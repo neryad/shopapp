@@ -36,37 +36,6 @@ class _ListPageState extends State<ListPage> {
           ],
         ),
       ),
-      // bottomNavigationBar: __bNavbarHome(),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () =>{}, //_settingModalBottomSheet(context),
-      //   child: Icon(Icons.add_shopping_cart),
-      //   backgroundColor: Color.fromRGBO(255, 111, 94, 1),
-      // ),
-      // drawer: Drawer(
-      //   child: SafeArea(
-      //     child: ListView(
-      //       children: <Widget>[
-      //         DrawerHeader(
-      //           child: Text(''),
-      //           decoration: BoxDecoration(
-      //               image: DecorationImage(
-      //                   image:
-      //                       AssetImage("assets/undraw_shopping_app_flsj.png"),
-      //                   fit: BoxFit.cover)),
-      //         ),
-      //         ListTile(
-      //           leading: Icon(Icons.settings),
-      //           title: Text('Settings'),
-      //         ),
-      //         ListTile(
-      //           leading: Icon(Icons.info),
-      //           title: Text('About'),
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

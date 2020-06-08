@@ -14,7 +14,14 @@ class _QuickPageState extends State<QuickPage> {
     body:Center(
       child:  Text('Quick'),
     ),
-    
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        label: Text('6,000.00'),
+        icon: Icon(Icons.monetization_on),
+        backgroundColor: Color.fromRGBO(255, 111, 94, 1),
+      ),
     );
   }
 }

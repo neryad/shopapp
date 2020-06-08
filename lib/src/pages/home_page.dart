@@ -22,10 +22,11 @@ class _HomePageState extends State<HomePage> {
         iconTheme: new IconThemeData(color: Color.fromRGBO(255, 111, 94, 1)),
       ),
       body: _callPage(currentIndex),
-      bottomNavigationBar: __bNavbarHome(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // bottomNavigationBar: __bNavbarHome(),
+      
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>{}, //_settingModalBottomSheet(context),
+        onPressed: () =>{ Navigator.pushNamed(context, 'newList')}, //_settingModalBottomSheet(context),
         child: Icon(Icons.add_shopping_cart),
         backgroundColor: Color.fromRGBO(255, 111, 94, 1),
       ),
@@ -41,7 +42,12 @@ class _HomePageState extends State<HomePage> {
                             AssetImage("assets/undraw_shopping_app_flsj.png"),
                         fit: BoxFit.cover)),
               ),
-              ListTile(
+            
+               ListTile(
+                leading: Icon(Icons.book),
+                title: Text('Pre-list'),
+              ),
+                ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
               ),
@@ -49,6 +55,7 @@ class _HomePageState extends State<HomePage> {
                 leading: Icon(Icons.info),
                 title: Text('About'),
               )
+              
             ],
           ),
         ),
@@ -178,14 +185,14 @@ class _HomePageState extends State<HomePage> {
                     color: Color.fromRGBO(255, 111, 94, 1),
                   ))),
               keyboardType: TextInputType.number),
-          TextField(
-              decoration: InputDecoration(
-                  labelText: 'Cantidad',
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Color.fromRGBO(255, 111, 94, 1),
-                  ))),
-              keyboardType: TextInputType.number),
+          // TextField(
+          //     decoration: InputDecoration(
+          //         labelText: 'Cantidad',
+          //         focusedBorder: UnderlineInputBorder(
+          //             borderSide: BorderSide(
+          //           color: Color.fromRGBO(255, 111, 94, 1),
+          //         ))),
+          //     keyboardType: TextInputType.number),
           FlatButton(
             onPressed: () {},
             color: Color.fromRGBO(255, 111, 94, 1),
