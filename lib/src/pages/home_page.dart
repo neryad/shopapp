@@ -88,22 +88,22 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget __bNavbarHome() {
+  // Widget __bNavbarHome() {
     
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (index) { 
-        setState(() {
-          currentIndex = index;
-        });
-      }, 
-      items: [
-      BottomNavigationBarItem(
-          icon: Icon(Icons.store_mall_directory), title: Text('Home')),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart), title: Text('Quick list')),
-    ]);
-  }
+  //   return BottomNavigationBar(
+  //     currentIndex: currentIndex,
+  //     onTap: (index) { 
+  //       setState(() {
+  //         currentIndex = index;
+  //       });
+  //     }, 
+  //     items: [
+  //     BottomNavigationBarItem(
+  //         icon: Icon(Icons.store_mall_directory), title: Text('Home')),
+  //     BottomNavigationBarItem(
+  //         icon: Icon(Icons.shopping_cart), title: Text('Quick list')),
+  //   ]);
+  // }
 
   Widget __bNavbar() {
     return BottomNavigationBar(items: [
