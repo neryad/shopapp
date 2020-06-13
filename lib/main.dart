@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TuCompra',
-      initialRoute: 'home',
+      initialRoute: 'newList',
       routes: {
         'home' : ( BuildContext context) => HomePage(),
         'quickList': ( BuildContext context) => QuickPage(),
