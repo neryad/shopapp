@@ -1,0 +1,16 @@
+{
+    "productos":[
+    {
+    "name":"pan",
+    "price":20.50,
+    "quantity":1
+    },
+
+    {
+      "name":"cafe",
+      "price":10.15,
+      "quantity":1
+      
+        }
+    ]
+}
