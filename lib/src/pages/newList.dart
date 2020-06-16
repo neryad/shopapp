@@ -6,6 +6,7 @@ import 'package:shopapp/src/models/product_model.dart';
 import 'package:shopapp/src/provider/dummy_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/counter.dart';
+import 'package:intl/intl.dart';
 
 class NewList extends StatefulWidget {
   final Counter counter;
@@ -18,98 +19,122 @@ class NewList extends StatefulWidget {
 class _NewListState extends State<NewList> {
   double buget = 00.00;
   double total = 0.00;
+  int itemTotal = 0;
+  
 
   List<dynamic> items = [
     {"name": "pan", "price": 20.5, "quantity": 0},
     {"name": "cafe", "price": 10.15, "quantity": 0},
-    {"name": "desodorante", "price":888.58, "quantity": 0}
+    {"name": "desodorante", "price": 888.58, "quantity": 0}
   ];
 
   final formKey = GlobalKey<FormState>();
   ProductModel productModel = new ProductModel();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'New list',
-          style: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+          style: TextStyle(color: Colors.white),
         ),
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(255, 111, 94, 1),
         iconTheme: new IconThemeData(color: Color.fromRGBO(255, 111, 94, 1)),
       ),
       backgroundColor: Colors.white,
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Dismissible(
-              key: Key('items[index]'),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Card(
-                  elevation: 5.0,
-                  child: Container(
-                    height: 50.00,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Icon(Icons.shopping_cart,
-                            color: Color.fromRGBO(255, 111, 94, 1)),
+      
+      body: Container(
+        child: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Dismissible(
+                key: Key('items[index]'),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Card(
+                    elevation: 5.0,
+                    child: Container(
+                      height: 50.00,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Icon(Icons.shopping_cart,
+                              color: Color.fromRGBO(255, 111, 94, 1)),
 
-                        Container(width: 80, child: Text(items[index]['name'])),
-                        Container(width: 50,child: Text(items[index]['price'].toString())),
-                        Container(
-                          width: 20.0,
-                          height: 20.0,
-                          child: FloatingActionButton(
-                            backgroundColor: Color.fromRGBO(255, 111, 94, 1),
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                              size: 15.0,
+                          Text(items[index]['name']),
+                          Container(
+                              width: 50.0,
+                              child: TextField(
+                                
+                                  onChanged: (text) {
+                                    items[index]['price'] = num.parse(text);
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  decoration:
+                                      InputDecoration(hintText: 'precio'),
+                                  style: TextStyle(
+
+                                      // fontSize: 40.0,
+                                      height: 2.0,
+                                      color: Colors.black))),
+                          //Text(items[index]['price'].toString()),
+                          Container(
+                            width: 20.0,
+                            height: 20.0,
+                            child: FloatingActionButton(
+                              backgroundColor: Color.fromRGBO(255, 111, 94, 1),
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                                size: 15.0,
+                              ),
+                              onPressed: () {
+                                _sumProduct(index);
+                              
+                              },
                             ),
-                            onPressed: () {
-                              _sumProduct(index);
-                            },
                           ),
-                        ),
-                        Text(items[index]['quantity'].toString()),
-                        Container(
-                          width: 20.0,
-                          height: 20.0,
-                          child: FloatingActionButton(
-                            backgroundColor: Color.fromRGBO(255, 111, 94, 1),
-                            child: Icon(
-                              Icons.remove,
-                              color: Colors.white,
-                              size: 15.0,
+                          Text(items[index]['quantity'].toString()),
+                         
+                          Container(
+                            width: 20.0,
+                            height: 20.0,
+                            child: FloatingActionButton(
+                              backgroundColor: Color.fromRGBO(255, 111, 94, 1),
+                              child: Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                                size: 15.0,
+                              ),
+                              onPressed: () {
+                                _resProduct(index);
+                              },
                             ),
-                            onPressed: () {
-                              _resProduct(index);
-                            },
                           ),
-                        ),
-                      ],
+                           Text(utils.numberFormat((items[index]['quantity'] * items[index]['price']))),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              )
-              );
-        },
+                ));
+          },
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
-        child:Container(
+        child: Container(
           height: 80.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               _buget(),
-             Icon(Icons.swap_horiz),
+              Icon(Icons.swap_horiz),
               _total(),
             ],
-          ),) ,
+          ),
         ),
+      ),
       // bottomNavigationBar: __bNavbar(buget, total),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       // floatingActionButton: FloatingActionButton(
@@ -233,18 +258,40 @@ class _NewListState extends State<NewList> {
   _sumProduct(int index) {
     setState(() {
       items[index]['quantity']++;
-        getTotal();
+      getTotal();
     });
   }
+// int _iteTotal(int index){
+//   num sum = 0;
+// for (num e in [1,2,3]) {
+//   sum += e;
 
+//   print(sum);
+// }
+// return sum;
+// //   int mmg;
+// //  if (items[index]['quantity'] == 0) {
+// //       itemTotal = 0;
+// //       for (int i = 0; i < items.length; i++) {
+// //         setState(() {
+// //           mmg =  items[i]['quantity'];
+// //           print( items[i]['quantity']);
+// //           return mmg;
+// //           //total = num.parse(total.toStringAsFixed(2));
+// //            //itemTotal = (items[i]['price'] * items[i]['quantity']);
+// //           //  format(total);
+// //         });
+// //       }
+// //     }
+// }
   _resProduct(int index) {
     setState(() {
       if (items[index]['quantity'] == 0) {
         return;
       }
       items[index]['quantity']--;
-        getTotal();
-      print(items[index]['quantity']);
+      itemTotal = items[index]['quantity'];
+      getTotal();
     });
   }
 
@@ -254,33 +301,48 @@ class _NewListState extends State<NewList> {
       for (int i = 0; i < items.length; i++) {
         setState(() {
           total += (items[i]['price'] * items[i]['quantity']);
-          total = num.parse(total.toStringAsFixed(2));
-          
+          //total = num.parse(total.toStringAsFixed(2));
+           //itemTotal = (items[i]['price'] * items[i]['quantity']);
           //  format(total);
-        });
+          // double value = 1000000;
+          //   print(numberFormat(total));
+          //   total = numberFormat()
 
+
+        });
       }
     }
   }
+String numberFormat(double x) {
+  List<String> parts = x.toString().split(',');
+  RegExp re = RegExp(r'\B(?=(\d{3})+(?!\d))');
 
- Widget _buget() {
-   return Container(
-     child: Column(children: <Widget>[
-       Icon(Icons.account_balance_wallet),
-     
-       Text('$total'),
-     ],)
-   );
- }
+  parts[0] = parts[0].replaceAll(re, ',');
+  if (parts.length == 1) {
+    // parts.add('00');
+  } else {
+    parts[1] = parts[1].padRight(2, '0').substring(0, 2);
+  }
+  return parts.join(',');
+}
+  Widget _buget() {
+    return Container(
+        child: Column(
+      children: <Widget>[
+        Icon(Icons.account_balance_wallet),
+        Text(utils.numberFormat(total)),
+      ],
+    ));
+  }
 
   Widget _total() {
-   return Container(
-     padding: EdgeInsets.symmetric(),
-     child: Column(children: <Widget>[
-       Icon(Icons.monetization_on),
-       
-       Text('$total'),
-     ],)
-   );
+    return Container(
+        padding: EdgeInsets.symmetric(),
+        child: Column(
+          children: <Widget>[
+            Icon(Icons.monetization_on),
+            Text(  utils.numberFormat(total)),
+          ],
+        ));
   }
 }
