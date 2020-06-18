@@ -12,16 +12,12 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: Colors.white,
-      // appBar: new AppBar(
-      //   elevation: 0.0,
-      //   backgroundColor: Colors.white,
-      //   iconTheme: new IconThemeData(color: Color.fromRGBO(255, 111, 94, 1)),
-      // ),
+
       body: SingleChildScrollView(
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-            _Imagen(),
+            _imagen(),
             _card(),
             _card(),
             _card(),
@@ -40,7 +36,7 @@ class _ListPageState extends State<ListPage> {
   }
 }
 
-  Widget _Imagen() {
+  Widget _imagen() {
     return Container(
       padding: EdgeInsets.all(15.0),
       child: Row(
@@ -56,28 +52,7 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  Widget __bNavbarHome() {
-    return BottomNavigationBar(items: [
-      BottomNavigationBarItem(
-          icon: Icon(Icons.store_mall_directory), title: Text('Home')),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart), title: Text('Quick list')),
-    ]);
-  }
-
-  Widget __bNavbar() {
-    return BottomNavigationBar(items: [
-      BottomNavigationBarItem(
-          icon: Icon(Icons.settings), title: Text('Settings')),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.monetization_on),
-          title: Text(
-            '10,000.00',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-          )),
-    ]);
-  }
-
+  
   Widget _card() {
     return Container(
       height: 100.00,

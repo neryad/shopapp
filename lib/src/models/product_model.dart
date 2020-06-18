@@ -11,9 +11,9 @@ String productModelToJson(ProductModel data) => json.encode(data.toJson());
 class ProductModel {
     ProductModel({
         // this.id,
-        this.name = '',
+        this.name,
         this.quantity = 0,
-        this.price,
+        this.price = 0.0,
     });
 
     int id;

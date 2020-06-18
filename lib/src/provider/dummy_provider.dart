@@ -91,3 +91,18 @@
 //                           ],
 //                         )));
 //               }).toList()))
+
+
+//TextField(
+                                
+  //                                 onChanged: (text) {
+  //                                   items[index]['price'] = num.parse(text);
+  //                                 },
+  //                                 keyboardType: TextInputType.number,
+  //                                 decoration:
+  //                                     InputDecoration(hintText: 'precio'),
+  //                                 style: TextStyle(
+
+  //                                     // fontSize: 40.0,
+  //                                     height: 2.0,
+  //                                     color: Colors.black)))
