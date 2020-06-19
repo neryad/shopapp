@@ -12,8 +12,8 @@ class ProductModel {
     ProductModel({
         // this.id,
         this.name,
-        this.quantity = 0,
-        this.price = 0.0,
+        this.quantity,
+        this.price,
     });
 
     int id;

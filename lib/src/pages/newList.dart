@@ -8,7 +8,6 @@ import 'package:shopapp/src/utils/utils.dart' as utils;
 // import 'package:intl/intl.dart';
 
 class NewList extends StatefulWidget {
- 
   NewList({Key key}) : super(key: key);
 
   @override
@@ -16,9 +15,12 @@ class NewList extends StatefulWidget {
 }
 
 class _NewListState extends State<NewList> {
-  double buget =00.00;
+  double buget = 00.00;
   double total = 0.00;
-  Color textColor = Color.fromRGBO(255, 111, 94, 1);
+  double diference = 0.00;
+  
+  Color colorBuget = Color.fromRGBO(255, 111, 94, 1);
+  Color bugetColor = Color.fromRGBO(255, 111, 94, 1);
   // String bugetText = "Presupuesto";
   TextEditingController _articlesCtrl = new TextEditingController();
 
@@ -28,7 +30,7 @@ class _NewListState extends State<NewList> {
   //   {"name": "desodorante", "price": 888.58, "quantity": 0}
   // ];
 
-  List<ProductModel>items = [];
+  List<ProductModel> items = [];
 
   final formKey = GlobalKey<FormState>();
   ProductModel productModel = new ProductModel();
@@ -36,122 +38,164 @@ class _NewListState extends State<NewList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:PreferredSize(
-        preferredSize: Size(double.infinity, 100),
-        
-        child: Container(
-          decoration: BoxDecoration(
-            boxShadow: [BoxShadow(
-              color: Colors.black12,
-              spreadRadius: 5,
-              blurRadius: 2
-            )]
-          ),
-          width: MediaQuery.of(context).size.width,
-          height: 140,
+      backgroundColor: Colors.grey[200],
+        appBar: PreferredSize(
+          preferredSize: Size(double.infinity, 200),
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20))
-            ),
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(color: Colors.black12, spreadRadius: 5, blurRadius: 2)
+            ]),
+            width: MediaQuery.of(context).size.width,
+            height: 140,
             child: Container(
-              margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-              child: Row(
-                
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                     margin: EdgeInsets.symmetric(horizontal: 10),
-                     child: Column(children:<Widget>[
-                    FlatButton.icon(onPressed: () =>_mostrarAlerta(context), icon: Icon(Icons.account_balance_wallet), label: Text("Presupuesto")),
-                    Text(utils.numberFormat(buget),style: TextStyle(fontSize: 20,color:  textColor,fontWeight: FontWeight.bold),),
-                    ], ), 
-                  ),
-  //                 Container(
-  //                   child: Text('Nueva compra',overflow: TextOverflow.ellipsis, style: TextStyle(
-  //   decoration: TextDecoration.underline, fontWeight: FontWeight.w900, fontSize: 15
-  // )),
-  //                 ),
-                    //Text("Foodbar",style: TextStyle(fontSize: 30,color: Colors.white),),
-                 Container(
-                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                   margin: EdgeInsets.symmetric(horizontal: 10),
-                   child:  Column(children:<Widget>[
-                    FlatButton.icon(onPressed: (){}, icon: Icon(Icons.shopping_cart), label: Text("Total")),
-                    Text(utils.numberFormat(total),style: TextStyle(fontSize: 20,color:  Color.fromRGBO(255, 111, 94, 1), fontWeight: FontWeight.bold),),
-                    ], ),
-                 ),
-                  
-                 // Icon(Icons.navigate_before,size: 40,color: Colors.white,),
-                
-                  //Icon(Icons.navigate_before,color: Colors.transparent,),
-                ],
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20))),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                      child: Column(
+                        children: <Widget>[
+                          FlatButton.icon(
+                              onPressed: () => _mostrarAlerta(context),
+                              icon: Icon(Icons.account_balance_wallet),
+                              label: Text("Presupuesto")),
+                          Text(
+                            utils.numberFormat(buget),
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: bugetColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                      child: Column(
+                        children: <Widget>[
+                          FlatButton.icon(
+                              onPressed: () {},
+                              icon: Icon(Icons.shopping_cart),
+                              label: Text("Total")),
+                          Text(
+                            utils.numberFormat(total),
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Color.fromRGBO(255, 111, 94, 1),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                      child: Column(
+                        children: <Widget>[
+                          FlatButton.icon(
+                              onPressed: () {},
+                              icon: Icon(Icons.shuffle),
+                              label: Text("Diferencia")),
+                          Text(
+                            utils.numberFormat(diference),
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: colorBuget,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
-
-      body: Column(
-        children: <Widget>[
+        body: Column(
           
-          Expanded(
+          children: <Widget>[
+            Expanded(
               child: ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Dismissible(
-                key: Key('items[index]'),
-                child: Card(
-                  elevation: 4,
-                  margin: EdgeInsets.all(15),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    height: 50.00,
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                itemCount: items.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Dismissible(
+                     background: Card(color: Colors.red,elevation: 4, margin: EdgeInsets.all(15),),
+                     // key: UniqueKey(),
+                      key: Key('items[index]'),
+                        
+       direction: DismissDirection.horizontal,
+       onDismissed: (direction) {
+          setState(() {
+              items.removeAt(index);
+              getTotal();
+            });
+        
+       },
+                    child: Card(
+                      
+                      elevation: 4,
+                      margin: EdgeInsets.all(15),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        height: 50.00,
+                        child: Row(
+                          //mainAxisAlignment: MainAxisAlignment.spaceAround,
 
-                      children: <Widget>[
-                        Expanded(
-                            flex: 2,
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 10),
-                                  child: Icon(Icons.add_shopping_cart,
-                                      color: Color.fromRGBO(255, 111, 94, 1)),
-                                ),
-                                Expanded(
-                                  flex:1,
-                                  child: Container(
-                                    child: Text(
-                                      items[index].name,
-                                      overflow: TextOverflow.ellipsis,
+                          children: <Widget>[
+                            Expanded(
+                                flex: 2,
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      child: Icon(Icons.add_shopping_cart,
+                                          color:
+                                              Color.fromRGBO(255, 111, 94, 1)),
                                     ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Expanded(
-                                   // flex: 2,
-                                    child: TextField(
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        child: Text(
+                                          items[index].name,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Expanded(
+                                        // flex: 2,
+                                        child: TextField(
                                       decoration:
                                           InputDecoration(hintText: '0.0'),
                                       keyboardType: TextInputType.number,
                                       onChanged: (text) {
                                         items[index].price =
                                             num.parse(text).toDouble();
+                                        setState(() {
+                                          getTotal();
+                                        });
                                       },
                                     )),
-                                // SizedBox(
-                                //   width: 5,
-                                // ),
-                                Expanded(
-                                    // flex: 1,
-                                    child: Row(
-                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    // SizedBox(
+                                    //   width: 5,
+                                    // ),
+                                    Expanded(
+                                        // flex: 1,
+                                        child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Expanded(
                                           flex: 2,
@@ -193,34 +237,34 @@ class _NewListState extends State<NewList> {
                                         ),
                                       ],
                                     )),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                    ),
-                                    child: Text(
-                                      utils.numberFormat(
-                                        items[index].quantity *
-                                            items[index].price,
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        margin: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                        ),
+                                        child: Text(
+                                          utils.numberFormat(
+                                            items[index].quantity *
+                                                items[index].price,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  ),
-                                ),
-                              ],
-                            ))
-                      ],
+                                  ],
+                                ))
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                );
-          },
-        ),
-      ),
-           _newProducto(),],
-      )
-    );
+                  );
+                },
+              ),
+            ),
+            _newProducto(),
+          ],
+        ));
   }
 
   _sumProduct(int index) {
@@ -236,7 +280,7 @@ class _NewListState extends State<NewList> {
         return;
       }
       items[index].quantity--;
-      
+
       getTotal();
     });
   }
@@ -247,84 +291,108 @@ class _NewListState extends State<NewList> {
       for (int i = 0; i < items.length; i++) {
         setState(() {
           total += (items[i].price * items[i].quantity);
-          if (total > buget){
-            textColor = Colors.red[900];
-           
-            
+          getDiference();
+          if (total > buget) {
+            bugetColor = Colors.red[900];
           } else {
-             textColor = Color.fromRGBO(255, 111, 94, 1);
+            bugetColor = Color.fromRGBO(255, 111, 94, 1);
           }
         });
       }
     }
   }
 
- 
-
-  void _mostrarAlerta(BuildContext context){
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context){
-        return AlertDialog(
-          title: Text(' Presupuesto'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              _crearIpunt(),
-          ],
-          ),
-          actions: <Widget>[
-            FlatButton(onPressed: ()=> Navigator.of(context).pop(), 
-            child: Text('Cancelar')),
-            FlatButton(onPressed: ()=> Navigator.of(context).pop(),  
-            child: Text('Aceptar')),
-          ],
-        );
-      }
-    );
+  void getDiference() {
+    double calDiferecen = buget - total;
+    if (calDiferecen < 0) {
+      colorBuget = Colors.red[900];
+    } else if (calDiferecen == 0) {
+      colorBuget = Color.fromRGBO(255, 111, 94, 1);
+    } else {
+      colorBuget = Colors.green[400];
+    }
+    diference = calDiferecen;
   }
 
-  Widget _crearIpunt(){
+  void _mostrarAlerta(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(' Presupuesto'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                _crearIpunt(),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Cancelar')),
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Aceptar')),
+            ],
+          );
+        });
+  }
 
+  Widget _crearIpunt() {
     return TextField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         hintText: 'Ingresar nuevo presupuesto',
-        suffixIcon: Icon(Icons.account_balance_wallet,color: Color.fromRGBO(255, 111, 94, 1),),
-    //       enabledBorder: UnderlineInputBorder(      
-	  // borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),   
-	  // ),  
-	  focusedBorder: UnderlineInputBorder(
-	  borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
-	   ),
+        suffixIcon: Icon(
+          Icons.account_balance_wallet,
+          color: Color.fromRGBO(255, 111, 94, 1),
+        ),
+        //       enabledBorder: UnderlineInputBorder(
+        // borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+        // ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+        ),
       ),
-      onChanged: (value){
-        if(value == null){
+      onChanged: (value) {
+        if (value == null) {
           return;
-        }else {
-           buget = double.parse(value);
+        } else {
+          buget = double.parse(value);
         }
-       
       },
     );
   }
 
-  Widget _newProducto(){
-      return TextField(
+  Widget _newProducto() {
+    var it = items.length;
+    return Container(
+      color: Colors.white60,
+      child: TextField(
+      textAlign: TextAlign.center,
+      
         controller: _articlesCtrl,
         onSubmitted: (text) {
-       items.insert(0, new ProductModel(name:text));
-        _articlesCtrl.clear();
-        setState(() {}); 
-  },
-      decoration: InputDecoration(
-        hintText: 'Nuevo articulo',
-	  focusedBorder: UnderlineInputBorder(
-	  borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
-	   ),
-      ),
+          // insertar(it,text);
+          items.insert(
+              it, new ProductModel(name: text, quantity: 1, price: 0.00));
+          _articlesCtrl.clear();
+          setState(() {});
+        },
+        decoration: InputDecoration(
 
+           focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+        ),
+
+          hintText: 'Nuevo articulo',
+          hintStyle: TextStyle( color: Color.fromRGBO(255, 111, 94, 1)),
+          
+         //border:  OutlineInputBorder(),
+        ),
+      ),
     );
   }
+
 }
