@@ -18,7 +18,7 @@ class _NewListState extends State<NewList> {
   double buget = 00.00;
   double total = 0.00;
   double diference = 0.00;
-  
+
   Color colorBuget = Color.fromRGBO(255, 111, 94, 1);
   Color bugetColor = Color.fromRGBO(255, 111, 94, 1);
   // String bugetText = "Presupuesto";
@@ -38,7 +38,7 @@ class _NewListState extends State<NewList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[200],
         appBar: PreferredSize(
           preferredSize: Size(double.infinity, 200),
           child: Container(
@@ -96,7 +96,7 @@ class _NewListState extends State<NewList> {
                       ),
                     ),
                     Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
                       child: Column(
                         children: <Widget>[
                           FlatButton.icon(
@@ -120,27 +120,28 @@ class _NewListState extends State<NewList> {
           ),
         ),
         body: Column(
-          
           children: <Widget>[
             Expanded(
               child: ListView.builder(
                 itemCount: items.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Dismissible(
-                     background: Card(color: Colors.red,elevation: 4, margin: EdgeInsets.all(15),),
-                     // key: UniqueKey(),
-                      key: Key('items[index]'),
-                        
-       direction: DismissDirection.horizontal,
-       onDismissed: (direction) {
-          setState(() {
-              items.removeAt(index);
-              getTotal();
-            });
-        
-       },
+                    background: Card(
+                      color: Colors.red,
+                      elevation: 4,
+                      margin: EdgeInsets.all(15),
+                      child: Icon(Icons.delete_forever),
+                    ),
+                    key: Key('items[index]'),
+                    //key: Key('items[index]'),
+
+                    direction: DismissDirection.horizontal,
+                    onDismissed: (direction) {
+                      setState(() {
+                        items.removeAt(index);
+                      });
+                    },
                     child: Card(
-                      
                       elevation: 4,
                       margin: EdgeInsets.all(15),
                       child: Container(
@@ -302,6 +303,14 @@ class _NewListState extends State<NewList> {
     }
   }
 
+  void dismissCard(ProductModel card) {
+    if (items.contains(card)) {
+      setState(() {
+        items.remove(card);
+      });
+    }
+  }
+
   void getDiference() {
     double calDiferecen = buget - total;
     if (calDiferecen < 0) {
@@ -370,8 +379,7 @@ class _NewListState extends State<NewList> {
     return Container(
       color: Colors.white60,
       child: TextField(
-      textAlign: TextAlign.center,
-      
+        textAlign: TextAlign.center,
         controller: _articlesCtrl,
         onSubmitted: (text) {
           // insertar(it,text);
@@ -381,18 +389,16 @@ class _NewListState extends State<NewList> {
           setState(() {});
         },
         decoration: InputDecoration(
-
-           focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
-        ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+          ),
 
           hintText: 'Nuevo articulo',
-          hintStyle: TextStyle( color: Color.fromRGBO(255, 111, 94, 1)),
-          
-         //border:  OutlineInputBorder(),
+          hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+
+          //border:  OutlineInputBorder(),
         ),
       ),
     );
   }
-
 }
