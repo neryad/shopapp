@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/models/product_model.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
+import 'package:uuid/uuid.dart';
+//import 'package:uuid/uuid_util.dart';
 // import 'package:shopapp/src/widgets/counter.dart';
 // import 'package:intl/intl.dart';
 
@@ -21,6 +23,7 @@ class _NewListState extends State<NewList> {
 
   Color colorBuget = Color.fromRGBO(255, 111, 94, 1);
   Color bugetColor = Color.fromRGBO(255, 111, 94, 1);
+  var uuid = Uuid();
   // String bugetText = "Presupuesto";
   TextEditingController _articlesCtrl = new TextEditingController();
 
@@ -126,20 +129,61 @@ class _NewListState extends State<NewList> {
                 itemCount: items.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Dismissible(
-                    background: Card(
-                      color: Colors.red,
-                      elevation: 4,
-                      margin: EdgeInsets.all(15),
-                      child: Icon(Icons.delete_forever),
+                    background: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        color: Colors.red,
+                        child: Align(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                " Eliminar",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                            ],
+                          ),
+                          alignment: Alignment.centerRight,
+                        ),
+                      ),
                     ),
+                    // background: Card(
+
+                    //   color: Colors.red,
+                    //   elevation: 4,
+                    //   margin: EdgeInsets.all(15),
+                    //   child: Icon(Icons.delete_forever, color: Colors.white,),
+                    // ),
                     key: Key('items[index]'),
                     //key: Key('items[index]'),
-
-                    direction: DismissDirection.horizontal,
+                    direction: DismissDirection.endToStart,
                     onDismissed: (direction) {
+                      var priceToDel = items[index].price;
+                      // items.removeWhere((item) => item.id ==items[index].id);
+                       items.removeWhere((item) => item.id ==items[index].id);
                       setState(() {
-                        items.removeAt(index);
+                        total = total - priceToDel;
+                        getDiference();
+                        print('asd');
+                         //items.removeAt(index);
                       });
+                      // setState(() {
+                        
+                      //   getTotal();
+                      // });
+
+                      //getTotal();
                     },
                     child: Card(
                       elevation: 4,
@@ -224,6 +268,7 @@ class _NewListState extends State<NewList> {
                                         Expanded(
                                           flex: 2,
                                           child: FloatingActionButton(
+                                            
                                             backgroundColor:
                                                 Color.fromRGBO(255, 111, 94, 1),
                                             child: Icon(
@@ -312,6 +357,11 @@ class _NewListState extends State<NewList> {
   }
 
   void getDiference() {
+    if(total == 0){
+    diference = buget;
+     colorBuget = colorBuget = Colors.green[400];
+     return;
+    }
     double calDiferecen = buget - total;
     if (calDiferecen < 0) {
       colorBuget = Colors.red[900];
@@ -341,7 +391,7 @@ class _NewListState extends State<NewList> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text('Cancelar')),
               FlatButton(
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: (){ getTotal(); Navigator.of(context).pop();},
                   child: Text('Aceptar')),
             ],
           );
@@ -383,8 +433,9 @@ class _NewListState extends State<NewList> {
         controller: _articlesCtrl,
         onSubmitted: (text) {
           // insertar(it,text);
+          var newId = uuid.v1();
           items.insert(
-              it, new ProductModel(name: text, quantity: 1, price: 0.00));
+              it, new ProductModel(id:newId,name: text, quantity: 1, price: 0.00));
           _articlesCtrl.clear();
           setState(() {});
         },
