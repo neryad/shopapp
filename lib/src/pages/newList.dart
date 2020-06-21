@@ -51,6 +51,7 @@ class _NewListState extends State<NewList> {
             width: MediaQuery.of(context).size.width,
             height: 140,
             child: Container(
+              
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -59,63 +60,59 @@ class _NewListState extends State<NewList> {
               child: Container(
                 margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-                      child: Column(
-                        children: <Widget>[
-                          FlatButton.icon(
-                              onPressed: () => _mostrarAlerta(context),
-                              icon: Icon(Icons.account_balance_wallet),
-                              label: Text("Presupuesto")),
-                          Text(
-                            utils.numberFormat(buget),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: bugetColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                    Container(width: 8.0, height: 70.0, color: Colors.white),
+                    Column(
+                      children: <Widget>[
+                        FlatButton.icon(
+                            onPressed: () => _mostrarAlerta(context),
+                            icon: Icon(Icons.account_balance_wallet),
+                            label: Text("Presupuesto")),
+                        Text(
+                          utils.numberFormat(buget),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: bugetColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-                      child: Column(
-                        children: <Widget>[
-                          FlatButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.shopping_cart),
-                              label: Text("Total")),
-                          Text(
-                            utils.numberFormat(total),
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Color.fromRGBO(255, 111, 94, 1),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                    SizedBox(width: 15.0),
+                    Column(
+                      children: <Widget>[
+                        FlatButton.icon(
+                            onPressed: () {},
+                            icon: Icon(Icons.shopping_cart),
+                            label: Text("Total")),
+                        Text(
+                          utils.numberFormat(total),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromRGBO(255, 111, 94, 1),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-                      child: Column(
-                        children: <Widget>[
-                          FlatButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.shuffle),
-                              label: Text("Diferencia")),
-                          Text(
-                            utils.numberFormat(diference),
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: colorBuget,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                    Spacer(),
+                    Column(
+                      children: <Widget>[
+                        FlatButton.icon(
+                            onPressed: () {},
+                            icon: Icon(Icons.shuffle),
+                            label: Text("Diferencia")),
+                        Text(
+                          utils.numberFormat(diference),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: colorBuget,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
+                     SizedBox(width: 18.0),
                   ],
                 ),
               ),
