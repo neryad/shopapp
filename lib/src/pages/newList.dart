@@ -169,7 +169,7 @@ class _NewListState extends State<NewList> {
                     //   margin: EdgeInsets.all(15),
                     //   child: Icon(Icons.delete_forever, color: Colors.white,),
                     // ),
-                     key: Key('items[index]'),
+                     key: Key(items[index].name + items.length.toString()),
                    // key: Key('items[index]'),
                     //key: Key('items[index]'),
                     direction: DismissDirection.endToStart,
@@ -181,7 +181,7 @@ class _NewListState extends State<NewList> {
                       setState(() {
                         items.removeAt(index);
                         total = total - priceToDel;
-                        //getDiference();
+                        getDiference();
 
                         //items.removeAt(index);
                       });
