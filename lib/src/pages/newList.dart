@@ -49,9 +49,9 @@ class _NewListState extends State<NewList> {
               BoxShadow(color: Colors.black12, spreadRadius: 5, blurRadius: 2)
             ]),
             width: MediaQuery.of(context).size.width,
-            height: 140,
+            height: 120,
             child: Container(
-              
+              //height: 120,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -60,11 +60,14 @@ class _NewListState extends State<NewList> {
               child: Container(
                 margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(width: 8.0, height: 70.0, color: Colors.white),
+                    SizedBox(width: 15.0),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         FlatButton.icon(
                             onPressed: () => _mostrarAlerta(context),
@@ -80,8 +83,10 @@ class _NewListState extends State<NewList> {
                         ),
                       ],
                     ),
-                    SizedBox(width: 15.0),
+                    Spacer(),
+                    //SizedBox(width: 15.0),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         FlatButton.icon(
                             onPressed: () {},
@@ -98,6 +103,8 @@ class _NewListState extends State<NewList> {
                     ),
                     Spacer(),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
                         FlatButton.icon(
                             onPressed: () {},
@@ -112,7 +119,7 @@ class _NewListState extends State<NewList> {
                         ),
                       ],
                     ),
-                     SizedBox(width: 18.0),
+                    SizedBox(width: 18.0),
                   ],
                 ),
               ),
@@ -162,33 +169,36 @@ class _NewListState extends State<NewList> {
                     //   margin: EdgeInsets.all(15),
                     //   child: Icon(Icons.delete_forever, color: Colors.white,),
                     // ),
-                    key: Key('items[index]'),
+                     key: Key('items[index]'),
+                   // key: Key('items[index]'),
                     //key: Key('items[index]'),
                     direction: DismissDirection.endToStart,
                     onDismissed: (direction) {
                       var priceToDel = items[index].price;
                       // items.removeWhere((item) => item.id ==items[index].id);
-                       items.removeWhere((item) => item.id ==items[index].id);
+                      
+                      //items.removeWhere((item) => item.id == items[index].id);
                       setState(() {
+                        items.removeAt(index);
                         total = total - priceToDel;
-                        getDiference();
-                        print('asd');
-                         //items.removeAt(index);
+                        //getDiference();
+
+                        //items.removeAt(index);
                       });
                       // setState(() {
-                        
+
                       //   getTotal();
                       // });
 
                       //getTotal();
                     },
                     child: Card(
-                      elevation: 4,
-                      margin: EdgeInsets.all(15),
+                      elevation: 2,
+                      margin: EdgeInsets.all(5),
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        height: 50.00,
+                        height: 70.00,
                         child: Row(
                           //mainAxisAlignment: MainAxisAlignment.spaceAround,
 
@@ -197,89 +207,110 @@ class _NewListState extends State<NewList> {
                                 flex: 2,
                                 child: Row(
                                   children: <Widget>[
-                                    Container(
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      child: Icon(Icons.add_shopping_cart,
-                                          color:
-                                              Color.fromRGBO(255, 111, 94, 1)),
-                                    ),
+                                    // Container(
+                                    //   margin:
+                                    //       EdgeInsets.symmetric(horizontal: 10),
+                                    //   child: Icon(Icons.add_shopping_cart,
+                                    //       color:
+                                    //           Color.fromRGBO(255, 111, 94, 1)),
+                                    // ),
                                     Expanded(
                                       flex: 1,
                                       child: Container(
                                         child: Text(
                                           items[index].name,
-                                          overflow: TextOverflow.ellipsis,
+                                          //overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                     ),
                                     SizedBox(
+                                      width: 25,
+                                    ),
+                                    Expanded(
+                                        flex: 1,
+                                        child: TextField(
+                                          decoration:
+                                              InputDecoration(hintText: '0.0'),
+                                          keyboardType: TextInputType.number,
+                                          onChanged: (text) {
+                                            items[index].price =
+                                                num.parse(text).toDouble();
+                                            setState(() {
+                                              getTotal();
+                                            });
+                                          },
+                                        )),
+                                    SizedBox(
                                       width: 5,
                                     ),
                                     Expanded(
-                                        // flex: 2,
-                                        child: TextField(
-                                      decoration:
-                                          InputDecoration(hintText: '0.0'),
-                                      keyboardType: TextInputType.number,
-                                      onChanged: (text) {
-                                        items[index].price =
-                                            num.parse(text).toDouble();
-                                        setState(() {
-                                          getTotal();
-                                        });
-                                      },
-                                    )),
-                                    // SizedBox(
-                                    //   width: 5,
-                                    // ),
-                                    Expanded(
-                                        // flex: 1,
+                                        flex: 2,
                                         child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Expanded(
-                                          flex: 2,
-                                          child: FloatingActionButton(
-                                            backgroundColor:
-                                                Color.fromRGBO(255, 111, 94, 1),
-                                            child: Icon(
-                                              Icons.add,
-                                              color: Colors.white,
-                                              size: 15.0,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 2,
+                                              child: IconButton(
+                                                icon: Icon(Icons.add),
+                                              color: Color.fromRGBO(255, 111, 94, 1),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _sumProduct(index);
+                                                  });
+                                                },
+                                              ),
+
+                                              // IconButton(
+                                              //   // backgroundColor:
+                                              //       Color.fromRGBO(255, 111, 94, 1),
+                                              //    icon:
+                                              //    Icon( Icons.add),
+                                              //     color: Colors.white,
+                                              //      onPressed: () {
+                                              //     _sumProduct(index);
+                                              //   },
+                                              //     //size: 15.0,
+
+                                              // ),
                                             ),
-                                            onPressed: () {
-                                              _sumProduct(index);
-                                            },
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: Text(
-                                            items[index].quantity.toString(),
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: FloatingActionButton(
-                                            
-                                            backgroundColor:
-                                                Color.fromRGBO(255, 111, 94, 1),
-                                            child: Icon(
-                                              Icons.remove,
-                                              color: Colors.white,
-                                              size: 15.0,
+                                            Expanded(
+                                              flex: 2,
+                                              child: Text(
+                                                items[index]
+                                                    .quantity
+                                                    .toString(),
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.center,
+                                              ),
                                             ),
-                                            onPressed: () {
-                                              _resProduct(index);
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    )),
+                                            Expanded(
+                                              flex: 2,
+                                              child: IconButton(
+                                                icon: Icon(Icons.remove),
+                                              color: Color.fromRGBO(255, 111, 94, 1),
+                                                onPressed: () {
+                                                  setState(() {
+                                                     _resProduct(index);
+                                                  });
+                                                },
+                                              ),
+                                              
+                                              // FloatingActionButton(
+                                              //   backgroundColor: Color.fromRGBO(
+                                              //       255, 111, 94, 1),
+                                              //   child: Icon(
+                                              //     Icons.remove,
+                                              //     color: Colors.white,
+                                              //     size: 15.0,
+                                              //   ),
+                                              //   onPressed: () {
+                                              //     _resProduct(index);
+                                              //   },
+                                              // ),
+                                            ),
+                                          ],
+                                        )),
                                     Expanded(
                                       flex: 1,
                                       child: Container(
@@ -308,6 +339,14 @@ class _NewListState extends State<NewList> {
             _newProducto(),
           ],
         ));
+  }
+
+  validconte() {
+    if (items.length == 0) {
+      return Text('nada');
+    } else {
+      return ('todo');
+    }
   }
 
   _sumProduct(int index) {
@@ -354,10 +393,10 @@ class _NewListState extends State<NewList> {
   }
 
   void getDiference() {
-    if(total == 0){
-    diference = buget;
-     colorBuget = colorBuget = Colors.green[400];
-     return;
+    if (total == 0) {
+      diference = buget;
+      colorBuget = colorBuget = Colors.green[400];
+      return;
     }
     double calDiferecen = buget - total;
     if (calDiferecen < 0) {
@@ -388,7 +427,10 @@ class _NewListState extends State<NewList> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text('Cancelar')),
               FlatButton(
-                  onPressed: (){ getTotal(); Navigator.of(context).pop();},
+                  onPressed: () {
+                    getTotal();
+                    Navigator.of(context).pop();
+                  },
                   child: Text('Aceptar')),
             ],
           );
@@ -432,7 +474,9 @@ class _NewListState extends State<NewList> {
           // insertar(it,text);
           var newId = uuid.v1();
           items.insert(
-              it, new ProductModel(id:newId,name: text, quantity: 1, price: 0.00));
+              it,
+              new ProductModel(
+                  id: newId, name: text, quantity: 1, price: 0.00));
           _articlesCtrl.clear();
           setState(() {});
         },
@@ -450,3 +494,101 @@ class _NewListState extends State<NewList> {
     );
   }
 }
+
+// if(items.length == 0){
+//       return  Scaffold(
+//         backgroundColor: Colors.grey[200],
+//         appBar: PreferredSize(
+//           preferredSize: Size(double.infinity, 200),
+//           child: Container(
+//             decoration: BoxDecoration(boxShadow: [
+//               BoxShadow(color: Colors.black12, spreadRadius: 5, blurRadius: 2)
+//             ]),
+//             width: MediaQuery.of(context).size.width,
+//             height: 140,
+//             child: Container(
+
+//               decoration: BoxDecoration(
+//                   color: Colors.white,
+//                   borderRadius: BorderRadius.only(
+//                       bottomLeft: Radius.circular(20),
+//                       bottomRight: Radius.circular(20))),
+//               child: Container(
+//                 margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+//                 child: Row(
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Container(width: 8.0, height: 70.0, color: Colors.white),
+//                     Column(
+//                       children: <Widget>[
+//                         FlatButton.icon(
+//                             onPressed: () => _mostrarAlerta(context),
+//                             icon: Icon(Icons.account_balance_wallet),
+//                             label: Text("Presupuesto")),
+//                         Text(
+//                           utils.numberFormat(buget),
+//                           overflow: TextOverflow.ellipsis,
+//                           style: TextStyle(
+//                               fontSize: 20,
+//                               color: bugetColor,
+//                               fontWeight: FontWeight.bold),
+//                         ),
+//                       ],
+//                     ),
+//                     SizedBox(width: 15.0),
+//                     Column(
+//                       children: <Widget>[
+//                         FlatButton.icon(
+//                             onPressed: () {},
+//                             icon: Icon(Icons.shopping_cart),
+//                             label: Text("Total")),
+//                         Text(
+//                           utils.numberFormat(total),
+//                           style: TextStyle(
+//                               fontSize: 20,
+//                               color: Color.fromRGBO(255, 111, 94, 1),
+//                               fontWeight: FontWeight.bold),
+//                         ),
+//                       ],
+//                     ),
+//                     Spacer(),
+//                     Column(
+//                       children: <Widget>[
+//                         FlatButton.icon(
+//                             onPressed: () {},
+//                             icon: Icon(Icons.shuffle),
+//                             label: Text("Diferencia")),
+//                         Text(
+//                           utils.numberFormat(diference),
+//                           style: TextStyle(
+//                               fontSize: 20,
+//                               color: colorBuget,
+//                               fontWeight: FontWeight.bold),
+//                         ),
+//                       ],
+//                     ),
+//                      SizedBox(width: 18.0),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ),
+//         body: Column(children:<Widget>[
+//           Container(
+//            // height: 250,
+//             margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+//             child: Image(
+//         image: AssetImage(
+//             'assets/add_to_cart.png'),
+//       height: 200.0,
+//       fit: BoxFit.contain,
+//       ),
+//           ),
+//            SizedBox(height: 35.0),
+//             Text('No se ha agregado articulos a la lsita'),
+//             SizedBox(height: 164.0),
+
+//           _newProducto()
+//         ]) );
