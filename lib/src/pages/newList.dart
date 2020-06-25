@@ -27,6 +27,12 @@ class _NewListState extends State<NewList> {
   // String bugetText = "Presupuesto";
   TextEditingController _articlesCtrl = new TextEditingController();
 
+  // @override
+  // void dispose() {
+  //   // Limpia el controlador cuando el widget se elimine del árbol de widgets
+  //   _articlesPriceCtrl.dispose();
+  //   super.dispose();
+  // }
   // List<dynamic> items = [
   //   {"name": "pan", "price": 0.00, "quantity": 0},
   //   {"name": "cafe", "price": 0.00, "quantity": 0},
@@ -34,21 +40,23 @@ class _NewListState extends State<NewList> {
   // ];
 
   List<ProductModel> items = [];
-
+  List<TextEditingController> _controllers = new List();
   final formKey = GlobalKey<FormState>();
   ProductModel productModel = new ProductModel();
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: PreferredSize(
           preferredSize: Size(double.infinity, 200),
           child: Container(
+         
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(color: Colors.black12, spreadRadius: 5, blurRadius: 2)
             ]),
-            width: MediaQuery.of(context).size.width,
+            width: width/2.2,
             height: 120,
             child: Container(
               //height: 120,
@@ -60,14 +68,14 @@ class _NewListState extends State<NewList> {
               child: Container(
                 margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
                 child: Row(
-                  //crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(width: 8.0, height: 70.0, color: Colors.white),
+                    //Container(width: 8.0, height: 70.0, color: Colors.white),
                     SizedBox(width: 15.0),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                     // crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         FlatButton.icon(
                             onPressed: () => _mostrarAlerta(context),
@@ -95,6 +103,7 @@ class _NewListState extends State<NewList> {
                         Text(
                           utils.numberFormat(total),
                           style: TextStyle(
+                              
                               fontSize: 20,
                               color: Color.fromRGBO(255, 111, 94, 1),
                               fontWeight: FontWeight.bold),
@@ -104,7 +113,7 @@ class _NewListState extends State<NewList> {
                     Spacer(),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                     // crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
                         FlatButton.icon(
                             onPressed: () {},
@@ -130,16 +139,20 @@ class _NewListState extends State<NewList> {
           children: <Widget>[
             Expanded(
               child: ListView.builder(
+                
                 itemCount: items.length,
                 itemBuilder: (BuildContext context, int index) {
+                  _controllers.add(new TextEditingController());
                   return Dismissible(
-                    background: Padding(
+                    background: 
+                    
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         color: Colors.red,
                         child: Align(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Icon(
                                 Icons.delete,
@@ -161,7 +174,9 @@ class _NewListState extends State<NewList> {
                           alignment: Alignment.centerRight,
                         ),
                       ),
+              
                     ),
+                   
                     // background: Card(
 
                     //   color: Colors.red,
@@ -169,14 +184,55 @@ class _NewListState extends State<NewList> {
                     //   margin: EdgeInsets.all(15),
                     //   child: Icon(Icons.delete_forever, color: Colors.white,),
                     // ),
-                     key: Key(items[index].name + items.length.toString()),
-                   // key: Key('items[index]'),
+                    key: Key(items[index].name + items.length.toString()),
+                    // key: Key('items[index]'),
                     //key: Key('items[index]'),
-                    direction: DismissDirection.endToStart,
+                    // secondaryBackground: (
+                    //      Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Container(
+                    //     color: Colors.green,
+                    //     child: Align(
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.end,
+                    //         children: <Widget>[
+                    //           Icon(
+                    //             Icons.check,
+                    //             color: Colors.white,
+                    //           ),
+                    //           Text(
+                    //             " Completado",
+                    //             style: TextStyle(
+                    //               color: Colors.white,
+                    //               fontWeight: FontWeight.w700,
+                    //             ),
+                    //             textAlign: TextAlign.right,
+                    //           ),
+                    //           SizedBox(
+                    //             width: 20,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       alignment: Alignment.centerRight,
+                    //     ),
+                    //   ),
+              
+                    // )),
+
+                    
+                    
                     onDismissed: (direction) {
+                      // if(direction == DismissDirection.endToStart){
+                      //   print('Verder');
+                      // }
+                      // print(direction);
+                      //DismissDirection.endToStart azuel
+                      //DismissDirection.startToEnd rojhos
+
+                 
                       var priceToDel = items[index].price;
                       // items.removeWhere((item) => item.id ==items[index].id);
-                      
+
                       //items.removeWhere((item) => item.id == items[index].id);
                       setState(() {
                         items.removeAt(index);
@@ -194,43 +250,50 @@ class _NewListState extends State<NewList> {
                     },
                     child: Card(
                       elevation: 2,
-                      margin: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(10),
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        height: 70.00,
+                             EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        height: 80.00,
                         child: Row(
                           //mainAxisAlignment: MainAxisAlignment.spaceAround,
 
                           children: <Widget>[
                             Expanded(
-                                flex: 2,
-                                child: Row(
-                                  children: <Widget>[
-                                    // Container(
-                                    //   margin:
-                                    //       EdgeInsets.symmetric(horizontal: 10),
-                                    //   child: Icon(Icons.add_shopping_cart,
-                                    //       color:
-                                    //           Color.fromRGBO(255, 111, 94, 1)),
-                                    // ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        child: Text(
+                           
+                              child: Column(children: <Widget>[
+                                Container(
+                               
+                                  child: Row(
+                                      children: <Widget>[
+                                        SizedBox( width: 15,),
+                                        Text(
                                           items[index].name,
-                                          //overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w900),
+
+                                          textAlign: TextAlign.start,
                                         ),
+                                        
+                                      ]
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 25,
-                                    ),
-                                    Expanded(
-                                        flex: 1,
-                                        child: TextField(
-                                          decoration:
-                                              InputDecoration(hintText: '0.0'),
+                                ),
+                                Container(
+                                  child: Row(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Expanded(
+                                        flex: 3,
+                                        child:
+                                            //_creaPrecio(index)
+                                            TextField(
+                                          maxLength:6,
+                                          controller: _controllers[index],
+                                          textAlign: TextAlign.center,
+                                          decoration: InputDecoration(
+                                              hintText: '0.0', counterText: ''),
                                           keyboardType: TextInputType.number,
                                           onChanged: (text) {
                                             items[index].price =
@@ -239,95 +302,80 @@ class _NewListState extends State<NewList> {
                                               getTotal();
                                             });
                                           },
-                                        )),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Expanded(
-                                              flex: 2,
-                                              child: IconButton(
-                                                icon: Icon(Icons.add),
-                                              color: Color.fromRGBO(255, 111, 94, 1),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    _sumProduct(index);
-                                                  });
-                                                },
-                                              ),
-
-                                              // IconButton(
-                                              //   // backgroundColor:
-                                              //       Color.fromRGBO(255, 111, 94, 1),
-                                              //    icon:
-                                              //    Icon( Icons.add),
-                                              //     color: Colors.white,
-                                              //      onPressed: () {
-                                              //     _sumProduct(index);
-                                              //   },
-                                              //     //size: 15.0,
-
-                                              // ),
-                                            ),
-                                            Expanded(
-                                              flex: 2,
-                                              child: Text(
-                                                items[index]
-                                                    .quantity
-                                                    .toString(),
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 2,
-                                              child: IconButton(
-                                                icon: Icon(Icons.remove),
-                                              color: Color.fromRGBO(255, 111, 94, 1),
-                                                onPressed: () {
-                                                  setState(() {
-                                                     _resProduct(index);
-                                                  });
-                                                },
-                                              ),
-                                              
-                                              // FloatingActionButton(
-                                              //   backgroundColor: Color.fromRGBO(
-                                              //       255, 111, 94, 1),
-                                              //   child: Icon(
-                                              //     Icons.remove,
-                                              //     color: Colors.white,
-                                              //     size: 15.0,
-                                              //   ),
-                                              //   onPressed: () {
-                                              //     _resProduct(index);
-                                              //   },
-                                              // ),
-                                            ),
-                                          ],
-                                        )),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        margin: EdgeInsets.symmetric(
-                                          horizontal: 10,
-                                        ),
-                                        child: Text(
-                                          utils.numberFormat(
-                                            items[index].quantity *
-                                                items[index].price,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ))
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Expanded(
+                                          flex: 5,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Expanded(
+                                                flex: 2,
+                                                child: IconButton(
+                                                  icon: Icon(Icons.add),
+                                                  color: Color.fromRGBO(
+                                                      255, 111, 94, 1),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _sumProduct(index);
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex:2,
+                                                child: Text(
+                                                  items[index]
+                                                      .quantity
+                                                      .toString(),
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: IconButton(
+                                                  icon: Icon(Icons.remove),
+                                                  color: Color.fromRGBO(
+                                                      255, 111, 94, 1),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _resProduct(index);
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Expanded(
+                                        flex: 3,
+                                        child: Container(
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                          ),
+                                          child: Text(
+                                            
+                                            utils.numberFormat(
+                                              items[index].quantity *
+                                                  items[index].price,
+                                            ),
+                                            style: TextStyle(fontWeight: FontWeight.w600),
+                                            //overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ]),
+                            )
                           ],
                         ),
                       ),
@@ -384,14 +432,6 @@ class _NewListState extends State<NewList> {
     }
   }
 
-  void dismissCard(ProductModel card) {
-    if (items.contains(card)) {
-      setState(() {
-        items.remove(card);
-      });
-    }
-  }
-
   void getDiference() {
     if (total == 0) {
       diference = buget;
@@ -439,16 +479,15 @@ class _NewListState extends State<NewList> {
 
   Widget _crearIpunt() {
     return TextField(
+      maxLength: 6,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
+        counterText: '',
         hintText: 'Ingresar nuevo presupuesto',
         suffixIcon: Icon(
           Icons.account_balance_wallet,
           color: Color.fromRGBO(255, 111, 94, 1),
         ),
-        //       enabledBorder: UnderlineInputBorder(
-        // borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
-        // ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
         ),
@@ -468,9 +507,14 @@ class _NewListState extends State<NewList> {
     return Container(
       color: Colors.white60,
       child: TextField(
+        maxLength: 50,
+        textCapitalization: TextCapitalization.sentences,
         textAlign: TextAlign.center,
         controller: _articlesCtrl,
         onSubmitted: (text) {
+          if( text == ''){
+            return;
+          }
           // insertar(it,text);
           var newId = uuid.v1();
           items.insert(
@@ -481,14 +525,12 @@ class _NewListState extends State<NewList> {
           setState(() {});
         },
         decoration: InputDecoration(
+          counterText: '',
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
           ),
-
           hintText: 'Nuevo articulo',
           hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
-
-          //border:  OutlineInputBorder(),
         ),
       ),
     );
