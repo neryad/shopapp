@@ -66,7 +66,7 @@ class _NewListState extends State<NewList> {
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20))),
               child: Container(
-                margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -144,6 +144,7 @@ class _NewListState extends State<NewList> {
                 itemBuilder: (BuildContext context, int index) {
                   _controllers.add(new TextEditingController());
                   return Dismissible(
+                    direction: DismissDirection.endToStart,
                     background: 
                     
                     Padding(
@@ -152,7 +153,7 @@ class _NewListState extends State<NewList> {
                         color: Colors.red,
                         child: Align(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
                               Icon(
                                 Icons.delete,
