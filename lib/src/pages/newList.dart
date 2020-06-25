@@ -72,7 +72,7 @@ class _NewListState extends State<NewList> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     //Container(width: 8.0, height: 70.0, color: Colors.white),
-                    SizedBox(width: 15.0),
+                    //SizedBox(width: 15.0),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                      // crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +128,7 @@ class _NewListState extends State<NewList> {
                         ),
                       ],
                     ),
-                    SizedBox(width: 18.0),
+                   // SizedBox(width: 18.0),
                   ],
                 ),
               ),
