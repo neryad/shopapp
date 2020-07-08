@@ -291,7 +291,7 @@ class _NewListState extends State<NewList> {
                                           textAlign: TextAlign.center,
                                           decoration: InputDecoration(
                                               hintText: '0.0', counterText: ''),
-                                          keyboardType: TextInputType.number,
+                                          keyboardType: TextInputType.numberWithOptions(decimal:true),
                                           onChanged: (text) {
                                             items[index].price =
                                                 num.parse(text).toDouble();
