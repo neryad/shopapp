@@ -50,16 +50,13 @@ class _NewListState extends State<NewList> {
     return Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: PreferredSize(
-          preferredSize: Size(double.infinity, 200),
+          preferredSize: Size(width / 3, 200),
           child: Container(
-         
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(color: Colors.black12, spreadRadius: 5, blurRadius: 2)
             ]),
-            width: width/2.2,
             height: 120,
             child: Container(
-              //height: 120,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -70,17 +67,28 @@ class _NewListState extends State<NewList> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     //Container(width: 8.0, height: 70.0, color: Colors.white),
                     //SizedBox(width: 15.0),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                     // crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        FlatButton.icon(
-                            onPressed: () => _mostrarAlerta(context),
-                            icon: Icon(Icons.account_balance_wallet),
-                            label: Text("Presupuesto")),
+                        Row(
+                          children: <Widget>[
+                            IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () => _mostrarAlerta(context)),
+                                Text("Presupuesto")
+                          ],
+                        ),
+                        // FlatButton.icon(
+                        //     onPressed: () => _mostrarAlerta(context),
+                        //     icon: Icon(Icons.account_balance_wallet),
+                        //     label: Text("Presupuesto")),
                         Text(
                           utils.numberFormat(buget),
                           overflow: TextOverflow.ellipsis,
@@ -103,7 +111,6 @@ class _NewListState extends State<NewList> {
                         Text(
                           utils.numberFormat(total),
                           style: TextStyle(
-                              
                               fontSize: 20,
                               color: Color.fromRGBO(255, 111, 94, 1),
                               fontWeight: FontWeight.bold),
@@ -113,7 +120,7 @@ class _NewListState extends State<NewList> {
                     Spacer(),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                     // crossAxisAlignment: CrossAxisAlignment.end,
+                      // crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
                         FlatButton.icon(
                             onPressed: () {},
@@ -128,7 +135,7 @@ class _NewListState extends State<NewList> {
                         ),
                       ],
                     ),
-                   // SizedBox(width: 18.0),
+                    // SizedBox(width: 18.0),
                   ],
                 ),
               ),
@@ -139,15 +146,12 @@ class _NewListState extends State<NewList> {
           children: <Widget>[
             Expanded(
               child: ListView.builder(
-                
                 itemCount: items.length,
                 itemBuilder: (BuildContext context, int index) {
                   _controllers.add(new TextEditingController());
                   return Dismissible(
                     direction: DismissDirection.endToStart,
-                    background: 
-                    
-                    Padding(
+                    background: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         color: Colors.red,
@@ -175,9 +179,8 @@ class _NewListState extends State<NewList> {
                           alignment: Alignment.centerRight,
                         ),
                       ),
-              
                     ),
-                   
+
                     // background: Card(
 
                     //   color: Colors.red,
@@ -217,11 +220,9 @@ class _NewListState extends State<NewList> {
                     //       alignment: Alignment.centerRight,
                     //     ),
                     //   ),
-              
+
                     // )),
 
-                    
-                    
                     onDismissed: (direction) {
                       // if(direction == DismissDirection.endToStart){
                       //   print('Verder');
@@ -230,7 +231,6 @@ class _NewListState extends State<NewList> {
                       //DismissDirection.endToStart azuel
                       //DismissDirection.startToEnd rojhos
 
-                 
                       var priceToDel = items[index].price;
                       // items.removeWhere((item) => item.id ==items[index].id);
 
@@ -254,30 +254,26 @@ class _NewListState extends State<NewList> {
                       margin: EdgeInsets.all(10),
                       child: Container(
                         padding:
-                             EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                         height: 80.00,
                         child: Row(
                           //mainAxisAlignment: MainAxisAlignment.spaceAround,
 
                           children: <Widget>[
                             Expanded(
-                           
                               child: Column(children: <Widget>[
                                 Container(
-                               
-                                  child: Row(
-                                      children: <Widget>[
-                                        SizedBox( width: 15,),
-                                        Text(
-                                          items[index].name,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w900),
-
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        
-                                      ]
-                                      ),
+                                  child: Row(children: <Widget>[
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Text(
+                                      items[index].name,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w900),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ]),
                                 ),
                                 Container(
                                   child: Row(
@@ -290,7 +286,7 @@ class _NewListState extends State<NewList> {
                                         child:
                                             //_creaPrecio(index)
                                             TextField(
-                                          maxLength:6,
+                                          maxLength: 6,
                                           controller: _controllers[index],
                                           textAlign: TextAlign.center,
                                           decoration: InputDecoration(
@@ -328,12 +324,13 @@ class _NewListState extends State<NewList> {
                                                 ),
                                               ),
                                               Expanded(
-                                                flex:2,
+                                                flex: 2,
                                                 child: Text(
                                                   items[index]
                                                       .quantity
                                                       .toString(),
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   textAlign: TextAlign.center,
                                                 ),
                                               ),
@@ -362,12 +359,12 @@ class _NewListState extends State<NewList> {
                                             horizontal: 10,
                                           ),
                                           child: Text(
-                                            
                                             utils.numberFormat(
                                               items[index].quantity *
                                                   items[index].price,
                                             ),
-                                            style: TextStyle(fontWeight: FontWeight.w600),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600),
                                             //overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
@@ -513,7 +510,7 @@ class _NewListState extends State<NewList> {
         textAlign: TextAlign.center,
         controller: _articlesCtrl,
         onSubmitted: (text) {
-          if( text == ''){
+          if (text == '') {
             return;
           }
           // insertar(it,text);
