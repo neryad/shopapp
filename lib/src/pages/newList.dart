@@ -1,6 +1,3 @@
-//Navigator.pushNamed(context, 'newList');
-//import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/models/product_model.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
@@ -20,12 +17,13 @@ class _NewListState extends State<NewList> {
   double buget = 00.00;
   double total = 0.00;
   double diference = 0.00;
-
+  final formKey = GlobalKey<FormState>();
+  final editFormKey = GlobalKey<FormState>();
   Color colorBuget = Color.fromRGBO(255, 111, 94, 1);
   Color bugetColor = Color.fromRGBO(255, 111, 94, 1);
   var uuid = Uuid();
   // String bugetText = "Presupuesto";
-  TextEditingController _articlesCtrl = new TextEditingController();
+  //TextEditingController _articlesCtrl = new TextEditingController();
 
   // @override
   // void dispose() {
@@ -41,377 +39,359 @@ class _NewListState extends State<NewList> {
 
   List<ProductModel> items = [];
   List<TextEditingController> _controllers = new List();
-  final formKey = GlobalKey<FormState>();
   ProductModel productModel = new ProductModel();
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: Colors.grey[200],
-        appBar: PreferredSize(
-          preferredSize: Size(width / 3, 200),
+      backgroundColor: Colors.grey[200],
+      appBar: PreferredSize(
+        preferredSize: Size(width / 3, 200),
+        child: Container(
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(color: Colors.black12, spreadRadius: 5, blurRadius: 2)
+          ]),
+          height: 120,
           child: Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(color: Colors.black12, spreadRadius: 5, blurRadius: 2)
-            ]),
-            height: 120,
+            decoration: BoxDecoration(
+              color: Colors.white,
+            
+            ),
             child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20))),
-              child: Container(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    //Container(width: 8.0, height: 70.0, color: Colors.white),
-                    //SizedBox(width: 15.0),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            IconButton(
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: Colors.black,
-                                ),
-                                onPressed: () => _mostrarAlerta(context)),
-                                Text("Presupuesto")
-                          ],
-                        ),
-                        // FlatButton.icon(
-                        //     onPressed: () => _mostrarAlerta(context),
-                        //     icon: Icon(Icons.account_balance_wallet),
-                        //     label: Text("Presupuesto")),
-                        Text(
-                          utils.numberFormat(buget),
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: bugetColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    //SizedBox(width: 15.0),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        FlatButton.icon(
-                            onPressed: () {},
-                            icon: Icon(Icons.shopping_cart),
-                            label: Text("Total")),
-                        Text(
-                          utils.numberFormat(total),
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Color.fromRGBO(255, 111, 94, 1),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      // crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        FlatButton.icon(
-                            onPressed: () {},
-                            icon: Icon(Icons.shuffle),
-                            label: Text("Diferencia")),
-                        Text(
-                          utils.numberFormat(diference),
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: colorBuget,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    // SizedBox(width: 18.0),
-                  ],
-                ),
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          IconButton(
+                              icon: Icon(
+                                Icons.account_balance_wallet,
+                                color: Colors.black,
+                              ),
+                              onPressed: () => _mostrarAlertaBuget(context)),
+                          Text("Presupuesto")
+                        ],
+                      ),
+                      Text(
+                        utils.numberFormat(buget),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: bugetColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  //SizedBox(width: 15.0),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      FlatButton.icon(
+                          onPressed: () {},
+                          icon: Icon(Icons.shopping_cart),
+                          label: Text("Total")),
+                      Text(
+                        utils.numberFormat(total),
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Color.fromRGBO(255, 111, 94, 1),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      FlatButton.icon(
+                          onPressed: () {},
+                          icon: Icon(Icons.shuffle),
+                          label: Text("Diferencia")),
+                      Text(
+                        utils.numberFormat(diference),
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: colorBuget,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+
+                ],
               ),
             ),
           ),
         ),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (BuildContext context, int index) {
-                  _controllers.add(new TextEditingController());
-                  return Dismissible(
-                    direction: DismissDirection.endToStart,
-                    background: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        color: Colors.red,
-                        child: Align(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                              Text(
-                                " Eliminar",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                textAlign: TextAlign.right,
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                            ],
-                          ),
-                          alignment: Alignment.centerRight,
-                        ),
-                      ),
-                    ),
+      ),
+      body: wawa(),
+      
+      // Column(
+      
+      //   children: <Widget>[
+      //     Expanded(
+      //       child: ListView.builder(
+      //         itemCount: items.length,
+      //         itemBuilder: (BuildContext context, int index) {
+      //           _controllers.add(new TextEditingController());
+               
+      //           return Dismissible(
+      //             direction: DismissDirection.endToStart,
+      //             background: Padding(
+      //               padding: const EdgeInsets.all(8.0),
+      //               child: Container(
+      //                 color: Colors.red,
+      //                 child: Align(
+      //                   child: Row(
+      //                     mainAxisAlignment: MainAxisAlignment.end,
+      //                     children: <Widget>[
+      //                       Icon(
+      //                         Icons.delete,
+      //                         color: Colors.white,
+      //                       ),
+      //                       Text(
+      //                         " Eliminar",
+      //                         style: TextStyle(
+      //                           color: Colors.white,
+      //                           fontWeight: FontWeight.w700,
+      //                         ),
+      //                         textAlign: TextAlign.right,
+      //                       ),
+      //                       SizedBox(
+      //                         width: 20,
+      //                       ),
+      //                     ],
+      //                   ),
+      //                   alignment: Alignment.centerRight,
+      //                 ),
+      //               ),
+      //             ),
 
-                    // background: Card(
+      //             // background: Card(
 
-                    //   color: Colors.red,
-                    //   elevation: 4,
-                    //   margin: EdgeInsets.all(15),
-                    //   child: Icon(Icons.delete_forever, color: Colors.white,),
-                    // ),
-                    key: Key(items[index].name + items.length.toString()),
-                    // key: Key('items[index]'),
-                    //key: Key('items[index]'),
-                    // secondaryBackground: (
-                    //      Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: Container(
-                    //     color: Colors.green,
-                    //     child: Align(
-                    //       child: Row(
-                    //         mainAxisAlignment: MainAxisAlignment.end,
-                    //         children: <Widget>[
-                    //           Icon(
-                    //             Icons.check,
-                    //             color: Colors.white,
-                    //           ),
-                    //           Text(
-                    //             " Completado",
-                    //             style: TextStyle(
-                    //               color: Colors.white,
-                    //               fontWeight: FontWeight.w700,
-                    //             ),
-                    //             textAlign: TextAlign.right,
-                    //           ),
-                    //           SizedBox(
-                    //             width: 20,
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       alignment: Alignment.centerRight,
-                    //     ),
-                    //   ),
+      //             //   color: Colors.red,
+      //             //   elevation: 4,
+      //             //   margin: EdgeInsets.all(15),
+      //             //   child: Icon(Icons.delete_forever, color: Colors.white,),
+      //             // ),
+      //             key: Key(items[index].name + items.length.toString()),
+      //             // key: Key('items[index]'),
+      //             //key: Key('items[index]'),
+      //             // secondaryBackground: (
+      //             //      Padding(
+      //             //   padding: const EdgeInsets.all(8.0),
+      //             //   child: Container(
+      //             //     color: Colors.green,
+      //             //     child: Align(
+      //             //       child: Row(
+      //             //         mainAxisAlignment: MainAxisAlignment.end,
+      //             //         children: <Widget>[
+      //             //           Icon(
+      //             //             Icons.check,
+      //             //             color: Colors.white,
+      //             //           ),
+      //             //           Text(
+      //             //             " Completado",
+      //             //             style: TextStyle(
+      //             //               color: Colors.white,
+      //             //               fontWeight: FontWeight.w700,
+      //             //             ),
+      //             //             textAlign: TextAlign.right,
+      //             //           ),
+      //             //           SizedBox(
+      //             //             width: 20,
+      //             //           ),
+      //             //         ],
+      //             //       ),
+      //             //       alignment: Alignment.centerRight,
+      //             //     ),
+      //             //   ),
 
-                    // )),
+      //             // )),
 
-                    onDismissed: (direction) {
-                      // if(direction == DismissDirection.endToStart){
-                      //   print('Verder');
-                      // }
-                      // print(direction);
-                      //DismissDirection.endToStart azuel
-                      //DismissDirection.startToEnd rojhos
+      //             onDismissed: (direction) {
+      //               // if(direction == DismissDirection.endToStart){
+      //               //   print('Verder');
+      //               // }
+      //               // print(direction);
+      //               //DismissDirection.endToStart azuel
+      //               //DismissDirection.startToEnd rojhos
 
-                      var priceToDel = items[index].price;
-                      // items.removeWhere((item) => item.id ==items[index].id);
+      //               // items.removeWhere((item) => item.id ==items[index].id);
 
-                      //items.removeWhere((item) => item.id == items[index].id);
-                      setState(() {
-                        items.removeAt(index);
-                        total = total - priceToDel;
-                        getDiference();
+      //               //items.removeWhere((item) => item.id == items[index].id);
+      //               setState(() {
+      //                 // var priceToDel = items[index].price;
+      //                 items.removeAt(index);
+      //                 // total = total - priceToDel;
+      //                 getTotal();
+      //                 getDiference();
 
-                        //items.removeAt(index);
-                      });
-                      // setState(() {
+      //                 //items.removeAt(index);
+      //               });
+      //               // setState(() {
 
-                      //   getTotal();
-                      // });
+      //               //   getTotal();
+      //               // });
 
-                      //getTotal();
-                    },
-                    child: Card(
-                      elevation: 2,
-                      margin: EdgeInsets.all(10),
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                        height: 80.00,
-                        child: Row(
-                          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //               //getTotal();
+      //             },
+      //             child: Card(
+      //               elevation: 2,
+      //               margin: EdgeInsets.all(10),
+      //               child: Container(
+      //                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      //                 height: 80.00,
+      //                 child: Row(
+      //                   //mainAxisAlignment: MainAxisAlignment.spaceAround,
 
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(children: <Widget>[
-                                Container(
-                                  child: Row(children: <Widget>[
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Text(
-                                      items[index].name,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w900),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                  ]),
-                                ),
-                                Container(
-                                  child: Row(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child:
-                                            //_creaPrecio(index)
-                                            TextField(
-                                          maxLength: 6,
-                                          controller: _controllers[index],
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                              hintText: '0.0', counterText: ''),
-                                          keyboardType: TextInputType.numberWithOptions(decimal:true),
-                                          onChanged: (text) {
-                                            items[index].price =
-                                                num.parse(text).toDouble();
-                                            setState(() {
-                                              getTotal();
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      Expanded(
-                                          flex: 5,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Expanded(
-                                                flex: 2,
-                                                child: IconButton(
-                                                  icon: Icon(Icons.add),
-                                                  color: Color.fromRGBO(
-                                                      255, 111, 94, 1),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      _sumProduct(index);
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: Text(
-                                                  items[index]
-                                                      .quantity
-                                                      .toString(),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: IconButton(
-                                                  icon: Icon(Icons.remove),
-                                                  color: Color.fromRGBO(
-                                                      255, 111, 94, 1),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      _resProduct(index);
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          )),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Container(
-                                          margin: EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                          ),
-                                          child: Text(
-                                            utils.numberFormat(
-                                              items[index].quantity *
-                                                  items[index].price,
-                                            ),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600),
-                                            //overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ]),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            _newProducto(),
-          ],
-        ));
+      //                   children: <Widget>[
+      //                     Expanded(
+      //                       child: Column(children: <Widget>[
+      //                         Container(
+      //                           child: Row(children: <Widget>[
+      //                             SizedBox(
+      //                               width: 15,
+      //                             ),
+      //                             Text(
+      //                               items[index].name,
+      //                               style:
+      //                                   TextStyle(fontWeight: FontWeight.w900),
+      //                               textAlign: TextAlign.start,
+      //                             ),
+      //                           ]),
+      //                         ),
+      //                         Container(
+      //                           child: Row(
+      //                             children: <Widget>[
+      //                               SizedBox(
+      //                                 width: 15,
+      //                               ),
+      //                               Expanded(
+      //                                 flex: 2,
+      //                                 child: IconButton(
+      //                                   icon: Icon(Icons.shopping_basket),
+      //                                   color: Color.fromRGBO(255, 111, 94, 1),
+      //                                   onPressed: () {
+      //                                     _mostrarAlertaEditarProducto(
+      //                                         context, index);
+      //                                     setState(() {
+      //                                       //_sumProduct(index);
+      //                                     });
+      //                                   },
+      //                                 ),
+      //                               ),
+      //                               Expanded(
+      //                                 flex: 2,
+      //                                 child:
+      //                                     //_creaPrecio(index)
+      //                                     Text(utils.numberFormat(
+      //                                         items[index].price)),
+      //                               ),
+      //                               SizedBox(
+      //                                 width: 15,
+      //                               ),
+      //                               Expanded(
+      //                                   flex: 2,
+      //                                   child: Row(
+      //                                     mainAxisAlignment:
+      //                                         MainAxisAlignment.spaceBetween,
+      //                                     children: <Widget>[
+      //                                       Expanded(
+      //                                         flex: 2,
+      //                                         child: Text(
+      //                                           items[index]
+      //                                               .quantity
+      //                                               .toString(),
+      //                                           overflow: TextOverflow.ellipsis,
+      //                                           textAlign: TextAlign.center,
+      //                                         ),
+      //                                       ),
+      //                                     ],
+      //                                   )),
+      //                               SizedBox(
+      //                                 width: 15,
+      //                               ),
+      //                               Expanded(
+      //                                 flex: 3,
+      //                                 child: Container(
+      //                                   margin: EdgeInsets.symmetric(
+      //                                     horizontal: 10,
+      //                                   ),
+      //                                   child: Text(
+      //                                     utils.numberFormat(
+      //                                       items[index].quantity *
+      //                                           items[index].price,
+      //                                     ),
+      //                                     style: TextStyle(
+      //                                         fontWeight: FontWeight.w600),
+      //                                     //overflow: TextOverflow.ellipsis,
+      //                                   ),
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                         )
+      //                       ]),
+      //                     )
+      //                   ],
+      //                 ),
+      //               ),
+      //             ),
+      //           );
+      //         },
+      //       ),
+      //     ),
+      //     //_newProducto(),
+      //   ],
+      // ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: () {
+          _mostrarAlertaProducto(context);
+        },
+        backgroundColor: Color.fromRGBO(255, 111, 94, 1),
+        child: Icon(Icons.add_shopping_cart),
+      ),
+
+      // Here's the new attribute:
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
   }
 
-  validconte() {
-    if (items.length == 0) {
-      return Text('nada');
-    } else {
-      return ('todo');
-    }
-  }
+  // validconte() {
+  //   if (items.length == 0) {
+  //     return Text('nada');
+  //   } else {
+  //     return ('todo');
+  //   }
+  // }
 
-  _sumProduct(int index) {
-    setState(() {
-      items[index].quantity++;
-      getTotal();
-    });
-  }
+  // _sumProduct(int index) {
+  //   setState(() {
+  //     items[index].quantity++;
+  //     getTotal();
+  //   });
+  // }
 
-  _resProduct(int index) {
-    setState(() {
-      if (items[index].quantity == 0) {
-        return;
-      }
-      items[index].quantity--;
+  // _resProduct(int index) {
+  //   setState(() {
+  //     if (items[index].quantity == 0) {
+  //       return;
+  //     }
+  //     items[index].quantity--;
 
-      getTotal();
-    });
-  }
+  //     getTotal();
+  //   });
+  // }
 
   void getTotal() {
     if (items != null) {
@@ -447,7 +427,7 @@ class _NewListState extends State<NewList> {
     diference = calDiferecen;
   }
 
-  void _mostrarAlerta(BuildContext context) {
+  void _mostrarAlertaBuget(BuildContext context) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -457,7 +437,7 @@ class _NewListState extends State<NewList> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                _crearIpunt(),
+                _crearBuget(),
               ],
             ),
             actions: <Widget>[
@@ -475,7 +455,225 @@ class _NewListState extends State<NewList> {
         });
   }
 
-  Widget _crearIpunt() {
+  void _mostrarAlertaProducto(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(' Nuevo artículo'),
+            content: Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _crearNombreArticulo(),
+                  _crearPrecioArticulo(),
+                  _crearcantidadArticulo(),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Salir')),
+              FlatButton(
+                  onPressed: () {
+                    _subimt();
+                    getTotal();
+                    //Navigator.of(context).pop();
+                  },
+                  child: Text('Aceptar')),
+            ],
+          );
+        });
+  }
+
+  Widget _crearNombreArticulo() {
+    return TextFormField(
+      //  initialValue: productModel.name,
+      maxLength: 50,
+      textCapitalization: TextCapitalization.sentences,
+      textAlign: TextAlign.center,
+      onSaved: (value) => productModel.name = value,
+      decoration: InputDecoration(
+        counterText: '',
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+        ),
+        hintText: 'Nombre artículo',
+        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+      ),
+    );
+  }
+
+  Widget _crearPrecioArticulo() {
+    return TextFormField(
+      //  initialValue: productModel.price.toString(),
+      maxLength: 6,
+      //controller: _controllers[index],
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText: 'Precio',
+        counterText: '',
+        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+      ),
+      onSaved: (value) => productModel.price = double.parse(value),
+      validator: (value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return 'Solo numeros';
+        }
+      },
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+    );
+  }
+
+  Widget _crearcantidadArticulo() {
+    return TextFormField(
+      // initialValue: productModel.quantity.toString(),
+      maxLength: 6,
+      //controller: _controllers[index],
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText: 'Cantidad',
+        counterText: '',
+        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+      ),
+      onSaved: (value) => productModel.quantity = int.parse(value),
+      validator: (value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return 'Solo numeros';
+        }
+      },
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+    );
+  }
+
+  void _subimt() {
+    var newId = uuid.v1();
+    var it = items.length;
+
+    if (!formKey.currentState.validate()) return;
+    formKey.currentState.save();
+    items.insert(
+        it,
+        new ProductModel(
+            id: newId,
+            name: productModel.name,
+            quantity: productModel.quantity,
+            price: productModel.price));
+    formKey.currentState.reset();
+  }
+
+  void _mostrarAlertaEditarProducto(BuildContext context, int index) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(' Nuevo artículo'),
+            content: Form(
+              key: editFormKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _editarNombreArticulo(index),
+                  _editarPrecioArticulo(index),
+                  _editarcantidadArticulo(index),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Salir')),
+              FlatButton(
+                  onPressed: () {
+                    //_subimt();
+                    _editDubimt(index);
+                    getTotal();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Aceptar')),
+            ],
+          );
+        });
+  }
+
+  void _editDubimt(int index) {
+    
+    editFormKey.currentState.save();
+  }
+
+  Widget _editarNombreArticulo(int index) {
+    return TextFormField(
+      initialValue: items[index].name,
+      maxLength: 50,
+      textCapitalization: TextCapitalization.sentences,
+      textAlign: TextAlign.center,
+      onSaved: (value) => items[index].name = value,
+      decoration: InputDecoration(
+        counterText: '',
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+        ),
+        hintText: 'Nombre artículo',
+        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+      ),
+    );
+  }
+
+  Widget _editarPrecioArticulo(int index) {
+    return TextFormField(
+      initialValue: items[index].price.toString(),
+      maxLength: 6,
+      //controller: _controllers[index],
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText: 'Precio',
+        counterText: '',
+        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+      ),
+      onSaved: (value) => items[index].price = double.parse(value),
+      validator: (value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return 'Solo numeros';
+        }
+      },
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+    );
+  }
+
+  Widget _editarcantidadArticulo(int index) {
+    return TextFormField(
+      initialValue: items[index].quantity.toString(),
+      maxLength: 6,
+      //controller: _controllers[index],
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText: 'Cantidad',
+        counterText: '',
+        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+      ),
+      onSaved: (value) => items[index].quantity = int.parse(value),
+      validator: (value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return 'Solo numeros';
+        }
+      },
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+    );
+  }
+
+  Widget _crearBuget() {
     return TextField(
       maxLength: 6,
       keyboardType: TextInputType.number,
@@ -499,136 +697,504 @@ class _NewListState extends State<NewList> {
       },
     );
   }
+ wawa(){
+     if (items.length == 0) {
+          return Center(
+            child: Text('No data'),
+          );
+}
+  return Column(
+      
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (BuildContext context, int index) {
+                _controllers.add(new TextEditingController());
+               
+                return Dismissible(
+                  direction: DismissDirection.endToStart,
+                  background: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      color: Colors.red,
+                      child: Align(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              " Eliminar",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                              textAlign: TextAlign.right,
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                          ],
+                        ),
+                        alignment: Alignment.centerRight,
+                      ),
+                    ),
+                  ),
 
-  Widget _newProducto() {
-    var it = items.length;
-    return Container(
-      color: Colors.white60,
-      child: TextField(
-        maxLength: 50,
-        textCapitalization: TextCapitalization.sentences,
-        textAlign: TextAlign.center,
-        controller: _articlesCtrl,
-        onSubmitted: (text) {
-          if (text == '') {
-            return;
-          }
-          // insertar(it,text);
-          var newId = uuid.v1();
-          items.insert(
-              it,
-              new ProductModel(
-                  id: newId, name: text, quantity: 1, price: 0.00));
-          _articlesCtrl.clear();
-          setState(() {});
-        },
-        decoration: InputDecoration(
-          counterText: '',
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+                  // background: Card(
+
+                  //   color: Colors.red,
+                  //   elevation: 4,
+                  //   margin: EdgeInsets.all(15),
+                  //   child: Icon(Icons.delete_forever, color: Colors.white,),
+                  // ),
+                  key: Key(items[index].name + items.length.toString()),
+                  // key: Key('items[index]'),
+                  //key: Key('items[index]'),
+                  // secondaryBackground: (
+                  //      Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Container(
+                  //     color: Colors.green,
+                  //     child: Align(
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.end,
+                  //         children: <Widget>[
+                  //           Icon(
+                  //             Icons.check,
+                  //             color: Colors.white,
+                  //           ),
+                  //           Text(
+                  //             " Completado",
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontWeight: FontWeight.w700,
+                  //             ),
+                  //             textAlign: TextAlign.right,
+                  //           ),
+                  //           SizedBox(
+                  //             width: 20,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       alignment: Alignment.centerRight,
+                  //     ),
+                  //   ),
+
+                  // )),
+
+                  onDismissed: (direction) {
+                    // if(direction == DismissDirection.endToStart){
+                    //   print('Verder');
+                    // }
+                    // print(direction);
+                    //DismissDirection.endToStart azuel
+                    //DismissDirection.startToEnd rojhos
+
+                    // items.removeWhere((item) => item.id ==items[index].id);
+
+                    //items.removeWhere((item) => item.id == items[index].id);
+                    setState(() {
+                      // var priceToDel = items[index].price;
+                      items.removeAt(index);
+                      // total = total - priceToDel;
+                      getTotal();
+                      getDiference();
+
+                      //items.removeAt(index);
+                    });
+                    // setState(() {
+
+                    //   getTotal();
+                    // });
+
+                    //getTotal();
+                  },
+                  child: Card(
+                    elevation: 2,
+                    margin: EdgeInsets.all(10),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      height: 80.00,
+                      child: Row(
+                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+                        children: <Widget>[
+                          Expanded(
+                            child: Column(children: <Widget>[
+                              Container(
+                                child: Row(children: <Widget>[
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Text(
+                                    items[index].name,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w900),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ]),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: IconButton(
+                                        icon: Icon(Icons.shopping_basket),
+                                        color: Color.fromRGBO(255, 111, 94, 1),
+                                        onPressed: () {
+                                          _mostrarAlertaEditarProducto(
+                                              context, index);
+                                          setState(() {
+                                            //_sumProduct(index);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child:
+                                          //_creaPrecio(index)
+                                          Text(utils.numberFormat(
+                                              items[index].price)),
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                        flex: 2,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 2,
+                                              child: Text(
+                                                items[index]
+                                                    .quantity
+                                                    .toString(),
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Container(
+                                        margin: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                        ),
+                                        child: Text(
+                                          utils.numberFormat(
+                                            items[index].quantity *
+                                                items[index].price,
+                                          ),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                          //overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ]),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
-          hintText: 'Nuevo articulo',
-          hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
-        ),
-      ),
-    );
-  }
+          //_newProducto(),
+        ],
+      );
+ }
+  // Widget _newProducto() {
+  //   var it = items.length;
+  //   return Container(
+  //       color: Colors.white60,
+  //       child: Column(
+  //         children: <Widget>[
+  //           TextField(
+  //             maxLength: 50,
+  //             textCapitalization: TextCapitalization.sentences,
+  //             textAlign: TextAlign.center,
+  //             controller: _articlesCtrl,
+  //             onSubmitted: (text) {
+  //               if (text == '') {
+  //                 return;
+  //               }
+  //               // insertar(it,text);
+  //               var newId = uuid.v1();
+  //               items.insert(
+  //                   it,
+  //                   new ProductModel(
+  //                      name: text, quantity: 1, price: 0.00));
+  //               _articlesCtrl.clear();
+  //               setState(() {});
+  //             },
+  //             decoration: InputDecoration(
+  //               counterText: '',
+  //               focusedBorder: UnderlineInputBorder(
+  //                 borderSide:
+  //                     BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+  //               ),
+  //               hintText: 'Nombre artículo',
+  //               hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+  //             ),
+  //           ),
+  //         ],
+  //       ));
+  // }
 }
 
-// if(items.length == 0){
-//       return  Scaffold(
-//         backgroundColor: Colors.grey[200],
-//         appBar: PreferredSize(
-//           preferredSize: Size(double.infinity, 200),
-//           child: Container(
-//             decoration: BoxDecoration(boxShadow: [
-//               BoxShadow(color: Colors.black12, spreadRadius: 5, blurRadius: 2)
-//             ]),
-//             width: MediaQuery.of(context).size.width,
-//             height: 140,
-//             child: Container(
+// ListView.builder(
+//               itemCount: items.length,
+//               itemBuilder: (BuildContext context, int index) {
+//                 _controllers.add(new TextEditingController());
+//                 return Dismissible(
+//                   direction: DismissDirection.endToStart,
+//                   background: Padding(
+//                     padding: const EdgeInsets.all(8.0),
+//                     child: Container(
+//                       color: Colors.red,
+//                       child: Align(
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.end,
+//                           children: <Widget>[
+//                             Icon(
+//                               Icons.delete,
+//                               color: Colors.white,
+//                             ),
+//                             Text(
+//                               " Eliminar",
+//                               style: TextStyle(
+//                                 color: Colors.white,
+//                                 fontWeight: FontWeight.w700,
+//                               ),
+//                               textAlign: TextAlign.right,
+//                             ),
+//                             SizedBox(
+//                               width: 20,
+//                             ),
+//                           ],
+//                         ),
+//                         alignment: Alignment.centerRight,
+//                       ),
+//                     ),
+//                   ),
 
-//               decoration: BoxDecoration(
-//                   color: Colors.white,
-//                   borderRadius: BorderRadius.only(
-//                       bottomLeft: Radius.circular(20),
-//                       bottomRight: Radius.circular(20))),
-//               child: Container(
-//                 margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-//                 child: Row(
-//                   crossAxisAlignment: CrossAxisAlignment.center,
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     Container(width: 8.0, height: 70.0, color: Colors.white),
-//                     Column(
-//                       children: <Widget>[
-//                         FlatButton.icon(
-//                             onPressed: () => _mostrarAlerta(context),
-//                             icon: Icon(Icons.account_balance_wallet),
-//                             label: Text("Presupuesto")),
-//                         Text(
-//                           utils.numberFormat(buget),
-//                           overflow: TextOverflow.ellipsis,
-//                           style: TextStyle(
-//                               fontSize: 20,
-//                               color: bugetColor,
-//                               fontWeight: FontWeight.bold),
-//                         ),
-//                       ],
+//                   // background: Card(
+
+//                   //   color: Colors.red,
+//                   //   elevation: 4,
+//                   //   margin: EdgeInsets.all(15),
+//                   //   child: Icon(Icons.delete_forever, color: Colors.white,),
+//                   // ),
+//                   key: Key(items[index].name + items.length.toString()),
+//                   // key: Key('items[index]'),
+//                   //key: Key('items[index]'),
+//                   // secondaryBackground: (
+//                   //      Padding(
+//                   //   padding: const EdgeInsets.all(8.0),
+//                   //   child: Container(
+//                   //     color: Colors.green,
+//                   //     child: Align(
+//                   //       child: Row(
+//                   //         mainAxisAlignment: MainAxisAlignment.end,
+//                   //         children: <Widget>[
+//                   //           Icon(
+//                   //             Icons.check,
+//                   //             color: Colors.white,
+//                   //           ),
+//                   //           Text(
+//                   //             " Completado",
+//                   //             style: TextStyle(
+//                   //               color: Colors.white,
+//                   //               fontWeight: FontWeight.w700,
+//                   //             ),
+//                   //             textAlign: TextAlign.right,
+//                   //           ),
+//                   //           SizedBox(
+//                   //             width: 20,
+//                   //           ),
+//                   //         ],
+//                   //       ),
+//                   //       alignment: Alignment.centerRight,
+//                   //     ),
+//                   //   ),
+
+//                   // )),
+
+//                   onDismissed: (direction) {
+//                     // if(direction == DismissDirection.endToStart){
+//                     //   print('Verder');
+//                     // }
+//                     // print(direction);
+//                     //DismissDirection.endToStart azuel
+//                     //DismissDirection.startToEnd rojhos
+
+//                     var priceToDel = items[index].price;
+//                     // items.removeWhere((item) => item.id ==items[index].id);
+
+//                     //items.removeWhere((item) => item.id == items[index].id);
+//                     setState(() {
+//                       items.removeAt(index);
+//                       total = total - priceToDel;
+//                       getDiference();
+
+//                       //items.removeAt(index);
+//                     });
+//                     // setState(() {
+
+//                     //   getTotal();
+//                     // });
+
+//                     //getTotal();
+//                   },
+//                   child: Card(
+//                     elevation: 2,
+//                     margin: EdgeInsets.all(10),
+//                     child: Container(
+//                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+//                       height: 80.00,
+//                       child: Row(
+//                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+//                         children: <Widget>[
+//                           Expanded(
+//                             child: Column(children: <Widget>[
+//                               Container(
+//                                 child: Row(children: <Widget>[
+//                                   SizedBox(
+//                                     width: 15,
+//                                   ),
+//                                   Text(
+//                                     items[index].name,
+//                                     style:
+//                                         TextStyle(fontWeight: FontWeight.w900),
+//                                     textAlign: TextAlign.start,
+//                                   ),
+//                                 ]),
+//                               ),
+//                               Container(
+//                                 child: Row(
+//                                   children: <Widget>[
+//                                     SizedBox(
+//                                       width: 15,
+//                                     ),
+//                                     Expanded(
+//                                       flex: 3,
+//                                       child:
+//                                           //_creaPrecio(index)
+//                                           TextField(
+//                                         maxLength: 6,
+//                                         controller: _controllers[index],
+//                                         textAlign: TextAlign.center,
+//                                         decoration: InputDecoration(
+//                                             hintText: '0.0', counterText: ''),
+//                                         keyboardType:
+//                                             TextInputType.numberWithOptions(
+//                                                 decimal: true),
+//                                         onChanged: (text) {
+//                                           items[index].price =
+//                                               num.parse(text).toDouble();
+//                                           setState(() {
+//                                             getTotal();
+//                                           });
+//                                         },
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                       width: 15,
+//                                     ),
+//                                     Expanded(
+//                                         flex: 5,
+//                                         child: Row(
+//                                           mainAxisAlignment:
+//                                               MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             Expanded(
+//                                               flex: 2,
+//                                               child: IconButton(
+//                                                 icon: Icon(Icons.add),
+//                                                 color: Color.fromRGBO(
+//                                                     255, 111, 94, 1),
+//                                                 onPressed: () {
+//                                                   setState(() {
+//                                                     _sumProduct(index);
+//                                                   });
+//                                                 },
+//                                               ),
+//                                             ),
+//                                             Expanded(
+//                                               flex: 2,
+//                                               child: Text(
+//                                                 items[index]
+//                                                     .quantity
+//                                                     .toString(),
+//                                                 overflow: TextOverflow.ellipsis,
+//                                                 textAlign: TextAlign.center,
+//                                               ),
+//                                             ),
+//                                             Expanded(
+//                                               flex: 2,
+//                                               child: IconButton(
+//                                                 icon: Icon(Icons.remove),
+//                                                 color: Color.fromRGBO(
+//                                                     255, 111, 94, 1),
+//                                                 onPressed: () {
+//                                                   setState(() {
+//                                                     _resProduct(index);
+//                                                   });
+//                                                 },
+//                                               ),
+//                                             ),
+//                                           ],
+//                                         )),
+//                                     SizedBox(
+//                                       width: 15,
+//                                     ),
+//                                     Expanded(
+//                                       flex: 3,
+//                                       child: Container(
+//                                         margin: EdgeInsets.symmetric(
+//                                           horizontal: 10,
+//                                         ),
+//                                         child: Text(
+//                                           utils.numberFormat(
+//                                             items[index].quantity *
+//                                                 items[index].price,
+//                                           ),
+//                                           style: TextStyle(
+//                                               fontWeight: FontWeight.w600),
+//                                           //overflow: TextOverflow.ellipsis,
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               )
+//                             ]),
+//                           )
+//                         ],
+//                       ),
 //                     ),
-//                     SizedBox(width: 15.0),
-//                     Column(
-//                       children: <Widget>[
-//                         FlatButton.icon(
-//                             onPressed: () {},
-//                             icon: Icon(Icons.shopping_cart),
-//                             label: Text("Total")),
-//                         Text(
-//                           utils.numberFormat(total),
-//                           style: TextStyle(
-//                               fontSize: 20,
-//                               color: Color.fromRGBO(255, 111, 94, 1),
-//                               fontWeight: FontWeight.bold),
-//                         ),
-//                       ],
-//                     ),
-//                     Spacer(),
-//                     Column(
-//                       children: <Widget>[
-//                         FlatButton.icon(
-//                             onPressed: () {},
-//                             icon: Icon(Icons.shuffle),
-//                             label: Text("Diferencia")),
-//                         Text(
-//                           utils.numberFormat(diference),
-//                           style: TextStyle(
-//                               fontSize: 20,
-//                               color: colorBuget,
-//                               fontWeight: FontWeight.bold),
-//                         ),
-//                       ],
-//                     ),
-//                      SizedBox(width: 18.0),
-//                   ],
-//                 ),
-//               ),
+//                   ),
+//                 );
+//               },
 //             ),
-//           ),
-//         ),
-//         body: Column(children:<Widget>[
-//           Container(
-//            // height: 250,
-//             margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-//             child: Image(
-//         image: AssetImage(
-//             'assets/add_to_cart.png'),
-//       height: 200.0,
-//       fit: BoxFit.contain,
-//       ),
-//           ),
-//            SizedBox(height: 35.0),
-//             Text('No se ha agregado articulos a la lsita'),
-//             SizedBox(height: 164.0),
-
-//           _newProducto()
-//         ]) );

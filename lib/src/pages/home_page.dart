@@ -23,13 +23,13 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListPage(),
       
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'wawa',
-        onPressed: () =>{ Navigator.pushNamed(context, 'newList')}, 
-        child: Icon(Icons.add_shopping_cart),
-        backgroundColor: Color.fromRGBO(255, 111, 94, 1),
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      // floatingActionButton: FloatingActionButton(
+      //   heroTag: 'wawa',
+      //   onPressed: () =>{ Navigator.pushNamed(context, 'newList')}, 
+      //   child: Icon(Icons.add_shopping_cart),
+      //   backgroundColor: Color.fromRGBO(255, 111, 94, 1),
+      // ),
       drawer: Drawer(
         child: SafeArea(
           child: ListView(
@@ -42,10 +42,15 @@ class _HomePageState extends State<HomePage> {
                             AssetImage("assets/undraw_shopping_app_flsj.png"),
                         fit: BoxFit.cover)),
               ),
-            
+          
                ListTile(
                 leading: Icon(Icons.book),
                 title: Text('Pre-list'),
+              ),
+               ListTile(
+                leading: Icon(Icons.list),
+                title: Text('Nueva lista'),
+                onTap: () =>{ Navigator.pushNamed(context, 'newList')},
               ),
                 ListTile(
                 leading: Icon(Icons.settings),
