@@ -42,16 +42,21 @@ class _HomePageState extends State<HomePage> {
                             AssetImage("assets/undraw_shopping_app_flsj.png"),
                         fit: BoxFit.cover)),
               ),
-          
-               ListTile(
-                leading: Icon(Icons.book),
-                title: Text('Pre-list'),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Home'),
+                onTap: () =>{ Navigator.pushNamed(context, 'home')},
               ),
-               ListTile(
+            ListTile(
                 leading: Icon(Icons.list),
-                title: Text('Nueva lista'),
+                title: Text('lista de compra'),
                 onTap: () =>{ Navigator.pushNamed(context, 'newList')},
               ),
+              //  ListTile(
+              //   leading: Icon(Icons.book),
+              //   title: Text('Pre-list'),
+              // ),
+             
                 ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
