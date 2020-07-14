@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/models/product_model.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
+import 'package:shopapp/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
-//import 'package:uuid/uuid_util.dart';
-// import 'package:shopapp/src/widgets/counter.dart';
-// import 'package:intl/intl.dart';
 
 class NewList extends StatefulWidget {
   NewList({Key key}) : super(key: key);
@@ -22,20 +20,6 @@ class _NewListState extends State<NewList> {
   Color colorBuget = Color.fromRGBO(255, 111, 94, 1);
   Color bugetColor = Color.fromRGBO(255, 111, 94, 1);
   var uuid = Uuid();
-  // String bugetText = "Presupuesto";
-  //TextEditingController _articlesCtrl = new TextEditingController();
-
-  // @override
-  // void dispose() {
-  //   // Limpia el controlador cuando el widget se elimine del árbol de widgets
-  //   _articlesPriceCtrl.dispose();
-  //   super.dispose();
-  // }
-  // List<dynamic> items = [
-  //   {"name": "pan", "price": 0.00, "quantity": 0},
-  //   {"name": "cafe", "price": 0.00, "quantity": 0},
-  //   {"name": "desodorante", "price": 888.58, "quantity": 0}
-  // ];
 
   List<ProductModel> items = [];
   List<TextEditingController> _controllers = new List();
@@ -46,10 +30,14 @@ class _NewListState extends State<NewList> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-          iconTheme: new IconThemeData(color: Color.fromRGBO(255, 111, 94, 1)),
-          backgroundColor: Colors.white,
-          title: Text('Lista de compra',
-              style: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)))),
+          //iconTheme: new IconThemeData(color: Color.fromRGBO(255, 111, 94, 1)),
+          backgroundColor: utils.cambiarColor(),
+          title: Text(
+            'Lista de compra',
+            // style: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)
+            // ),
+          )),
+      drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
           _header(),
@@ -280,7 +268,7 @@ class _NewListState extends State<NewList> {
         onPressed: () {
           _mostrarAlertaProducto(context);
         },
-        backgroundColor: Color.fromRGBO(255, 111, 94, 1),
+        backgroundColor: utils.cambiarColor(),
         child: Icon(Icons.add_shopping_cart),
       ),
 
