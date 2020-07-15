@@ -42,7 +42,7 @@ class PreferenciasUsuario {
   }
 
   get nombreUsuario {
-    return _prefs.getString('nombreUsuario') ?? 'sdf';
+    return _prefs.getString('nombreUsuario') ?? '';
   }
 
   set nombreUsuario(String value) {

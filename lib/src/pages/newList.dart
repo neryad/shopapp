@@ -274,7 +274,8 @@ class _NewListState extends State<NewList> {
 
       // Here's the new attribute:
 
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      bottomNavigationBar: _bNavbar(context),
     );
   }
 
@@ -314,8 +315,8 @@ class _NewListState extends State<NewList> {
           if (total > buget) {
             bugetColor = Colors.red[900];
           } else {
-           // bugetColor = Color.fromRGBO(255, 111, 94, 1);
-           bugetColor = utils.cambiarColor();
+            // bugetColor = Color.fromRGBO(255, 111, 94, 1);
+            bugetColor = utils.cambiarColor();
           }
         });
       }
@@ -333,7 +334,7 @@ class _NewListState extends State<NewList> {
       colorBuget = Colors.red[900];
     } else if (calDiferecen >= 0) {
       colorBuget = utils.cambiarColor();
-    } else{
+    } else {
       colorBuget = utils.cambiarColor();
     }
     // else {
@@ -358,15 +359,19 @@ class _NewListState extends State<NewList> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Cancelar', style: TextStyle(color: utils.cambiarColor()),)
-                  ),
+                  child: Text(
+                    'Cancelar',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
               FlatButton(
                   onPressed: () {
                     getTotal();
                     Navigator.of(context).pop();
                   },
-                  child: Text('Aceptar', style: TextStyle(color: utils.cambiarColor()),)
-                  ),
+                  child: Text(
+                    'Aceptar',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
             ],
           );
         });
@@ -402,16 +407,20 @@ class _NewListState extends State<NewList> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Salir', style: TextStyle(color: utils.cambiarColor()),)
-                  ),
+                  child: Text(
+                    'Salir',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
               FlatButton(
                   onPressed: () {
                     _subimt();
                     getTotal();
                     //Navigator.of(context).pop();
                   },
-                  child: Text('Aceptar', style: TextStyle(color: utils.cambiarColor()),)
-                  ),
+                  child: Text(
+                    'Aceptar',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
             ],
           );
         });
@@ -518,8 +527,10 @@ class _NewListState extends State<NewList> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Salir', style: TextStyle(color: utils.cambiarColor()),)
-                  ),
+                  child: Text(
+                    'Salir',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
               FlatButton(
                   onPressed: () {
                     //_subimt();
@@ -527,8 +538,10 @@ class _NewListState extends State<NewList> {
                     getTotal();
                     Navigator.of(context).pop();
                   },
-                  child: Text('Aceptar', style: TextStyle(color: utils.cambiarColor()),)
-                  ),
+                  child: Text(
+                    'Aceptar',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
             ],
           );
         });
@@ -650,7 +663,10 @@ class _NewListState extends State<NewList> {
                           color: Colors.black,
                         ),
                         onPressed: () => _mostrarAlertaBuget(context)),
-                    Text("Presupuesto", overflow: TextOverflow.ellipsis,)
+                    Text(
+                      "Presupuesto",
+                      overflow: TextOverflow.ellipsis,
+                    )
                   ],
                 ),
                 Text(
@@ -712,20 +728,25 @@ class _NewListState extends State<NewList> {
     if (items.length == 0) {
       return Card(
           child: Column(
-        // padding: EdgeInsets.all(15.0),
-        children:<Widget>[
-           Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            utils.cambiarNewImage(),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('No se han agregado articulos a la lista', style: TextStyle(color:utils.cambiarColor(),  fontSize: 18,  ),),
-        )
-        ]
-      ));
+              // padding: EdgeInsets.all(15.0),
+              children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                utils.cambiarNewImage(),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'No se han agregado articulos a la lista',
+                style: TextStyle(
+                  color: utils.cambiarColor(),
+                  fontSize: 18,
+                ),
+              ),
+            )
+          ]));
     }
     return Expanded(
       child: ListView.builder(
@@ -748,7 +769,7 @@ class _NewListState extends State<NewList> {
                         color: Colors.white,
                       ),
                       Text(
-                        " Eliminar",
+                        "Eliminar",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
@@ -937,6 +958,105 @@ class _NewListState extends State<NewList> {
         },
       ),
     );
+  }
+
+  Widget _bNavbar(BuildContext context) {
+    return BottomAppBar(
+        child: new Row(
+      // mainAxisSize: MainAxisSize.max,
+      // mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        FlatButton(
+          onPressed: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[Icon(Icons.save), Text('Guardar lista')],
+          ),
+        ),
+        FlatButton(
+          onPressed: () {
+            _validateEliminarList(context);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Icon(Icons.remove_circle_outline),
+              Text('Eliminar lista')
+            ],
+          ),
+        ),
+        // IconButton(
+        // icon: Icon(Icons.save),
+        // onPressed: () {},),
+        // Text('Guardar lista'),
+        // IconButton(icon: Icon(Icons.remove_circle_outline), onPressed: () {},),
+        //  Text('Elimnar lista'),
+      ],
+    ));
+  
+    // BottomNavigationBar(items: [
+    //   BottomNavigationBarItem(
+
+    //     icon: Icon(Icons.save),
+    //     title: Text('Guardar')
+    //     ),
+    //   BottomNavigationBarItem(
+
+    //     icon: Icon(Icons.delete_outline),
+    //     title: Text(
+    //       "Borrar lista",
+    //       // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+    //     ),
+    //   ),
+    // ]
+    // );
+  }
+  _validateEliminarList(BuildContext context) {
+
+     return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Eliminar contenido'),
+            // content: Form(
+            //   key: editFormKey,
+            //   child: Column(
+            //     mainAxisSize: MainAxisSize.min,
+            //     children: <Widget>[
+            //       _editarNombreArticulo(index),
+            //       _editarPrecioArticulo(index),
+            //       _editarcantidadArticulo(index),
+            //     ],
+            //   ),
+            // ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'Salir',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+              FlatButton(
+                  onPressed: () => limpiarTodo(),
+                  child: Text(
+                    'Aceptar',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+            ],
+          );
+         } );
+  }
+
+  limpiarTodo(){
+     print(items);
+   items.clear();
+   
+   setState(() {
+     getTotal();
+     getDiference();
+   }); 
+   Navigator.of(context).pop();
   }
   // Widget _newProducto() {
   //   var it = items.length;

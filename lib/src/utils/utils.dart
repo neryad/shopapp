@@ -69,7 +69,7 @@ Image cambiarHomeImage() {
 
   return Image(
     image: AssetImage(img),
-    height: 200.00,
+    height: 150.00,
     fit: BoxFit.cover,
   );
 }
