@@ -13,23 +13,23 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
 
-  bool _colorsecundario;
+  //bool _colorsecundario;
   int _genero;
-  String _nombre;
+  //String _nombre;
   TextEditingController _textEditingController;
   final prefs = new PreferenciasUsuario();
 
 @override
   void initState()  {
     _genero = prefs.genero;
-    _colorsecundario = prefs.colorSecundario;
+    //_colorsecundario = prefs.colorSecundario;
     super.initState();
     //cargarPrefs();
     // (prefs.colorSecundario) ? Colors.teal : Colors.blue
     _textEditingController = new TextEditingController( text: prefs.nombreUsuario);
   }
 
-    _SelectedRadio( int valor)  {
+    _selectedRadio( int valor)  {
         //_genero = valor;
         prefs.genero = valor;
         _genero = valor;
@@ -69,31 +69,31 @@ class _SettingPageState extends State<SettingPage> {
           RadioListTile(title:Text('Naraja'),
           value: 1, 
           groupValue: _genero, 
-          onChanged: _SelectedRadio,
+          onChanged: _selectedRadio,
           ),
           RadioListTile(
             title:Text('Azul'),
             value: 2, 
             groupValue: _genero, 
-            onChanged: _SelectedRadio,
+            onChanged: _selectedRadio,
             ),
               RadioListTile(
             title:Text('Verde'),
             value: 3, 
             groupValue: _genero, 
-            onChanged: _SelectedRadio,
+            onChanged: _selectedRadio,
             ),
               RadioListTile(
             title:Text('Rosado'),
             value: 4, 
             groupValue: _genero, 
-            onChanged: _SelectedRadio,
+            onChanged: _selectedRadio,
             ),
              RadioListTile(
             title:Text('Gris'),
             value: 5, 
             groupValue: _genero, 
-            onChanged: _SelectedRadio,
+            onChanged: _selectedRadio,
             ),
           Divider(),
            Container(

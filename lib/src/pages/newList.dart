@@ -707,7 +707,7 @@ class _NewListState extends State<NewList> {
   }
 
   _bodyWidget() {
-    var width = MediaQuery.of(context).size.width;
+    //var width = MediaQuery.of(context).size.width;
 
     if (items.length == 0) {
       return Card(
