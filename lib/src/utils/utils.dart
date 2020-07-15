@@ -22,7 +22,6 @@ String numberFormat(double t) {
 }
 
 Color cambiarColor() {
-  print(prefs.genero);
   if (prefs.genero == 1) {
     return Color.fromRGBO(255, 111, 94, 1);
   } else if (prefs.genero == 2) {
@@ -86,7 +85,7 @@ Image cambiarNewImage() {
   } else if (prefs.genero == 4) {
     img = 'assets/add_to_cart_R.png';
   } else {
-    img = 'assets/assets/add_to_cart_GR.png';
+    img = 'assets/add_to_cart_GR.png';
   }
 
   return Image(
