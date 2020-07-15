@@ -17,8 +17,8 @@ class _NewListState extends State<NewList> {
   double diference = 0.00;
   final formKey = GlobalKey<FormState>();
   final editFormKey = GlobalKey<FormState>();
-  Color colorBuget = Color.fromRGBO(255, 111, 94, 1);
-  Color bugetColor = Color.fromRGBO(255, 111, 94, 1);
+  Color colorBuget = utils.cambiarColor();
+  Color bugetColor = utils.cambiarColor();
   var uuid = Uuid();
 
   List<ProductModel> items = [];
@@ -314,7 +314,8 @@ class _NewListState extends State<NewList> {
           if (total > buget) {
             bugetColor = Colors.red[900];
           } else {
-            bugetColor = Color.fromRGBO(255, 111, 94, 1);
+           // bugetColor = Color.fromRGBO(255, 111, 94, 1);
+           bugetColor = utils.cambiarColor();
           }
         });
       }
@@ -324,17 +325,20 @@ class _NewListState extends State<NewList> {
   void getDiference() {
     if (total == 0) {
       diference = buget;
-      colorBuget = colorBuget = Colors.green[400];
+      //colorBuget = colorBuget = Colors.green[400];
       return;
     }
     double calDiferecen = buget - total;
     if (calDiferecen < 0) {
       colorBuget = Colors.red[900];
-    } else if (calDiferecen == 0) {
-      colorBuget = Color.fromRGBO(255, 111, 94, 1);
-    } else {
-      colorBuget = Colors.green[400];
+    } else if (calDiferecen >= 0) {
+      colorBuget = utils.cambiarColor();
+    } else{
+      colorBuget = utils.cambiarColor();
     }
+    // else {
+    //   colorBuget = Colors.green[400];
+    // }
     diference = calDiferecen;
   }
 
@@ -354,13 +358,15 @@ class _NewListState extends State<NewList> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Cancelar')),
+                  child: Text('Cancelar', style: TextStyle(color: utils.cambiarColor()),)
+                  ),
               FlatButton(
                   onPressed: () {
                     getTotal();
                     Navigator.of(context).pop();
                   },
-                  child: Text('Aceptar')),
+                  child: Text('Aceptar', style: TextStyle(color: utils.cambiarColor()),)
+                  ),
             ],
           );
         });
@@ -396,14 +402,16 @@ class _NewListState extends State<NewList> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Salir')),
+                  child: Text('Salir', style: TextStyle(color: utils.cambiarColor()),)
+                  ),
               FlatButton(
                   onPressed: () {
                     _subimt();
                     getTotal();
                     //Navigator.of(context).pop();
                   },
-                  child: Text('Aceptar')),
+                  child: Text('Aceptar', style: TextStyle(color: utils.cambiarColor()),)
+                  ),
             ],
           );
         });
@@ -419,10 +427,10 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         counterText: '',
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+          borderSide: BorderSide(color: utils.cambiarColor()),
         ),
         hintText: 'Nombre artículo',
-        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+        hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -436,14 +444,14 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         hintText: 'Precio',
         counterText: '',
-        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+        hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) => productModel.price = double.parse(value),
       validator: (value) {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Solo numeros';
+          return 'Completar campos';
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -459,14 +467,14 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         hintText: 'Cantidad',
         counterText: '',
-        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+        hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) => productModel.quantity = int.parse(value),
       validator: (value) {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Solo numeros';
+          return 'Completar campos';
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -510,7 +518,8 @@ class _NewListState extends State<NewList> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Salir')),
+                  child: Text('Salir', style: TextStyle(color: utils.cambiarColor()),)
+                  ),
               FlatButton(
                   onPressed: () {
                     //_subimt();
@@ -518,7 +527,8 @@ class _NewListState extends State<NewList> {
                     getTotal();
                     Navigator.of(context).pop();
                   },
-                  child: Text('Aceptar')),
+                  child: Text('Aceptar', style: TextStyle(color: utils.cambiarColor()),)
+                  ),
             ],
           );
         });
@@ -538,10 +548,10 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         counterText: '',
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+          borderSide: BorderSide(color: utils.cambiarColor()),
         ),
         hintText: 'Nombre artículo',
-        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+        hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -555,7 +565,7 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         hintText: 'Precio',
         counterText: '',
-        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+        hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) => items[index].price = double.parse(value),
       validator: (value) {
@@ -578,7 +588,7 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         hintText: 'Cantidad',
         counterText: '',
-        hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+        hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) => items[index].quantity = int.parse(value),
       validator: (value) {
@@ -601,10 +611,10 @@ class _NewListState extends State<NewList> {
         hintText: 'Ingresar nuevo presupuesto',
         suffixIcon: Icon(
           Icons.account_balance_wallet,
-          color: Color.fromRGBO(255, 111, 94, 1),
+          color: utils.cambiarColor(),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+          borderSide: BorderSide(color: utils.cambiarColor()),
         ),
       ),
       onChanged: (value) {
@@ -640,7 +650,7 @@ class _NewListState extends State<NewList> {
                           color: Colors.black,
                         ),
                         onPressed: () => _mostrarAlertaBuget(context)),
-                    Text("Presupuesto", overflow: TextOverflow.ellipsis)
+                    Text("Presupuesto", overflow: TextOverflow.ellipsis,)
                   ],
                 ),
                 Text(
@@ -666,7 +676,7 @@ class _NewListState extends State<NewList> {
                   utils.numberFormat(total),
                   style: TextStyle(
                       fontSize: 20,
-                      color: Color.fromRGBO(255, 111, 94, 1),
+                      color: utils.cambiarColor(),
                       fontWeight: FontWeight.bold),
                 ),
               ],
@@ -706,11 +716,12 @@ class _NewListState extends State<NewList> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image(
-              image: AssetImage('assets/add_to_cart.png'),
-              height: 240.00,
-              fit: BoxFit.cover,
-            ),
+            utils.cambiarNewImage(),
+            // Image(
+            //   image: AssetImage('assets/add_to_cart.png'),
+            //   height: 240.00,
+            //   fit: BoxFit.cover,
+            // ),
           ],
         ),
       ));
@@ -856,7 +867,7 @@ class _NewListState extends State<NewList> {
                                 flex: 2,
                                 child: IconButton(
                                   icon: Icon(Icons.shopping_basket),
-                                  color: Color.fromRGBO(255, 111, 94, 1),
+                                  color: utils.cambiarColor(),
                                   onPressed: () {
                                     _mostrarAlertaEditarProducto(
                                         context, index);

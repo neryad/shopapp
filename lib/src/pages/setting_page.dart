@@ -50,21 +50,21 @@ class _SettingPageState extends State<SettingPage> {
         children:<Widget>[
           Container(
             padding: EdgeInsets.all(5.0),
-            child: Text('Configuracion', style: TextStyle(fontSize: 45.0, fontWeight: FontWeight.bold),),
+            child: Text('Personalización temas', style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),),
           ),
 
           Divider(),
-          SwitchListTile(
-            title: Text('asd'),
-            value: _colorsecundario, 
-            onChanged: (value) {
+          // SwitchListTile(
+          //   title: Text('asd'),
+          //   value: _colorsecundario, 
+          //   onChanged: (value) {
               
-              setState(() {
-                _colorsecundario = value;
-                prefs.colorSecundario = value;
-              });
-            }
-          ),
+          //     setState(() {
+          //       _colorsecundario = value;
+          //       prefs.colorSecundario = value;
+          //     });
+          //   }
+          // ),
 
           RadioListTile(title:Text('Naraja'),
           value: 1, 
@@ -96,6 +96,10 @@ class _SettingPageState extends State<SettingPage> {
             onChanged: _SelectedRadio,
             ),
           Divider(),
+           Container(
+            padding: EdgeInsets.all(5.0),
+            child: Text('Personalización usuario', style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),),
+          ),
           Container(
             padding: EdgeInsets.symmetric(horizontal:20.0),
             child: TextField(

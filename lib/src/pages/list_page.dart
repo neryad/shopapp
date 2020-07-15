@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopapp/src/utils/utils.dart' as utils;
 
 class ListPage extends StatefulWidget {
   ListPage({Key key}) : super(key: key);
@@ -43,12 +44,12 @@ class _ListPageState extends State<ListPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          
-          Image(
-            image: AssetImage('assets/undraw_empty_cart_co35.png'),
-            height: 200.00,
-            fit: BoxFit.cover,
-          ),
+          utils.cambiarHomeImage(),
+          // Image(
+          //   image: AssetImage('assets/undraw_empty_cart_co35.png'),
+          //   height: 200.00,
+          //   fit: BoxFit.cover,
+          // ),
         ],
       ),
     );
@@ -87,7 +88,7 @@ class _ListPageState extends State<ListPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Icon(Icons.shopping_basket, color: Color.fromRGBO(255, 111, 94, 1)),
+            Icon(Icons.shopping_basket, color: utils.cambiarColor()),
             Text('Compra supermecado'),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,

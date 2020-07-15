@@ -30,9 +30,101 @@ Color cambiarColor() {
   } else {
     return Color(0xffb04e4e4e);
   }
+}
 
-  //   Color bgColor = Color(0xffb9fbec3);
-  // Color bgColor1 = Color(0xffb0e5c68);
-  // Color bgColor2 = Color(0xffbf9fbfb);
-  // return Color.fromRGBO(255, 111, 94, 1);
+BoxDecoration cambiarHeaderImage() {
+  if (prefs.genero == 1) {
+    return BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/undraw_shopping_app_flsj.png"),
+            fit: BoxFit.cover));
+  } else if (prefs.genero == 2) {
+    return BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/undraw_shopping_app_flsj_A.png"),
+            fit: BoxFit.cover));
+  } else if (prefs.genero == 3) {
+    return BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/undraw_shopping_app_flsj_G.png"),
+            fit: BoxFit.cover));
+  } else if (prefs.genero == 4) {
+    return BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/undraw_shopping_app_flsj_R.png"),
+            fit: BoxFit.cover));
+  } else {
+    return BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/undraw_shopping_app_flsj_GR.png"),
+            fit: BoxFit.cover));
+  }
+}
+
+Image cambiarHomeImage() {
+  if (prefs.genero == 1) {
+    return Image(
+      image: AssetImage('assets/undraw_empty_cart_co35.png'),
+      height: 200.00,
+      fit: BoxFit.cover,
+    );
+  } else if (prefs.genero == 2) {
+    return Image(
+      image: AssetImage('assets/undraw_empty_cart_co35_A.png'),
+      height: 200.00,
+      fit: BoxFit.cover,
+    );
+  } else if (prefs.genero == 3) {
+    return Image(
+      image: AssetImage('assets/undraw_empty_cart_co35_G.png'),
+      height: 200.00,
+      fit: BoxFit.cover,
+    );
+  } else if (prefs.genero == 4) {
+    return Image(
+      image: AssetImage('assets/undraw_empty_cart_co35_R.png'),
+      height: 200.00,
+      fit: BoxFit.cover,
+    );
+  } else {
+    return Image(
+      image: AssetImage('assets/undraw_empty_cart_co35_GR.png'),
+      height: 200.00,
+      fit: BoxFit.cover,
+    );
+  }
+}
+
+Image cambiarNewImage() {
+  if (prefs.genero == 1) {
+    return Image(
+      image: AssetImage('assets/add_to_cart.png'),
+      height: 240.00,
+      fit: BoxFit.cover,
+    );
+  } else if (prefs.genero == 2) {
+    return Image(
+      image: AssetImage('assets/add_to_cart_A.png'),
+      height: 240.00,
+      fit: BoxFit.cover,
+    );
+  } else if (prefs.genero == 3) {
+    return Image(
+      image: AssetImage('assets/add_to_cart_G.png'),
+      height: 240.00,
+      fit: BoxFit.cover,
+    );
+  } else if (prefs.genero == 4) {
+    return Image(
+      image: AssetImage('assets/add_to_cart_R.png'),
+      height: 240.00,
+      fit: BoxFit.cover,
+    );
+  } else {
+    return Image(
+      image: AssetImage('assets/add_to_cart_GR.png'),
+      height: 240.00,
+      fit: BoxFit.cover,
+    );
+  }
 }
