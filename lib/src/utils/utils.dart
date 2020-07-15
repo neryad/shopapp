@@ -12,6 +12,10 @@ bool isNumeric(String s) {
   return (n == null) ? false : true;
 }
 
+DateTime now = DateTime.now();
+
+var timeNow = int.parse(DateFormat('kk').format(now));
+
 String numberFormat(double t) {
   NumberFormat f = new NumberFormat("#,##0.00", "en_US");
   return f.format(t);
@@ -33,98 +37,92 @@ Color cambiarColor() {
 }
 
 BoxDecoration cambiarHeaderImage() {
+  var img = '';
   if (prefs.genero == 1) {
-    return BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/undraw_shopping_app_flsj.png"),
-            fit: BoxFit.cover));
+    img = 'assets/undraw_shopping_app_flsj.png';
   } else if (prefs.genero == 2) {
-    return BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/undraw_shopping_app_flsj_A.png"),
-            fit: BoxFit.cover));
+    img = 'assets/undraw_shopping_app_flsj_A.png';
   } else if (prefs.genero == 3) {
-    return BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/undraw_shopping_app_flsj_G.png"),
-            fit: BoxFit.cover));
+    img = 'assets/undraw_shopping_app_flsj_G.png';
   } else if (prefs.genero == 4) {
-    return BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/undraw_shopping_app_flsj_R.png"),
-            fit: BoxFit.cover));
+    img = 'assets/undraw_shopping_app_flsj_R.png';
   } else {
-    return BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/undraw_shopping_app_flsj_GR.png"),
-            fit: BoxFit.cover));
+    img = 'assets/undraw_shopping_app_flsj_GR.png';
   }
+
+  return BoxDecoration(
+      image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover));
 }
 
 Image cambiarHomeImage() {
+  var img;
   if (prefs.genero == 1) {
-    return Image(
-      image: AssetImage('assets/undraw_empty_cart_co35.png'),
-      height: 200.00,
-      fit: BoxFit.cover,
-    );
+    img = 'assets/undraw_empty_cart_co35.png';
   } else if (prefs.genero == 2) {
-    return Image(
-      image: AssetImage('assets/undraw_empty_cart_co35_A.png'),
-      height: 200.00,
-      fit: BoxFit.cover,
-    );
+    img = 'assets/undraw_empty_cart_co35_A.png';
   } else if (prefs.genero == 3) {
-    return Image(
-      image: AssetImage('assets/undraw_empty_cart_co35_G.png'),
-      height: 200.00,
-      fit: BoxFit.cover,
-    );
+    img = 'assets/undraw_empty_cart_co35_G.png';
   } else if (prefs.genero == 4) {
-    return Image(
-      image: AssetImage('assets/undraw_empty_cart_co35_R.png'),
-      height: 200.00,
-      fit: BoxFit.cover,
-    );
+    img = 'assets/undraw_empty_cart_co35_R.png';
   } else {
-    return Image(
-      image: AssetImage('assets/undraw_empty_cart_co35_GR.png'),
-      height: 200.00,
-      fit: BoxFit.cover,
-    );
+    img = 'assets/undraw_empty_cart_co35_GR.png';
   }
+
+  return Image(
+    image: AssetImage(img),
+    height: 200.00,
+    fit: BoxFit.cover,
+  );
 }
 
 Image cambiarNewImage() {
+  var img;
   if (prefs.genero == 1) {
-    return Image(
-      image: AssetImage('assets/add_to_cart.png'),
-      height: 240.00,
-      fit: BoxFit.cover,
-    );
+    img = 'assets/add_to_cart.png';
   } else if (prefs.genero == 2) {
-    return Image(
-      image: AssetImage('assets/add_to_cart_A.png'),
-      height: 240.00,
-      fit: BoxFit.cover,
-    );
+    img = 'assets/add_to_cart_A.png';
   } else if (prefs.genero == 3) {
-    return Image(
-      image: AssetImage('assets/add_to_cart_G.png'),
-      height: 240.00,
-      fit: BoxFit.cover,
-    );
+    img = 'assets/add_to_cart_G.png';
   } else if (prefs.genero == 4) {
-    return Image(
-      image: AssetImage('assets/add_to_cart_R.png'),
-      height: 240.00,
-      fit: BoxFit.cover,
-    );
+    img = 'assets/add_to_cart_R.png';
   } else {
-    return Image(
-      image: AssetImage('assets/add_to_cart_GR.png'),
-      height: 240.00,
-      fit: BoxFit.cover,
-    );
+    img = 'assets/assets/add_to_cart_GR.png';
   }
+
+  return Image(
+    image: AssetImage(img),
+    height: 200.00,
+    fit: BoxFit.cover,
+  );
+}
+
+saludos() {
+  //   var msg = '';
+  // var klok = timeNow;
+  // DateTime now = new DateTime.now();
+  // DateTime date = new DateTime(now.hour, now.minute).toLocal();
+  var msg = '';
+  if (timeNow <= 11) {
+    msg = 'Buenos dias ${prefs.nombreUsuario}';
+  } else if ((timeNow >= 12) && (timeNow <= 16)) {
+    msg = 'Buenas tardes ${prefs.nombreUsuario}';
+  } else if ((timeNow > 16) && (timeNow < 20)) {
+    msg = 'Buenas tardes ${prefs.nombreUsuario}';
+  } else {
+    msg = 'Buenas noches ${prefs.nombreUsuario}';
+  }
+
+//   return ConstrainedBox(
+//   constraints: BoxConstraints.expand(height: 60),
+//   child: Container(
+//     //color: Colors.orange,
+//     child: Padding(padding: EdgeInsets.all(16), child: Text(msg, style: TextStyle(fontSize: 25 ,fontWeight: FontWeight.bold),)
+//     ),
+// ));
+
+  return Text(msg,
+      style: TextStyle(
+        fontSize: 25,
+        fontWeight: FontWeight.bold,
+      ));
 }

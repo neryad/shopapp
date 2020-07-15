@@ -18,7 +18,7 @@ class _ListPageState extends State<ListPage> {
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-        
+            utils.saludos(),
             _imagen(),
             _card(),
             _card(),
@@ -28,9 +28,6 @@ class _ListPageState extends State<ListPage> {
              _card(),
             _card(),
             _card(),
-
-            // _header()
-            // _lista(),
           ],
         ),
       ),
@@ -45,40 +42,10 @@ class _ListPageState extends State<ListPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           utils.cambiarHomeImage(),
-          // Image(
-          //   image: AssetImage('assets/undraw_empty_cart_co35.png'),
-          //   height: 200.00,
-          //   fit: BoxFit.cover,
-          // ),
         ],
       ),
     );
   }
-
-   Widget _SomeTest() {
-   return Container(
-      height: 100.00,
-      //width: 300.00,
-      child: Card(
-        elevation: 1.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            //Icon(Icons.shopping_basket, color: Color.fromRGBO(255, 111, 94, 1)),
-            Text('Compra supermecado'),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-              Text('15/05/2020'), 
-              //Text('Total: 250.00', style:  TextStyle(fontWeight: FontWeight.bold,), )
-              ]
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   
   Widget _card() {
     return Container(

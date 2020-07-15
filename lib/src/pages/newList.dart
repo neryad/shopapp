@@ -711,19 +711,20 @@ class _NewListState extends State<NewList> {
 
     if (items.length == 0) {
       return Card(
-          child: Container(
+          child: Column(
         // padding: EdgeInsets.all(15.0),
-        child: Row(
+        children:<Widget>[
+           Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             utils.cambiarNewImage(),
-            // Image(
-            //   image: AssetImage('assets/add_to_cart.png'),
-            //   height: 240.00,
-            //   fit: BoxFit.cover,
-            // ),
           ],
         ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('No se han agregado articulos a la lista', style: TextStyle(color:utils.cambiarColor(),  fontSize: 18,  ),),
+        )
+        ]
       ));
     }
     return Expanded(
