@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
+import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
@@ -967,7 +969,7 @@ class _NewListState extends State<NewList> {
       // mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         FlatButton(
-          onPressed: () {},
+          onPressed: () => saveList(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[Icon(Icons.save), Text('Guardar lista')],
@@ -1019,17 +1021,6 @@ class _NewListState extends State<NewList> {
         builder: (context) {
           return AlertDialog(
             title: Text('Eliminar contenido'),
-            // content: Form(
-            //   key: editFormKey,
-            //   child: Column(
-            //     mainAxisSize: MainAxisSize.min,
-            //     children: <Widget>[
-            //       _editarNombreArticulo(index),
-            //       _editarPrecioArticulo(index),
-            //       _editarcantidadArticulo(index),
-            //     ],
-            //   ),
-            // ),
             actions: <Widget>[
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
@@ -1057,6 +1048,18 @@ class _NewListState extends State<NewList> {
      getDiference();
    }); 
    Navigator.of(context).pop();
+  }
+
+  saveList(){
+    DateTime now = new DateTime.now();
+    
+
+    final wawa = Lista(title: 'Compra2', superMaret: "Bravo", fecha: '02/12/2020' );
+    DBProvider.db.nuevoLista(wawa);
+
+    final rochy = ProductModel(id: '1', name: 'asd', price: 32.00,quantity: 2, listId: wawa.id );
+      DBProvider.db.newProd(rochy);
+    print(rochy);
   }
   // Widget _newProducto() {
   //   var it = items.length;

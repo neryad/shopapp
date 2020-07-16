@@ -10,18 +10,21 @@ class ProductModel {
         this.name,
         this.quantity,
         this.price,
+        this.listId,
     });
 
     String id;
     String name;
     int quantity;
     double price;
+    int listId;
 
     factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
         name: json["name"],
         quantity: json["quantity"],
         price: json["price"],
+        listId: json["listId"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -29,5 +32,6 @@ class ProductModel {
         "name": name,
         "quantity": quantity,
         "price": price,
+        "listId": listId,
     };
 }

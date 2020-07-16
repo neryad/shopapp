@@ -17,13 +17,8 @@ class PreferenciasUsuario {
     this._prefs = await SharedPreferences.getInstance();
   }
 
-  //Ninunfa de estas se usa
-  // bool _colorSecundario;
-  // int _genero;
-  // String _nombre;
-
   Color defaultColor = Color.fromRGBO(255, 111, 94, 1);
-  Color test = Colors.teal;
+
 
   get genero {
     return _prefs.getInt('genero') ?? 1;

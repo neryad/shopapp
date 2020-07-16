@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
@@ -13,28 +12,24 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
 
-  //bool _colorsecundario;
+
   int _genero;
-  //String _nombre;
   TextEditingController _textEditingController;
+
   final prefs = new PreferenciasUsuario();
 
 @override
   void initState()  {
     _genero = prefs.genero;
-    //_colorsecundario = prefs.colorSecundario;
     super.initState();
-    //cargarPrefs();
-    // (prefs.colorSecundario) ? Colors.teal : Colors.blue
     _textEditingController = new TextEditingController( text: prefs.nombreUsuario);
   }
 
     _selectedRadio( int valor)  {
-        //_genero = valor;
+    
         prefs.genero = valor;
         _genero = valor;
       setState(() {
-       // utils.cambiarColor();
       });
     }
   @override
@@ -54,18 +49,6 @@ class _SettingPageState extends State<SettingPage> {
           ),
 
           Divider(),
-          // SwitchListTile(
-          //   title: Text('asd'),
-          //   value: _colorsecundario, 
-          //   onChanged: (value) {
-              
-          //     setState(() {
-          //       _colorsecundario = value;
-          //       prefs.colorSecundario = value;
-          //     });
-          //   }
-          // ),
-
           RadioListTile(title:Text('Naraja'),
           value: 1, 
           groupValue: _genero, 
