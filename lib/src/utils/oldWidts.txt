@@ -1,0 +1,800 @@
+ // Widget _newProducto() {
+  //   var it = items.length;
+  //   return Container(
+  //       color: Colors.white60,
+  //       child: Column(
+  //         children: <Widget>[
+  //           TextField(
+  //             maxLength: 50,
+  //             textCapitalization: TextCapitalization.sentences,
+  //             textAlign: TextAlign.center,
+  //             controller: _articlesCtrl,
+  //             onSubmitted: (text) {
+  //               if (text == '') {
+  //                 return;
+  //               }
+  //               // insertar(it,text);
+  //               var newId = uuid.v1();
+  //               items.insert(
+  //                   it,
+  //                   new ProductModel(
+  //                      name: text, quantity: 1, price: 0.00));
+  //               _articlesCtrl.clear();
+  //               setState(() {});
+  //             },
+  //             decoration: InputDecoration(
+  //               counterText: '',
+  //               focusedBorder: UnderlineInputBorder(
+  //                 borderSide:
+  //                     BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
+  //               ),
+  //               hintText: 'Nombre artículo',
+  //               hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
+  //             ),
+  //           ),
+  //         ],
+  //       ));
+  // }
+
+
+// ListView.builder(
+//               itemCount: items.length,
+//               itemBuilder: (BuildContext context, int index) {
+//                 _controllers.add(new TextEditingController());
+//                 return Dismissible(
+//                   direction: DismissDirection.endToStart,
+//                   background: Padding(
+//                     padding: const EdgeInsets.all(8.0),
+//                     child: Container(
+//                       color: Colors.red,
+//                       child: Align(
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.end,
+//                           children: <Widget>[
+//                             Icon(
+//                               Icons.delete,
+//                               color: Colors.white,
+//                             ),
+//                             Text(
+//                               " Eliminar",
+//                               style: TextStyle(
+//                                 color: Colors.white,
+//                                 fontWeight: FontWeight.w700,
+//                               ),
+//                               textAlign: TextAlign.right,
+//                             ),
+//                             SizedBox(
+//                               width: 20,
+//                             ),
+//                           ],
+//                         ),
+//                         alignment: Alignment.centerRight,
+//                       ),
+//                     ),
+//                   ),
+
+//                   // background: Card(
+
+//                   //   color: Colors.red,
+//                   //   elevation: 4,
+//                   //   margin: EdgeInsets.all(15),
+//                   //   child: Icon(Icons.delete_forever, color: Colors.white,),
+//                   // ),
+//                   key: Key(items[index].name + items.length.toString()),
+//                   // key: Key('items[index]'),
+//                   //key: Key('items[index]'),
+//                   // secondaryBackground: (
+//                   //      Padding(
+//                   //   padding: const EdgeInsets.all(8.0),
+//                   //   child: Container(
+//                   //     color: Colors.green,
+//                   //     child: Align(
+//                   //       child: Row(
+//                   //         mainAxisAlignment: MainAxisAlignment.end,
+//                   //         children: <Widget>[
+//                   //           Icon(
+//                   //             Icons.check,
+//                   //             color: Colors.white,
+//                   //           ),
+//                   //           Text(
+//                   //             " Completado",
+//                   //             style: TextStyle(
+//                   //               color: Colors.white,
+//                   //               fontWeight: FontWeight.w700,
+//                   //             ),
+//                   //             textAlign: TextAlign.right,
+//                   //           ),
+//                   //           SizedBox(
+//                   //             width: 20,
+//                   //           ),
+//                   //         ],
+//                   //       ),
+//                   //       alignment: Alignment.centerRight,
+//                   //     ),
+//                   //   ),
+
+//                   // )),
+
+//                   onDismissed: (direction) {
+//                     // if(direction == DismissDirection.endToStart){
+//                     //   print('Verder');
+//                     // }
+//                     // print(direction);
+//                     //DismissDirection.endToStart azuel
+//                     //DismissDirection.startToEnd rojhos
+
+//                     var priceToDel = items[index].price;
+//                     // items.removeWhere((item) => item.id ==items[index].id);
+
+//                     //items.removeWhere((item) => item.id == items[index].id);
+//                     setState(() {
+//                       items.removeAt(index);
+//                       total = total - priceToDel;
+//                       getDiference();
+
+//                       //items.removeAt(index);
+//                     });
+//                     // setState(() {
+
+//                     //   getTotal();
+//                     // });
+
+//                     //getTotal();
+//                   },
+//                   child: Card(
+//                     elevation: 2,
+//                     margin: EdgeInsets.all(10),
+//                     child: Container(
+//                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+//                       height: 80.00,
+//                       child: Row(
+//                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+//                         children: <Widget>[
+//                           Expanded(
+//                             child: Column(children: <Widget>[
+//                               Container(
+//                                 child: Row(children: <Widget>[
+//                                   SizedBox(
+//                                     width: 15,
+//                                   ),
+//                                   Text(
+//                                     items[index].name,
+//                                     style:
+//                                         TextStyle(fontWeight: FontWeight.w900),
+//                                     textAlign: TextAlign.start,
+//                                   ),
+//                                 ]),
+//                               ),
+//                               Container(
+//                                 child: Row(
+//                                   children: <Widget>[
+//                                     SizedBox(
+//                                       width: 15,
+//                                     ),
+//                                     Expanded(
+//                                       flex: 3,
+//                                       child:
+//                                           //_creaPrecio(index)
+//                                           TextField(
+//                                         maxLength: 6,
+//                                         controller: _controllers[index],
+//                                         textAlign: TextAlign.center,
+//                                         decoration: InputDecoration(
+//                                             hintText: '0.0', counterText: ''),
+//                                         keyboardType:
+//                                             TextInputType.numberWithOptions(
+//                                                 decimal: true),
+//                                         onChanged: (text) {
+//                                           items[index].price =
+//                                               num.parse(text).toDouble();
+//                                           setState(() {
+//                                             getTotal();
+//                                           });
+//                                         },
+//                                       ),
+//                                     ),
+//                                     SizedBox(
+//                                       width: 15,
+//                                     ),
+//                                     Expanded(
+//                                         flex: 5,
+//                                         child: Row(
+//                                           mainAxisAlignment:
+//                                               MainAxisAlignment.spaceBetween,
+//                                           children: <Widget>[
+//                                             Expanded(
+//                                               flex: 2,
+//                                               child: IconButton(
+//                                                 icon: Icon(Icons.add),
+//                                                 color: Color.fromRGBO(
+//                                                     255, 111, 94, 1),
+//                                                 onPressed: () {
+//                                                   setState(() {
+//                                                     _sumProduct(index);
+//                                                   });
+//                                                 },
+//                                               ),
+//                                             ),
+//                                             Expanded(
+//                                               flex: 2,
+//                                               child: Text(
+//                                                 items[index]
+//                                                     .quantity
+//                                                     .toString(),
+//                                                 overflow: TextOverflow.ellipsis,
+//                                                 textAlign: TextAlign.center,
+//                                               ),
+//                                             ),
+//                                             Expanded(
+//                                               flex: 2,
+//                                               child: IconButton(
+//                                                 icon: Icon(Icons.remove),
+//                                                 color: Color.fromRGBO(
+//                                                     255, 111, 94, 1),
+//                                                 onPressed: () {
+//                                                   setState(() {
+//                                                     _resProduct(index);
+//                                                   });
+//                                                 },
+//                                               ),
+//                                             ),
+//                                           ],
+//                                         )),
+//                                     SizedBox(
+//                                       width: 15,
+//                                     ),
+//                                     Expanded(
+//                                       flex: 3,
+//                                       child: Container(
+//                                         margin: EdgeInsets.symmetric(
+//                                           horizontal: 10,
+//                                         ),
+//                                         child: Text(
+//                                           utils.numberFormat(
+//                                             items[index].quantity *
+//                                                 items[index].price,
+//                                           ),
+//                                           style: TextStyle(
+//                                               fontWeight: FontWeight.w600),
+//                                           //overflow: TextOverflow.ellipsis,
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               )
+//                             ]),
+//                           )
+//                         ],
+//                       ),
+//                     ),
+//                   ),
+//                 );
+//               },
+//             ),
+
+
+
+
+
+   // BottomNavigationBar(items: [
+    //   BottomNavigationBarItem(
+
+    //     icon: Icon(Icons.save),
+    //     title: Text('Guardar')
+    //     ),
+    //   BottomNavigationBarItem(
+
+    //     icon: Icon(Icons.delete_outline),
+    //     title: Text(
+    //       "Borrar lista",
+    //       // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+    //     ),
+    //   ),
+    // ]
+    // );
+
+
+            // IconButton(
+        // icon: Icon(Icons.save),
+        // onPressed: () {},),
+        // Text('Guardar lista'),
+        // IconButton(icon: Icon(Icons.remove_circle_outline), onPressed: () {},),
+        //  Text('Elimnar lista'),
+
+                    // background: Card(
+
+            //   color: Colors.red,
+            //   elevation: 4,
+            //   margin: EdgeInsets.all(15),
+            //   child: Icon(Icons.delete_forever, color: Colors.white,),
+            // ),
+            // key: Key('items[index]'),
+            //key: Key('items[index]'),
+            // secondaryBackground: (
+            //      Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Container(
+            //     color: Colors.green,
+            //     child: Align(
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.end,
+            //         children: <Widget>[
+            //           Icon(
+            //             Icons.check,
+            //             color: Colors.white,
+            //           ),
+            //           Text(
+            //             " Completado",
+            //             style: TextStyle(
+            //               color: Colors.white,
+            //               fontWeight: FontWeight.w700,
+            //             ),
+            //             textAlign: TextAlign.right,
+            //           ),
+            //           SizedBox(
+            //             width: 20,
+            //           ),
+            //         ],
+            //       ),
+            //       alignment: Alignment.centerRight,
+            //     ),
+            //   ),
+
+            // )),
+
+              // if(direction == DismissDirection.endToStart){
+              //   print('Verder');
+              // }
+              // print(direction);
+              //DismissDirection.endToStart azuel
+              //DismissDirection.startToEnd rojhos
+
+              // items.removeWhere((item) => item.id ==items[index].id);
+
+              //items.removeWhere((item) => item.id == items[index].id);
+
+
+              
+  // validconte() {
+  //   if (items.length == 0) {
+  //     return Text('nada');
+  //   } else {
+  //     return ('todo');
+  //   }
+  // }
+
+  // _sumProduct(int index) {
+  //   setState(() {
+  //     items[index].quantity++;
+  //     getTotal();
+  //   });
+  // }
+
+  // _resProduct(int index) {
+  //   setState(() {
+  //     if (items[index].quantity == 0) {
+  //       return;
+  //     }
+  //     items[index].quantity--;
+
+  //     getTotal();
+  //   });
+  // }
+
+        // Column(
+
+      //   children: <Widget>[
+      //     Expanded(
+      //       child: ListView.builder(
+      //         itemCount: items.length,
+      //         itemBuilder: (BuildContext context, int index) {
+      //           _controllers.add(new TextEditingController());
+
+      //           return Dismissible(
+      //             direction: DismissDirection.endToStart,
+      //             background: Padding(
+      //               padding: const EdgeInsets.all(8.0),
+      //               child: Container(
+      //                 color: Colors.red,
+      //                 child: Align(
+      //                   child: Row(
+      //                     mainAxisAlignment: MainAxisAlignment.end,
+      //                     children: <Widget>[
+      //                       Icon(
+      //                         Icons.delete,
+      //                         color: Colors.white,
+      //                       ),
+      //                       Text(
+      //                         " Eliminar",
+      //                         style: TextStyle(
+      //                           color: Colors.white,
+      //                           fontWeight: FontWeight.w700,
+      //                         ),
+      //                         textAlign: TextAlign.right,
+      //                       ),
+      //                       SizedBox(
+      //                         width: 20,
+      //                       ),
+      //                     ],
+      //                   ),
+      //                   alignment: Alignment.centerRight,
+      //                 ),
+      //               ),
+      //             ),
+
+      //             // background: Card(
+
+      //             //   color: Colors.red,
+      //             //   elevation: 4,
+      //             //   margin: EdgeInsets.all(15),
+      //             //   child: Icon(Icons.delete_forever, color: Colors.white,),
+      //             // ),
+      //             key: Key(items[index].name + items.length.toString()),
+      //             // key: Key('items[index]'),
+      //             //key: Key('items[index]'),
+      //             // secondaryBackground: (
+      //             //      Padding(
+      //             //   padding: const EdgeInsets.all(8.0),
+      //             //   child: Container(
+      //             //     color: Colors.green,
+      //             //     child: Align(
+      //             //       child: Row(
+      //             //         mainAxisAlignment: MainAxisAlignment.end,
+      //             //         children: <Widget>[
+      //             //           Icon(
+      //             //             Icons.check,
+      //             //             color: Colors.white,
+      //             //           ),
+      //             //           Text(
+      //             //             " Completado",
+      //             //             style: TextStyle(
+      //             //               color: Colors.white,
+      //             //               fontWeight: FontWeight.w700,
+      //             //             ),
+      //             //             textAlign: TextAlign.right,
+      //             //           ),
+      //             //           SizedBox(
+      //             //             width: 20,
+      //             //           ),
+      //             //         ],
+      //             //       ),
+      //             //       alignment: Alignment.centerRight,
+      //             //     ),
+      //             //   ),
+
+      //             // )),
+
+      //             onDismissed: (direction) {
+      //               // if(direction == DismissDirection.endToStart){
+      //               //   print('Verder');
+      //               // }
+      //               // print(direction);
+      //               //DismissDirection.endToStart azuel
+      //               //DismissDirection.startToEnd rojhos
+
+      //               // items.removeWhere((item) => item.id ==items[index].id);
+
+      //               //items.removeWhere((item) => item.id == items[index].id);
+      //               setState(() {
+      //                 // var priceToDel = items[index].price;
+      //                 items.removeAt(index);
+      //                 // total = total - priceToDel;
+      //                 getTotal();
+      //                 getDiference();
+
+      //                 //items.removeAt(index);
+      //               });
+      //               // setState(() {
+
+      //               //   getTotal();
+      //               // });
+
+      //               //getTotal();
+      //             },
+      //             child: Card(
+      //               elevation: 2,
+      //               margin: EdgeInsets.all(10),
+      //               child: Container(
+      //                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      //                 height: 80.00,
+      //                 child: Row(
+      //                   //mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+      //                   children: <Widget>[
+      //                     Expanded(
+      //                       child: Column(children: <Widget>[
+      //                         Container(
+      //                           child: Row(children: <Widget>[
+      //                             SizedBox(
+      //                               width: 15,
+      //                             ),
+      //                             Text(
+      //                               items[index].name,
+      //                               style:
+      //                                   TextStyle(fontWeight: FontWeight.w900),
+      //                               textAlign: TextAlign.start,
+      //                             ),
+      //                           ]),
+      //                         ),
+      //                         Container(
+      //                           child: Row(
+      //                             children: <Widget>[
+      //                               SizedBox(
+      //                                 width: 15,
+      //                               ),
+      //                               Expanded(
+      //                                 flex: 2,
+      //                                 child: IconButton(
+      //                                   icon: Icon(Icons.shopping_basket),
+      //                                   color: Color.fromRGBO(255, 111, 94, 1),
+      //                                   onPressed: () {
+      //                                     _mostrarAlertaEditarProducto(
+      //                                         context, index);
+      //                                     setState(() {
+      //                                       //_sumProduct(index);
+      //                                     });
+      //                                   },
+      //                                 ),
+      //                               ),
+      //                               Expanded(
+      //                                 flex: 2,
+      //                                 child:
+      //                                     //_creaPrecio(index)
+      //                                     Text(utils.numberFormat(
+      //                                         items[index].price)),
+      //                               ),
+      //                               SizedBox(
+      //                                 width: 15,
+      //                               ),
+      //                               Expanded(
+      //                                   flex: 2,
+      //                                   child: Row(
+      //                                     mainAxisAlignment:
+      //                                         MainAxisAlignment.spaceBetween,
+      //                                     children: <Widget>[
+      //                                       Expanded(
+      //                                         flex: 2,
+      //                                         child: Text(
+      //                                           items[index]
+      //                                               .quantity
+      //                                               .toString(),
+      //                                           overflow: TextOverflow.ellipsis,
+      //                                           textAlign: TextAlign.center,
+      //                                         ),
+      //                                       ),
+      //                                     ],
+      //                                   )),
+      //                               SizedBox(
+      //                                 width: 15,
+      //                               ),
+      //                               Expanded(
+      //                                 flex: 3,
+      //                                 child: Container(
+      //                                   margin: EdgeInsets.symmetric(
+      //                                     horizontal: 10,
+      //                                   ),
+      //                                   child: Text(
+      //                                     utils.numberFormat(
+      //                                       items[index].quantity *
+      //                                           items[index].price,
+      //                                     ),
+      //                                     style: TextStyle(
+      //                                         fontWeight: FontWeight.w600),
+      //                                     //overflow: TextOverflow.ellipsis,
+      //                                   ),
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                         )
+      //                       ]),
+      //                     )
+      //                   ],
+      //                 ),
+      //               ),
+      //             ),
+      //           );
+      //         },
+      //       ),
+      //     ),
+      //     //_newProducto(),
+      //   ],
+      // ),
+
+      // wawaw(){
+// return FutureBuilder<List<Lista>>(
+//     future: DBProvider.db.getToadasLista(),
+//     builder: (BuildContext context, AsyncSnapshot<List<Lista>> snapshot){
+
+//      if (!snapshot.hasData) {
+//         return Center(child: CircularProgressIndicator());
+//       }
+
+//       final lista = snapshot.data;
+
+//       if(lista.length == 0 ){
+//         return Center(child: Text('data'));
+//       }
+
+//       return ListView.builder(
+//         padding: EdgeInsets.all(8.0),
+//         itemCount: lista.length,
+//         itemBuilder: (context,i) =>
+//         _card(lista[i]
+//         ),
+//       );
+//     },
+//   );
+// }
+
+//  return  FutureBuilder<List<Lista>>(
+//       future: DBProvider.db.getToadasLista(),
+//       builder: (BuildContext context, AsyncSnapshot<List<Lista>> snapshot){
+
+//        if (!snapshot.hasData) {
+//           return Center(child: CircularProgressIndicator());
+//         }
+
+//         final lista = snapshot.data;
+
+//         if(lista.length == 0 ){
+//           return Center(child: Text('data'));
+//         }
+
+//         return ListView.builder(
+//           padding: EdgeInsets.all(8.0),
+//           itemCount: lista.length,
+//           itemBuilder: (context,i) =>
+//           _card(lista[i]
+//           ),
+//         );
+//       },
+//     );
+
+
+ // Widget _callPage( int currentPage ){
+  //   switch( currentPage ) {
+  //     case 0 : return ListPage();
+  //     // case 1 : return QuickPage();
+
+  //     default:
+  //       return ListPage();
+  //   }
+  // }
+
+  // Widget _imagen() {
+  //   return Container(
+  //     padding: EdgeInsets.all(10.0),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: <Widget>[
+  //         Image(
+  //           image: AssetImage('assets/undraw_empty_cart_co35.png'),
+  //           height: 200.00,
+  //           fit: BoxFit.cover,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // Widget _bNavbar() {
+  //   return BottomNavigationBar(items: [
+  //     BottomNavigationBarItem(
+  //         icon: Icon(Icons.settings), title: Text('Settings')),
+  //     BottomNavigationBarItem(
+  //         icon: Icon(Icons.monetization_on),
+  //         title: Text(
+  //           '10,000.00',
+  //           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+  //         )),
+  //   ]);
+  // }
+
+  // Widget _card() {
+  //   return Container(
+  //     height: 100.00,
+  //     child: Card(
+  //       elevation: 10.0,
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //         children: <Widget>[
+  //           Icon(Icons.shopping_basket, color: Color.fromRGBO(255, 111, 94, 1)),
+  //           Text('Compra supermecado'),
+  //           Column(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: <Widget>[
+  //             Text('15/05/2020'),
+  //             Text('Total: 250.00', style:  TextStyle(fontWeight: FontWeight.bold,), )
+  //             ]
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Drawer _crearMenu() {
+  //   return Drawer(
+  //     child: ListView(
+  //       padding: EdgeInsets.zero,
+  //       children: <Widget>[
+  //         DrawerHeader(
+  //           child: Text(''),
+  //           decoration: BoxDecoration(
+  //               image: DecorationImage(
+  //                   image: AssetImage("assets/undraw_shopping_app_flsj.png"),
+  //                   fit: BoxFit.cover)),
+  //         ),
+  //         ListTile(
+  //           leading: Icon(Icons.home),
+  //           title: Text('Inicio'),
+  //           onTap: () => {Navigator.pushReplacementNamed(context, 'home')},
+  //         ),
+  //         ListTile(
+  //           leading: Icon(Icons.list),
+  //           title: Text('lista de compra'),
+  //           onTap: () => {Navigator.pushNamed(context, 'newList')},
+  //         ),
+  //         //  ListTile(
+  //         //   leading: Icon(Icons.book),
+  //         //   title: Text('Pre-list'),
+  //         // ),
+
+  //         ListTile(
+  //           leading: Icon(Icons.settings),
+  //           title: Text('Ajustes'),
+  //           onTap: () => {Navigator.pushNamed(context, 'settings')},
+  //         ),
+  //         ListTile(
+  //           leading: Icon(Icons.info),
+  //           title: Text('Acerca de'),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
+
+// Drawer(
+//         child: SafeArea(
+//           child: ListView(
+//             children: <Widget>[
+//               DrawerHeader(
+//                 child: Text(''),
+//                 decoration: BoxDecoration(
+//                     image: DecorationImage(
+//                         image:
+//                             AssetImage("assets/undraw_shopping_app_flsj.png"),
+//                         fit: BoxFit.cover)),
+//               ),
+//               ListTile(
+//                 leading: Icon(Icons.home),
+//                 title: Text('Inicio'),
+//                 onTap: () =>{ Navigator.pushNamed(context, 'home')},
+//               ),
+//             ListTile(
+//                 leading: Icon(Icons.list),
+//                 title: Text('lista de compra'),
+//                 onTap: () =>{ Navigator.pushNamed(context, 'newList')},
+//               ),
+//               //  ListTile(
+//               //   leading: Icon(Icons.book),
+//               //   title: Text('Pre-list'),
+//               // ),
+
+//                 ListTile(
+//                 leading: Icon(Icons.settings),
+//                 title: Text('Ajustes'),
+//                  onTap: () =>{ Navigator.pushNamed(context, 'settings')},
+//               ),
+//               ListTile(
+//                 leading: Icon(Icons.info),
+//                 title: Text('Acerca de'),
+//               )
+
+//             ],
+//           ),
+//         ),
+//       ),

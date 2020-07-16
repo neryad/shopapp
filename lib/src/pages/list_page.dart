@@ -63,56 +63,6 @@ _wawa(BuildContext context) {
     ),
   );
 }
-// wawaw(){
-// return FutureBuilder<List<Lista>>(
-//     future: DBProvider.db.getToadasLista(),
-//     builder: (BuildContext context, AsyncSnapshot<List<Lista>> snapshot){
-
-//      if (!snapshot.hasData) {
-//         return Center(child: CircularProgressIndicator());
-//       }
-
-//       final lista = snapshot.data;
-
-//       if(lista.length == 0 ){
-//         return Center(child: Text('data'));
-//       }
-
-//       return ListView.builder(
-//         padding: EdgeInsets.all(8.0),
-//         itemCount: lista.length,
-//         itemBuilder: (context,i) =>
-//         _card(lista[i]
-//         ),
-//       );
-//     },
-//   );
-// }
-
-//  return  FutureBuilder<List<Lista>>(
-//       future: DBProvider.db.getToadasLista(),
-//       builder: (BuildContext context, AsyncSnapshot<List<Lista>> snapshot){
-
-//        if (!snapshot.hasData) {
-//           return Center(child: CircularProgressIndicator());
-//         }
-
-//         final lista = snapshot.data;
-
-//         if(lista.length == 0 ){
-//           return Center(child: Text('data'));
-//         }
-
-//         return ListView.builder(
-//           padding: EdgeInsets.all(8.0),
-//           itemCount: lista.length,
-//           itemBuilder: (context,i) =>
-//           _card(lista[i]
-//           ),
-//         );
-//       },
-//     );
-
 Widget _imagen() {
   return Container(
     padding: EdgeInsets.all(15.0),

@@ -51,226 +51,6 @@ class _NewListState extends State<NewList> {
           _bodyWidget(),
         ],
       ),
-
-      // Column(
-
-      //   children: <Widget>[
-      //     Expanded(
-      //       child: ListView.builder(
-      //         itemCount: items.length,
-      //         itemBuilder: (BuildContext context, int index) {
-      //           _controllers.add(new TextEditingController());
-
-      //           return Dismissible(
-      //             direction: DismissDirection.endToStart,
-      //             background: Padding(
-      //               padding: const EdgeInsets.all(8.0),
-      //               child: Container(
-      //                 color: Colors.red,
-      //                 child: Align(
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.end,
-      //                     children: <Widget>[
-      //                       Icon(
-      //                         Icons.delete,
-      //                         color: Colors.white,
-      //                       ),
-      //                       Text(
-      //                         " Eliminar",
-      //                         style: TextStyle(
-      //                           color: Colors.white,
-      //                           fontWeight: FontWeight.w700,
-      //                         ),
-      //                         textAlign: TextAlign.right,
-      //                       ),
-      //                       SizedBox(
-      //                         width: 20,
-      //                       ),
-      //                     ],
-      //                   ),
-      //                   alignment: Alignment.centerRight,
-      //                 ),
-      //               ),
-      //             ),
-
-      //             // background: Card(
-
-      //             //   color: Colors.red,
-      //             //   elevation: 4,
-      //             //   margin: EdgeInsets.all(15),
-      //             //   child: Icon(Icons.delete_forever, color: Colors.white,),
-      //             // ),
-      //             key: Key(items[index].name + items.length.toString()),
-      //             // key: Key('items[index]'),
-      //             //key: Key('items[index]'),
-      //             // secondaryBackground: (
-      //             //      Padding(
-      //             //   padding: const EdgeInsets.all(8.0),
-      //             //   child: Container(
-      //             //     color: Colors.green,
-      //             //     child: Align(
-      //             //       child: Row(
-      //             //         mainAxisAlignment: MainAxisAlignment.end,
-      //             //         children: <Widget>[
-      //             //           Icon(
-      //             //             Icons.check,
-      //             //             color: Colors.white,
-      //             //           ),
-      //             //           Text(
-      //             //             " Completado",
-      //             //             style: TextStyle(
-      //             //               color: Colors.white,
-      //             //               fontWeight: FontWeight.w700,
-      //             //             ),
-      //             //             textAlign: TextAlign.right,
-      //             //           ),
-      //             //           SizedBox(
-      //             //             width: 20,
-      //             //           ),
-      //             //         ],
-      //             //       ),
-      //             //       alignment: Alignment.centerRight,
-      //             //     ),
-      //             //   ),
-
-      //             // )),
-
-      //             onDismissed: (direction) {
-      //               // if(direction == DismissDirection.endToStart){
-      //               //   print('Verder');
-      //               // }
-      //               // print(direction);
-      //               //DismissDirection.endToStart azuel
-      //               //DismissDirection.startToEnd rojhos
-
-      //               // items.removeWhere((item) => item.id ==items[index].id);
-
-      //               //items.removeWhere((item) => item.id == items[index].id);
-      //               setState(() {
-      //                 // var priceToDel = items[index].price;
-      //                 items.removeAt(index);
-      //                 // total = total - priceToDel;
-      //                 getTotal();
-      //                 getDiference();
-
-      //                 //items.removeAt(index);
-      //               });
-      //               // setState(() {
-
-      //               //   getTotal();
-      //               // });
-
-      //               //getTotal();
-      //             },
-      //             child: Card(
-      //               elevation: 2,
-      //               margin: EdgeInsets.all(10),
-      //               child: Container(
-      //                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      //                 height: 80.00,
-      //                 child: Row(
-      //                   //mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-      //                   children: <Widget>[
-      //                     Expanded(
-      //                       child: Column(children: <Widget>[
-      //                         Container(
-      //                           child: Row(children: <Widget>[
-      //                             SizedBox(
-      //                               width: 15,
-      //                             ),
-      //                             Text(
-      //                               items[index].name,
-      //                               style:
-      //                                   TextStyle(fontWeight: FontWeight.w900),
-      //                               textAlign: TextAlign.start,
-      //                             ),
-      //                           ]),
-      //                         ),
-      //                         Container(
-      //                           child: Row(
-      //                             children: <Widget>[
-      //                               SizedBox(
-      //                                 width: 15,
-      //                               ),
-      //                               Expanded(
-      //                                 flex: 2,
-      //                                 child: IconButton(
-      //                                   icon: Icon(Icons.shopping_basket),
-      //                                   color: Color.fromRGBO(255, 111, 94, 1),
-      //                                   onPressed: () {
-      //                                     _mostrarAlertaEditarProducto(
-      //                                         context, index);
-      //                                     setState(() {
-      //                                       //_sumProduct(index);
-      //                                     });
-      //                                   },
-      //                                 ),
-      //                               ),
-      //                               Expanded(
-      //                                 flex: 2,
-      //                                 child:
-      //                                     //_creaPrecio(index)
-      //                                     Text(utils.numberFormat(
-      //                                         items[index].price)),
-      //                               ),
-      //                               SizedBox(
-      //                                 width: 15,
-      //                               ),
-      //                               Expanded(
-      //                                   flex: 2,
-      //                                   child: Row(
-      //                                     mainAxisAlignment:
-      //                                         MainAxisAlignment.spaceBetween,
-      //                                     children: <Widget>[
-      //                                       Expanded(
-      //                                         flex: 2,
-      //                                         child: Text(
-      //                                           items[index]
-      //                                               .quantity
-      //                                               .toString(),
-      //                                           overflow: TextOverflow.ellipsis,
-      //                                           textAlign: TextAlign.center,
-      //                                         ),
-      //                                       ),
-      //                                     ],
-      //                                   )),
-      //                               SizedBox(
-      //                                 width: 15,
-      //                               ),
-      //                               Expanded(
-      //                                 flex: 3,
-      //                                 child: Container(
-      //                                   margin: EdgeInsets.symmetric(
-      //                                     horizontal: 10,
-      //                                   ),
-      //                                   child: Text(
-      //                                     utils.numberFormat(
-      //                                       items[index].quantity *
-      //                                           items[index].price,
-      //                                     ),
-      //                                     style: TextStyle(
-      //                                         fontWeight: FontWeight.w600),
-      //                                     //overflow: TextOverflow.ellipsis,
-      //                                   ),
-      //                                 ),
-      //                               ),
-      //                             ],
-      //                           ),
-      //                         )
-      //                       ]),
-      //                     )
-      //                   ],
-      //                 ),
-      //               ),
-      //             ),
-      //           );
-      //         },
-      //       ),
-      //     ),
-      //     //_newProducto(),
-      //   ],
-      // ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
           _mostrarAlertaProducto(context);
@@ -285,32 +65,6 @@ class _NewListState extends State<NewList> {
       bottomNavigationBar: _bNavbar(context),
     );
   }
-
-  // validconte() {
-  //   if (items.length == 0) {
-  //     return Text('nada');
-  //   } else {
-  //     return ('todo');
-  //   }
-  // }
-
-  // _sumProduct(int index) {
-  //   setState(() {
-  //     items[index].quantity++;
-  //     getTotal();
-  //   });
-  // }
-
-  // _resProduct(int index) {
-  //   setState(() {
-  //     if (items[index].quantity == 0) {
-  //       return;
-  //     }
-  //     items[index].quantity--;
-
-  //     getTotal();
-  //   });
-  // }
 
   void getTotal() {
     if (items != null) {
@@ -830,76 +584,17 @@ class _NewListState extends State<NewList> {
               ),
             ),
 
-            // background: Card(
 
-            //   color: Colors.red,
-            //   elevation: 4,
-            //   margin: EdgeInsets.all(15),
-            //   child: Icon(Icons.delete_forever, color: Colors.white,),
-            // ),
             key: Key(items[index].name + items.length.toString()),
-            // key: Key('items[index]'),
-            //key: Key('items[index]'),
-            // secondaryBackground: (
-            //      Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Container(
-            //     color: Colors.green,
-            //     child: Align(
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.end,
-            //         children: <Widget>[
-            //           Icon(
-            //             Icons.check,
-            //             color: Colors.white,
-            //           ),
-            //           Text(
-            //             " Completado",
-            //             style: TextStyle(
-            //               color: Colors.white,
-            //               fontWeight: FontWeight.w700,
-            //             ),
-            //             textAlign: TextAlign.right,
-            //           ),
-            //           SizedBox(
-            //             width: 20,
-            //           ),
-            //         ],
-            //       ),
-            //       alignment: Alignment.centerRight,
-            //     ),
-            //   ),
-
-            // )),
+            
 
             onDismissed: (direction) {
-              // if(direction == DismissDirection.endToStart){
-              //   print('Verder');
-              // }
-              // print(direction);
-              //DismissDirection.endToStart azuel
-              //DismissDirection.startToEnd rojhos
-
-              // items.removeWhere((item) => item.id ==items[index].id);
-
-              //items.removeWhere((item) => item.id == items[index].id);
+            
               setState(() {
-                // var priceToDel = items[index].price;
                 items.removeAt(index);
-                // total = total - priceToDel;
                 getTotal();
                 getDiference();
-
-                //items.removeAt(index);
               });
-              // setState(() {
-              // onTap: () {
-              //               _mostrarAlertaEditarProducto(context, index);
-              //             },
-              //   getTotal();
-              // });
-
-              //getTotal();
             },
             child: GestureDetector(
               onTap: () {
@@ -1036,31 +731,8 @@ class _NewListState extends State<NewList> {
             ],
           ),
         ),
-        // IconButton(
-        // icon: Icon(Icons.save),
-        // onPressed: () {},),
-        // Text('Guardar lista'),
-        // IconButton(icon: Icon(Icons.remove_circle_outline), onPressed: () {},),
-        //  Text('Elimnar lista'),
       ],
     ));
-
-    // BottomNavigationBar(items: [
-    //   BottomNavigationBarItem(
-
-    //     icon: Icon(Icons.save),
-    //     title: Text('Guardar')
-    //     ),
-    //   BottomNavigationBarItem(
-
-    //     icon: Icon(Icons.delete_outline),
-    //     title: Text(
-    //       "Borrar lista",
-    //       // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-    //     ),
-    //   ),
-    // ]
-    // );
   }
 
   _validateEliminarList(BuildContext context) {
@@ -1102,14 +774,6 @@ class _NewListState extends State<NewList> {
   saveList() {
     //if (!formKey.currentState.validate()) return;
     lisForm.currentState.save();
-    // items.insert(
-    //     it,
-    //     new ProductModel(
-    //         id: newId,
-    //         name: productModel.name,
-    //         quantity: productModel.quantity,
-    //         price: productModel.price));
-
     DateTime now = new DateTime.now();
     var fecha = '${now.day}/${now.month}/${now.year}';
     final nuevaLista = Lista(
@@ -1119,11 +783,6 @@ class _NewListState extends State<NewList> {
         total: total);
     DBProvider.db.nuevoLista(nuevaLista);
     lisForm.currentState.reset();
-
-    // final rochy = ProductModel(
-    //     id: '2', name: 'asd', price: 32.00, quantity: 2, listId: wawa.id);
-    // DBProvider.db.newProd(rochy);
-    // print(rochy);
   }
 
   void _guardarLista(BuildContext context) {
@@ -1140,8 +799,6 @@ class _NewListState extends State<NewList> {
                 children: <Widget>[
                   _nombrelista(),
                   _nombresupermeacdo()
-                  // _editarPrecioArticulo(index),
-                  // _editarcantidadArticulo(index),
                 ],
               ),
             ),
@@ -1155,9 +812,6 @@ class _NewListState extends State<NewList> {
               FlatButton(
                   onPressed: () {
                     saveList();
-                    //_subimt();
-                    //_editDubimt(index);
-                    // getTotal();
                     Navigator.of(context).pop();
                   },
                   child: Text(
@@ -1168,278 +822,6 @@ class _NewListState extends State<NewList> {
           );
         });
   }
-  // Widget _newProducto() {
-  //   var it = items.length;
-  //   return Container(
-  //       color: Colors.white60,
-  //       child: Column(
-  //         children: <Widget>[
-  //           TextField(
-  //             maxLength: 50,
-  //             textCapitalization: TextCapitalization.sentences,
-  //             textAlign: TextAlign.center,
-  //             controller: _articlesCtrl,
-  //             onSubmitted: (text) {
-  //               if (text == '') {
-  //                 return;
-  //               }
-  //               // insertar(it,text);
-  //               var newId = uuid.v1();
-  //               items.insert(
-  //                   it,
-  //                   new ProductModel(
-  //                      name: text, quantity: 1, price: 0.00));
-  //               _articlesCtrl.clear();
-  //               setState(() {});
-  //             },
-  //             decoration: InputDecoration(
-  //               counterText: '',
-  //               focusedBorder: UnderlineInputBorder(
-  //                 borderSide:
-  //                     BorderSide(color: Color.fromRGBO(255, 111, 94, 1)),
-  //               ),
-  //               hintText: 'Nombre artículo',
-  //               hintStyle: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)),
-  //             ),
-  //           ),
-  //         ],
-  //       ));
-  // }
-}
 
-// ListView.builder(
-//               itemCount: items.length,
-//               itemBuilder: (BuildContext context, int index) {
-//                 _controllers.add(new TextEditingController());
-//                 return Dismissible(
-//                   direction: DismissDirection.endToStart,
-//                   background: Padding(
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: Container(
-//                       color: Colors.red,
-//                       child: Align(
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.end,
-//                           children: <Widget>[
-//                             Icon(
-//                               Icons.delete,
-//                               color: Colors.white,
-//                             ),
-//                             Text(
-//                               " Eliminar",
-//                               style: TextStyle(
-//                                 color: Colors.white,
-//                                 fontWeight: FontWeight.w700,
-//                               ),
-//                               textAlign: TextAlign.right,
-//                             ),
-//                             SizedBox(
-//                               width: 20,
-//                             ),
-//                           ],
-//                         ),
-//                         alignment: Alignment.centerRight,
-//                       ),
-//                     ),
-//                   ),
-
-//                   // background: Card(
-
-//                   //   color: Colors.red,
-//                   //   elevation: 4,
-//                   //   margin: EdgeInsets.all(15),
-//                   //   child: Icon(Icons.delete_forever, color: Colors.white,),
-//                   // ),
-//                   key: Key(items[index].name + items.length.toString()),
-//                   // key: Key('items[index]'),
-//                   //key: Key('items[index]'),
-//                   // secondaryBackground: (
-//                   //      Padding(
-//                   //   padding: const EdgeInsets.all(8.0),
-//                   //   child: Container(
-//                   //     color: Colors.green,
-//                   //     child: Align(
-//                   //       child: Row(
-//                   //         mainAxisAlignment: MainAxisAlignment.end,
-//                   //         children: <Widget>[
-//                   //           Icon(
-//                   //             Icons.check,
-//                   //             color: Colors.white,
-//                   //           ),
-//                   //           Text(
-//                   //             " Completado",
-//                   //             style: TextStyle(
-//                   //               color: Colors.white,
-//                   //               fontWeight: FontWeight.w700,
-//                   //             ),
-//                   //             textAlign: TextAlign.right,
-//                   //           ),
-//                   //           SizedBox(
-//                   //             width: 20,
-//                   //           ),
-//                   //         ],
-//                   //       ),
-//                   //       alignment: Alignment.centerRight,
-//                   //     ),
-//                   //   ),
-
-//                   // )),
-
-//                   onDismissed: (direction) {
-//                     // if(direction == DismissDirection.endToStart){
-//                     //   print('Verder');
-//                     // }
-//                     // print(direction);
-//                     //DismissDirection.endToStart azuel
-//                     //DismissDirection.startToEnd rojhos
-
-//                     var priceToDel = items[index].price;
-//                     // items.removeWhere((item) => item.id ==items[index].id);
-
-//                     //items.removeWhere((item) => item.id == items[index].id);
-//                     setState(() {
-//                       items.removeAt(index);
-//                       total = total - priceToDel;
-//                       getDiference();
-
-//                       //items.removeAt(index);
-//                     });
-//                     // setState(() {
-
-//                     //   getTotal();
-//                     // });
-
-//                     //getTotal();
-//                   },
-//                   child: Card(
-//                     elevation: 2,
-//                     margin: EdgeInsets.all(10),
-//                     child: Container(
-//                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-//                       height: 80.00,
-//                       child: Row(
-//                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-//                         children: <Widget>[
-//                           Expanded(
-//                             child: Column(children: <Widget>[
-//                               Container(
-//                                 child: Row(children: <Widget>[
-//                                   SizedBox(
-//                                     width: 15,
-//                                   ),
-//                                   Text(
-//                                     items[index].name,
-//                                     style:
-//                                         TextStyle(fontWeight: FontWeight.w900),
-//                                     textAlign: TextAlign.start,
-//                                   ),
-//                                 ]),
-//                               ),
-//                               Container(
-//                                 child: Row(
-//                                   children: <Widget>[
-//                                     SizedBox(
-//                                       width: 15,
-//                                     ),
-//                                     Expanded(
-//                                       flex: 3,
-//                                       child:
-//                                           //_creaPrecio(index)
-//                                           TextField(
-//                                         maxLength: 6,
-//                                         controller: _controllers[index],
-//                                         textAlign: TextAlign.center,
-//                                         decoration: InputDecoration(
-//                                             hintText: '0.0', counterText: ''),
-//                                         keyboardType:
-//                                             TextInputType.numberWithOptions(
-//                                                 decimal: true),
-//                                         onChanged: (text) {
-//                                           items[index].price =
-//                                               num.parse(text).toDouble();
-//                                           setState(() {
-//                                             getTotal();
-//                                           });
-//                                         },
-//                                       ),
-//                                     ),
-//                                     SizedBox(
-//                                       width: 15,
-//                                     ),
-//                                     Expanded(
-//                                         flex: 5,
-//                                         child: Row(
-//                                           mainAxisAlignment:
-//                                               MainAxisAlignment.spaceBetween,
-//                                           children: <Widget>[
-//                                             Expanded(
-//                                               flex: 2,
-//                                               child: IconButton(
-//                                                 icon: Icon(Icons.add),
-//                                                 color: Color.fromRGBO(
-//                                                     255, 111, 94, 1),
-//                                                 onPressed: () {
-//                                                   setState(() {
-//                                                     _sumProduct(index);
-//                                                   });
-//                                                 },
-//                                               ),
-//                                             ),
-//                                             Expanded(
-//                                               flex: 2,
-//                                               child: Text(
-//                                                 items[index]
-//                                                     .quantity
-//                                                     .toString(),
-//                                                 overflow: TextOverflow.ellipsis,
-//                                                 textAlign: TextAlign.center,
-//                                               ),
-//                                             ),
-//                                             Expanded(
-//                                               flex: 2,
-//                                               child: IconButton(
-//                                                 icon: Icon(Icons.remove),
-//                                                 color: Color.fromRGBO(
-//                                                     255, 111, 94, 1),
-//                                                 onPressed: () {
-//                                                   setState(() {
-//                                                     _resProduct(index);
-//                                                   });
-//                                                 },
-//                                               ),
-//                                             ),
-//                                           ],
-//                                         )),
-//                                     SizedBox(
-//                                       width: 15,
-//                                     ),
-//                                     Expanded(
-//                                       flex: 3,
-//                                       child: Container(
-//                                         margin: EdgeInsets.symmetric(
-//                                           horizontal: 10,
-//                                         ),
-//                                         child: Text(
-//                                           utils.numberFormat(
-//                                             items[index].quantity *
-//                                                 items[index].price,
-//                                           ),
-//                                           style: TextStyle(
-//                                               fontWeight: FontWeight.w600),
-//                                           //overflow: TextOverflow.ellipsis,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               )
-//                             ]),
-//                           )
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 );
-//               },
-//             ),
+  }
+ 
