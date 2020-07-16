@@ -41,7 +41,8 @@ class DBProvider {
           'id INTEGER PRIMARY KEY,'
           'title TEXT,'
           'superMaret TEXT,'
-          'fecha TEXT'
+          'fecha TEXT,'
+          'total REAL'
           ')');
 
         await db.execute(
@@ -53,10 +54,7 @@ class DBProvider {
           'price REAL,'
           'listId INTEGER,'
           'FOREIGN KEY(listId) REFERENCES Lista(id)'
-          ')'
-
-
-        );
+          ')');
         
       }
     );
@@ -65,7 +63,7 @@ class DBProvider {
   }
 
   //Crear Registro
-  nuevoLista( Lista nuevalista ) async {
+    nuevoLista( Lista nuevalista ) async {
 
     final db =  await database;
 
@@ -82,5 +80,29 @@ class DBProvider {
 
     return res;
   }
+//GET
 
+     Future <ProductModel> getarticulos(int id) async {
+
+      final db = await database;
+
+      final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
+
+      return res.isNotEmpty ? ProductModel.fromJson(res.first) : null;
+
+      // List<Lista> list = res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
+
+      // return list;
+    }
+
+    Future <List<Lista>> getToadasLista() async {
+
+      final db = await database;
+
+      final res = await db.query('Lista');
+
+      List<Lista> list = res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
+
+      return list;
+    }
 }

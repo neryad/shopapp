@@ -17,15 +17,20 @@ class _NewListState extends State<NewList> {
   double buget = 00.00;
   double total = 0.00;
   double diference = 0.00;
+
   final formKey = GlobalKey<FormState>();
   final editFormKey = GlobalKey<FormState>();
+  final lisForm = GlobalKey<FormState>();
+
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
+
   var uuid = Uuid();
 
   List<ProductModel> items = [];
   List<TextEditingController> _controllers = new List();
   ProductModel productModel = new ProductModel();
+  Lista listaModel = new Lista();
 
   @override
   Widget build(BuildContext context) {
@@ -617,6 +622,43 @@ class _NewListState extends State<NewList> {
     );
   }
 
+  Widget _nombrelista() {
+    //weo
+    return TextFormField(
+      //  initialValue: productModel.name,
+      maxLength: 25,
+      textCapitalization: TextCapitalization.sentences,
+      textAlign: TextAlign.center,
+      onSaved: (value) => listaModel.title = value,
+      decoration: InputDecoration(
+        //counterText: '',
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
+        hintText: 'Nombre lista',
+        hintStyle: TextStyle(color: utils.cambiarColor()),
+      ),
+    );
+  }
+
+  Widget _nombresupermeacdo() {
+    return TextFormField(
+      //  initialValue: productModel.name,
+      maxLength: 20,
+      textCapitalization: TextCapitalization.sentences,
+      textAlign: TextAlign.center,
+      onSaved: (value) => listaModel.superMaret = value,
+      decoration: InputDecoration(
+        // counterText: '',
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
+        hintText: 'Nombre localidad',
+        hintStyle: TextStyle(color: utils.cambiarColor()),
+      ),
+    );
+  }
+
   Widget _crearBuget() {
     return TextField(
       maxLength: 6,
@@ -851,108 +893,115 @@ class _NewListState extends State<NewList> {
                 //items.removeAt(index);
               });
               // setState(() {
-
+              // onTap: () {
+              //               _mostrarAlertaEditarProducto(context, index);
+              //             },
               //   getTotal();
               // });
 
               //getTotal();
             },
-            child: Card(
-              elevation: 2,
-              margin: EdgeInsets.all(10),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                height: 80.00,
-                child: Row(
-                  //mainAxisAlignment: MainAxisAlignment.spaceAround,
+            child: GestureDetector(
+              onTap: () {
+                _mostrarAlertaEditarProducto(context, index);
+              },
+              child: Card(
+                elevation: 2,
+                margin: EdgeInsets.all(10),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  height: 80.00,
+                  child: Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
 
-                  children: <Widget>[
-                    Expanded(
-                      child: Column(children: <Widget>[
-                        Container(
-                          child: Row(children: <Widget>[
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Text(
-                              items[index].name,
-                              style: TextStyle(fontWeight: FontWeight.w900),
-                              textAlign: TextAlign.start,
-                            ),
-                          ]),
-                        ),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(children: <Widget>[
+                          Container(
+                            child: Row(children: <Widget>[
                               SizedBox(
                                 width: 15,
                               ),
-                              Expanded(
-                                flex: 2,
-                                child: IconButton(
-                                  icon: Icon(Icons.shopping_basket),
-                                  color: utils.cambiarColor(),
-                                  onPressed: () {
-                                    _mostrarAlertaEditarProducto(
-                                        context, index);
-                                    setState(() {
-                                      //_sumProduct(index);
-                                    });
-                                  },
-                                ),
+                              Text(
+                                items[index].name,
+                                style: TextStyle(fontWeight: FontWeight.w900),
+                                textAlign: TextAlign.start,
                               ),
-                              Expanded(
-                                flex: 2,
-                                child:
-                                    //_creaPrecio(index)
-                                    Text(
-                                        utils.numberFormat(items[index].price)),
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Expanded(
-                                  flex: 2,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Expanded(
-                                        flex: 2,
-                                        child: Text(
-                                          items[index].quantity.toString(),
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Expanded(
-                                flex: 3,
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                  ),
-                                  child: Text(
-                                    utils.numberFormat(
-                                      items[index].quantity *
-                                          items[index].price,
-                                    ),
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                    //overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ]),
                           ),
-                        )
-                      ]),
-                    )
-                  ],
+                          Container(
+                            child: Row(
+                              children: <Widget>[
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: IconButton(
+                                    icon: Icon(Icons.shopping_basket),
+                                    color: utils.cambiarColor(),
+                                    onPressed: () {
+                                      _mostrarAlertaEditarProducto(
+                                          context, index);
+                                      setState(() {
+                                        //_sumProduct(index);
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child:
+                                      //_creaPrecio(index)
+                                      Text(utils
+                                          .numberFormat(items[index].price)),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Expanded(
+                                    flex: 2,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            items[index].quantity.toString(),
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                    ),
+                                    child: Text(
+                                      utils.numberFormat(
+                                        items[index].quantity *
+                                            items[index].price,
+                                      ),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600),
+                                      //overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ]),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -969,21 +1018,21 @@ class _NewListState extends State<NewList> {
       // mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         FlatButton(
-          onPressed: () => saveList(),
+          //onPressed: () => _guardarLista(context),   _validateEliminarList(context);
+          onPressed: items.length == 0 ? null : () => _guardarLista(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[Icon(Icons.save), Text('Guardar lista')],
           ),
         ),
         FlatButton(
-          onPressed: () {
-            _validateEliminarList(context);
-          },
+          onPressed:
+              items.length == 0 ? null : () => _validateEliminarList(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Icon(Icons.remove_circle_outline),
-              Text('Eliminar lista')
+              Text('Limpiar lista')
             ],
           ),
         ),
@@ -995,7 +1044,7 @@ class _NewListState extends State<NewList> {
         //  Text('Elimnar lista'),
       ],
     ));
-  
+
     // BottomNavigationBar(items: [
     //   BottomNavigationBarItem(
 
@@ -1013,9 +1062,9 @@ class _NewListState extends State<NewList> {
     // ]
     // );
   }
-  _validateEliminarList(BuildContext context) {
 
-     return showDialog(
+  _validateEliminarList(BuildContext context) {
+    return showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) {
@@ -1036,30 +1085,88 @@ class _NewListState extends State<NewList> {
                   )),
             ],
           );
-         } );
+        });
   }
 
-  limpiarTodo(){
-     print(items);
-   items.clear();
-   
-   setState(() {
-     getTotal();
-     getDiference();
-   }); 
-   Navigator.of(context).pop();
+  limpiarTodo() {
+    print(items);
+    items.clear();
+
+    setState(() {
+      getTotal();
+      getDiference();
+    });
+    Navigator.of(context).pop();
   }
 
-  saveList(){
+  saveList() {
+    //if (!formKey.currentState.validate()) return;
+    lisForm.currentState.save();
+    // items.insert(
+    //     it,
+    //     new ProductModel(
+    //         id: newId,
+    //         name: productModel.name,
+    //         quantity: productModel.quantity,
+    //         price: productModel.price));
+
     DateTime now = new DateTime.now();
-    
+    var fecha = '${now.day}/${now.month}/${now.year}';
+    final nuevaLista = Lista(
+        title: listaModel.title,
+        superMaret: listaModel.superMaret,
+        fecha: fecha,
+        total: total);
+    DBProvider.db.nuevoLista(nuevaLista);
+    lisForm.currentState.reset();
 
-    final wawa = Lista(title: 'Compra2', superMaret: "Bravo", fecha: '02/12/2020' );
-    DBProvider.db.nuevoLista(wawa);
+    // final rochy = ProductModel(
+    //     id: '2', name: 'asd', price: 32.00, quantity: 2, listId: wawa.id);
+    // DBProvider.db.newProd(rochy);
+    // print(rochy);
+  }
 
-    final rochy = ProductModel(id: '1', name: 'asd', price: 32.00,quantity: 2, listId: wawa.id );
-      DBProvider.db.newProd(rochy);
-    print(rochy);
+  void _guardarLista(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Guardar lista'),
+            content: Form(
+              key: lisForm,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _nombrelista(),
+                  _nombresupermeacdo()
+                  // _editarPrecioArticulo(index),
+                  // _editarcantidadArticulo(index),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'Salir',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+              FlatButton(
+                  onPressed: () {
+                    saveList();
+                    //_subimt();
+                    //_editDubimt(index);
+                    // getTotal();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Aceptar',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+            ],
+          );
+        });
   }
   // Widget _newProducto() {
   //   var it = items.length;
