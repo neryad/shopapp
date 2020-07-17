@@ -431,6 +431,9 @@ class _NewListState extends State<NewList> {
         ),
       ),
       onChanged: (value) {
+        setState(() {
+          
+        });
         if (value == null) {
           return;
         } else {
@@ -452,15 +455,15 @@ class _NewListState extends State<NewList> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
+            GestureDetector(
+              onTap: () {
                     _mostrarAlertaBuget(context);
                   },
-                  child: Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
                     children: <Widget>[
                       IconButton(
                           icon: Icon(
@@ -474,16 +477,16 @@ class _NewListState extends State<NewList> {
                       )
                     ],
                   ),
-                ),
-                Text(
-                  utils.numberFormat(buget),
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: bugetColor,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
+                  Text(
+                    utils.numberFormat(buget),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: bugetColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
             Spacer(),
             //SizedBox(width: 15.0),
