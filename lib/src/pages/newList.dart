@@ -546,7 +546,7 @@ class _NewListState extends State<NewList> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text(
                 'No se han agregado articulos a la lista',
                 style: TextStyle(
