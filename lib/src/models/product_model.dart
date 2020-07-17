@@ -11,6 +11,7 @@ class ProductModel {
         this.quantity,
         this.price,
         this.listId,
+        this.complete = false,
     });
 
     String id;
@@ -18,6 +19,7 @@ class ProductModel {
     int quantity;
     double price;
     int listId;
+    bool complete;
 
     factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
@@ -25,6 +27,7 @@ class ProductModel {
         quantity: json["quantity"],
         price: json["price"],
         listId: json["listId"],
+        complete: json["complete"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -33,5 +36,6 @@ class ProductModel {
         "quantity": quantity,
         "price": price,
         "listId": listId,
+        "complete": complete,
     };
 }

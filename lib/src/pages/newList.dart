@@ -17,6 +17,7 @@ class _NewListState extends State<NewList> {
   double buget = 00.00;
   double total = 0.00;
   double diference = 0.00;
+  bool checkValue = false;
 
   final formKey = GlobalKey<FormState>();
   final editFormKey = GlobalKey<FormState>();
@@ -264,6 +265,7 @@ class _NewListState extends State<NewList> {
             name: productModel.name,
             quantity: productModel.quantity,
             price: productModel.price));
+
     formKey.currentState.reset();
   }
 
@@ -444,6 +446,7 @@ class _NewListState extends State<NewList> {
         color: Colors.white,
       ),
       child: Container(
+        padding: EdgeInsets.all(5),
         // margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -453,19 +456,24 @@ class _NewListState extends State<NewList> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    IconButton(
-                        icon: Icon(
-                          Icons.account_balance_wallet,
-                          color: Colors.black,
-                        ),
-                        onPressed: () => _mostrarAlertaBuget(context)),
-                    Text(
-                      "Presupuesto",
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    _mostrarAlertaBuget(context);
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                          icon: Icon(
+                            Icons.account_balance_wallet,
+                            color: Colors.black,
+                          ),
+                          onPressed: () => _mostrarAlertaBuget(context)),
+                      Text(
+                        "Presupuesto",
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    ],
+                  ),
                 ),
                 Text(
                   utils.numberFormat(buget),
@@ -546,6 +554,8 @@ class _NewListState extends State<NewList> {
             )
           ]));
     }
+    items.sort((a, b) => a.name.compareTo(b.name));
+
     return Expanded(
       child: ListView.builder(
         itemCount: items.length,
@@ -583,13 +593,8 @@ class _NewListState extends State<NewList> {
                 ),
               ),
             ),
-
-
             key: Key(items[index].name + items.length.toString()),
-            
-
             onDismissed: (direction) {
-            
               setState(() {
                 items.removeAt(index);
                 getTotal();
@@ -604,8 +609,8 @@ class _NewListState extends State<NewList> {
                 elevation: 2,
                 margin: EdgeInsets.all(10),
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  height: 80.00,
+                  // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  height: 100.00,
                   child: Row(
                     //mainAxisAlignment: MainAxisAlignment.spaceAround,
 
@@ -613,16 +618,32 @@ class _NewListState extends State<NewList> {
                       Expanded(
                         child: Column(children: <Widget>[
                           Container(
-                            child: Row(children: <Widget>[
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                items[index].name,
-                                style: TextStyle(fontWeight: FontWeight.w900),
-                                textAlign: TextAlign.start,
-                              ),
-                            ]),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      items[index].name,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w900),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                  Checkbox(
+                                      activeColor: utils.cambiarColor(),
+                                      value: items[index].complete,
+                                      onChanged: (valor) {
+                                        items[index].complete = valor;
+                                        setState(() {});
+                                      }),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                ]),
                           ),
                           Container(
                             child: Row(
@@ -655,7 +676,7 @@ class _NewListState extends State<NewList> {
                                   width: 15,
                                 ),
                                 Expanded(
-                                    flex: 2,
+                                    flex: 1,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -796,10 +817,7 @@ class _NewListState extends State<NewList> {
               key: lisForm,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  _nombrelista(),
-                  _nombresupermeacdo()
-                ],
+                children: <Widget>[_nombrelista(), _nombresupermeacdo()],
               ),
             ),
             actions: <Widget>[
@@ -822,6 +840,4 @@ class _NewListState extends State<NewList> {
           );
         });
   }
-
-  }
- 
+}
