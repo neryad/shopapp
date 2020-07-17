@@ -43,7 +43,7 @@ _wawa(BuildContext context) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'No se han guadado alguna lista',
+              'No se ha registrado alguna lista',
               style: TextStyle(
                 color: utils.cambiarColor(),
                 fontSize: 18,
