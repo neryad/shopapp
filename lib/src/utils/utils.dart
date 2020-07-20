@@ -105,7 +105,7 @@ saludos() {
     msg = 'Buenos dias ${prefs.nombreUsuario}';
   } else if ((timeNow >= 12) && (timeNow <= 16)) {
     msg = 'Buenas tardes ${prefs.nombreUsuario}';
-  } else if ((timeNow > 16) && (timeNow < 20)) {
+  } else if ((timeNow > 16) && (timeNow < 19)) {
     msg = 'Buenas tardes ${prefs.nombreUsuario}';
   } else {
     msg = 'Buenas noches ${prefs.nombreUsuario}';

@@ -11,15 +11,15 @@ class ProductModel {
         this.quantity,
         this.price,
         this.listId,
-        this.complete = false,
+        this.complete = 0,
     });
 
-    String id;
+    int id;
     String name;
     int quantity;
     double price;
-    int listId;
-    bool complete;
+    int listId =1;
+    int complete;
 
     factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],

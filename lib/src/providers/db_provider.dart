@@ -48,11 +48,24 @@ class DBProvider {
         await db.execute(
 
           'CREATE TABLE product ('
-          'id INTERGER PRIMARY KEY,'
+          'id INTEGER PRIMARY KEY,'
           'name TEXT,'
           'quantity INTERGER,'
           'price REAL,'
           'listId INTEGER,'
+           'complete INTEGER,'
+          'FOREIGN KEY(listId) REFERENCES Lista(id)'
+          ')');
+
+          await db.execute(
+
+          'CREATE TABLE tmpProduct ('
+          'id INTEGER PRIMARY KEY,'
+          'name TEXT,'
+          'quantity INTERGER,'
+          'price REAL,'
+          'listId INTEGER,'
+          'complete INTEGER,'
           'FOREIGN KEY(listId) REFERENCES Lista(id)'
           ')');
         
@@ -80,16 +93,32 @@ class DBProvider {
 
     return res;
   }
-//GET
 
-     Future <ProductModel> getarticulos(int id) async {
+      tmpProd( ProductModel productModel  ) async {
+
+    final db =  await database;
+
+    final res = db.insert('tmpProduct', productModel.toJson());
+
+    return res;
+  }
+
+
+    //GET
+
+     Future <List<ProductModel>> getarticulos() async {
 
       final db = await database;
+       final res = await db.query('product');
 
-      final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
+     // final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
+      
+       List<ProductModel> art = res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList(): [];
 
-      return res.isNotEmpty ? ProductModel.fromJson(res.first) : null;
 
+       //List<ProductModel> art = res.isNotEmpty ? ProductModel.fromJson(res.first) : null;
+
+        return art;
       // List<Lista> list = res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
 
       // return list;
@@ -105,4 +134,38 @@ class DBProvider {
 
       return list;
     }
+
+    //Delete
+
+    Future<int> deleteLista(int id ) async {
+
+      final db =  await database;
+
+      final res = await db.delete('Lista', where: 'id = ?', whereArgs: [id]);
+
+      return res;
+    }
+
+      Future<int> deleteTmpProd(int id ) async {
+
+      final db =  await database;
+
+      final res = await db.delete('tmpProduct', where: 'id = ?', whereArgs: [id]);
+
+      return res;
+    }
+
+       Future<int> deleteAllTempProd() async {
+
+      final db =  await database;
+
+
+      final res = await db.rawDelete('Delete FROM tmpProduct');
+
+      return res;
+    }
+
+
+
+
 }

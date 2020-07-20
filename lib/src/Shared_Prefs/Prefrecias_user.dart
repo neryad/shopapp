@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
@@ -43,4 +45,16 @@ class PreferenciasUsuario {
   set nombreUsuario(String value) {
     _prefs.setString('nombreUsuario', value);
   }
+
+  save(String key, value) async {
+    //final prefs = await SharedPreferences.getInstance();
+    _prefs.setString(key, json.encode(value));
+  }
+
+  read(String key) async {
+  //final prefs = await SharedPreferences.getInstance();
+  return json.decode(_prefs.getString(key)?? '');
+}
+
+
 }

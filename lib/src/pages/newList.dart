@@ -5,6 +5,7 @@ import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
+//import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart' as wawa;
 
 class NewList extends StatefulWidget {
   NewList({Key key}) : super(key: key);
@@ -29,12 +30,56 @@ class _NewListState extends State<NewList> {
   var uuid = Uuid();
 
   List<ProductModel> items = [];
+
+  //List<ProductModel> itemsTemp =  utils.prefs.read("TempPro");
   List<TextEditingController> _controllers = new List();
   ProductModel productModel = new ProductModel();
   Lista listaModel = new Lista();
 
+  //       loadSharedPrefs() async {
+  //         try {
+  //            ProductModel user =  ProductModel.fromJson(await utils.prefs.read("user"));
+  //           print("object");
+  //         } catch (e) {
+  //           print('algun jodido error');
+  //         }
+  //   // try {
+  //   //    ProductModel user =  ProductModel.fromJson(await utils.prefs.read("user"));
+  //   //   Scaffold.of(context).showSnackBar(SnackBar(
+  //   //       content: new Text("Loaded!"),
+  //   //       duration: const Duration(milliseconds: 500)));
+  //   //   setState(() {
+  //   //     //userLoad = user;
+  //   //     print("object");
+  //   //   });
+  //   // } catch (Excepetion) {
+  //   //   Scaffold.of(context).showSnackBar(SnackBar(
+  //   //       content: new Text("Nothing found!"),
+  //   //       duration: const Duration(milliseconds: 500)));
+  //   // }
+
+  // }
+
+  // loadSharedPrefs() async {
+  //   try {
+
+  //     Scaffold.of(context).showSnackBar(SnackBar(
+  //         content: new Text("Loaded!"),
+  //         duration: const Duration(milliseconds: 500)));
+  //     setState(() {
+  //       itemsTemp = user;
+  //     });
+  //   } catch (Excepetion) {
+  //     Scaffold.of(context).showSnackBar(SnackBar(
+  //         content: new Text("Nothing found!"),
+  //         duration: const Duration(milliseconds: 500)));
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
+    //loadSharedPrefs();
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -258,14 +303,15 @@ class _NewListState extends State<NewList> {
 
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
-    items.insert(
-        it,
-        new ProductModel(
-            id: newId,
-            name: productModel.name,
-            quantity: productModel.quantity,
-            price: productModel.price));
-
+    var prod = new ProductModel(
+        // id: newId,
+        name: productModel.name,
+        quantity: productModel.quantity,
+        listId: 1,
+        price: productModel.price);
+    items.insert(it, prod);
+    //utils.prefs.save("TempPro", prod);
+    DBProvider.db.newProd(prod);
     formKey.currentState.reset();
   }
 
@@ -431,9 +477,7 @@ class _NewListState extends State<NewList> {
         ),
       ),
       onChanged: (value) {
-        setState(() {
-          
-        });
+        setState(() {});
         if (value == null) {
           return;
         } else {
@@ -457,8 +501,8 @@ class _NewListState extends State<NewList> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                    _mostrarAlertaBuget(context);
-                  },
+                _mostrarAlertaBuget(context);
+              },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -532,202 +576,435 @@ class _NewListState extends State<NewList> {
   }
 
   _bodyWidget() {
-    //var width = MediaQuery.of(context).size.width;
+    return FutureBuilder<List<ProductModel>>(
+        // builder: null
+        future: DBProvider.db.getarticulos(),
+        builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
+          if (snapshot.hasData && snapshot.data.length > 0) {
+            print('Data ====> ${snapshot.data}');
+            final mmg = snapshot.data;
 
-    if (items.length == 0) {
-      return Card(
-          child: Column(
-              // padding: EdgeInsets.all(15.0),
-              children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                utils.cambiarNewImage(),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                'No se han agregado articulos a la lista',
-                style: TextStyle(
-                  color: utils.cambiarColor(),
-                  fontSize: 18,
-                ),
-              ),
-            )
-          ]));
-    }
-    items.sort((a, b) => a.name.compareTo(b.name));
-
-    return Expanded(
-      child: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (BuildContext context, int index) {
-          _controllers.add(new TextEditingController());
-
-          return Dismissible(
-            direction: DismissDirection.endToStart,
-            background: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: Colors.red,
-                child: Align(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+            items = mmg;
+            print('Data ====> $items.name');
+          }
+          print('Data ====>2 ${snapshot.data}');
+          if (items.length == 0) {
+            // print(tempPro);
+            return Card(
+                child: Column(
+                    // padding: EdgeInsets.all(15.0),
                     children: <Widget>[
-                      Icon(
-                        Icons.delete,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Eliminar",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        textAlign: TextAlign.right,
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      utils.cambiarNewImage(),
                     ],
                   ),
-                  alignment: Alignment.centerRight,
-                ),
-              ),
-            ),
-            key: Key(items[index].name + items.length.toString()),
-            onDismissed: (direction) {
-              setState(() {
-                items.removeAt(index);
-                getTotal();
-                getDiference();
-              });
-            },
-            child: GestureDetector(
-              onTap: () {
-                _mostrarAlertaEditarProducto(context, index);
-              },
-              child: Card(
-                elevation: 2,
-                margin: EdgeInsets.all(10),
-                child: Container(
-                  // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  height: 100.00,
-                  child: Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(
+                      'No se han agregado articulos a la lista',
+                      style: TextStyle(
+                        color: utils.cambiarColor(),
+                        fontSize: 18,
+                      ),
+                    ),
+                  )
+                ]));
+          }
 
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(children: <Widget>[
-                          Container(
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      items[index].name,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w900),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                  ),
-                                  Checkbox(
-                                      activeColor: utils.cambiarColor(),
-                                      value: items[index].complete,
-                                      onChanged: (valor) {
-                                        items[index].complete = valor;
-                                        setState(() {});
-                                      }),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                ]),
+          items.sort((a, b) => a.name.compareTo(b.name));
+
+          return Expanded(
+              child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (BuildContext context, int index) {
+              _controllers.add(new TextEditingController());
+
+              return Dismissible(
+                direction: DismissDirection.endToStart,
+                background: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    color: Colors.red,
+                    child: Align(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Icon(
+                            Icons.delete,
+                            color: Colors.white,
                           ),
-                          Container(
-                            child: Row(
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: IconButton(
-                                    icon: Icon(Icons.shopping_basket),
-                                    color: utils.cambiarColor(),
-                                    onPressed: () {
-                                      _mostrarAlertaEditarProducto(
-                                          context, index);
-                                      setState(() {
-                                        //_sumProduct(index);
-                                      });
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child:
-                                      //_creaPrecio(index)
-                                      Text(utils
-                                          .numberFormat(items[index].price)),
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Expanded(
-                                    flex: 1,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Expanded(
-                                          flex: 2,
-                                          child: Text(
-                                            items[index].quantity.toString(),
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                    ),
-                                    child: Text(
-                                      utils.numberFormat(
-                                        items[index].quantity *
-                                            items[index].price,
-                                      ),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                      //overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          Text(
+                            "Eliminar",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
                             ),
-                          )
-                        ]),
-                      )
-                    ],
+                            textAlign: TextAlign.right,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                        ],
+                      ),
+                      alignment: Alignment.centerRight,
+                    ),
                   ),
                 ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
+                key: Key(items[index].name + items.length.toString()),
+                onDismissed: (direction) {
+                  DBProvider.db.deleteTmpProd(items[index].id);
+                  items.removeAt(index);
+                  getTotal();
+                  getDiference();
+
+                  // setState(() {
+                  //   items.removeAt(index);
+
+                  //  // DBProvider.db.deleteTmpProd(items[index].id);
+                  //   getTotal();
+                  //   getDiference();
+                  // });
+                },
+                child: GestureDetector(
+                  onTap: () {
+                    _mostrarAlertaEditarProducto(context, index);
+                  },
+                  child: Card(
+                    elevation: 2,
+                    margin: EdgeInsets.all(10),
+                    child: Container(
+                      // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      height: 100.00,
+                      child: Row(
+                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+                        children: <Widget>[
+                          Expanded(
+                            child: Column(children: <Widget>[
+                              Container(
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          items[index].name,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w900),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                      // Checkbox(
+                                      //     activeColor: utils.cambiarColor(),
+                                      //     value: items[index].complete,
+                                      //     onChanged: (valor) {
+                                      //       items[index].complete = valor;
+                                      //       setState(() {});
+                                      //     }),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                    ]),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: IconButton(
+                                        icon: Icon(Icons.shopping_basket),
+                                        color: utils.cambiarColor(),
+                                        onPressed: () {
+                                          _mostrarAlertaEditarProducto(
+                                              context, index);
+                                          setState(() {
+                                            //_sumProduct(index);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child:
+                                          //_creaPrecio(index)
+                                          Text(utils.numberFormat(
+                                              items[index].price)),
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                        flex: 1,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 2,
+                                              child: Text(
+                                                items[index]
+                                                    .quantity
+                                                    .toString(),
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Container(
+                                        margin: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                        ),
+                                        child: Text(
+                                          utils.numberFormat(
+                                            items[index].quantity *
+                                                items[index].price,
+                                          ),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                          //overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ]),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ));
+        });
+    // loadSharedPrefs();
+    //  List<ProductModel> papa = DBProvider.db.getarticulos(1);
+    // items = papa;
+    //  print('data ==> ${papa}');
+    //     utils.prefs.read("TempPro");
+    // List<ProductModel> list2 =  papa.map((l) => ProductModel.fromJson(l)).toList();
+    // print('data ==> ${papa}');
+    //var width = MediaQuery.of(context).size.width;
+    // var tempPro = utils.prefs.read("TempPro");
+    // if (items.length == 0) {
+    // // print(tempPro);
+    //   return Card(
+    //       child: Column(
+    //           // padding: EdgeInsets.all(15.0),
+    //           children: <Widget>[
+    //         Row(
+    //           mainAxisAlignment: MainAxisAlignment.center,
+    //           children: <Widget>[
+    //             utils.cambiarNewImage(),
+    //           ],
+    //         ),
+    //         Padding(
+    //           padding: const EdgeInsets.all(5.0),
+    //           child: Text(
+    //             'No se han agregado articulos a la lista',
+    //             style: TextStyle(
+    //               color: utils.cambiarColor(),
+    //               fontSize: 18,
+    //             ),
+    //           ),
+    //         )
+    //       ]));
+
+    // }
+    //items = DBProvider.db.getarticulos(1);
+    // if( items.length == 0 && itemsTemp.length > 0  ) {
+    //   print('itemsTemp => ${itemsTemp}');
+    //   //items = itemsTemp;
+    // }
+
+    //items = itemsTemp;
+    //   items.sort((a, b) => a.name.compareTo(b.name));
+    // var tempPro = utils.prefs.read("TempPro");
+    // print(tempPro);
+    // return Expanded(
+    //   child:  ListView.builder(
+    //       itemCount: items.length,
+    //       itemBuilder: (BuildContext context, int index) {
+    //         _controllers.add(new TextEditingController());
+
+    //         return Dismissible(
+    //           direction: DismissDirection.endToStart,
+    //           background: Padding(
+    //             padding: const EdgeInsets.all(8.0),
+    //             child: Container(
+    //               color: Colors.red,
+    //               child: Align(
+    //                 child: Row(
+    //                   mainAxisAlignment: MainAxisAlignment.end,
+    //                   children: <Widget>[
+    //                     Icon(
+    //                       Icons.delete,
+    //                       color: Colors.white,
+    //                     ),
+    //                     Text(
+    //                       "Eliminar",
+    //                       style: TextStyle(
+    //                         color: Colors.white,
+    //                         fontWeight: FontWeight.w700,
+    //                       ),
+    //                       textAlign: TextAlign.right,
+    //                     ),
+    //                     SizedBox(
+    //                       width: 20,
+    //                     ),
+    //                   ],
+    //                 ),
+    //                 alignment: Alignment.centerRight,
+    //               ),
+    //             ),
+    //           ),
+    //           key: Key(items[index].name + items.length.toString()),
+    //           onDismissed: (direction) {
+    //             setState(() {
+    //               items.removeAt(index);
+    //               getTotal();
+    //               getDiference();
+    //             });
+    //           },
+    //           child: GestureDetector(
+    //             onTap: () {
+    //               _mostrarAlertaEditarProducto(context, index);
+    //             },
+    //             child: Card(
+    //               elevation: 2,
+    //               margin: EdgeInsets.all(10),
+    //               child: Container(
+    //                 // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+    //                 height: 100.00,
+    //                 child: Row(
+    //                   //mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+    //                   children: <Widget>[
+    //                     Expanded(
+    //                       child: Column(children: <Widget>[
+    //                         Container(
+    //                           child: Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.spaceBetween,
+    //                               children: <Widget>[
+    //                                 SizedBox(
+    //                                   width: 15,
+    //                                 ),
+    //                                 Expanded(
+    //                                   child: Text(
+    //                                     items[index].name,
+    //                                     style: TextStyle(
+    //                                         fontWeight: FontWeight.w900),
+    //                                     textAlign: TextAlign.start,
+    //                                   ),
+    //                                 ),
+    //                                 // Checkbox(
+    //                                 //     activeColor: utils.cambiarColor(),
+    //                                 //     value: items[index].complete,
+    //                                 //     onChanged: (valor) {
+    //                                 //       items[index].complete = valor;
+    //                                 //       setState(() {});
+    //                                 //     }),
+    //                                 SizedBox(
+    //                                   width: 15,
+    //                                 ),
+    //                               ]),
+    //                         ),
+    //                         Container(
+    //                           child: Row(
+    //                             children: <Widget>[
+    //                               SizedBox(
+    //                                 width: 15,
+    //                               ),
+    //                               Expanded(
+    //                                 flex: 2,
+    //                                 child: IconButton(
+    //                                   icon: Icon(Icons.shopping_basket),
+    //                                   color: utils.cambiarColor(),
+    //                                   onPressed: () {
+    //                                     _mostrarAlertaEditarProducto(
+    //                                         context, index);
+    //                                     setState(() {
+    //                                       //_sumProduct(index);
+    //                                     });
+    //                                   },
+    //                                 ),
+    //                               ),
+    //                               Expanded(
+    //                                 flex: 2,
+    //                                 child:
+    //                                     //_creaPrecio(index)
+    //                                     Text(utils
+    //                                         .numberFormat(items[index].price)),
+    //                               ),
+    //                               SizedBox(
+    //                                 width: 15,
+    //                               ),
+    //                               Expanded(
+    //                                   flex: 1,
+    //                                   child: Row(
+    //                                     mainAxisAlignment:
+    //                                         MainAxisAlignment.spaceBetween,
+    //                                     children: <Widget>[
+    //                                       Expanded(
+    //                                         flex: 2,
+    //                                         child: Text(
+    //                                           items[index].quantity.toString(),
+    //                                           overflow: TextOverflow.ellipsis,
+    //                                           textAlign: TextAlign.center,
+    //                                         ),
+    //                                       ),
+    //                                     ],
+    //                                   )),
+    //                               SizedBox(
+    //                                 width: 15,
+    //                               ),
+    //                               Expanded(
+    //                                 flex: 3,
+    //                                 child: Container(
+    //                                   margin: EdgeInsets.symmetric(
+    //                                     horizontal: 10,
+    //                                   ),
+    //                                   child: Text(
+    //                                     utils.numberFormat(
+    //                                       items[index].quantity *
+    //                                           items[index].price,
+    //                                     ),
+    //                                     style: TextStyle(
+    //                                         fontWeight: FontWeight.w600),
+    //                                     //overflow: TextOverflow.ellipsis,
+    //                                   ),
+    //                                 ),
+    //                               ),
+    //                             ],
+    //                           ),
+    //                         )
+    //                       ]),
+    //                     )
+    //                   ],
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         );
+    //       },
+    // ));
   }
 
   Widget _bNavbar(BuildContext context) {
@@ -784,11 +1061,20 @@ class _NewListState extends State<NewList> {
         });
   }
 
+  // borrarmmg(int index){
+  //   print(items[index].id);
+  //   print(items[index].name);
+  //     // DBProvider.db.deleteTmpProd(items[index].id);
+  // }
+
   limpiarTodo() {
     print(items);
-    items.clear();
+    //    DBProvider.db.deleteAllTempProd();
+    // items.clear();
 
     setState(() {
+             DBProvider.db.deleteAllTempProd();
+    items.clear();
       getTotal();
       getDiference();
     });
