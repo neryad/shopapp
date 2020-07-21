@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
+import 'package:shopapp/src/pages/home_page.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
@@ -1014,15 +1015,16 @@ class _NewListState extends State<NewList> {
       children: <Widget>[
         FlatButton(
           //onPressed: () => _guardarLista(context),   _validateEliminarList(context);
-          onPressed: items.length == 0 ? null : () => _guardarLista(context),
+          //onPressed: items.length == 0 ? null : () => _guardarLista(context),
+          onPressed: () => _guardarLista(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[Icon(Icons.save), Text('Guardar lista')],
           ),
         ),
         FlatButton(
-          onPressed:
-              items.length == 0 ? null : () => _validateEliminarList(context),
+          //onPressed: items.length == 0 ? null : () => _validateEliminarList(context),
+          onPressed: () => _validateEliminarList(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -1067,7 +1069,7 @@ class _NewListState extends State<NewList> {
   // }
 
   limpiarTodo() {
-    print(items);
+   
     //    DBProvider.db.deleteAllTempProd();
     // items.clear();
 
@@ -1102,9 +1104,11 @@ class _NewListState extends State<NewList> {
         price: productModel.price);
       
         DBProvider.db.newProd(prod);
+
+        items = [];
     lisForm.currentState.reset();
-   // Navigator.of(context).pop();
-    
+  
+
   }
 
   void _guardarLista(BuildContext context) {
@@ -1130,8 +1134,13 @@ class _NewListState extends State<NewList> {
                   )),
               FlatButton(
                   onPressed: () {
+                   //  DBProvider.db.getTmpArticulos();
+                   
                     saveList();
-                    Navigator.of(context).pop();
+                      Navigator.pushNamed(context, 'home');
+                    // setState(() {
+                     
+                    // });
                   },
                   child: Text(
                     'Aceptar',
