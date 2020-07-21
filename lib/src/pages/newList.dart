@@ -298,20 +298,19 @@ class _NewListState extends State<NewList> {
   }
 
   void _subimt() {
-    var newId = uuid.v1();
+    // var newId = uuid.v1();
     var it = items.length;
 
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
     var prod = new ProductModel(
-        // id: newId,
         name: productModel.name,
         quantity: productModel.quantity,
         listId: 1,
         price: productModel.price);
     items.insert(it, prod);
     //utils.prefs.save("TempPro", prod);
-    DBProvider.db.newProd(prod);
+    DBProvider.db.tmpProd(prod);
     formKey.currentState.reset();
   }
 
@@ -578,7 +577,7 @@ class _NewListState extends State<NewList> {
   _bodyWidget() {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
-        future: DBProvider.db.getarticulos(),
+        future: DBProvider.db.getTmpArticulos(),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData && snapshot.data.length > 0) {
             print('Data ====> ${snapshot.data}');
@@ -1082,8 +1081,12 @@ class _NewListState extends State<NewList> {
   }
 
   saveList() {
+      DBProvider.db.deleteAllTempProd();
     //if (!formKey.currentState.validate()) return;
     lisForm.currentState.save();
+      //  var it = items.length;
+
+    // items.insert(it, prod);
     DateTime now = new DateTime.now();
     var fecha = '${now.day}/${now.month}/${now.year}';
     final nuevaLista = Lista(
@@ -1091,8 +1094,17 @@ class _NewListState extends State<NewList> {
         superMaret: listaModel.superMaret,
         fecha: fecha,
         total: total);
-    DBProvider.db.nuevoLista(nuevaLista);
+         DBProvider.db.nuevoLista(nuevaLista);
+        var prod = new ProductModel(
+        name: productModel.name,
+        quantity: productModel.quantity,
+        listId: nuevaLista.id,
+        price: productModel.price);
+      
+        DBProvider.db.newProd(prod);
     lisForm.currentState.reset();
+   // Navigator.of(context).pop();
+    
   }
 
   void _guardarLista(BuildContext context) {

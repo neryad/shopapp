@@ -94,7 +94,7 @@ class DBProvider {
     return res;
   }
 
-      tmpProd( ProductModel productModel  ) async {
+    tmpProd( ProductModel productModel  ) async {
 
     final db =  await database;
 
@@ -110,6 +110,24 @@ class DBProvider {
 
       final db = await database;
        final res = await db.query('product');
+
+     // final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
+      
+       List<ProductModel> art = res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList(): [];
+
+
+       //List<ProductModel> art = res.isNotEmpty ? ProductModel.fromJson(res.first) : null;
+
+        return art;
+      // List<Lista> list = res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
+
+      // return list;
+    }
+
+      Future <List<ProductModel>> getTmpArticulos() async {
+
+      final db = await database;
+       final res = await db.query('tmpProduct');
 
      // final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
       
