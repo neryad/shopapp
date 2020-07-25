@@ -11,7 +11,7 @@ class ProductModel {
         this.quantity,
         this.price,
         this.listId,
-        this.complete = 0,
+        this.complete,
     });
 
     int id;
@@ -19,7 +19,7 @@ class ProductModel {
     int quantity;
     double price;
     int listId =1;
-    int complete;
+    bool complete;
 
     factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],

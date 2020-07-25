@@ -53,7 +53,7 @@ class DBProvider {
           'quantity INTERGER,'
           'price REAL,'
           'listId INTEGER,'
-           'complete INTEGER,'
+           'complete BOOLEAN,'
           'FOREIGN KEY(listId) REFERENCES Lista(id)'
           ')');
 
@@ -65,7 +65,7 @@ class DBProvider {
           'quantity INTERGER,'
           'price REAL,'
           'listId INTEGER,'
-          'complete INTEGER,'
+          'complete BOOLEAN,'
           'FOREIGN KEY(listId) REFERENCES Lista(id)'
           ')');
         
@@ -132,6 +132,7 @@ class DBProvider {
      // final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
       
        List<ProductModel> art = res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList(): [];
+      
 
 
        //List<ProductModel> art = res.isNotEmpty ? ProductModel.fromJson(res.first) : null;
