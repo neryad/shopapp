@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
@@ -42,12 +43,9 @@ class _NewListState extends State<NewList> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-          //iconTheme: new IconThemeData(color: Color.fromRGBO(255, 111, 94, 1)),
           backgroundColor: utils.cambiarColor(),
           title: Text(
             'Lista de compra',
-            // style: TextStyle(color: Color.fromRGBO(255, 111, 94, 1)
-            // ),
           )),
       drawer: MenuWidget(),
       body: Column(
@@ -63,9 +61,6 @@ class _NewListState extends State<NewList> {
         backgroundColor: utils.cambiarColor(),
         child: Icon(Icons.add_shopping_cart),
       ),
-
-      // Here's the new attribute:
-
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: _bNavbar(context),
     );
@@ -81,7 +76,6 @@ class _NewListState extends State<NewList> {
           if (total > buget) {
             bugetColor = Colors.red[900];
           } else {
-            // bugetColor = Color.fromRGBO(255, 111, 94, 1);
             bugetColor = utils.cambiarColor();
           }
         });
@@ -103,9 +97,6 @@ class _NewListState extends State<NewList> {
     } else {
       colorBuget = utils.cambiarColor();
     }
-    // else {
-    //   colorBuget = Colors.green[400];
-    // }
     diference = calDiferecen;
   }
 
@@ -540,15 +531,12 @@ class _NewListState extends State<NewList> {
         future: DBProvider.db.getTmpArticulos(),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData && snapshot.data.length > 0) {
-            // print('Data ====> ${snapshot.data}');
             final mmg = snapshot.data;
 
             items = mmg;
-            // print('Data ====> $items.name');
           }
-          // print('Data ====>2 ${snapshot.data}');
+
           if (items.length == 0) {
-            // print(tempPro);
             return Card(
                 child: Column(
                     // padding: EdgeInsets.all(15.0),
@@ -614,75 +602,83 @@ class _NewListState extends State<NewList> {
                 ),
                 key: Key(items[index].name + items.length.toString()),
                 onDismissed: (direction) {
+                  showSnack(context, 'Artículo eliminado de la lista');
                   DBProvider.db.deleteTmpProd(items[index].id);
                   items.removeAt(index);
+                 
                   getTotal();
                   getDiference();
+                  setState(() {});
 
-                  // setState(() {
-                  //   items.removeAt(index);
-
-                  //  // DBProvider.db.deleteTmpProd(items[index].id);
-                  //   getTotal();
-                  //   getDiference();
-                  // });
                 },
                 child: Container(
                   child: Card(
-                      child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2.5, bottom: 2.5),
+                      child: Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            items[index].name,
+                            style: TextStyle(fontWeight: FontWeight.w900),
+                            textAlign: TextAlign.start,
+                          ),
+                          Spacer(),
+                          Checkbox(
+                            value: isComplete,
+                            onChanged: (valor) {
+                              //var flag = (items[index].complete ==1)? true:false;
+                              //  if(valor){
+                              //    items[index].complete = 1;
+                              //  }
+                              int complValue = (valor == true) ? 1 : 0;
+                              items[index].complete = complValue;
+                              DBProvider.db.updatetempProd(items[index]);
+                              setState(() {});
+                              
+                              (valor == true) ? showSnack(context, 'Artículo agregado al carrito') : showSnack(context, 'Artículo removido del carrito');                              //   showSnack(context, 'Artículo agregado');
+                              // //        final snackBar = SnackBar(
+                              // //   content: Text('Articulo en el carrito!'),
+                              // // );
+
+                              // // // Encuentra el Scaffold en el árbol de widgets y ¡úsalo para mostrar un SnackBar!
+                              // // Scaffold.of(context).showSnackBar(snackBar);
+                              // } else {
+
+                              // }
+                         
+                            },
+                            activeColor: utils.cambiarColor(),
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                        ],
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _mostrarAlertaEditarProducto(context, index);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3, bottom: 5),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Text(
-                                items[index].name,
-                                style: TextStyle(fontWeight: FontWeight.w900),
-                                textAlign: TextAlign.start,
-                              ),
-                              Spacer(),
-                              Checkbox(
-                                value: isComplete,
-                                onChanged: (valor) {
-                                  //var flag = (items[index].complete ==1)? true:false;
-                                  //  if(valor){
-                                  //    items[index].complete = 1;
-                                  //  }
-                                  int complValue = (valor == true) ? 1 : 0;
-                                  items[index].complete = complValue;
-                                  DBProvider.db.updatetempProd(items[index]);
-                                  setState(() {});
-                                },
-                                activeColor: utils.cambiarColor(),
-                              )
+                              Icon(Icons.shopping_basket),
+                              Text(utils.numberFormat(items[index].price)),
+                              Text(items[index].quantity.toString()),
+                              Text(utils.numberFormat(
+                                items[index].quantity * items[index].price,
+                              )),
+                              //Spacer(),
                             ],
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            _mostrarAlertaEditarProducto(context, index);
-                          },
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 2.5, bottom: 2.5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Icon(Icons.shopping_basket),
-                                Text(utils.numberFormat(items[index].price)),
-                                Text(items[index].quantity.toString()),
-                                Text(utils.numberFormat(
-                                  items[index].quantity * items[index].price,
-                                )),
-                                //Spacer(),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   )),
                 ),
               );
@@ -783,6 +779,26 @@ class _NewListState extends State<NewList> {
     lisForm.currentState.reset();
   }
 
+  void showSnack(BuildContext context, String msg){
+       Flushbar(
+      //title: 'This action is prohibited',
+      message: msg,
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: utils.cambiarColor(),
+      ),
+      leftBarIndicatorColor: utils.cambiarColor(),
+      duration: Duration(seconds: 2),
+    )..show(context);
+    // Scaffold.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Text(msg),
+    //   ),
+      
+    // );
+  }
+
   void _guardarLista(BuildContext context) {
     showDialog(
         context: context,
@@ -823,10 +839,4 @@ class _NewListState extends State<NewList> {
         });
   }
 
-  bool toBoolean(String str, [bool strict]) {
-    if (strict == true) {
-      return str == '1' || str == 'true';
-    }
-    return str != '0' && str != 'false' && str != '';
-  }
 }
