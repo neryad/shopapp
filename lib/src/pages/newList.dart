@@ -630,26 +630,13 @@ class _NewListState extends State<NewList> {
                           Checkbox(
                             value: isComplete,
                             onChanged: (valor) {
-                              //var flag = (items[index].complete ==1)? true:false;
-                              //  if(valor){
-                              //    items[index].complete = 1;
-                              //  }
                               int complValue = (valor == true) ? 1 : 0;
                               items[index].complete = complValue;
                               DBProvider.db.updatetempProd(items[index]);
                               setState(() {});
                               
                               (valor == true) ? showSnack(context, 'Artículo agregado al carrito') : showSnack(context, 'Artículo removido del carrito');                              //   showSnack(context, 'Artículo agregado');
-                              // //        final snackBar = SnackBar(
-                              // //   content: Text('Articulo en el carrito!'),
-                              // // );
 
-                              // // // Encuentra el Scaffold en el árbol de widgets y ¡úsalo para mostrar un SnackBar!
-                              // // Scaffold.of(context).showSnackBar(snackBar);
-                              // } else {
-
-                              // }
-                         
                             },
                             activeColor: utils.cambiarColor(),
                           ),
