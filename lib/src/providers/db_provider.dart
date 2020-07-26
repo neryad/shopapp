@@ -53,7 +53,7 @@ class DBProvider {
           'quantity INTERGER,'
           'price REAL,'
           'listId INTEGER,'
-           'complete BOOLEAN,'
+          'complete INTEGER,'
           'FOREIGN KEY(listId) REFERENCES Lista(id)'
           ')');
 
@@ -65,7 +65,7 @@ class DBProvider {
           'quantity INTERGER,'
           'price REAL,'
           'listId INTEGER,'
-          'complete BOOLEAN,'
+          'complete INTEGER,'
           'FOREIGN KEY(listId) REFERENCES Lista(id)'
           ')');
         

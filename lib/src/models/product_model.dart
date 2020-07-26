@@ -18,8 +18,8 @@ class ProductModel {
     String name;
     int quantity;
     double price;
-    int listId =1;
-    bool complete;
+    int listId;
+    int complete;
 
     factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
@@ -37,5 +37,6 @@ class ProductModel {
         "price": price,
         "listId": listId,
         "complete": complete,
+        
     };
 }

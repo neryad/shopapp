@@ -303,7 +303,7 @@ class _NewListState extends State<NewList> {
   void _subimt() {
     // var newId = uuid.v1();
     var it = items.length;
-
+      //int flag = (boolValue==true)? 1:0;
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
     var prod = new ProductModel(
@@ -311,7 +311,7 @@ class _NewListState extends State<NewList> {
         quantity: productModel.quantity,
         listId: 1,
         price: productModel.price,
-        complete: false);
+        complete: 0);
     items.insert(it, prod);
     //utils.prefs.save("TempPro", prod);
     DBProvider.db.tmpProd(prod);
@@ -331,8 +331,8 @@ class _NewListState extends State<NewList> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   _editarNombreArticulo(index),
-                  _editarPrecioArticulo(index),
                   _editarcantidadArticulo(index),
+                   _editarPrecioArticulo(index),
                 ],
               ),
             ),
@@ -626,6 +626,7 @@ class _NewListState extends State<NewList> {
             itemBuilder: (BuildContext context, int index) {
               _controllers.add(new TextEditingController());
  //var wawa = toBoolean(items[index].complete);
+            bool flag2 = (items[index].complete==1)?true:false;
               return Dismissible(
                 direction: DismissDirection.endToStart,
                 background: Padding(
@@ -689,10 +690,26 @@ class _NewListState extends State<NewList> {
                                 textAlign: TextAlign.start,
                               ),
                               Spacer(),
-                              Checkbox(value:items[index].complete , onChanged: (valor) {
-                                  items[index].complete = valor;
+                              Checkbox(value:flag2, onChanged: (valor) {
+                                //var flag = (items[index].complete ==1)? true:false;
+                              //  if(valor){
+                              //    items[index].complete = 1;
+                              //  }
+                            
+                              flag2 = valor;
+                              int flag = (valor)? 1 : 0;
+                                //int flag = (valor==true)? 1:0;
+                                print(valor);
+                              if(valor == true ) {
+                                items[index].complete = 1;
+                              }
+                               print(valor);
+                               print(items[index].complete);
+                               // items[index].complete = valor;
+                                
+                                  //items[index].complete = valor;
                                   setState(() {
-                                    
+                                    //(items[index].complete ==1)? true:false;
                                   });
                                  // onTaskToggled(index, valor);
                                 // items[index].complete = valor.toString();
