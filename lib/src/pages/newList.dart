@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
-//import 'package:shopapp/src/pages/home_page.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
-//import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart' as wawa;
 
 class NewList extends StatefulWidget {
   NewList({Key key}) : super(key: key);
@@ -36,46 +34,6 @@ class _NewListState extends State<NewList> {
   List<TextEditingController> _controllers = new List();
   ProductModel productModel = new ProductModel();
   Lista listaModel = new Lista();
-
-  //       loadSharedPrefs() async {
-  //         try {
-  //            ProductModel user =  ProductModel.fromJson(await utils.prefs.read("user"));
-  //           print("object");
-  //         } catch (e) {
-  //           print('algun jodido error');
-  //         }
-  //   // try {
-  //   //    ProductModel user =  ProductModel.fromJson(await utils.prefs.read("user"));
-  //   //   Scaffold.of(context).showSnackBar(SnackBar(
-  //   //       content: new Text("Loaded!"),
-  //   //       duration: const Duration(milliseconds: 500)));
-  //   //   setState(() {
-  //   //     //userLoad = user;
-  //   //     print("object");
-  //   //   });
-  //   // } catch (Excepetion) {
-  //   //   Scaffold.of(context).showSnackBar(SnackBar(
-  //   //       content: new Text("Nothing found!"),
-  //   //       duration: const Duration(milliseconds: 500)));
-  //   // }
-
-  // }
-
-  // loadSharedPrefs() async {
-  //   try {
-
-  //     Scaffold.of(context).showSnackBar(SnackBar(
-  //         content: new Text("Loaded!"),
-  //         duration: const Duration(milliseconds: 500)));
-  //     setState(() {
-  //       itemsTemp = user;
-  //     });
-  //   } catch (Excepetion) {
-  //     Scaffold.of(context).showSnackBar(SnackBar(
-  //         content: new Text("Nothing found!"),
-  //         duration: const Duration(milliseconds: 500)));
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -290,8 +248,6 @@ class _NewListState extends State<NewList> {
       validator: (value) {
         if (utils.isNumeric(value)) {
           return null;
-
-          
         } else {
           return 'Solo numeros';
         }
@@ -303,7 +259,7 @@ class _NewListState extends State<NewList> {
   void _subimt() {
     // var newId = uuid.v1();
     var it = items.length;
-      //int flag = (boolValue==true)? 1:0;
+    //int flag = (boolValue==true)? 1:0;
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
     var prod = new ProductModel(
@@ -332,7 +288,7 @@ class _NewListState extends State<NewList> {
                 children: <Widget>[
                   _editarNombreArticulo(index),
                   _editarcantidadArticulo(index),
-                   _editarPrecioArticulo(index),
+                  _editarPrecioArticulo(index),
                 ],
               ),
             ),
@@ -618,15 +574,13 @@ class _NewListState extends State<NewList> {
 
           items.sort((a, b) => a.name.compareTo(b.name));
 
-           
-
           return Expanded(
               child: ListView.builder(
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
               _controllers.add(new TextEditingController());
- //var wawa = toBoolean(items[index].complete);
-            bool flag2 = (items[index].complete==1)?true:false;
+              //var wawa = toBoolean(items[index].complete);
+              bool isComplete = (items[index].complete == 1) ? true : false;
               return Dismissible(
                 direction: DismissDirection.endToStart,
                 background: Padding(
@@ -680,8 +634,7 @@ class _NewListState extends State<NewList> {
                     child: Column(
                       children: <Widget>[
                         Padding(
-                          padding:
-                              const EdgeInsets.only(top: 2.5, bottom: 2.5),
+                          padding: const EdgeInsets.only(top: 2.5, bottom: 2.5),
                           child: Row(
                             children: <Widget>[
                               Text(
@@ -690,72 +643,33 @@ class _NewListState extends State<NewList> {
                                 textAlign: TextAlign.start,
                               ),
                               Spacer(),
-                              Checkbox(value:flag2, onChanged: (valor) {
-                                //var flag = (items[index].complete ==1)? true:false;
-                              //  if(valor){
-                              //    items[index].complete = 1;
-                              //  }
-                            
-                              flag2 = valor;
-                              int flag = (valor)? 1 : 0;
-                                //int flag = (valor==true)? 1:0;
-                                print(valor);
-                              if(valor == true ) {
-                                items[index].complete = 1;
-                              }
-                               print(valor);
-                               print(items[index].complete);
-                               // items[index].complete = valor;
-                                
-                                  //items[index].complete = valor;
-                                  setState(() {
-                                    //(items[index].complete ==1)? true:false;
-                                  });
-                                 // onTaskToggled(index, valor);
-                                // items[index].complete = valor.toString();
-                              
-                                // wawa = toBoolean(items[index].complete);
-                                // //checkValue = toBoolean(items[index].complete );
-                                // //checkValue = items[index].complete;
-                                // items[index].complete = wawa.toString();
-                                // print( wawa);
-                                // if(items[index].complete == 'true'){
-                                  
-                                //}
-                                // if(valor == true){
-                                //   isComplete(index);
-                                //   checkValue = valor;
-                                //   bool.parse(items[index].);
-                                // }
-                                // print(valor);
-                                // (valor == true) ? 1 : 0;
-
-                                // items[index].complete =  (valor == true) ? 1 : 0;
-                                // checkValue = valor;
-                                // if(checkValue){
-                                //   items[index].complete = 1;
-                                // }
-                                // var mmg = isComplete(index);
-                                // isComplete(index);
-                                //items[index].complete = valor.toString();
-                                // setState(() {
-                                  
-                                // });
-                              }, activeColor: utils.cambiarColor(),)
+                              Checkbox(
+                                value: isComplete,
+                                onChanged: (valor) {
+                                  //var flag = (items[index].complete ==1)? true:false;
+                                  //  if(valor){
+                                  //    items[index].complete = 1;
+                                  //  }
+                                  int complValue = (valor == true) ? 1 : 0;
+                                  items[index].complete = complValue;
+                                  DBProvider.db.updatetempProd(items[index]);
+                                  setState(() {});
+                                },
+                                activeColor: utils.cambiarColor(),
+                              )
                             ],
                           ),
                         ),
                         GestureDetector(
                           onTap: () {
-                    _mostrarAlertaEditarProducto(context, index);
-                  },
+                            _mostrarAlertaEditarProducto(context, index);
+                          },
                           child: Padding(
                             padding:
                                 const EdgeInsets.only(top: 2.5, bottom: 2.5),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                
                                 Icon(Icons.shopping_basket),
                                 Text(utils.numberFormat(items[index].price)),
                                 Text(items[index].quantity.toString()),
@@ -763,7 +677,6 @@ class _NewListState extends State<NewList> {
                                   items[index].quantity * items[index].price,
                                 )),
                                 //Spacer(),
-                                
                               ],
                             ),
                           ),
@@ -776,218 +689,6 @@ class _NewListState extends State<NewList> {
             },
           ));
         });
-    // loadSharedPrefs();
-    //  List<ProductModel> papa = DBProvider.db.getarticulos(1);
-    // items = papa;
-    //  print('data ==> ${papa}');
-    //     utils.prefs.read("TempPro");
-    // List<ProductModel> list2 =  papa.map((l) => ProductModel.fromJson(l)).toList();
-    // print('data ==> ${papa}');
-    //var width = MediaQuery.of(context).size.width;
-    // var tempPro = utils.prefs.read("TempPro");
-    // if (items.length == 0) {
-    // // print(tempPro);
-    //   return Card(
-    //       child: Column(
-    //           // padding: EdgeInsets.all(15.0),
-    //           children: <Widget>[
-    //         Row(
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           children: <Widget>[
-    //             utils.cambiarNewImage(),
-    //           ],
-    //         ),
-    //         Padding(
-    //           padding: const EdgeInsets.all(5.0),
-    //           child: Text(
-    //             'No se han agregado articulos a la lista',
-    //             style: TextStyle(
-    //               color: utils.cambiarColor(),
-    //               fontSize: 18,
-    //             ),
-    //           ),
-    //         )
-    //       ]));
-
-    // }
-    //items = DBProvider.db.getarticulos(1);
-    // if( items.length == 0 && itemsTemp.length > 0  ) {
-    //   print('itemsTemp => ${itemsTemp}');
-    //   //items = itemsTemp;
-    // }
-
-    //items = itemsTemp;
-    //   items.sort((a, b) => a.name.compareTo(b.name));
-    // var tempPro = utils.prefs.read("TempPro");
-    // print(tempPro);
-    // return Expanded(
-    //   child:  ListView.builder(
-    //       itemCount: items.length,
-    //       itemBuilder: (BuildContext context, int index) {
-    //         _controllers.add(new TextEditingController());
-
-    //         return Dismissible(
-    //           direction: DismissDirection.endToStart,
-    //           background: Padding(
-    //             padding: const EdgeInsets.all(8.0),
-    //             child: Container(
-    //               color: Colors.red,
-    //               child: Align(
-    //                 child: Row(
-    //                   mainAxisAlignment: MainAxisAlignment.end,
-    //                   children: <Widget>[
-    //                     Icon(
-    //                       Icons.delete,
-    //                       color: Colors.white,
-    //                     ),
-    //                     Text(
-    //                       "Eliminar",
-    //                       style: TextStyle(
-    //                         color: Colors.white,
-    //                         fontWeight: FontWeight.w700,
-    //                       ),
-    //                       textAlign: TextAlign.right,
-    //                     ),
-    //                     SizedBox(
-    //                       width: 20,
-    //                     ),
-    //                   ],
-    //                 ),
-    //                 alignment: Alignment.centerRight,
-    //               ),
-    //             ),
-    //           ),
-    //           key: Key(items[index].name + items.length.toString()),
-    //           onDismissed: (direction) {
-    //             setState(() {
-    //               items.removeAt(index);
-    //               getTotal();
-    //               getDiference();
-    //             });
-    //           },
-    //           child: GestureDetector(
-    //             onTap: () {
-    //               _mostrarAlertaEditarProducto(context, index);
-    //             },
-    //             child: Card(
-    //               elevation: 2,
-    //               margin: EdgeInsets.all(10),
-    //               child: Container(
-    //                 // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-    //                 height: 100.00,
-    //                 child: Row(
-    //                   //mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-    //                   children: <Widget>[
-    //                     Expanded(
-    //                       child: Column(children: <Widget>[
-    //                         Container(
-    //                           child: Row(
-    //                               mainAxisAlignment:
-    //                                   MainAxisAlignment.spaceBetween,
-    //                               children: <Widget>[
-    //                                 SizedBox(
-    //                                   width: 15,
-    //                                 ),
-    //                                 Expanded(
-    //                                   child: Text(
-    //                                     items[index].name,
-    //                                     style: TextStyle(
-    //                                         fontWeight: FontWeight.w900),
-    //                                     textAlign: TextAlign.start,
-    //                                   ),
-    //                                 ),
-    //                                 // Checkbox(
-    //                                 //     activeColor: utils.cambiarColor(),
-    //                                 //     value: items[index].complete,
-    //                                 //     onChanged: (valor) {
-    //                                 //       items[index].complete = valor;
-    //                                 //       setState(() {});
-    //                                 //     }),
-    //                                 SizedBox(
-    //                                   width: 15,
-    //                                 ),
-    //                               ]),
-    //                         ),
-    //                         Container(
-    //                           child: Row(
-    //                             children: <Widget>[
-    //                               SizedBox(
-    //                                 width: 15,
-    //                               ),
-    //                               Expanded(
-    //                                 flex: 2,
-    //                                 child: IconButton(
-    //                                   icon: Icon(Icons.shopping_basket),
-    //                                   color: utils.cambiarColor(),
-    //                                   onPressed: () {
-    //                                     _mostrarAlertaEditarProducto(
-    //                                         context, index);
-    //                                     setState(() {
-    //                                       //_sumProduct(index);
-    //                                     });
-    //                                   },
-    //                                 ),
-    //                               ),
-    //                               Expanded(
-    //                                 flex: 2,
-    //                                 child:
-    //                                     //_creaPrecio(index)
-    //                                     Text(utils
-    //                                         .numberFormat(items[index].price)),
-    //                               ),
-    //                               SizedBox(
-    //                                 width: 15,
-    //                               ),
-    //                               Expanded(
-    //                                   flex: 1,
-    //                                   child: Row(
-    //                                     mainAxisAlignment:
-    //                                         MainAxisAlignment.spaceBetween,
-    //                                     children: <Widget>[
-    //                                       Expanded(
-    //                                         flex: 2,
-    //                                         child: Text(
-    //                                           items[index].quantity.toString(),
-    //                                           overflow: TextOverflow.ellipsis,
-    //                                           textAlign: TextAlign.center,
-    //                                         ),
-    //                                       ),
-    //                                     ],
-    //                                   )),
-    //                               SizedBox(
-    //                                 width: 15,
-    //                               ),
-    //                               Expanded(
-    //                                 flex: 3,
-    //                                 child: Container(
-    //                                   margin: EdgeInsets.symmetric(
-    //                                     horizontal: 10,
-    //                                   ),
-    //                                   child: Text(
-    //                                     utils.numberFormat(
-    //                                       items[index].quantity *
-    //                                           items[index].price,
-    //                                     ),
-    //                                     style: TextStyle(
-    //                                         fontWeight: FontWeight.w600),
-    //                                     //overflow: TextOverflow.ellipsis,
-    //                                   ),
-    //                                 ),
-    //                               ),
-    //                             ],
-    //                           ),
-    //                         )
-    //                       ]),
-    //                     )
-    //                   ],
-    //                 ),
-    //               ),
-    //             ),
-    //           ),
-    //         );
-    //       },
-    // ));
   }
 
   Widget _bNavbar(BuildContext context) {
@@ -1045,16 +746,7 @@ class _NewListState extends State<NewList> {
         });
   }
 
-  // borrarmmg(int index){
-  //   print(items[index].id);
-  //   print(items[index].name);
-  //     // DBProvider.db.deleteTmpProd(items[index].id);
-  // }
-
   limpiarTodo() {
-    //    DBProvider.db.deleteAllTempProd();
-    // items.clear();
-
     setState(() {
       DBProvider.db.deleteAllTempProd();
       items.clear();
@@ -1132,24 +824,9 @@ class _NewListState extends State<NewList> {
   }
 
   bool toBoolean(String str, [bool strict]) {
-  if (strict == true) {
-    return str == '1' || str == 'true';
+    if (strict == true) {
+      return str == '1' || str == 'true';
+    }
+    return str != '0' && str != 'false' && str != '';
   }
-  return str != '0' && str != 'false' && str != '';
-}
-//  void onTaskToggled(int index, bool valor) {
-//     setState(() {
-//       items[index].complete = valor.toString();
-//       print(items[index].complete);
-//     });
-//   }
-  // isComplete(int valor) {
-  //  // (items[valor].complete == 1)? true : false;
-  //   if( items[valor].complete <= 0 ) {
-  //     return checkValue;
-  //   } 
-  //   items[valor].complete = 1;
-  //   checkValue = true;
-  //   return true;
-  // }
 }

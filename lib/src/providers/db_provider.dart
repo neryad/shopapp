@@ -185,6 +185,15 @@ class DBProvider {
     }
 
 
+    //pdate 
+    updatetempProd( ProductModel prod) async {
+      final db = await database;
+
+      final res = await db.update('tmpProduct', prod.toJson(),where: 'id = ?', whereArgs: [prod.id]);
+
+      return res;
+    }
+
 
 
 }
