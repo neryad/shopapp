@@ -46,15 +46,11 @@ class PreferenciasUsuario {
     _prefs.setString('nombreUsuario', value);
   }
 
-  save(String key, value) async {
-    //final prefs = await SharedPreferences.getInstance();
-    _prefs.setString(key, json.encode(value));
+   get total{
+    return _prefs.getString('total') ?? '0.00';
   }
-
-  read(String key) async {
-  //final prefs = await SharedPreferences.getInstance();
-  return json.decode(_prefs.getString(key)?? '');
-}
-
+   set total(String value) {
+    _prefs.setString('total', value);
+  }
 
 }

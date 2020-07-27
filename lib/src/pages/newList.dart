@@ -1,5 +1,6 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
@@ -19,6 +20,16 @@ class _NewListState extends State<NewList> {
   double total = 0.00;
   double diference = 0.00;
   bool checkValue = false;
+  String _tmpTotal;
+  final prefs = new PreferenciasUsuario();
+
+@override
+void initState() { 
+  total = double.parse(prefs.total);
+  super.initState();
+  
+}
+  
 
   final formKey = GlobalKey<FormState>();
   final editFormKey = GlobalKey<FormState>();
@@ -72,6 +83,7 @@ class _NewListState extends State<NewList> {
       for (int i = 0; i < items.length; i++) {
         setState(() {
           total += (items[i].price * items[i].quantity);
+         
           getDiference();
           if (total > buget) {
             bugetColor = Colors.red[900];
@@ -80,6 +92,7 @@ class _NewListState extends State<NewList> {
           }
         });
       }
+       prefs.total = total.toString();
     }
   }
 
