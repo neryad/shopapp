@@ -20,12 +20,13 @@ class _NewListState extends State<NewList> {
   double total = 0.00;
   double diference = 0.00;
   bool checkValue = false;
-  String _tmpTotal;
   final prefs = new PreferenciasUsuario();
+  
 
 @override
 void initState() { 
-  total = double.parse(prefs.total);
+  total = double.parse(prefs.tempTotal);
+  buget = double.parse(prefs.tempBuget);
   super.initState();
   
 }
@@ -62,6 +63,7 @@ void initState() {
       body: Column(
         children: <Widget>[
           _header(),
+          _midHeader(),
           _bodyWidget(),
         ],
       ),
@@ -92,7 +94,7 @@ void initState() {
           }
         });
       }
-       prefs.total = total.toString();
+       prefs.tempTotal = total.toString();
     }
   }
 
@@ -445,6 +447,7 @@ void initState() {
           return;
         } else {
           buget = double.parse(value);
+          prefs.tempBuget = buget.toString();
         }
       },
     );
@@ -532,21 +535,51 @@ void initState() {
                 ),
               ],
             ),
+           
           ],
         ),
       ),
     );
   }
-
+  Widget _midHeader(){
+      return ConstrainedBox(
+  constraints: BoxConstraints.expand(height: 60),
+  child: Container(
+    color: Colors.white,
+    child: Padding(
+      padding: EdgeInsets.all(10), 
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          
+        Text('Articulo'),
+          SizedBox(
+                            width: 20,
+                          ),
+        Text('Precio'),
+          SizedBox(
+                            width: 15,
+                          ),
+        Text('Cantidad'),
+            SizedBox(
+                            width: 15,
+                          ),
+        Text('Total articulo'),
+      ],)
+      //Text('msg', style: TextStyle(fontSize: 25 ,fontWeight: FontWeight.bold))
+    ),
+));
+  }
   _bodyWidget() {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
         future: DBProvider.db.getTmpArticulos(),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData && snapshot.data.length > 0) {
-            final mmg = snapshot.data;
+            final tmpArt = snapshot.data;
 
-            items = mmg;
+            items = tmpArt;
           }
 
           if (items.length == 0) {
@@ -663,17 +696,30 @@ void initState() {
                           _mostrarAlertaEditarProducto(context, index);
                         },
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 3, bottom: 5),
+                          padding: const EdgeInsets.only(top: 0, bottom: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
+                              
                               Icon(Icons.shopping_basket),
+                                  SizedBox(
+                            width: 5,
+                          ),
                               Text(utils.numberFormat(items[index].price)),
+                                  SizedBox(
+                            width: 5,
+                          ),
                               Text(items[index].quantity.toString()),
+                                  SizedBox(
+                            width: 5,
+                          ),
                               Text(utils.numberFormat(
                                 items[index].quantity * items[index].price,
-                              )),
-                              //Spacer(),
+                              )
+                              ),
+                                SizedBox(
+                            width: 5,
+                          ),
                             ],
                           ),
                         ),
@@ -826,6 +872,8 @@ void initState() {
 
                     saveList();
                     Navigator.pushNamed(context, 'home');
+                    prefs.tempTotal = '0.00';
+                    prefs.tempBuget = '0.00';
                     // setState(() {
 
                     // });

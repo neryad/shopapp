@@ -46,11 +46,18 @@ class PreferenciasUsuario {
     _prefs.setString('nombreUsuario', value);
   }
 
-   get total{
-    return _prefs.getString('total') ?? '0.00';
+   get tempTotal{
+    return _prefs.getString('tempTotal') ?? '0.00';
   }
-   set total(String value) {
-    _prefs.setString('total', value);
+   set tempTotal(String value) {
+    _prefs.setString('tempTotal', value);
+  }
+
+  get tempBuget{
+    return _prefs.getString('tempBuget') ?? '0.00';
+  }
+   set tempBuget(String value) {
+    _prefs.setString('tempBuget', value);
   }
 
 }
