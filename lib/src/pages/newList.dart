@@ -21,16 +21,13 @@ class _NewListState extends State<NewList> {
   double diference = 0.00;
   bool checkValue = false;
   final prefs = new PreferenciasUsuario();
-  
 
-@override
-void initState() { 
-  total = double.parse(prefs.tempTotal);
-  buget = double.parse(prefs.tempBuget);
-  super.initState();
-  
-}
-  
+  @override
+  void initState() {
+    total = double.parse(prefs.tempTotal);
+    buget = double.parse(prefs.tempBuget);
+    super.initState();
+  }
 
   final formKey = GlobalKey<FormState>();
   final editFormKey = GlobalKey<FormState>();
@@ -85,7 +82,7 @@ void initState() {
       for (int i = 0; i < items.length; i++) {
         setState(() {
           total += (items[i].price * items[i].quantity);
-         
+
           getDiference();
           if (total > buget) {
             bugetColor = Colors.red[900];
@@ -94,7 +91,7 @@ void initState() {
           }
         });
       }
-       prefs.tempTotal = total.toString();
+      prefs.tempTotal = total.toString();
     }
   }
 
@@ -455,122 +452,94 @@ void initState() {
 
   Widget _header() {
     return Container(
+      padding: EdgeInsets.only(left: 5.0, right: 10.0),
       decoration: BoxDecoration(
         color: Colors.white,
       ),
-      child: Container(
-        padding: EdgeInsets.all(3),
-        // margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                _mostrarAlertaBuget(context);
-              },
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Container(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      IconButton(
-                          icon: Icon(
-                            Icons.account_balance_wallet,
-                            color: Colors.black,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          FlatButton.icon(
+                              onPressed: () => _mostrarAlertaBuget(context),
+                              icon: Icon(Icons.account_balance_wallet),
+                              label: Text("Presupuesto")),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            utils.numberFormat(buget),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: bugetColor,
+                                fontWeight: FontWeight.bold),
                           ),
-                          onPressed: () => _mostrarAlertaBuget(context)),
-                      Text(
-                        "Presupuesto",
-                        overflow: TextOverflow.ellipsis,
+                        ],
                       )
                     ],
                   ),
-                  Text(
-                    utils.numberFormat(buget),
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: bugetColor,
-                        fontWeight: FontWeight.bold),
+                  Row(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          FlatButton.icon(
+                              onPressed: () => _mostrarAlertaBuget(context),
+                              icon: Icon(Icons.shopping_cart),
+                              label: Text("Total")),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Text(
+                            utils.numberFormat(total),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: utils.cambiarColor(),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      FlatButton.icon(
+                          onPressed: () => _mostrarAlertaBuget(context),
+                          icon: Icon(Icons.shuffle),
+                          label: Text("Diferencia")),
+                      Spacer(),
+                      Text(
+                        utils.numberFormat(diference),
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: bugetColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            Spacer(),
-            //SizedBox(width: 15.0),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FlatButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.shopping_cart),
-                    label: Text("Total")),
-                Text(
-                  utils.numberFormat(total),
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: utils.cambiarColor(),
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Spacer(),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                FlatButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.shuffle),
-                    label: Text("Diferencia")),
-                Text(
-                  utils.numberFormat(diference),
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: colorBuget,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-           
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
-//   Widget _midHeader(){
-//       return ConstrainedBox(
-//   constraints: BoxConstraints.expand(height: 60),
-//   child: Container(
-//     color: Colors.white,
-//     child: Padding(
-//       padding: EdgeInsets.all(10), 
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         //crossAxisAlignment: CrossAxisAlignment.center,
-//         children: <Widget>[
-          
-//         Text('Articulo'),
-//           SizedBox(
-//                             width: 20,
-//                           ),
-//         Text('Precio'),
-//           SizedBox(
-//                             width: 15,
-//                           ),
-//         Text('Cantidad'),
-//             SizedBox(
-//                             width: 15,
-//                           ),
-//         Text('Total articulo'),
-//       ],)
-//       //Text('msg', style: TextStyle(fontSize: 25 ,fontWeight: FontWeight.bold))
-//     ),
-// ));
-//   }
+
   _bodyWidget() {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
@@ -651,11 +620,10 @@ void initState() {
                   showSnack(context, 'Artículo eliminado de la lista');
                   DBProvider.db.deleteTmpProd(items[index].id);
                   items.removeAt(index);
-                 
+
                   getTotal();
                   getDiference();
                   setState(() {});
-
                 },
                 child: Container(
                   child: Card(
@@ -680,9 +648,12 @@ void initState() {
                               items[index].complete = complValue;
                               DBProvider.db.updatetempProd(items[index]);
                               setState(() {});
-                              
-                              (valor == true) ? showSnack(context, 'Artículo agregado al carrito') : showSnack(context, 'Artículo removido del carrito');                              //   showSnack(context, 'Artículo agregado');
 
+                              (valor == true)
+                                  ? showSnack(
+                                      context, 'Artículo agregado al carrito')
+                                  : showSnack(context,
+                                      'Artículo removido del carrito'); //   showSnack(context, 'Artículo agregado');
                             },
                             activeColor: utils.cambiarColor(),
                           ),
@@ -700,49 +671,61 @@ void initState() {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              
-                              Icon(Icons.shopping_basket, color: utils.cambiarColor(),),
-                                  SizedBox(
-                            width: 5,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                              Text(utils.numberFormat(items[index].price),style: TextStyle( fontWeight: FontWeight.bold)),
-                              Text('Precio')
-                            ],),
-                          )
-                              ,
-                                  SizedBox(
-                            width: 5,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Column(children: <Widget>[
-                              Text(items[index].quantity.toString(),style: TextStyle( fontWeight: FontWeight.bold)),
-                              Text('Cantidad')
-                            ],),
-                          ),
-                              
-                                  SizedBox(
-                            width: 5,
-                          ),
-                           Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Column(children: <Widget>[
-                              Text(utils.numberFormat(items[index].quantity * items[index].price),style: TextStyle( fontWeight: FontWeight.bold)),
-                              Text('Total')
-                            ],),
-                          ),
-                              // Text(utils.numberFormat(
-                              //   items[index].quantity * items[index].price,
-                              // )
-                              //),
-                                SizedBox(
-                            width: 5,
-                          ),
+                              Icon(
+                                Icons.shopping_basket,
+                                color: utils.cambiarColor(),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(utils.numberFormat(items[index].price),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text('Precio')
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(items[index].quantity.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text('Cantidad')
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                        utils.numberFormat(
+                                            items[index].quantity *
+                                                items[index].price),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text('Total')
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(
+                                width: 5,
+                              ),
                             ],
                           ),
                         ),
@@ -759,12 +742,9 @@ void initState() {
   Widget _bNavbar(BuildContext context) {
     return BottomAppBar(
         child: new Row(
-      // mainAxisSize: MainAxisSize.max,
-      // mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         FlatButton(
-          //onPressed: () => _guardarLista(context),   _validateEliminarList(context);
-          //onPressed: items.length == 0 ? null : () => _guardarLista(context),
+
           onPressed: () => _guardarLista(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -772,7 +752,6 @@ void initState() {
           ),
         ),
         FlatButton(
-          //onPressed: items.length == 0 ? null : () => _validateEliminarList(context),
           onPressed: () => _validateEliminarList(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -823,11 +802,7 @@ void initState() {
 
   saveList() {
     DBProvider.db.deleteAllTempProd();
-    //if (!formKey.currentState.validate()) return;
     lisForm.currentState.save();
-    //  var it = items.length;
-
-    // items.insert(it, prod);
     DateTime now = new DateTime.now();
     var fecha = '${now.day}/${now.month}/${now.year}';
     final nuevaLista = Lista(
@@ -848,8 +823,8 @@ void initState() {
     lisForm.currentState.reset();
   }
 
-  void showSnack(BuildContext context, String msg){
-       Flushbar(
+  void showSnack(BuildContext context, String msg) {
+    Flushbar(
       //title: 'This action is prohibited',
       message: msg,
       icon: Icon(
@@ -860,12 +835,6 @@ void initState() {
       leftBarIndicatorColor: utils.cambiarColor(),
       duration: Duration(seconds: 2),
     )..show(context);
-    // Scaffold.of(context).showSnackBar(
-    //   SnackBar(
-    //     content: Text(msg),
-    //   ),
-      
-    // );
   }
 
   void _guardarLista(BuildContext context) {
@@ -891,15 +860,11 @@ void initState() {
                   )),
               FlatButton(
                   onPressed: () {
-                    //  DBProvider.db.getTmpArticulos();
-
                     saveList();
                     Navigator.pushNamed(context, 'home');
                     prefs.tempTotal = '0.00';
                     prefs.tempBuget = '0.00';
-                    // setState(() {
 
-                    // });
                   },
                   child: Text(
                     'Aceptar',
@@ -909,5 +874,4 @@ void initState() {
           );
         });
   }
-
 }
