@@ -63,7 +63,7 @@ void initState() {
       body: Column(
         children: <Widget>[
           _header(),
-          _midHeader(),
+          //_midHeader(),
           _bodyWidget(),
         ],
       ),
@@ -459,7 +459,7 @@ void initState() {
         color: Colors.white,
       ),
       child: Container(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(3),
         // margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -541,36 +541,36 @@ void initState() {
       ),
     );
   }
-  Widget _midHeader(){
-      return ConstrainedBox(
-  constraints: BoxConstraints.expand(height: 60),
-  child: Container(
-    color: Colors.white,
-    child: Padding(
-      padding: EdgeInsets.all(10), 
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
+//   Widget _midHeader(){
+//       return ConstrainedBox(
+//   constraints: BoxConstraints.expand(height: 60),
+//   child: Container(
+//     color: Colors.white,
+//     child: Padding(
+//       padding: EdgeInsets.all(10), 
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         //crossAxisAlignment: CrossAxisAlignment.center,
+//         children: <Widget>[
           
-        Text('Articulo'),
-          SizedBox(
-                            width: 20,
-                          ),
-        Text('Precio'),
-          SizedBox(
-                            width: 15,
-                          ),
-        Text('Cantidad'),
-            SizedBox(
-                            width: 15,
-                          ),
-        Text('Total articulo'),
-      ],)
-      //Text('msg', style: TextStyle(fontSize: 25 ,fontWeight: FontWeight.bold))
-    ),
-));
-  }
+//         Text('Articulo'),
+//           SizedBox(
+//                             width: 20,
+//                           ),
+//         Text('Precio'),
+//           SizedBox(
+//                             width: 15,
+//                           ),
+//         Text('Cantidad'),
+//             SizedBox(
+//                             width: 15,
+//                           ),
+//         Text('Total articulo'),
+//       ],)
+//       //Text('msg', style: TextStyle(fontSize: 25 ,fontWeight: FontWeight.bold))
+//     ),
+// ));
+//   }
   _bodyWidget() {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
@@ -596,7 +596,7 @@ void initState() {
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
-                      'No se han agregado articulos a la lista',
+                      'No se han agregado artículos a la lista',
                       style: TextStyle(
                         color: utils.cambiarColor(),
                         fontSize: 18,
@@ -701,22 +701,45 @@ void initState() {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               
-                              Icon(Icons.shopping_basket),
+                              Icon(Icons.shopping_basket, color: utils.cambiarColor(),),
                                   SizedBox(
                             width: 5,
                           ),
-                              Text(utils.numberFormat(items[index].price)),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                              Text(utils.numberFormat(items[index].price),style: TextStyle( fontWeight: FontWeight.bold)),
+                              Text('Precio')
+                            ],),
+                          )
+                              ,
                                   SizedBox(
                             width: 5,
                           ),
-                              Text(items[index].quantity.toString()),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Column(children: <Widget>[
+                              Text(items[index].quantity.toString(),style: TextStyle( fontWeight: FontWeight.bold)),
+                              Text('Cantidad')
+                            ],),
+                          ),
+                              
                                   SizedBox(
                             width: 5,
                           ),
-                              Text(utils.numberFormat(
-                                items[index].quantity * items[index].price,
-                              )
-                              ),
+                           Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Column(children: <Widget>[
+                              Text(utils.numberFormat(items[index].quantity * items[index].price),style: TextStyle( fontWeight: FontWeight.bold)),
+                              Text('Total')
+                            ],),
+                          ),
+                              // Text(utils.numberFormat(
+                              //   items[index].quantity * items[index].price,
+                              // )
+                              //),
                                 SizedBox(
                             width: 5,
                           ),

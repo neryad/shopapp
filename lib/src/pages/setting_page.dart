@@ -45,35 +45,35 @@ class _SettingPageState extends State<SettingPage> {
         children:<Widget>[
           Container(
             padding: EdgeInsets.all(5.0),
-            child: Text('Personalización temas', style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),),
+            child: Text('Personalización temas', style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),),
           ),
 
           Divider(),
-          RadioListTile(title:Text('Naraja'),
+          RadioListTile(title:Text('Naraja',style: TextStyle(fontSize: 20),),
           value: 1, 
           groupValue: _genero, 
           onChanged: _selectedRadio,
           ),
           RadioListTile(
-            title:Text('Azul'),
+            title:Text('Azul',style: TextStyle(fontSize: 20),),
             value: 2, 
             groupValue: _genero, 
             onChanged: _selectedRadio,
             ),
               RadioListTile(
-            title:Text('Verde'),
+            title:Text('Verde',style: TextStyle(fontSize: 20),),
             value: 3, 
             groupValue: _genero, 
             onChanged: _selectedRadio,
             ),
               RadioListTile(
-            title:Text('Rosado'),
+            title:Text('Rosado',style: TextStyle(fontSize: 20),),
             value: 4, 
             groupValue: _genero, 
             onChanged: _selectedRadio,
             ),
              RadioListTile(
-            title:Text('Gris'),
+            title:Text('Gris',style: TextStyle(fontSize: 20),),
             value: 5, 
             groupValue: _genero, 
             onChanged: _selectedRadio,
@@ -81,7 +81,7 @@ class _SettingPageState extends State<SettingPage> {
           Divider(),
            Container(
             padding: EdgeInsets.all(5.0),
-            child: Text('Personalización usuario', style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),),
+            child: Text('Personalización usuario', style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal:20.0),
@@ -90,6 +90,7 @@ class _SettingPageState extends State<SettingPage> {
               decoration: InputDecoration(
                 labelText: 'Nombre usuario',
                 helperText: 'Nombre del usuario'
+                
               ),
               onChanged: (value) { 
                 prefs.nombreUsuario = value;
