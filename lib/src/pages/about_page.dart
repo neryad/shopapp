@@ -16,16 +16,15 @@ class AboutPage extends StatelessWidget {
             )),
         drawer: MenuWidget(),
         body: SingleChildScrollView(
-                  child: Column(
+          child: Column(
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(
-                  color: utils.cambiarColor()
+                decoration: BoxDecoration(color: utils.cambiarColor()
                     // gradient: LinearGradient(
                     //     begin: Alignment.topCenter,
                     //     end: Alignment.bottomCenter,
                     //     colors: [utils.cambiarColor(), Colors.blueGrey])
-                        ),
+                    ),
                 child: Container(
                     width: double.infinity,
                     height: 300,
@@ -35,8 +34,9 @@ class AboutPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           CircleAvatar(
-                            backgroundImage: AssetImage('assets/undraw_online_groceries_a02y.png'),
-                            
+                            backgroundImage: AssetImage(
+                                'assets/undraw_online_groceries_a02y.png'),
+
                             // NetworkImage(
                             //     'https://cdn.the-scientist.com/assets/articleNo/67431/hImg/37292/lemur-wrist-glands-scent-pheromones-primates-testosterone-mating-breeding-sexual-communication-x.png'
                             //     ),
@@ -47,79 +47,81 @@ class AboutPage extends StatelessWidget {
                           ),
                           Text(
                             'AppName',
-                            style: TextStyle(fontSize: 22.0, color: Colors.white),
+                            style:
+                                TextStyle(fontSize: 22.0, color: Colors.white),
                           ),
                           SizedBox(
                             height: 10.0,
                           ),
                           Card(
-                            margin: EdgeInsets.symmetric(horizontal: 20.0, vertical:8.0),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 8.0),
                             clipBehavior: Clip.antiAlias,
                             color: Colors.white,
                             elevation: 8.0,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical:8.0),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 22.0, vertical: 8.0),
                               child: Row(
                                 children: <Widget>[
                                   Expanded(
                                     child: Column(
-                                    children: <Widget>[
-                                      Text('Version',style:TextStyle(
-                                        color: utils.cambiarColor(),
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.bold
-                                      )),
+                                      children: <Widget>[
+                                        Text('Version',
+                                            style: TextStyle(
+                                                color: utils.cambiarColor(),
+                                                fontSize: 22.0,
+                                                fontWeight: FontWeight.bold)),
                                         SizedBox(
-                              height: 10.0,
-                          ),
-                                      Text('0.0.1',style:TextStyle(
-                                        color: utils.cambiarColor(),
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.w200
-                                      )),
-                                  ],
+                                          height: 10.0,
+                                        ),
+                                        Text('0.0.1',
+                                            style: TextStyle(
+                                                color: utils.cambiarColor(),
+                                                fontSize: 22.0,
+                                                fontWeight: FontWeight.w200)),
+                                      ],
+                                    ),
                                   ),
-                                  ),
-                                     Expanded(
+                                  Expanded(
                                     child: Column(
-                                    children: <Widget>[
-                                      Text('Author',style:TextStyle(
-                                        color: utils.cambiarColor(),
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.bold
-                                      )),
+                                      children: <Widget>[
+                                        Text('Author',
+                                            style: TextStyle(
+                                                color: utils.cambiarColor(),
+                                                fontSize: 22.0,
+                                                fontWeight: FontWeight.bold)),
                                         SizedBox(
-                              height: 10.0,
-                          ),
-                                      Text('Neryad',style:TextStyle(
-                                        color: utils.cambiarColor(),
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.w200
-                                      )),
-                                  ],
+                                          height: 10.0,
+                                        ),
+                                        Text('Neryad',
+                                            style: TextStyle(
+                                                color: utils.cambiarColor(),
+                                                fontSize: 22.0,
+                                                fontWeight: FontWeight.w200)),
+                                      ],
+                                    ),
                                   ),
-                                  ),
-                          //          Expanded(
-                          //         child: Column(
-                          //         children: <Widget>[
-                          //           Text('Version',style:TextStyle(
-                          //             color: Colors.redAccent,
-                          //             fontSize: 22.0,
-                          //             fontWeight: FontWeight.bold
-                          //           )),
-                          //             SizedBox(
-                          //   height: 10.0,
-                          // ),
-                          //           Text('1.0.0',style:TextStyle(
-                          //             color: Colors.redAccent,
-                          //             fontSize: 22.0,
-                          //             fontWeight: FontWeight.w200
-                          //           )),
-                          //       ],
-                          //       ),
-                          //       ),
-
-                              ],
+                                  //          Expanded(
+                                  //         child: Column(
+                                  //         children: <Widget>[
+                                  //           Text('Version',style:TextStyle(
+                                  //             color: Colors.redAccent,
+                                  //             fontSize: 22.0,
+                                  //             fontWeight: FontWeight.bold
+                                  //           )),
+                                  //             SizedBox(
+                                  //   height: 10.0,
+                                  // ),
+                                  //           Text('1.0.0',style:TextStyle(
+                                  //             color: Colors.redAccent,
+                                  //             fontSize: 22.0,
+                                  //             fontWeight: FontWeight.w200
+                                  //           )),
+                                  //       ],
+                                  //       ),
+                                  //       ),
+                                ],
                               ),
                             ),
                           ),
@@ -128,32 +130,32 @@ class AboutPage extends StatelessWidget {
                     )),
               ),
               Container(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical:8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                    Text("Descripción",
-                    style:TextStyle(
-                      color: utils.cambiarColor(),
-                      fontStyle: FontStyle.normal,
-                      fontSize: 28.0
-                    ),
-                    ),
-                    SizedBox(height:10.0),
-                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vel orci nec tellus mattis sodales sit amet id est. Praesent ut tempor ligula. Nullam venenatis, risus vel tristique viverra, nibh diam vehicula eros, eu hendrerit magna massa at velit. Mauris ultrices nulla eget nunc rutrum, eu porttitor orci iaculis.",
+                  child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Descripción",
                       style: TextStyle(
-                        fontSize:20.0,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black,
-                        letterSpacing: 2.0
-                        
-                      ),
+                          color: utils.cambiarColor(),
+                          fontStyle: FontStyle.normal,
+                          fontSize: 28.0),
+                    ),
+                    SizedBox(height: 10.0),
+                    Text(
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vel orci nec tellus mattis sodales sit amet id est. Praesent ut tempor ligula. Nullam venenatis, risus vel tristique viverra, nibh diam vehicula eros, eu hendrerit magna massa at velit. Mauris ultrices nulla eget nunc rutrum, eu porttitor orci iaculis.",
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.black,
+                          letterSpacing: 2.0),
                     ),
                   ],
-                  ),
-               ) ),
+                ),
+              )),
             ],
           ),
         ));
