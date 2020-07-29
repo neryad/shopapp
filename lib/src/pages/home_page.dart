@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: new AppBar(
+        title: Text("Mis listas"),
         elevation: 0.0,
         backgroundColor: utils.cambiarColor(),
       ),

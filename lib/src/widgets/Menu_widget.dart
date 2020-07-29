@@ -15,26 +15,23 @@ class MenuWidget extends StatelessWidget {
           ),
           ListTile(
             
-            leading: Icon(Icons.home,),
-            title: Text('Mis listas'),
+            leading: Icon(Icons.home, size: 30.0,),
+            title: Text('Mis listas', style: TextStyle(fontSize: 18.0),),
             onTap: () => {Navigator.pushReplacementNamed(context, 'home')},
           ),
-          Divider(),
           ListTile(
-            leading: Icon(Icons.list),
-            title: Text('Nueva lista'),
+            leading: Icon(Icons.list, size: 30.0,),
+            title: Text('Lista de compra',style: TextStyle(fontSize: 18.0),),
             onTap: () => {Navigator.pushReplacementNamed(context, 'newList')},
           ),
-          Divider(),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Ajustes'),
+            leading: Icon(Icons.settings, size: 30.0,),
+            title: Text('Ajustes',style: TextStyle(fontSize: 18.0),),
             onTap: () => {Navigator.pushReplacementNamed(context, 'settings')},
           ),
-          Divider(),
           ListTile(
-            leading: Icon(Icons.info),
-            title: Text('Acerca de'),
+            leading: Icon(Icons.info, size: 30.0,),
+            title: Text('Acerca de',style: TextStyle(fontSize: 18.0),),
             onTap: () => {Navigator.pushReplacementNamed(context, 'about')},
           )
         ],
