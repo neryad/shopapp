@@ -20,10 +20,12 @@ class AboutPage extends StatelessWidget {
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Colors.redAccent, Colors.pink])),
+                  color: utils.cambiarColor()
+                    // gradient: LinearGradient(
+                    //     begin: Alignment.topCenter,
+                    //     end: Alignment.bottomCenter,
+                    //     colors: [utils.cambiarColor(), Colors.blueGrey])
+                        ),
                 child: Container(
                     width: double.infinity,
                     height: 300,
@@ -33,8 +35,11 @@ class AboutPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                'https://cdn.the-scientist.com/assets/articleNo/67431/hImg/37292/lemur-wrist-glands-scent-pheromones-primates-testosterone-mating-breeding-sexual-communication-x.png'),
+                            backgroundImage: AssetImage('assets/undraw_online_groceries_a02y.png'),
+                            
+                            // NetworkImage(
+                            //     'https://cdn.the-scientist.com/assets/articleNo/67431/hImg/37292/lemur-wrist-glands-scent-pheromones-primates-testosterone-mating-breeding-sexual-communication-x.png'
+                            //     ),
                             radius: 50.0,
                           ),
                           SizedBox(
@@ -60,15 +65,15 @@ class AboutPage extends StatelessWidget {
                                     child: Column(
                                     children: <Widget>[
                                       Text('Version',style:TextStyle(
-                                        color: Colors.redAccent,
+                                        color: utils.cambiarColor(),
                                         fontSize: 22.0,
                                         fontWeight: FontWeight.bold
                                       )),
                                         SizedBox(
                               height: 10.0,
                           ),
-                                      Text('1.0.0',style:TextStyle(
-                                        color: Colors.redAccent,
+                                      Text('0.0.1',style:TextStyle(
+                                        color: utils.cambiarColor(),
                                         fontSize: 22.0,
                                         fontWeight: FontWeight.w200
                                       )),
@@ -79,7 +84,7 @@ class AboutPage extends StatelessWidget {
                                     child: Column(
                                     children: <Widget>[
                                       Text('Author',style:TextStyle(
-                                        color: Colors.redAccent,
+                                        color: utils.cambiarColor(),
                                         fontSize: 22.0,
                                         fontWeight: FontWeight.bold
                                       )),
@@ -87,7 +92,7 @@ class AboutPage extends StatelessWidget {
                               height: 10.0,
                           ),
                                       Text('Neryad',style:TextStyle(
-                                        color: Colors.redAccent,
+                                        color: utils.cambiarColor(),
                                         fontSize: 22.0,
                                         fontWeight: FontWeight.w200
                                       )),
@@ -130,7 +135,7 @@ class AboutPage extends StatelessWidget {
                     children: <Widget>[
                     Text("Descripción",
                     style:TextStyle(
-                      color: Colors.redAccent,
+                      color: utils.cambiarColor(),
                       fontStyle: FontStyle.normal,
                       fontSize: 28.0
                     ),
