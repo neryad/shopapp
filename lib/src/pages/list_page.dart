@@ -53,7 +53,7 @@ _wawa(BuildContext context) {
           //return Center(child: Text('data'));
 
         }
-
+          lista.sort((a, b) => b.fecha.compareTo(a.fecha));
         return ListView.builder(
           padding: EdgeInsets.all(8.0),
           itemCount: lista.length,
