@@ -320,6 +320,7 @@ class _NewListState extends State<NewList> {
 
   void _editDubimt(int index) {
     editFormKey.currentState.save();
+    DBProvider.db.updatetempProd(items[index]);
   }
 
   Widget _editarNombreArticulo(int index) {
