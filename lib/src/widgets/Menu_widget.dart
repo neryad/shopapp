@@ -35,6 +35,7 @@ class MenuWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.info),
             title: Text('Acerca de'),
+            onTap: () => {Navigator.pushReplacementNamed(context, 'about')},
           )
         ],
       ),

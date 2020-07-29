@@ -102,7 +102,7 @@ saludos() {
   // DateTime date = new DateTime(now.hour, now.minute).toLocal();
   var msg = '';
   if (timeNow <= 11) {
-    msg = 'Buenos dias ${prefs.nombreUsuario}';
+    msg = 'Buenos días ${prefs.nombreUsuario}';
   } else if ((timeNow >= 12) && (timeNow <= 16)) {
     msg = 'Buenas tardes ${prefs.nombreUsuario}';
   } else if ((timeNow > 16) && (timeNow < 19)) {

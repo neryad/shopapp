@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:shopapp/src/pages/about_page.dart';
 import 'package:shopapp/src/pages/home_page.dart';
 import 'package:shopapp/src/pages/newList.dart';
 import 'package:shopapp/src/pages/setting_page.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         'home' : ( BuildContext context) => HomePage(),
         'newList': ( BuildContext context) => NewList(),
         'settings': ( BuildContext context) => SettingPage(),
+        'about': (BuildContext context) => AboutPage(),
       },
     );
   }
