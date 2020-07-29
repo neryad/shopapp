@@ -106,7 +106,7 @@ class DBProvider {
 
     //GET
 
-     Future <List<ProductModel>> getarticulos() async {
+    Future <List<ProductModel>> getarticulos() async {
 
       final db = await database;
        final res = await db.query('product');
@@ -124,7 +124,7 @@ class DBProvider {
       // return list;
     }
 
-      Future <List<ProductModel>> getTmpArticulos() async {
+    Future <List<ProductModel>> getTmpArticulos() async {
 
       final db = await database;
        final res = await db.query('tmpProduct');
@@ -154,6 +154,16 @@ class DBProvider {
       return list;
     }
 
+    //Get by id
+
+    Future <List<ProductModel>> getprodId(int id ) async {
+
+      final db = await database;
+      final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
+      List<ProductModel> art = res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList(): [];
+      return art;
+
+    }
     //Delete
 
     Future<int> deleteLista(int id ) async {

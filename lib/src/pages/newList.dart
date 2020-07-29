@@ -9,6 +9,7 @@ import 'package:shopapp/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class NewList extends StatefulWidget {
+  
   NewList({Key key}) : super(key: key);
 
   @override
@@ -21,6 +22,7 @@ class _NewListState extends State<NewList> {
   double diference = 0.00;
   bool checkValue = false;
   final prefs = new PreferenciasUsuario();
+
 
   @override
   void initState() {

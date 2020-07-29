@@ -53,58 +53,56 @@ class _ListPageState extends State<ListPage> {
 
         }
           lista.sort((a, b) => b.fecha.compareTo(a.fecha));
-        return Expanded(
-                  child: ListView.builder(
+        return ListView.builder(
             //padding: EdgeInsets.all(8.0),
             itemCount: lista.length,
             itemBuilder: (context, i) {
               return Dismissible(
                 direction: DismissDirection.endToStart,
-                  background: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      color: Colors.red,
-                      child: Align(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Icon(
-                              Icons.delete,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "Eliminar",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              textAlign: TextAlign.right,
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                        alignment: Alignment.centerRight,
-                      ),
-                    ),
+        background: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            color: Colors.red,
+            child: Align(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Icon(
+                    Icons.delete,
+                    color: Colors.white,
                   ),
-                  key: Key(lista[i].title + lista.length.toString()),
-                  onDismissed: (direction) {
-                    utils.showSnack(context, 'Lista eliminada');
-                    DBProvider.db.deleteLista(lista[i].id);
-                    lista.removeAt(i);
-                    
-                    // getTotal();
-                    // getDiference();
-                     setState(() {});
-                  },
-                  child: _card(lista[i]),
+                  Text(
+                    "Eliminar",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                ],
+              ),
+              alignment: Alignment.centerRight,
+            ),
+          ),
+        ),
+        key: Key(lista[i].title + lista.length.toString()),
+        onDismissed: (direction) {
+          utils.showSnack(context, 'Lista eliminada');
+          DBProvider.db.deleteLista(lista[i].id);
+          lista.removeAt(i);
+          
+          // getTotal();
+          // getDiference();
+           setState(() {});
+        },
+        child: _card(lista[i]),
               );
               //_card(lista[i]),
             } 
-          ),
-        );
+          );
       },
     ),
   );
@@ -122,36 +120,45 @@ Widget _imagen() {
 }
 
 Widget _card(Lista lista) {
-  return Container(
-    height: 100.00,
-    child: Card(
-      elevation: 10.0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Icon(Icons.shopping_basket, color: utils.cambiarColor()),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(lista.title),
-              Text(lista.superMaret,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  )),
-            ],
-          ),
-          Column(
+  return GestureDetector(
+    onTap: () {
+            //Navigator.pushReplacementNamed(context, 'savedList', savelist: 'test')
+          //  var route = new MaterialPageRoute(
+          //     builder: (BuildContext context) => SavedListState(savelist: lista));
+          //     Navigator.of(context).push(route);
+          
+            },
+      child: Container(
+      height: 100.00,
+      child: Card(
+        elevation: 10.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Icon(Icons.shopping_basket, color: utils.cambiarColor()),
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(lista.fecha),
-                Text(
-                  utils.numberFormat(lista.total),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ]),
-        ],
+                Text(lista.title),
+                Text(lista.superMaret,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    )),
+              ],
+            ),
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(lista.fecha),
+                  Text(
+                    utils.numberFormat(lista.total),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ]),
+          ],
+        ),
       ),
     ),
   );
