@@ -1,4 +1,4 @@
-import 'package:flushbar/flushbar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:shopapp/src/models/List_model.dart';
@@ -618,7 +618,7 @@ class _NewListState extends State<NewList> {
                 ),
                 key: Key(items[index].name + items.length.toString()),
                 onDismissed: (direction) {
-                  showSnack(context, 'Artículo eliminado de la lista');
+                  utils.showSnack(context, 'Artículo eliminado de la lista');
                   DBProvider.db.deleteTmpProd(items[index].id);
                   items.removeAt(index);
 
@@ -651,9 +651,9 @@ class _NewListState extends State<NewList> {
                               setState(() {});
 
                               (valor == true)
-                                  ? showSnack(
+                                  ? utils.showSnack(
                                       context, 'Artículo agregado al carrito')
-                                  : showSnack(context,
+                                  : utils.showSnack(context,
                                       'Artículo removido del carrito'); //   showSnack(context, 'Artículo agregado');
                             },
                             activeColor: utils.cambiarColor(),
@@ -824,20 +824,7 @@ class _NewListState extends State<NewList> {
     lisForm.currentState.reset();
   }
 
-  void showSnack(BuildContext context, String msg) {
-    Flushbar(
-      //title: 'This action is prohibited',
-      message: msg,
-      icon: Icon(
-        Icons.info_outline,
-        size: 28,
-        color: utils.cambiarColor(),
-      ),
-      leftBarIndicatorColor: utils.cambiarColor(),
-      duration: Duration(seconds: 2),
-    )..show(context);
-  }
-
+ 
   void _guardarLista(BuildContext context) {
     showDialog(
         context: context,

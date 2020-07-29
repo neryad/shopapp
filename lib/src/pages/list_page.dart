@@ -25,9 +25,8 @@ class _ListPageState extends State<ListPage> {
       ),
     );
   }
-}
 
-_wawa(BuildContext context) {
+  _wawa(BuildContext context) {
   return Container(
     height: MediaQuery.of(context).size.height * .6,
     child: FutureBuilder<List<Lista>>(
@@ -54,10 +53,57 @@ _wawa(BuildContext context) {
 
         }
           lista.sort((a, b) => b.fecha.compareTo(a.fecha));
-        return ListView.builder(
-          padding: EdgeInsets.all(8.0),
-          itemCount: lista.length,
-          itemBuilder: (context, i) => _card(lista[i]),
+        return Expanded(
+                  child: ListView.builder(
+            //padding: EdgeInsets.all(8.0),
+            itemCount: lista.length,
+            itemBuilder: (context, i) {
+              return Dismissible(
+                direction: DismissDirection.endToStart,
+                  background: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      color: Colors.red,
+                      child: Align(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              "Eliminar",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                              textAlign: TextAlign.right,
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                          ],
+                        ),
+                        alignment: Alignment.centerRight,
+                      ),
+                    ),
+                  ),
+                  key: Key(lista[i].title + lista.length.toString()),
+                  onDismissed: (direction) {
+                    utils.showSnack(context, 'Lista eliminada');
+                    DBProvider.db.deleteLista(lista[i].id);
+                    lista.removeAt(i);
+                    
+                    // getTotal();
+                    // getDiference();
+                     setState(() {});
+                  },
+                  child: _card(lista[i]),
+              );
+              //_card(lista[i]),
+            } 
+          ),
         );
       },
     ),
@@ -110,3 +156,6 @@ Widget _card(Lista lista) {
     ),
   );
 }
+
+}
+

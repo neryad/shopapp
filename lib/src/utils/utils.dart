@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:flushbar/flushbar.dart';
 
 final prefs = new PreferenciasUsuario();
 
@@ -125,3 +126,18 @@ saludos() {
         fontWeight: FontWeight.bold,
       ));
 }
+
+
+ void showSnack(BuildContext context, String msg) {
+    Flushbar(
+      //title: 'This action is prohibited',
+      message: msg,
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: cambiarColor(),
+      ),
+      leftBarIndicatorColor: cambiarColor(),
+      duration: Duration(seconds: 2),
+    )..show(context);
+  }
