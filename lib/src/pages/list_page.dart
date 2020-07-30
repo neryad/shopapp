@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/models/List_model.dart';
+import 'package:shopapp/src/pages/details_page.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 
@@ -123,9 +124,9 @@ Widget _card(Lista lista) {
   return GestureDetector(
     onTap: () {
             //Navigator.pushReplacementNamed(context, 'savedList', savelist: 'test')
-          //  var route = new MaterialPageRoute(
-          //     builder: (BuildContext context) => SavedListState(savelist: lista));
-          //     Navigator.of(context).push(route);
+            var route = new MaterialPageRoute(
+              builder: (BuildContext context) => DetailsPage(savelist: lista));
+              Navigator.of(context).push(route);
           
             },
       child: Container(

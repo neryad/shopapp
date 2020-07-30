@@ -546,7 +546,7 @@ class _NewListState extends State<NewList> {
   _bodyWidget() {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
-        future: DBProvider.db.getTmpArticulos(),
+        future: DBProvider.db.getprodId(3),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData && snapshot.data.length > 0) {
             final tmpArt = snapshot.data;
@@ -817,7 +817,7 @@ class _NewListState extends State<NewList> {
     var prod = new ProductModel(
         name: productModel.name,
         quantity: productModel.quantity,
-        listId: nuevaLista.id,
+        listId: 3,
         price: productModel.price);
 
     DBProvider.db.newProd(prod);
