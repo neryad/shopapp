@@ -12,7 +12,9 @@ class Lista {
         this.title,
         this.superMaret,
         this.fecha,
-        this.total
+        this.total,
+        this.diference,
+        this.buget
 
     });
 
@@ -21,6 +23,8 @@ class Lista {
     String superMaret;
     String fecha;
     double total;
+    double diference;
+    double buget;
     ProductModel productModel;
 
     factory Lista.fromJson(Map<String, dynamic> json) => Lista(
@@ -29,8 +33,8 @@ class Lista {
         superMaret: json["superMaret"],
         fecha: json["fecha"],
         total: json["total"],
-        // prodId: json["prod_id"],
-        // productModel: json["ProductModel"],
+        buget: json["buget"],
+        diference: json["diference"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -39,6 +43,8 @@ class Lista {
         "superMaret": superMaret,
         "fecha": fecha,
         "total":total,
+        "buget":buget,
+        "diference":diference,
         // "prod_id": prodId,
         // "ProductModel": productModel,
     };

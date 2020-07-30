@@ -814,7 +814,10 @@ class _NewListState extends State<NewList> {
         title: listaModel.title,
         superMaret: listaModel.superMaret,
         fecha: fecha,
-        total: total);
+        total: total,
+        diference: diference,
+        buget: buget
+        );
 
     DBProvider.db.nuevoLista(nuevaLista);
     // var prod = new ProductModel(

@@ -42,7 +42,9 @@ class DBProvider {
           'title TEXT,'
           'superMaret TEXT,'
           'fecha TEXT,'
-          'total REAL'
+          'total REAL,'
+          'buget REAL,'
+          'diference REAL'
           ')');
 
         await db.execute(
@@ -186,6 +188,15 @@ class DBProvider {
       return res;
     }
 
+       Future<int> deleteProd(int id ) async {
+
+      final db =  await database;
+
+      final res = await db.delete('product', where: 'id = ?', whereArgs: [id]);
+
+      return res;
+    }
+
        Future<int> deleteAllTempProd() async {
 
       final db =  await database;
@@ -205,6 +216,23 @@ class DBProvider {
 
       return res;
     }
+
+      updateProd( ProductModel prod) async {
+      final db = await database;
+
+      final res = await db.update('product', prod.toJson(),where: 'id = ?', whereArgs: [prod.id]);
+
+      return res;
+    }
+
+      updatelist( Lista prod) async {
+      final db = await database;
+
+      final res = await db.update('Lista', prod.toJson(),where: 'id = ?', whereArgs: [prod.id]);
+
+      return res;
+    }
+
 
 
 
