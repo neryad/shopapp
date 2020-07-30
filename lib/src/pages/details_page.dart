@@ -19,6 +19,7 @@ class _DetailsPageState extends State<DetailsPage> {
   double diference;
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
+  final editFormKey = GlobalKey<FormState>();
   //@override
   List<ProductModel> articulos = [];
   Widget build(BuildContext context) {
@@ -27,20 +28,30 @@ class _DetailsPageState extends State<DetailsPage> {
     //buget = listaModel.total;
 
     return Scaffold(
-        backgroundColor: Colors.grey[200],
-        appBar: AppBar(
-            backgroundColor: utils.cambiarColor(),
-            title: Text(
-              listaModel.id.toString(),
-            )),
-        drawer: MenuWidget(),
-        body: Column(
-          children: <Widget>[
-            _header(listaModel.total, listaModel.buget, listaModel.diference,
-                listaModel),
-            _bodyWidget(listaModel.id, listaModel)
-          ],
-        ));
+      backgroundColor: Colors.grey[200],
+      appBar: AppBar(
+          backgroundColor: utils.cambiarColor(),
+          title: Text(
+            listaModel.title,
+          )),
+      drawer: MenuWidget(),
+      body: Column(
+        children: <Widget>[
+          _header(listaModel.total, listaModel.buget, listaModel.diference,
+              listaModel),
+          _bodyWidget(listaModel.id, listaModel)
+        ],
+      ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: () {
+          // _mostrarAlertaProducto(context);
+        },
+        backgroundColor: utils.cambiarColor(),
+        child: Icon(Icons.add_shopping_cart),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      bottomNavigationBar: _bNavbar(context),
+    );
   }
 
   Widget _header(double total, double buget, double diference, Lista list) {
@@ -76,7 +87,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             utils.numberFormat(buget),
                             style: TextStyle(
                                 fontSize: 18,
-                                 color: bugetColor,
+                                color: bugetColor,
                                 fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -120,7 +131,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         utils.numberFormat(diference),
                         style: TextStyle(
                             fontSize: 18,
-                             color: bugetColor,
+                            color: bugetColor,
                             fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -132,6 +143,31 @@ class _DetailsPageState extends State<DetailsPage> {
         ],
       ),
     );
+  }
+
+  Widget _bNavbar(BuildContext context) {
+    return BottomAppBar(
+        child: new Row(
+      children: <Widget>[
+        FlatButton(
+          //onPressed: () => _guardarLista(context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[Icon(Icons.save), Text('Actualizar lista')],
+          ),
+        ),
+        FlatButton(
+          //onPressed: () => _validateEliminarList(context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Icon(Icons.remove_circle_outline),
+              Text('Limpiar lista')
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 
   _bodyWidget(String id, Lista listaArt) {
@@ -212,7 +248,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 key: Key(articulos[index].name + articulos.length.toString()),
                 onDismissed: (direction) {
                   utils.showSnack(context, 'Artículo eliminado de la lista');
-                   DBProvider.db.deleteProd(articulos[index].id);
+                  DBProvider.db.deleteProd(articulos[index].id);
                   articulos.removeAt(index);
 
                   getTotal(listaArt);
@@ -258,7 +294,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          //_mostrarAlertaEditarProducto(context, index);
+                          _mostrarAlertaEditarProducto(context, index, listaArt);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(top: 0, bottom: 5),
@@ -366,7 +402,7 @@ class _DetailsPageState extends State<DetailsPage> {
           );
         });
   }
-
+  
   Widget _crearBuget(Lista prod) {
     return TextField(
       maxLength: 6,
@@ -387,7 +423,6 @@ class _DetailsPageState extends State<DetailsPage> {
         if (value == null) {
           return;
         } else {
-          
           prod.buget = double.parse(value);
           DBProvider.db.updatelist(prod);
           //prefs.tempBuget = buget.toString();
@@ -403,7 +438,7 @@ class _DetailsPageState extends State<DetailsPage> {
         setState(() {
           list.total += (articulos[i].price * articulos[i].quantity);
 
-           getDiference(list);
+          getDiference(list);
           if (list.total > list.buget) {
             bugetColor = Colors.red[900];
           } else {
@@ -431,4 +466,114 @@ class _DetailsPageState extends State<DetailsPage> {
     }
     list.diference = calDiferecen;
   }
+
+    void _mostrarAlertaEditarProducto(BuildContext context, int index, Lista list) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Actulizar artículo'),
+            content: Form(
+              key: editFormKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _editarNombreArticulo(index),
+                  _editarcantidadArticulo(index),
+                  _editarPrecioArticulo(index),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'Salir',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+              FlatButton(
+                  onPressed: () {
+                    //_subimt();
+                    _editDubimt(index);
+                    getTotal(list);
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Aceptar',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+            ],
+          );
+        });
+  }
+    void _editDubimt(int index) {
+    editFormKey.currentState.save();
+    DBProvider.db.updateProd(articulos[index]);
+  }
+
+   Widget _editarNombreArticulo(int index) {
+    return TextFormField(
+      initialValue: articulos[index].name,
+      maxLength: 50,
+      textCapitalization: TextCapitalization.sentences,
+      textAlign: TextAlign.center,
+      onSaved: (value) => articulos[index].name = value,
+      decoration: InputDecoration(
+        counterText: '',
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
+        hintText: 'Nombre artículo',
+        hintStyle: TextStyle(color: utils.cambiarColor()),
+      ),
+    );
+  }
+
+  Widget _editarPrecioArticulo(int index) {
+    return TextFormField(
+      initialValue: articulos[index].price.toString(),
+      maxLength: 6,
+      //controller: _controllers[index],
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText: 'Precio',
+        counterText: '',
+        hintStyle: TextStyle(color: utils.cambiarColor()),
+      ),
+      onSaved: (value) => articulos[index].price = double.parse(value),
+      validator: (value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return 'Solo numeros';
+        }
+      },
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+    );
+  }
+
+  Widget _editarcantidadArticulo(int index) {
+    return TextFormField(
+      initialValue: articulos[index].quantity.toString(),
+      maxLength: 6,
+      //controller: _controllers[index],
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText: 'Cantidad',
+        counterText: '',
+        hintStyle: TextStyle(color: utils.cambiarColor()),
+      ),
+      onSaved: (value) => articulos[index].quantity = int.parse(value),
+      validator: (value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return 'Solo numeros';
+        }
+      },
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+    );
+  }
+
 }
