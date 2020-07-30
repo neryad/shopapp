@@ -18,7 +18,7 @@ class ProductModel {
     String name;
     int quantity;
     double price;
-    int listId;
+    String listId;
     int complete;
 
     factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(

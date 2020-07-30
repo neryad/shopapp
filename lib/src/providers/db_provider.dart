@@ -38,7 +38,7 @@ class DBProvider {
         await db.execute(
 
           'CREATE TABLE Lista ('
-          'id INTEGER PRIMARY KEY,'
+          'id TEXT PRIMARY KEY,'
           'title TEXT,'
           'superMaret TEXT,'
           'fecha TEXT,'
@@ -156,23 +156,25 @@ class DBProvider {
 
     //Get by id
 
-    Future <List<ProductModel>> getprodId(int id ) async {
+    Future <List<ProductModel>> getprodId(String id ) async {
 
       final db = await database;
-      final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
+      //final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
+      final res = await db.rawQuery('SELECT * FROM product WHERE listId=?', [id]);
+      //List<Map> result = await db.rawQuery('SELECT * FROM product WHERE listId=?', [id]);
       List<ProductModel> art = res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList(): [];
       return art;
 
     }
     //Delete
 
-    Future<int> deleteLista(int id ) async {
+    Future<String> deleteLista(String id ) async {
 
       final db =  await database;
 
       final res = await db.delete('Lista', where: 'id = ?', whereArgs: [id]);
 
-      return res;
+      return res.toString();
     }
 
       Future<int> deleteTmpProd(int id ) async {

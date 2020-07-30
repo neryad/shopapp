@@ -16,7 +16,7 @@ class Lista {
 
     });
 
-    int id;
+    String id;
     String title;
     String superMaret;
     String fecha;

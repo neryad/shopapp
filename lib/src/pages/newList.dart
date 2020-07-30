@@ -270,7 +270,7 @@ class _NewListState extends State<NewList> {
     var prod = new ProductModel(
         name: productModel.name,
         quantity: productModel.quantity,
-        listId: 1,
+        listId: '1',
         price: productModel.price,
         complete: 0);
     items.insert(it, prod);
@@ -546,7 +546,7 @@ class _NewListState extends State<NewList> {
   _bodyWidget() {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
-        future: DBProvider.db.getprodId(3),
+        future: DBProvider.db.getTmpArticulos(),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData && snapshot.data.length > 0) {
             final tmpArt = snapshot.data;
@@ -804,23 +804,33 @@ class _NewListState extends State<NewList> {
   }
 
   saveList() {
+    String lisId = uuid.v4();
     DBProvider.db.deleteAllTempProd();
     lisForm.currentState.save();
     DateTime now = new DateTime.now();
     var fecha = '${now.day}/${now.month}/${now.year}';
     final nuevaLista = Lista(
+        id: lisId,
         title: listaModel.title,
         superMaret: listaModel.superMaret,
         fecha: fecha,
         total: total);
-    DBProvider.db.nuevoLista(nuevaLista);
-    var prod = new ProductModel(
-        name: productModel.name,
-        quantity: productModel.quantity,
-        listId: 3,
-        price: productModel.price);
 
-    DBProvider.db.newProd(prod);
+    DBProvider.db.nuevoLista(nuevaLista);
+    // var prod = new ProductModel(
+    //     name: productModel.name,
+    //     quantity: productModel.quantity,
+    //     listId: 6,
+    //     price: productModel.price);
+
+        
+        for (var i = 0; i < items.length; i++) {
+          items[i].listId = nuevaLista.id;
+          print(items[i]);
+          DBProvider.db.newProd(items[i]);
+        }
+    
+   // DBProvider.db.newProd(prod);
 
     items = [];
     lisForm.currentState.reset();
