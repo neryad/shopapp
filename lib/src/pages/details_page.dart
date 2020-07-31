@@ -21,6 +21,7 @@ class _DetailsPageState extends State<DetailsPage> {
   Color bugetColor = utils.cambiarColor();
   final editFormKey = GlobalKey<FormState>();
    final formKey = GlobalKey<FormState>();
+     ProductModel productModel = new ProductModel();
   //@override
   List<ProductModel> articulos = [];
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
-           _mostrarAlertaProducto(context);
+           _mostrarAlertaProducto(context, listaModel);
         },
         backgroundColor: utils.cambiarColor(),
         child: Icon(Icons.add_shopping_cart),
@@ -631,7 +632,7 @@ class _DetailsPageState extends State<DetailsPage> {
     Navigator.of(context).pop();
   }
 
-    void _mostrarAlertaProducto(BuildContext context) {
+    void _mostrarAlertaProducto(BuildContext context, Lista list) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -667,8 +668,8 @@ class _DetailsPageState extends State<DetailsPage> {
                   )),
               FlatButton(
                   onPressed: () {
-                    _subimt();
-                    getTotal();
+                    _subimt(list);
+                    getTotal(list);
                     //Navigator.of(context).pop();
                   },
                   child: Text(
@@ -745,5 +746,21 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  void _subimt() {
+   void _subimt(Lista list) {
+    // var newId = uuid.v1();
+    var it = articulos.length;
+    //int flag = (boolValue==true)? 1:0;
+    if (!formKey.currentState.validate()) return;
+    formKey.currentState.save();
+    var prod = new ProductModel(
+        name: productModel.name,
+        quantity: productModel.quantity,
+        listId: list.id,
+        price: productModel.price,
+        complete: 0);
+    articulos.insert(it, prod);
+    //utils.prefs.save("TempPro", prod);
+    DBProvider.db.newProd(prod);
+    formKey.currentState.reset();
+  }
 }
