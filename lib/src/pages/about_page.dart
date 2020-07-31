@@ -13,7 +13,9 @@ class AboutPage extends StatelessWidget {
             backgroundColor: utils.cambiarColor(),
             title: Text(
               'Acerca de',
-            )),
+            ),
+            elevation: 0.0,
+            ),
         drawer: MenuWidget(),
         body: SingleChildScrollView(
           child: Column(
@@ -145,7 +147,7 @@ class AboutPage extends StatelessWidget {
                     ),
                     SizedBox(height: 10.0),
                     Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vel orci nec tellus mattis sodales sit amet id est. Praesent ut tempor ligula. Nullam venenatis, risus vel tristique viverra, nibh diam vehicula eros, eu hendrerit magna massa at velit. Mauris ultrices nulla eget nunc rutrum, eu porttitor orci iaculis.",
+                      "AppName es una simple aplicación para ayudar de forma simple y con mejor manejo a las personas con sus listas de compras. © 2020 Neryad.",
                       style: TextStyle(
                           fontSize: 20.0,
                           fontStyle: FontStyle.italic,

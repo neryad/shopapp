@@ -30,6 +30,7 @@ class _DetailsPageState extends State<DetailsPage> {
     //buget = listaModel.total;
 
     return Scaffold(
+      
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
@@ -230,6 +231,7 @@ class _DetailsPageState extends State<DetailsPage> {
               //_controllers.add(new TextEditingController());
               //var wawa = toBoolean(articulos[index].complete);
               bool isComplete = (articulos[index].complete == 1) ? true : false;
+              
               return Dismissible(
                 direction: DismissDirection.endToStart,
                 background: Padding(
