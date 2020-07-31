@@ -20,6 +20,7 @@ class _DetailsPageState extends State<DetailsPage> {
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
   final editFormKey = GlobalKey<FormState>();
+   final formKey = GlobalKey<FormState>();
   //@override
   List<ProductModel> articulos = [];
   Widget build(BuildContext context) {
@@ -44,13 +45,13 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
-          // _mostrarAlertaProducto(context);
+           _mostrarAlertaProducto(context);
         },
         backgroundColor: utils.cambiarColor(),
         child: Icon(Icons.add_shopping_cart),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: _bNavbar(context),
+      bottomNavigationBar: _bNavbar(context, listaModel),
     );
   }
 
@@ -145,19 +146,33 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  Widget _bNavbar(BuildContext context) {
+  Widget _bNavbar(BuildContext context, Lista list) {
     return BottomAppBar(
         child: new Row(
       children: <Widget>[
         FlatButton(
-          //onPressed: () => _guardarLista(context),
+          onPressed: () {
+            DateTime now = new DateTime.now();
+            var fecha = '${now.day}/${now.month}/${now.year}';
+            final updateLista = Lista(
+                id: list.id,
+                title: list.title,
+                superMaret: list.superMaret,
+                fecha: fecha,
+                total: list.total,
+                diference: list.diference,
+                buget: list.buget);
+
+            DBProvider.db.updatelist(updateLista);
+            utils.showSnack(context, 'Lista actlizada');
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[Icon(Icons.save), Text('Actualizar lista')],
           ),
         ),
         FlatButton(
-          //onPressed: () => _validateEliminarList(context),
+          onPressed: () => _validateEliminarList(context, list),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -294,7 +309,8 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          _mostrarAlertaEditarProducto(context, index, listaArt);
+                          _mostrarAlertaEditarProducto(
+                              context, index, listaArt);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(top: 0, bottom: 5),
@@ -369,7 +385,7 @@ class _DetailsPageState extends State<DetailsPage> {
         });
   }
 
-  void _mostrarAlertaBuget(BuildContext context, Lista lista) {
+  _mostrarAlertaBuget(BuildContext context, Lista lista) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -402,7 +418,7 @@ class _DetailsPageState extends State<DetailsPage> {
           );
         });
   }
-  
+
   Widget _crearBuget(Lista prod) {
     return TextField(
       maxLength: 6,
@@ -467,7 +483,8 @@ class _DetailsPageState extends State<DetailsPage> {
     list.diference = calDiferecen;
   }
 
-    void _mostrarAlertaEditarProducto(BuildContext context, int index, Lista list) {
+  void _mostrarAlertaEditarProducto(
+      BuildContext context, int index, Lista list) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -507,12 +524,13 @@ class _DetailsPageState extends State<DetailsPage> {
           );
         });
   }
-    void _editDubimt(int index) {
+
+  void _editDubimt(int index) {
     editFormKey.currentState.save();
     DBProvider.db.updateProd(articulos[index]);
   }
 
-   Widget _editarNombreArticulo(int index) {
+  Widget _editarNombreArticulo(int index) {
     return TextFormField(
       initialValue: articulos[index].name,
       maxLength: 50,
@@ -576,4 +594,156 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
+  _validateEliminarList(BuildContext context, Lista list) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Eliminar contenido'),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'Salir',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+              FlatButton(
+                  onPressed: () => limpiarTodo(list),
+                  child: Text(
+                    'Aceptar',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+            ],
+          );
+        });
+  }
+
+  limpiarTodo(Lista list) {
+    setState(() {
+      DBProvider.db.deleteAllProd();
+      articulos.clear();
+      getTotal(list);
+      getDiference(list);
+      DBProvider.db.updatelist(list);
+      utils.showSnack(context, 'Lista limpiada');
+    });
+    Navigator.of(context).pop();
+  }
+
+    void _mostrarAlertaProducto(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(' Nuevo artículo'),
+            content: Form(
+              key: formKey,
+              child: SingleChildScrollView(
+                child: Container(
+                  //  height: MediaQuery.of(context).size.height / 4,
+                  //width: MediaQuery.of(context).size.width / 1,
+                  //color: Colors.red,
+
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      _crearNombreArticulo(),
+                      _crearcantidadArticulo(),
+                      _crearPrecioArticulo(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'Salir',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+              FlatButton(
+                  onPressed: () {
+                    _subimt();
+                    getTotal();
+                    //Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Aceptar',
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+            ],
+          );
+        });
+  }
+
+
+  Widget _crearNombreArticulo() {
+    return TextFormField(
+      //  initialValue: productModel.name,
+      maxLength: 50,
+      textCapitalization: TextCapitalization.sentences,
+      textAlign: TextAlign.center,
+      onSaved: (value) => productModel.name = value,
+      decoration: InputDecoration(
+        counterText: '',
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
+        hintText: 'Nombre artículo',
+        hintStyle: TextStyle(color: utils.cambiarColor()),
+      ),
+    );
+  }
+
+  Widget _crearPrecioArticulo() {
+    return TextFormField(
+      //  initialValue: productModel.price.toString(),
+      maxLength: 6,
+      //controller: _controllers[index],
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText: 'Precio',
+        counterText: '',
+        hintStyle: TextStyle(color: utils.cambiarColor()),
+      ),
+      onSaved: (value) => productModel.price = double.parse(value),
+      validator: (value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return 'Completar campos';
+        }
+      },
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+    );
+  }
+
+  Widget _crearcantidadArticulo() {
+    return TextFormField(
+      // initialValue: productModel.quantity.toString(),
+      maxLength: 6,
+      //controller: _controllers[index],
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText: 'Cantidad',
+        counterText: '',
+        hintStyle: TextStyle(color: utils.cambiarColor()),
+      ),
+      onSaved: (value) => productModel.quantity = int.parse(value),
+      validator: (value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return 'Solo numeros';
+        }
+      },
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+    );
+  }
+
+  void _subimt() {
 }
