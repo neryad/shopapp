@@ -563,8 +563,14 @@ class _DetailsPageState extends State<DetailsPage> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-      onSaved: (value) => articulos[index].price = double.parse(value),
+             onSaved: (value)  {
+       productModel.quantity = int.parse((value == "")? "0": value);
+        },
+      //onSaved: (value) => articulos[index].price = double.parse(value),
       validator: (value) {
+             if(value.isEmpty){
+          value = "0";
+        }
         if (utils.isNumeric(value)) {
           return null;
         } else {
@@ -586,8 +592,14 @@ class _DetailsPageState extends State<DetailsPage> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-      onSaved: (value) => articulos[index].quantity = int.parse(value),
+             onSaved: (value)  {
+       productModel.quantity = int.parse((value == "")? "0": value);
+        },
+      //onSaved: (value) => articulos[index].quantity = int.parse(value),
       validator: (value) {
+        if(value.isEmpty){
+          value = "0";
+        }
         if (utils.isNumeric(value)) {
           return null;
         } else {
@@ -711,8 +723,14 @@ class _DetailsPageState extends State<DetailsPage> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-      onSaved: (value) => productModel.price = double.parse(value),
+             onSaved: (value)  {
+       productModel.price = double.parse((value == "")? "0": value);
+        },
+      //onSaved: (value) => productModel.price = double.parse(value),
       validator: (value) {
+        if(value.isEmpty){
+          value = "0";
+        }
         if (utils.isNumeric(value)) {
           return null;
         } else {
@@ -734,8 +752,14 @@ class _DetailsPageState extends State<DetailsPage> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-      onSaved: (value) => productModel.quantity = int.parse(value),
+       onSaved: (value)  {
+       productModel.quantity = int.parse((value == "")? "0": value);
+        },
+      //onSaved: (value) => productModel.quantity = int.parse(value),
       validator: (value) {
+        if(value.isEmpty){
+          value = "0";
+        }
         if (utils.isNumeric(value)) {
           return null;
         } else {

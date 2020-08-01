@@ -341,6 +341,7 @@ class _NewListState extends State<NewList> {
       maxLength: 50,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
+
       onSaved: (value) => items[index].name = value,
       decoration: InputDecoration(
         counterText: '',
@@ -364,7 +365,10 @@ class _NewListState extends State<NewList> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-      onSaved: (value) => items[index].price = double.parse(value),
+       onSaved: (value)  {
+        items[index].price = double.parse((value == "")? "0": value);
+        },
+      //onSaved: (value) => items[index].price = double.parse(value),
       validator: (value) {
         if (utils.isNumeric(value)) {
           return null;
@@ -387,7 +391,10 @@ class _NewListState extends State<NewList> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-      onSaved: (value) => items[index].quantity = int.parse(value),
+       onSaved: (value)  {
+        items[index].quantity = int.parse((value == "")? "0": value);
+        },
+      //onSaved: (value) => items[index].quantity = int.parse(value),
       validator: (value) {
         if (utils.isNumeric(value)) {
           return null;
