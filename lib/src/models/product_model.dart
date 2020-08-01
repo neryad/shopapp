@@ -8,7 +8,7 @@ class ProductModel {
     ProductModel({
         this.id,
         this.name,
-        this.quantity,
+        this.quantity = 0,
         this.price,
         this.listId,
         this.complete,
@@ -17,7 +17,7 @@ class ProductModel {
     int id;
     String name;
     int quantity;
-    double price;
+    double price = 0.00;
     String listId;
     int complete;
 

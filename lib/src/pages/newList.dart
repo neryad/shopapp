@@ -217,7 +217,7 @@ class _NewListState extends State<NewList> {
 
   Widget _crearPrecioArticulo() {
     return TextFormField(
-      //  initialValue: productModel.price.toString(),
+      // initialValue:0.toString(),
       maxLength: 6,
       //controller: _controllers[index],
       textAlign: TextAlign.center,
@@ -226,12 +226,17 @@ class _NewListState extends State<NewList> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-      onSaved: (value) => productModel.price = double.parse(value),
+      onSaved: (value)  {
+        productModel.price = double.parse((value == "")? "0": value);
+        },
       validator: (value) {
+        if(value.isEmpty){
+          value = "0";
+        }
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Completar campos';
+          return 'Solo numeros';
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -240,7 +245,7 @@ class _NewListState extends State<NewList> {
 
   Widget _crearcantidadArticulo() {
     return TextFormField(
-      // initialValue: productModel.quantity.toString(),
+      //initialValue: 0.toString(),
       maxLength: 6,
       //controller: _controllers[index],
       textAlign: TextAlign.center,
@@ -248,9 +253,16 @@ class _NewListState extends State<NewList> {
         hintText: 'Cantidad',
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
-      ),
-      onSaved: (value) => productModel.quantity = int.parse(value),
+        //  int complValue = (valor == true) ? 1 : 0; int.parse(value),
+      ), 
+      onSaved: (value) {
+        
+        productModel.quantity = int.parse( (value == "") ? "0": value);
+      },
       validator: (value) {
+        if(value.isEmpty){
+          value = "0";
+        }
         if (utils.isNumeric(value)) {
           return null;
         } else {
@@ -262,9 +274,8 @@ class _NewListState extends State<NewList> {
   }
 
   void _subimt() {
-    // var newId = uuid.v1();
+
     var it = items.length;
-    //int flag = (boolValue==true)? 1:0;
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
     var prod = new ProductModel(
@@ -274,7 +285,6 @@ class _NewListState extends State<NewList> {
         price: productModel.price,
         complete: 0);
     items.insert(it, prod);
-    //utils.prefs.save("TempPro", prod);
     DBProvider.db.tmpProd(prod);
     formKey.currentState.reset();
   }
@@ -285,7 +295,7 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(' Nuevo artículo'),
+            title: Text('Editar artículo'),
             content: Form(
               key: editFormKey,
               child: Column(

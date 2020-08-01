@@ -148,44 +148,44 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  Widget _bNavbar(BuildContext context, Lista list) {
-    return BottomAppBar(
-        child: new Row(
-      children: <Widget>[
-        FlatButton(
-          onPressed: () {
-            DateTime now = new DateTime.now();
-            var fecha = '${now.day}/${now.month}/${now.year}';
-            final updateLista = Lista(
-                id: list.id,
-                title: list.title,
-                superMaret: list.superMaret,
-                fecha: fecha,
-                total: list.total,
-                diference: list.diference,
-                buget: list.buget);
+  // Widget _bNavbar(BuildContext context, Lista list) {
+  //   return BottomAppBar(
+  //       child: new Row(
+  //     children: <Widget>[
+  //       FlatButton(
+  //         onPressed: () {
+  //           DateTime now = new DateTime.now();
+  //           var fecha = '${now.day}/${now.month}/${now.year}';
+  //           final updateLista = Lista(
+  //               id: list.id,
+  //               title: list.title,
+  //               superMaret: list.superMaret,
+  //               fecha: fecha,
+  //               total: list.total,
+  //               diference: list.diference,
+  //               buget: list.buget);
 
-            DBProvider.db.updatelist(updateLista);
-            utils.showSnack(context, 'Lista actualizada');
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[Icon(Icons.save), Text('Actualizar lista')],
-          ),
-        ),
-        FlatButton(
-          onPressed: () => _validateEliminarList(context, list),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Icon(Icons.remove_circle_outline),
-              Text('Limpiar lista')
-            ],
-          ),
-        ),
-      ],
-    ));
-  }
+  //           DBProvider.db.updatelist(updateLista);
+  //           utils.showSnack(context, 'Lista actualizada');
+  //         },
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //           children: <Widget>[Icon(Icons.save), Text('Actualizar lista')],
+  //         ),
+  //       ),
+  //       FlatButton(
+  //         onPressed: () => _validateEliminarList(context, list),
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: <Widget>[
+  //             Icon(Icons.remove_circle_outline),
+  //             Text('Limpiar lista')
+  //           ],
+  //         ),
+  //       ),
+  //     ],
+  //   ));
+  // }
 
   _bodyWidget(String id, Lista listaArt) {
     return FutureBuilder<List<ProductModel>>(
@@ -598,42 +598,42 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  _validateEliminarList(BuildContext context, Lista list) {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Eliminar contenido'),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(
-                    'Salir',
-                    style: TextStyle(color: utils.cambiarColor()),
-                  )),
-              FlatButton(
-                  onPressed: () => limpiarTodo(list),
-                  child: Text(
-                    'Aceptar',
-                    style: TextStyle(color: utils.cambiarColor()),
-                  )),
-            ],
-          );
-        });
-  }
+  // _validateEliminarList(BuildContext context, Lista list) {
+  //   return showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text('Eliminar contenido'),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //                 onPressed: () => Navigator.of(context).pop(),
+  //                 child: Text(
+  //                   'Salir',
+  //                   style: TextStyle(color: utils.cambiarColor()),
+  //                 )),
+  //             FlatButton(
+  //                 onPressed: () => limpiarTodo(list),
+  //                 child: Text(
+  //                   'Aceptar',
+  //                   style: TextStyle(color: utils.cambiarColor()),
+  //                 )),
+  //           ],
+  //         );
+  //       });
+  // }
 
-  limpiarTodo(Lista list) {
-    setState(() {
-      DBProvider.db.deleteAllProd();
-      articulos.clear();
-      getTotal(list);
-      getDiference(list);
-      DBProvider.db.updatelist(list);
-      utils.showSnack(context, 'Lista limpiada');
-    });
-    Navigator.of(context).pop();
-  }
+  // limpiarTodo(Lista list) {
+  //   setState(() {
+  //     DBProvider.db.deleteAllProd();
+  //     articulos.clear();
+  //     getTotal(list);
+  //     getDiference(list);
+  //     DBProvider.db.updatelist(list);
+  //     utils.showSnack(context, 'Lista limpiada');
+  //   });
+  //   Navigator.of(context).pop();
+  // }
 
     void _mostrarAlertaProducto(BuildContext context, Lista list) {
     showDialog(

@@ -6,12 +6,14 @@ import 'package:flushbar/flushbar.dart';
 final prefs = new PreferenciasUsuario();
 
 bool isNumeric(String s) {
+
   if (s.isEmpty) return false;
 
   final n = num.tryParse(s);
 
   return (n == null) ? false : true;
 }
+
 
 DateTime now = DateTime.now();
 
