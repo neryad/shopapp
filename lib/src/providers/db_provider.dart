@@ -217,6 +217,16 @@ class DBProvider {
       return res;
     }
 
+        Future<int> deleteAllList() async {
+
+      final db =  await database;
+
+
+      final res = await db.rawDelete('Delete FROM Lista');
+
+      return res;
+    }
+
 
     //pdate 
     updatetempProd( ProductModel prod) async {

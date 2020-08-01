@@ -52,8 +52,8 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: utils.cambiarColor(),
         child: Icon(Icons.add_shopping_cart),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: _bNavbar(context, listaModel),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // bottomNavigationBar: _bNavbar(context, listaModel),
     );
   }
 
@@ -166,7 +166,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 buget: list.buget);
 
             DBProvider.db.updatelist(updateLista);
-            utils.showSnack(context, 'Lista actlizada');
+            utils.showSnack(context, 'Lista actualizada');
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -271,6 +271,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
                   getTotal(listaArt);
                   getDiference(listaArt);
+                  _updataLista(listaArt);
                   setState(() {});
                 },
                 child: Container(
@@ -645,9 +646,6 @@ class _DetailsPageState extends State<DetailsPage> {
               key: formKey,
               child: SingleChildScrollView(
                 child: Container(
-                  //  height: MediaQuery.of(context).size.height / 4,
-                  //width: MediaQuery.of(context).size.width / 1,
-                  //color: Colors.red,
 
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -672,7 +670,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   onPressed: () {
                     _subimt(list);
                     getTotal(list);
-                    //Navigator.of(context).pop();
+                    _updataLista(list);
                   },
                   child: Text(
                     'Aceptar',
@@ -749,9 +747,8 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
    void _subimt(Lista list) {
-    // var newId = uuid.v1();
+
     var it = articulos.length;
-    //int flag = (boolValue==true)? 1:0;
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
     var prod = new ProductModel(
@@ -761,8 +758,23 @@ class _DetailsPageState extends State<DetailsPage> {
         price: productModel.price,
         complete: 0);
     articulos.insert(it, prod);
-    //utils.prefs.save("TempPro", prod);
     DBProvider.db.newProd(prod);
+
     formKey.currentState.reset();
+  }
+
+  _updataLista(Lista list){
+    DateTime now = new DateTime.now();
+            var fecha = '${now.day}/${now.month}/${now.year}';
+            final updateLista = Lista(
+                id: list.id,
+                title: list.title,
+                superMaret: list.superMaret,
+                fecha: fecha,
+                total: list.total,
+                diference: list.diference,
+                buget: list.buget);
+
+            DBProvider.db.updatelist(updateLista);
   }
 }

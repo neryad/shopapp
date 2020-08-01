@@ -97,10 +97,7 @@ Image cambiarNewImage() {
 }
 
 saludos() {
-  //   var msg = '';
-  // var klok = timeNow;
-  // DateTime now = new DateTime.now();
-  // DateTime date = new DateTime(now.hour, now.minute).toLocal();
+
   var msg = '';
   if (timeNow <= 11) {
     msg = 'Buenos días ${prefs.nombreUsuario}';
@@ -111,20 +108,18 @@ saludos() {
   } else {
     msg = 'Buenas noches ${prefs.nombreUsuario}';
   }
+  return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+    
+      Text(msg,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        )),
+  ],);
 
-//   return ConstrainedBox(
-//   constraints: BoxConstraints.expand(height: 60),
-//   child: Container(
-//     //color: Colors.orange,
-//     child: Padding(padding: EdgeInsets.all(16), child: Text(msg, style: TextStyle(fontSize: 25 ,fontWeight: FontWeight.bold),)
-//     ),
-// ));
-
-  return Text(msg,
-      style: TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.bold,
-      ));
+  
 }
 
 

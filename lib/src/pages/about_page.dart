@@ -8,25 +8,20 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.white,
         appBar: AppBar(
-            backgroundColor: utils.cambiarColor(),
-            title: Text(
-              'Acerca de',
-            ),
-            elevation: 0.0,
-            ),
+          backgroundColor: utils.cambiarColor(),
+          title: Text(
+            'Acerca de',
+          ),
+          elevation: 0.0,
+        ),
         drawer: MenuWidget(),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(color: utils.cambiarColor()
-                    // gradient: LinearGradient(
-                    //     begin: Alignment.topCenter,
-                    //     end: Alignment.bottomCenter,
-                    //     colors: [utils.cambiarColor(), Colors.blueGrey])
-                    ),
+                decoration: BoxDecoration(color: utils.cambiarColor()),
                 child: Container(
                     width: double.infinity,
                     height: 300,
@@ -36,13 +31,13 @@ class AboutPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           CircleAvatar(
-                            backgroundImage: AssetImage(
-                                'assets/undraw_online_groceries_a02y.png'),
-
-                            // NetworkImage(
-                            //     'https://cdn.the-scientist.com/assets/articleNo/67431/hImg/37292/lemur-wrist-glands-scent-pheromones-primates-testosterone-mating-breeding-sexual-communication-x.png'
-                            //     ),
-                            radius: 50.0,
+                            radius: 55,
+                            backgroundColor: Colors.black38,
+                            child: CircleAvatar(
+                              backgroundImage: AssetImage(
+                                  'assets/undraw_online_groceries_a02y.png'),
+                              radius: 50.0,
+                            ),
                           ),
                           SizedBox(
                             height: 20.0,
@@ -131,33 +126,35 @@ class AboutPage extends StatelessWidget {
                       ),
                     )),
               ),
-              Container(
-                  child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Descripción",
-                      style: TextStyle(
-                          color: utils.cambiarColor(),
-                          fontStyle: FontStyle.normal,
-                          fontSize: 28.0),
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      "AppName es una simple aplicación para ayudar de forma simple y con mejor manejo a las personas con sus listas de compras. © 2020 Neryad.",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black,
-                          letterSpacing: 2.0),
-                    ),
-                  ],
-                ),
-              )),
+              Card(
+                child: Container(
+                    child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0, vertical: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Descripción",
+                        style: TextStyle(
+                            color: utils.cambiarColor(),
+                            fontStyle: FontStyle.normal,
+                            fontSize: 28.0),
+                      ),
+                      SizedBox(height: 10.0),
+                      Text(
+                        "AppName es una simple aplicación para ayudar de forma simple y con mejor manejo a las personas con sus listas de compras. © 2020 Neryad. Todos los derechos reservados",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black,
+                            letterSpacing: 2.0),
+                      ),
+                    ],
+                  ),
+                )),
+              ),
             ],
           ),
         ));
