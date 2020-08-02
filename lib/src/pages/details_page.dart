@@ -1,9 +1,13 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:shopapp/src/data/data.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+// import 'package:shopapp/src/data/data.dart';
 
 class DetailsPage extends StatefulWidget {
   final Lista savelist;
@@ -20,17 +24,17 @@ class _DetailsPageState extends State<DetailsPage> {
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
   final editFormKey = GlobalKey<FormState>();
-   final formKey = GlobalKey<FormState>();
-     ProductModel productModel = new ProductModel();
+  final formKey = GlobalKey<FormState>();
+  ProductModel productModel = new ProductModel();
   //@override
   List<ProductModel> articulos = [];
+ 
   Widget build(BuildContext context) {
     // Lista listaModel = widget.savelist;
     Lista listaModel = widget.savelist;
     //buget = listaModel.total;
 
     return Scaffold(
-      
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
@@ -40,6 +44,7 @@ class _DetailsPageState extends State<DetailsPage> {
       drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
+          //wawawaw(),
           _header(listaModel.total, listaModel.buget, listaModel.diference,
               listaModel),
           _bodyWidget(listaModel.id, listaModel)
@@ -47,7 +52,7 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
-           _mostrarAlertaProducto(context, listaModel);
+          _mostrarAlertaProducto(context, listaModel);
         },
         backgroundColor: utils.cambiarColor(),
         child: Icon(Icons.add_shopping_cart),
@@ -231,7 +236,7 @@ class _DetailsPageState extends State<DetailsPage> {
               //_controllers.add(new TextEditingController());
               //var wawa = toBoolean(articulos[index].complete);
               bool isComplete = (articulos[index].complete == 1) ? true : false;
-              
+
               return Dismissible(
                 direction: DismissDirection.endToStart,
                 background: Padding(
@@ -563,12 +568,12 @@ class _DetailsPageState extends State<DetailsPage> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-             onSaved: (value)  {
-       productModel.quantity = int.parse((value == "")? "0": value);
-        },
+      onSaved: (value) {
+        productModel.quantity = int.parse((value == "") ? "0" : value);
+      },
       //onSaved: (value) => articulos[index].price = double.parse(value),
       validator: (value) {
-             if(value.isEmpty){
+        if (value.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -592,12 +597,12 @@ class _DetailsPageState extends State<DetailsPage> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-             onSaved: (value)  {
-       productModel.quantity = int.parse((value == "")? "0": value);
-        },
+      onSaved: (value) {
+        productModel.quantity = int.parse((value == "") ? "0" : value);
+      },
       //onSaved: (value) => articulos[index].quantity = int.parse(value),
       validator: (value) {
-        if(value.isEmpty){
+        if (value.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -647,7 +652,7 @@ class _DetailsPageState extends State<DetailsPage> {
   //   Navigator.of(context).pop();
   // }
 
-    void _mostrarAlertaProducto(BuildContext context, Lista list) {
+  void _mostrarAlertaProducto(BuildContext context, Lista list) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -658,7 +663,6 @@ class _DetailsPageState extends State<DetailsPage> {
               key: formKey,
               child: SingleChildScrollView(
                 child: Container(
-
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -693,6 +697,89 @@ class _DetailsPageState extends State<DetailsPage> {
         });
   }
 
+  Widget row(ProductModel user) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          user.name,
+          style: TextStyle(fontSize: 16.0),
+        ),
+        SizedBox(
+          width: 10.0,
+        ),
+      ],
+    );
+  }
+
+  AutoCompleteTextField searchTextField;
+  Widget wawawaw() {
+
+    return TypeAheadField(
+
+                textFieldConfiguration: TextFieldConfiguration(
+                  autofocus: true,
+                  style: DefaultTextStyle.of(context)
+                      .style
+                      .copyWith(fontStyle: FontStyle.italic),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'What are you looking for?'),
+                ),
+                suggestionsCallback: (pattern) async {
+                  // Here you can call http call 
+                  return await BackendService.getSuggestions(pattern);
+                },
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    leading: Icon(Icons.shopping_cart),
+                    title: Text(suggestion['name']),
+                    subtitle: Text('\$${suggestion['price']}'),
+                  );
+                },
+                onSuggestionSelected: (suggestion) {
+                  // This when someone click the items
+                  print(suggestion);
+                },
+              
+    );
+
+    // return Column(
+    //   mainAxisAlignment: MainAxisAlignment.start,
+    //   children: <Widget>[
+    //     searchTextField = AutoCompleteTextField<ProductModel>(
+    //       // key: UniqueKey(),
+    //       clearOnSubmit: false,
+    //       suggestions: articulos,
+    //       style: TextStyle(color: Colors.black, fontSize: 16.0),
+    //      decoration: InputDecoration(
+    //     counterText: '',
+    //     focusedBorder: UnderlineInputBorder(
+    //       borderSide: BorderSide(color: utils.cambiarColor()),
+    //     ),
+    //     hintText: 'Nombre artículo',
+    //     hintStyle: TextStyle(color: utils.cambiarColor()),
+    //   ),
+    //       itemFilter: (item, query) {
+    //         return item.name.toLowerCase().startsWith(query.toLowerCase());
+    //       },
+    //       itemSorter: (a, b) {
+    //         return a.name.compareTo(b.name);
+    //       },
+    //       itemSubmitted: (item) {
+    //         setState(() {
+    //           searchTextField.textField.controller.text = item.name;
+    //         });
+    //       },
+    //       itemBuilder: (context, item) {
+    //         // ui for the autocomplete row
+    //         return row(item);
+    //       },
+    //     ),
+    //   ],
+    // );
+    //);
+  }
 
   Widget _crearNombreArticulo() {
     return TextFormField(
@@ -723,12 +810,12 @@ class _DetailsPageState extends State<DetailsPage> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-             onSaved: (value)  {
-       productModel.price = double.parse((value == "")? "0": value);
-        },
+      onSaved: (value) {
+        productModel.price = double.parse((value == "") ? "0" : value);
+      },
       //onSaved: (value) => productModel.price = double.parse(value),
       validator: (value) {
-        if(value.isEmpty){
+        if (value.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -752,12 +839,12 @@ class _DetailsPageState extends State<DetailsPage> {
         counterText: '',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-       onSaved: (value)  {
-       productModel.quantity = int.parse((value == "")? "0": value);
-        },
+      onSaved: (value) {
+        productModel.quantity = int.parse((value == "") ? "0" : value);
+      },
       //onSaved: (value) => productModel.quantity = int.parse(value),
       validator: (value) {
-        if(value.isEmpty){
+        if (value.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -770,8 +857,7 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-   void _subimt(Lista list) {
-
+  void _subimt(Lista list) {
     var it = articulos.length;
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
@@ -787,18 +873,18 @@ class _DetailsPageState extends State<DetailsPage> {
     formKey.currentState.reset();
   }
 
-  _updataLista(Lista list){
+  _updataLista(Lista list) {
     DateTime now = new DateTime.now();
-            var fecha = '${now.day}/${now.month}/${now.year}';
-            final updateLista = Lista(
-                id: list.id,
-                title: list.title,
-                superMaret: list.superMaret,
-                fecha: fecha,
-                total: list.total,
-                diference: list.diference,
-                buget: list.buget);
+    var fecha = '${now.day}/${now.month}/${now.year}';
+    final updateLista = Lista(
+        id: list.id,
+        title: list.title,
+        superMaret: list.superMaret,
+        fecha: fecha,
+        total: list.total,
+        diference: list.diference,
+        buget: list.buget);
 
-            DBProvider.db.updatelist(updateLista);
+    DBProvider.db.updatelist(updateLista);
   }
 }

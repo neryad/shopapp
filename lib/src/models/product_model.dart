@@ -12,6 +12,7 @@ class ProductModel {
         this.price,
         this.listId,
         this.complete,
+        // this.autocompleteterm,
     });
 
     int id;
@@ -20,6 +21,7 @@ class ProductModel {
     double price = 0.00;
     String listId;
     int complete;
+    // String autocompleteterm;
 
     factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
@@ -28,6 +30,7 @@ class ProductModel {
         price: json["price"],
         listId: json["listId"],
         complete: json["complete"],
+        // autocompleteterm: json['autocompleteTerm'] as String,
     );
 
     Map<String, dynamic> toJson() => {
@@ -37,6 +40,7 @@ class ProductModel {
         "price": price,
         "listId": listId,
         "complete": complete,
+        // "autocompleteterm" : autocompleteterm,
         
     };
 }
