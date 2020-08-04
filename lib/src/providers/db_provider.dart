@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
+import 'package:shopapp/src/models/suge.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
@@ -70,6 +71,12 @@ class DBProvider {
           'complete INTEGER,'
           'FOREIGN KEY(listId) REFERENCES Lista(id)'
           ')');
+
+          await db.execute(
+          'CREATE TABLE suge ('
+          'id INTEGER PRIMARY KEY,'
+          'name TEXT'
+          ')');
         
       }
     );
@@ -104,6 +111,25 @@ class DBProvider {
 
     return res;
   }
+
+  sugeInsert( Segurencia productModel  ) async {
+
+    final db =  await database;
+
+    final res = db.insert('suge', productModel.toJson());
+
+    return res;
+  }
+    Future <List<Segurencia>> sugeGet(String name) async {
+
+      final db = await database;
+     //final res = await db.query('suge', where: 'name=?',whereArgs: [name]);
+      final res = await db.rawQuery("SELECT name FROM suge where name LIKE ?",[name] );
+      //'SELECT * FROM product WHERE listId=?', [id]
+      List<Segurencia> art = res.isNotEmpty ? res.map((e) => Segurencia.fromJson(e)).toList(): [];
+      return art;
+  }
+
 
 
     //GET
@@ -168,6 +194,8 @@ class DBProvider {
       return art;
 
     }
+
+  
     //Delete
 
     Future<String> deleteLista(String id ) async {

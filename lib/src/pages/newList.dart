@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
+import 'package:shopapp/src/models/suge.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
@@ -45,6 +46,7 @@ class _NewListState extends State<NewList> {
   //List<ProductModel> itemsTemp =  utils.prefs.read("TempPro");
   List<TextEditingController> _controllers = new List();
   ProductModel productModel = new ProductModel();
+  Segurencia sugeModel = new Segurencia();
   Lista listaModel = new Lista();
 
   @override
@@ -52,6 +54,7 @@ class _NewListState extends State<NewList> {
     //loadSharedPrefs();
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
@@ -570,7 +573,15 @@ class _NewListState extends State<NewList> {
 
             items = tmpArt;
           }
+          //      sugeModel.name = "Pan";
+          // DBProvider.db.sugeInsert(sugeModel);
 
+          //   sugeModel.name = "Yuca";
+          // DBProvider.db.sugeInsert(sugeModel);
+
+          
+          //   sugeModel.name = "Jabon";
+          // DBProvider.db.sugeInsert(sugeModel);
           if (items.length == 0) {
             return Card(
                 child: Column(
@@ -596,6 +607,15 @@ class _NewListState extends State<NewList> {
           }
 
           items.sort((a, b) => a.name.compareTo(b.name));
+          // sugeModel.name = "Pan";
+          // DBProvider.db.sugeInsert(sugeModel);
+
+          //   sugeModel.name = "Yuca";
+          // DBProvider.db.sugeInsert(sugeModel);
+
+          
+          //   sugeModel.name = "Jabon";
+          // DBProvider.db.sugeInsert(sugeModel);
 
           return Expanded(
               child: ListView.builder(
@@ -846,7 +866,6 @@ class _NewListState extends State<NewList> {
         
         for (var i = 0; i < items.length; i++) {
           items[i].listId = nuevaLista.id;
-          print(items[i]);
           DBProvider.db.newProd(items[i]);
         }
     

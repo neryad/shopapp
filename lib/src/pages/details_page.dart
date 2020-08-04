@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shopapp/src/data/data.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
+import 'package:shopapp/src/models/suge.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
@@ -17,7 +18,16 @@ class DetailsPage extends StatefulWidget {
   _DetailsPageState createState() => _DetailsPageState();
 }
 
+// void _loadData() async {
+//   await BackendService.getSuggestions();
+// }
 class _DetailsPageState extends State<DetailsPage> {
+  @override
+  void initState() {
+    //_loadData();
+    super.initState();
+  }
+
   double buget;
   double total;
   double diference;
@@ -25,16 +35,29 @@ class _DetailsPageState extends State<DetailsPage> {
   Color bugetColor = utils.cambiarColor();
   final editFormKey = GlobalKey<FormState>();
   final formKey = GlobalKey<FormState>();
+  GlobalKey<AutoCompleteTextFieldState<Segurencia>> keyS = new GlobalKey();
+  final TextEditingController _typeAheadController = TextEditingController();
   ProductModel productModel = new ProductModel();
   //@override
   List<ProductModel> articulos = [];
- 
+  List<Segurencia> segerecias3 = [];
+  //var segerecias =  BackendService.getSuggestions();
+
+//   Future funcThatMakesAsyncCall() async {
+//   var result = await BackendService.getSuggestions();
+//   print(result);
+//   setState(() {
+//     segerecias = result;
+//   });
+// }
+
   Widget build(BuildContext context) {
     // Lista listaModel = widget.savelist;
     Lista listaModel = widget.savelist;
     //buget = listaModel.total;
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
@@ -44,7 +67,7 @@ class _DetailsPageState extends State<DetailsPage> {
       drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
-          //wawawaw(),
+          // wawawaw(),
           _header(listaModel.total, listaModel.buget, listaModel.diference,
               listaModel),
           _bodyWidget(listaModel.id, listaModel)
@@ -202,7 +225,9 @@ class _DetailsPageState extends State<DetailsPage> {
 
             articulos = art;
           }
+          //funcThatMakesAsyncCall();
 
+          //segerecias = BackendService.getSuggestions();
           // if (listaModel.length == 0) {
           //   return Card(
           //       child: Column(
@@ -505,7 +530,8 @@ class _DetailsPageState extends State<DetailsPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  _editarNombreArticulo(index),
+                  wawawaw2(index),
+                  //_editarNombreArticulo(index),
                   _editarcantidadArticulo(index),
                   _editarPrecioArticulo(index),
                 ],
@@ -569,7 +595,7 @@ class _DetailsPageState extends State<DetailsPage> {
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
-        productModel.quantity = int.parse((value == "") ? "0" : value);
+        articulos[index].price = double.parse((value == "") ? "0" : value);
       },
       //onSaved: (value) => articulos[index].price = double.parse(value),
       validator: (value) {
@@ -598,7 +624,7 @@ class _DetailsPageState extends State<DetailsPage> {
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
-        productModel.quantity = int.parse((value == "") ? "0" : value);
+        articulos[index].quantity = int.parse((value == "") ? "0" : value);
       },
       //onSaved: (value) => articulos[index].quantity = int.parse(value),
       validator: (value) {
@@ -667,7 +693,8 @@ class _DetailsPageState extends State<DetailsPage> {
                     mainAxisSize: MainAxisSize.min,
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      _crearNombreArticulo(),
+                      wawawaw(),
+                      //_crearNombreArticulo(),
                       _crearcantidadArticulo(),
                       _crearPrecioArticulo(),
                     ],
@@ -697,13 +724,16 @@ class _DetailsPageState extends State<DetailsPage> {
         });
   }
 
-  Widget row(ProductModel user) {
+  Widget row(Segurencia user) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(
-          user.name,
-          style: TextStyle(fontSize: 16.0),
+        Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Text(
+            user.name,
+            style: TextStyle(fontSize: 16.0),
+          ),
         ),
         SizedBox(
           width: 10.0,
@@ -714,43 +744,68 @@ class _DetailsPageState extends State<DetailsPage> {
 
   AutoCompleteTextField searchTextField;
   Widget wawawaw() {
-
-    return TypeAheadField(
-
-                textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: true,
-                  style: DefaultTextStyle.of(context)
-                      .style
-                      .copyWith(fontStyle: FontStyle.italic),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'What are you looking for?'),
-                ),
-                suggestionsCallback: (pattern) async {
-                  // Here you can call http call 
-                  return await BackendService.getSuggestions(pattern);
-                },
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    leading: Icon(Icons.shopping_cart),
-                    title: Text(suggestion['name']),
-                    subtitle: Text('\$${suggestion['price']}'),
-                  );
-                },
-                onSuggestionSelected: (suggestion) {
-                  // This when someone click the items
-                  print(suggestion);
-                },
-              
+    return TypeAheadFormField(
+      textFieldConfiguration: TextFieldConfiguration(
+          controller: this._typeAheadController,
+          decoration: InputDecoration(labelText: 'Nombre artículo')),
+      suggestionsCallback: (pattern) {
+        return DBProvider.db.sugeGet(pattern);
+      },
+      itemBuilder: (context, Segurencia suggestion) {
+        return ListTile(
+          title: Text(suggestion.name),
+        );
+      },
+      transitionBuilder: (context, suggestionsBox, controller) {
+        return suggestionsBox;
+      },
+      onSuggestionSelected: (suggestion) {
+        return null;
+      },
+      onSaved: (value) => productModel.name = value,
+      // validator: (value) {
+      //   if (value.isEmpty) {
+      //     return 'Please select a city';
+      //   }
+      // },
+      // onSaved: (value) => this._selectedCity = value,
     );
 
-    // return Column(
+//     TypeAheadField(
+//   textFieldConfiguration: TextFieldConfiguration(
+//     autofocus: false,
+//     style: DefaultTextStyle.of(context).style.copyWith(
+//       fontStyle: FontStyle.italic
+//     ),
+//     decoration: InputDecoration(
+//       border: OutlineInputBorder()
+//     )
+//   ),
+//   suggestionsCallback: (pattern) async {
+//     return await BackendService.players;
+//     //BackendService.getSuggestions(pattern);
+//   },
+//   itemBuilder: (context, Segurencia suggestion) {
+//     return ListTile(
+//       //leading: Icon(Icons.shopping_cart),
+//       title: Text(suggestion.name),
+//       //subtitle: Text('\$${suggestion['price']}'),
+//     );
+//   },
+//   onSuggestionSelected: (suggestion) {
+//     // Navigator.of(context).push(MaterialPageRoute(
+//     //   builder: (context) => ProductPage(product: suggestion)
+//     // ));
+//   },
+// );
+    // Column(
     //   mainAxisAlignment: MainAxisAlignment.start,
     //   children: <Widget>[
-    //     searchTextField = AutoCompleteTextField<ProductModel>(
-    //       // key: UniqueKey(),
+    //     searchTextField = AutoCompleteTextField<Segurencia>(
+
+    //       key:keyS,
     //       clearOnSubmit: false,
-    //       suggestions: articulos,
+    //      suggestions: BackendService.players,
     //       style: TextStyle(color: Colors.black, fontSize: 16.0),
     //      decoration: InputDecoration(
     //     counterText: '',
@@ -760,6 +815,7 @@ class _DetailsPageState extends State<DetailsPage> {
     //     hintText: 'Nombre artículo',
     //     hintStyle: TextStyle(color: utils.cambiarColor()),
     //   ),
+
     //       itemFilter: (item, query) {
     //         return item.name.toLowerCase().startsWith(query.toLowerCase());
     //       },
@@ -769,6 +825,8 @@ class _DetailsPageState extends State<DetailsPage> {
     //       itemSubmitted: (item) {
     //         setState(() {
     //           searchTextField.textField.controller.text = item.name;
+    //           productModel.name = item.name;
+    //          // (value) => productModel.name = value
     //         });
     //       },
     //       itemBuilder: (context, item) {
@@ -778,7 +836,115 @@ class _DetailsPageState extends State<DetailsPage> {
     //     ),
     //   ],
     // );
-    //);
+    // );
+  }
+
+  Widget wawawaw2(int index) {
+    // return TypeAheadField(
+    //   textFieldConfiguration: TextFieldConfiguration(
+    //     //autofocus: true,
+    //     decoration: InputDecoration(
+    //       counterText: '',
+    //       focusedBorder: UnderlineInputBorder(
+    //         borderSide: BorderSide(color: utils.cambiarColor()),
+    //       ),
+    //       hintText: 'Nombre artículo',
+    //       hintStyle: TextStyle(color: utils.cambiarColor()),
+    //     ),
+    //     // style: DefaultTextStyle.of(context)
+    //     //     .style
+    //     //     .copyWith(fontStyle: FontStyle.italic),
+    //     // decoration: InputDecoration(
+    //     //     border: OutlineInputBorder(),
+    //     //     hintText: 'What are you looking for?'),
+    //   ),
+    //   suggestionsCallback: (id) async {
+    //     // Here you can call http call
+    //     // return await DBProvider.db.getprodPD(id);
+    //     return await BackendService.getSuggestions(id);
+    //   },
+    //   itemBuilder: (context, suggestion) {
+    //     return ListTile(
+    //       // leading: Icon(Icons.shopping_cart),
+    //       title: Text(suggestion['name']),
+    //       // subtitle: Text('\$${suggestion['price']}'),
+    //     );
+    //   },
+    //   onSuggestionSelected: (suggestion) {
+    //     // This when someone click the items
+    //     print(suggestion);
+    //   },
+    // );
+
+    return TypeAheadFormField(
+      initialValue: articulos[index].name,
+      textFieldConfiguration: TextFieldConfiguration(
+          //controller: this._typeAheadController,
+          decoration: InputDecoration(labelText: 'Nombre artículo')),
+      suggestionsCallback: (pattern) {
+        return DBProvider.db.sugeGet(pattern);
+      },
+      itemBuilder: (context, Segurencia suggestion) {
+        return ListTile(
+          title: Text(suggestion.name),
+        );
+      },
+      transitionBuilder: (context, suggestionsBox, controller) {
+        return suggestionsBox;
+      },
+      onSuggestionSelected: (suggestion) {
+        return null;
+      },
+      onSaved: (value) => articulos[index].name = value,
+      // validator: (value) {
+      //   if (value.isEmpty) {
+      //     return 'Please select a city';
+      //   }
+      // },
+      // onSaved: (value) => this._selectedCity = value,
+    );
+
+    // Column(
+    //   mainAxisAlignment: MainAxisAlignment.start,
+    //   children: <Widget>[
+    //     searchTextField = AutoCompleteTextField<Segurencia>(
+
+    //       key:keyS,
+    //       clearOnSubmit: false,
+    //      suggestions: BackendService.players,
+    //       style: TextStyle(color: Colors.black, fontSize: 16.0),
+    //      decoration: InputDecoration(
+    //     counterText: '',
+    //     focusedBorder: UnderlineInputBorder(
+    //       borderSide: BorderSide(color: utils.cambiarColor()),
+    //     ),
+    //     hintText: 'Nombre artículo',
+    //     hintStyle: TextStyle(color: utils.cambiarColor()),
+    //   ),
+
+    //       itemFilter: (item, query) {
+    //         return item.name.toLowerCase().startsWith(query.toLowerCase());
+    //       },
+    //       itemSorter: (a, b) {
+    //         return a.name.compareTo(b.name);
+    //       },
+    //       itemSubmitted: (item) {
+    //         setState(() {
+    //           searchTextField.textField.controller.text =  articulos[index].name;
+    //           articulos[index].name = item.name;
+    //          // (value) => productModel.name = value
+    //         });
+    //       },
+    //       itemBuilder: (context, item) {
+    //          //initialValue: articulos[index].name;
+    //          //articulos[index].name = value,
+    //         // ui for the autocomplete row
+    //         return row(item);
+    //       },
+    //     ),
+    //   ],
+    // );
+    // );
   }
 
   Widget _crearNombreArticulo() {

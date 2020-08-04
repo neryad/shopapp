@@ -8,6 +8,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
@@ -143,7 +144,7 @@ class AboutPage extends StatelessWidget {
                       ),
                       SizedBox(height: 10.0),
                       Text(
-                        "AppName es una simple aplicación para ayudar de forma simple y con mejor manejo a las personas con sus listas de compras. © 2020 Neryad. Todos los derechos reservados",
+                        " AppName es una aplicación simple que buscar apoyarte en la organización de tu lista de compras, así cuando salgas, no olvidarás nada. Puedes usarla para lo que quieras, ir al supermercado, ferretería, de compras para el hogar, listar los regalos de San Valentín, navidad, de mamá, papá, en fin... tu escoges, AppName es para ti.",
                         style: TextStyle(
                             fontSize: 20.0,
                             fontStyle: FontStyle.italic,
@@ -151,6 +152,7 @@ class AboutPage extends StatelessWidget {
                             color: Colors.black,
                             letterSpacing: 2.0),
                       ),
+                      Text('Neryad ©️ 2020')
                     ],
                   ),
                 )),

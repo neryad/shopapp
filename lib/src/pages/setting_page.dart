@@ -35,6 +35,7 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title:Text("Ajustes"),
         backgroundColor: utils.cambiarColor(),
