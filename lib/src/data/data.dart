@@ -12,8 +12,8 @@ class BackendService {
          print('Nada lindo');
         List  items = ['Pan','Salami','Soda','Aceite'];
         for (var i = 0; i < items.length; i++) {
-          //Segurencia mmg = new Segurencia();
-          //mmg.name = items[i];
+          //Segurencia se = new Segurencia();
+          //se .name = items[i];
           //DBProvider.db.sugeInsert(new Segurencia(name:items[i]));
           
         }
