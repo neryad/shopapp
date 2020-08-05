@@ -1,13 +1,13 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:shopapp/src/data/data.dart';
+//import 'package:shopapp/src/data/data.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
 import 'package:shopapp/src/models/suge.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+//import 'package:flutter_typeahead/flutter_typeahead.dart';
 // import 'package:shopapp/src/data/data.dart';
 
 class DetailsPage extends StatefulWidget {
@@ -36,20 +36,12 @@ class _DetailsPageState extends State<DetailsPage> {
   final editFormKey = GlobalKey<FormState>();
   final formKey = GlobalKey<FormState>();
   GlobalKey<AutoCompleteTextFieldState<Segurencia>> keyS = new GlobalKey();
-  final TextEditingController _typeAheadController = TextEditingController();
+ // final TextEditingController _typeAheadController = TextEditingController();
   ProductModel productModel = new ProductModel();
   //@override
   List<ProductModel> articulos = [];
   List<Segurencia> segerecias3 = [];
-  //var segerecias =  BackendService.getSuggestions();
 
-//   Future funcThatMakesAsyncCall() async {
-//   var result = await BackendService.getSuggestions();
-//   print(result);
-//   setState(() {
-//     segerecias = result;
-//   });
-// }
 
   Widget build(BuildContext context) {
     // Lista listaModel = widget.savelist;
@@ -67,7 +59,6 @@ class _DetailsPageState extends State<DetailsPage> {
       drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
-          // wawawaw(),
           _header(listaModel.total, listaModel.buget, listaModel.diference,
               listaModel),
           _bodyWidget(listaModel.id, listaModel)
@@ -176,44 +167,6 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  // Widget _bNavbar(BuildContext context, Lista list) {
-  //   return BottomAppBar(
-  //       child: new Row(
-  //     children: <Widget>[
-  //       FlatButton(
-  //         onPressed: () {
-  //           DateTime now = new DateTime.now();
-  //           var fecha = '${now.day}/${now.month}/${now.year}';
-  //           final updateLista = Lista(
-  //               id: list.id,
-  //               title: list.title,
-  //               superMaret: list.superMaret,
-  //               fecha: fecha,
-  //               total: list.total,
-  //               diference: list.diference,
-  //               buget: list.buget);
-
-  //           DBProvider.db.updatelist(updateLista);
-  //           utils.showSnack(context, 'Lista actualizada');
-  //         },
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //           children: <Widget>[Icon(Icons.save), Text('Actualizar lista')],
-  //         ),
-  //       ),
-  //       FlatButton(
-  //         onPressed: () => _validateEliminarList(context, list),
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: <Widget>[
-  //             Icon(Icons.remove_circle_outline),
-  //             Text('Limpiar lista')
-  //           ],
-  //         ),
-  //       ),
-  //     ],
-  //   ));
-  // }
 
   _bodyWidget(String id, Lista listaArt) {
     return FutureBuilder<List<ProductModel>>(
@@ -225,33 +178,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
             articulos = art;
           }
-          //funcThatMakesAsyncCall();
-
-          //segerecias = BackendService.getSuggestions();
-          // if (listaModel.length == 0) {
-          //   return Card(
-          //       child: Column(
-          //           // padding: EdgeInsets.all(15.0),
-          //           children: <Widget>[
-          //         Row(
-          //           mainAxisAlignment: MainAxisAlignment.center,
-          //           children: <Widget>[
-          //             utils.cambiarNewImage(),
-          //           ],
-          //         ),
-          //         Padding(
-          //           padding: const EdgeInsets.all(5.0),
-          //           child: Text(
-          //             'No se han agregado artículos a la lista',
-          //             style: TextStyle(
-          //               color: utils.cambiarColor(),
-          //               fontSize: 18,
-          //             ),
-          //           ),
-          //         )
-          //       ]));
-          // }
-
+         
           articulos.sort((a, b) => a.name.compareTo(b.name));
 
           return Expanded(
@@ -530,8 +457,8 @@ class _DetailsPageState extends State<DetailsPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  wawawaw2(index),
-                  //_editarNombreArticulo(index),
+                  //wawawaw2(index),
+                  _editarNombreArticulo(index),
                   _editarcantidadArticulo(index),
                   _editarPrecioArticulo(index),
                 ],
@@ -693,8 +620,8 @@ class _DetailsPageState extends State<DetailsPage> {
                     mainAxisSize: MainAxisSize.min,
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      wawawaw(),
-                      //_crearNombreArticulo(),
+                      //wawawaw(),
+                      _crearNombreArticulo(),
                       _crearcantidadArticulo(),
                       _crearPrecioArticulo(),
                     ],
@@ -742,210 +669,104 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  AutoCompleteTextField searchTextField;
-  Widget wawawaw() {
-    return TypeAheadFormField(
-      textFieldConfiguration: TextFieldConfiguration(
-          controller: this._typeAheadController,
-          decoration: InputDecoration(labelText: 'Nombre artículo')),
-      suggestionsCallback: (pattern) {
-        return DBProvider.db.sugeGet(pattern);
-      },
-      itemBuilder: (context, Segurencia suggestion) {
-        return ListTile(
-          title: Text(suggestion.name),
-        );
-      },
-      transitionBuilder: (context, suggestionsBox, controller) {
-        return suggestionsBox;
-      },
-      onSuggestionSelected: (suggestion) {
-        return null;
-      },
-      onSaved: (value) => productModel.name = value,
-      // validator: (value) {
-      //   if (value.isEmpty) {
-      //     return 'Please select a city';
-      //   }
-      // },
-      // onSaved: (value) => this._selectedCity = value,
-    );
+  // AutoCompleteTextField searchTextField;
+  // Widget wawawaw() {
+  //   return TypeAheadFormField(
+  //     textFieldConfiguration: TextFieldConfiguration(
+  //         controller: this._typeAheadController,
+  //         decoration: InputDecoration(labelText: 'Nombre artículo')),
+  //     suggestionsCallback: (pattern) {
+  //       return DBProvider.db.sugeGet(pattern);
+  //     },
+  //     itemBuilder: (context, Segurencia suggestion) {
+  //       return ListTile(
+  //         title: Text(suggestion.name),
+  //       );
+  //     },
+  //     transitionBuilder: (context, suggestionsBox, controller) {
+  //       return suggestionsBox;
+  //     },
+  //     onSuggestionSelected: (suggestion) {
+  //       return null;
+  //     },
+  //     onSaved: (value) => productModel.name = value,
 
-//     TypeAheadField(
-//   textFieldConfiguration: TextFieldConfiguration(
-//     autofocus: false,
-//     style: DefaultTextStyle.of(context).style.copyWith(
-//       fontStyle: FontStyle.italic
-//     ),
-//     decoration: InputDecoration(
-//       border: OutlineInputBorder()
-//     )
-//   ),
-//   suggestionsCallback: (pattern) async {
-//     return await BackendService.players;
-//     //BackendService.getSuggestions(pattern);
-//   },
-//   itemBuilder: (context, Segurencia suggestion) {
-//     return ListTile(
-//       //leading: Icon(Icons.shopping_cart),
-//       title: Text(suggestion.name),
-//       //subtitle: Text('\$${suggestion['price']}'),
-//     );
-//   },
-//   onSuggestionSelected: (suggestion) {
-//     // Navigator.of(context).push(MaterialPageRoute(
-//     //   builder: (context) => ProductPage(product: suggestion)
-//     // ));
-//   },
-// );
-    // Column(
-    //   mainAxisAlignment: MainAxisAlignment.start,
-    //   children: <Widget>[
-    //     searchTextField = AutoCompleteTextField<Segurencia>(
+  //   );
+  // }
 
-    //       key:keyS,
-    //       clearOnSubmit: false,
-    //      suggestions: BackendService.players,
-    //       style: TextStyle(color: Colors.black, fontSize: 16.0),
-    //      decoration: InputDecoration(
-    //     counterText: '',
-    //     focusedBorder: UnderlineInputBorder(
-    //       borderSide: BorderSide(color: utils.cambiarColor()),
-    //     ),
-    //     hintText: 'Nombre artículo',
-    //     hintStyle: TextStyle(color: utils.cambiarColor()),
-    //   ),
+  // Widget wawawaw2(int index) {
 
-    //       itemFilter: (item, query) {
-    //         return item.name.toLowerCase().startsWith(query.toLowerCase());
-    //       },
-    //       itemSorter: (a, b) {
-    //         return a.name.compareTo(b.name);
-    //       },
-    //       itemSubmitted: (item) {
-    //         setState(() {
-    //           searchTextField.textField.controller.text = item.name;
-    //           productModel.name = item.name;
-    //          // (value) => productModel.name = value
-    //         });
-    //       },
-    //       itemBuilder: (context, item) {
-    //         // ui for the autocomplete row
-    //         return row(item);
-    //       },
-    //     ),
-    //   ],
-    // );
-    // );
-  }
 
-  Widget wawawaw2(int index) {
-    // return TypeAheadField(
-    //   textFieldConfiguration: TextFieldConfiguration(
-    //     //autofocus: true,
-    //     decoration: InputDecoration(
-    //       counterText: '',
-    //       focusedBorder: UnderlineInputBorder(
-    //         borderSide: BorderSide(color: utils.cambiarColor()),
-    //       ),
-    //       hintText: 'Nombre artículo',
-    //       hintStyle: TextStyle(color: utils.cambiarColor()),
-    //     ),
-    //     // style: DefaultTextStyle.of(context)
-    //     //     .style
-    //     //     .copyWith(fontStyle: FontStyle.italic),
-    //     // decoration: InputDecoration(
-    //     //     border: OutlineInputBorder(),
-    //     //     hintText: 'What are you looking for?'),
-    //   ),
-    //   suggestionsCallback: (id) async {
-    //     // Here you can call http call
-    //     // return await DBProvider.db.getprodPD(id);
-    //     return await BackendService.getSuggestions(id);
-    //   },
-    //   itemBuilder: (context, suggestion) {
-    //     return ListTile(
-    //       // leading: Icon(Icons.shopping_cart),
-    //       title: Text(suggestion['name']),
-    //       // subtitle: Text('\$${suggestion['price']}'),
-    //     );
-    //   },
-    //   onSuggestionSelected: (suggestion) {
-    //     // This when someone click the items
-    //     print(suggestion);
-    //   },
-    // );
+  //   return TypeAheadFormField(
+  //     initialValue: articulos[index].name,
+  //     textFieldConfiguration: TextFieldConfiguration(
+  //         //controller: this._typeAheadController,
+  //         decoration: InputDecoration(labelText: 'Nombre artículo')),
+  //     suggestionsCallback: (pattern) {
+  //       return DBProvider.db.sugeGet(pattern);
+  //     },
+  //     itemBuilder: (context, Segurencia suggestion) {
+  //       return ListTile(
+  //         title: Text(suggestion.name),
+  //       );
+  //     },
+  //     transitionBuilder: (context, suggestionsBox, controller) {
+  //       return suggestionsBox;
+  //     },
+  //     onSuggestionSelected: (suggestion) {
+  //       return null;
+  //     },
+  //     onSaved: (value) => articulos[index].name = value,
+  //     // validator: (value) {
+  //     //   if (value.isEmpty) {
+  //     //     return 'Please select a city';
+  //     //   }
+  //     // },
+  //     // onSaved: (value) => this._selectedCity = value,
+  //   );
 
-    return TypeAheadFormField(
-      initialValue: articulos[index].name,
-      textFieldConfiguration: TextFieldConfiguration(
-          //controller: this._typeAheadController,
-          decoration: InputDecoration(labelText: 'Nombre artículo')),
-      suggestionsCallback: (pattern) {
-        return DBProvider.db.sugeGet(pattern);
-      },
-      itemBuilder: (context, Segurencia suggestion) {
-        return ListTile(
-          title: Text(suggestion.name),
-        );
-      },
-      transitionBuilder: (context, suggestionsBox, controller) {
-        return suggestionsBox;
-      },
-      onSuggestionSelected: (suggestion) {
-        return null;
-      },
-      onSaved: (value) => articulos[index].name = value,
-      // validator: (value) {
-      //   if (value.isEmpty) {
-      //     return 'Please select a city';
-      //   }
-      // },
-      // onSaved: (value) => this._selectedCity = value,
-    );
+  //   // Column(
+  //   //   mainAxisAlignment: MainAxisAlignment.start,
+  //   //   children: <Widget>[
+  //   //     searchTextField = AutoCompleteTextField<Segurencia>(
 
-    // Column(
-    //   mainAxisAlignment: MainAxisAlignment.start,
-    //   children: <Widget>[
-    //     searchTextField = AutoCompleteTextField<Segurencia>(
+  //   //       key:keyS,
+  //   //       clearOnSubmit: false,
+  //   //      suggestions: BackendService.players,
+  //   //       style: TextStyle(color: Colors.black, fontSize: 16.0),
+  //   //      decoration: InputDecoration(
+  //   //     counterText: '',
+  //   //     focusedBorder: UnderlineInputBorder(
+  //   //       borderSide: BorderSide(color: utils.cambiarColor()),
+  //   //     ),
+  //   //     hintText: 'Nombre artículo',
+  //   //     hintStyle: TextStyle(color: utils.cambiarColor()),
+  //   //   ),
 
-    //       key:keyS,
-    //       clearOnSubmit: false,
-    //      suggestions: BackendService.players,
-    //       style: TextStyle(color: Colors.black, fontSize: 16.0),
-    //      decoration: InputDecoration(
-    //     counterText: '',
-    //     focusedBorder: UnderlineInputBorder(
-    //       borderSide: BorderSide(color: utils.cambiarColor()),
-    //     ),
-    //     hintText: 'Nombre artículo',
-    //     hintStyle: TextStyle(color: utils.cambiarColor()),
-    //   ),
-
-    //       itemFilter: (item, query) {
-    //         return item.name.toLowerCase().startsWith(query.toLowerCase());
-    //       },
-    //       itemSorter: (a, b) {
-    //         return a.name.compareTo(b.name);
-    //       },
-    //       itemSubmitted: (item) {
-    //         setState(() {
-    //           searchTextField.textField.controller.text =  articulos[index].name;
-    //           articulos[index].name = item.name;
-    //          // (value) => productModel.name = value
-    //         });
-    //       },
-    //       itemBuilder: (context, item) {
-    //          //initialValue: articulos[index].name;
-    //          //articulos[index].name = value,
-    //         // ui for the autocomplete row
-    //         return row(item);
-    //       },
-    //     ),
-    //   ],
-    // );
-    // );
-  }
+  //   //       itemFilter: (item, query) {
+  //   //         return item.name.toLowerCase().startsWith(query.toLowerCase());
+  //   //       },
+  //   //       itemSorter: (a, b) {
+  //   //         return a.name.compareTo(b.name);
+  //   //       },
+  //   //       itemSubmitted: (item) {
+  //   //         setState(() {
+  //   //           searchTextField.textField.controller.text =  articulos[index].name;
+  //   //           articulos[index].name = item.name;
+  //   //          // (value) => productModel.name = value
+  //   //         });
+  //   //       },
+  //   //       itemBuilder: (context, item) {
+  //   //          //initialValue: articulos[index].name;
+  //   //          //articulos[index].name = value,
+  //   //         // ui for the autocomplete row
+  //   //         return row(item);
+  //   //       },
+  //   //     ),
+  //   //   ],
+  //   // );
+  //   // );
+  // }
 
   Widget _crearNombreArticulo() {
     return TextFormField(

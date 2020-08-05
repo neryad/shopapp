@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:shopapp/src/models/product_model.dart';
+//import 'package:shopapp/src/models/product_model.dart';
 
 Segurencia listaFromJson(String str) => Segurencia.fromJson(json.decode(str));
 
