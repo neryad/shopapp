@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:shopapp/src/models/List_model.dart';
@@ -10,7 +9,6 @@ import 'package:shopapp/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class NewList extends StatefulWidget {
-  
   NewList({Key key}) : super(key: key);
 
   @override
@@ -23,7 +21,6 @@ class _NewListState extends State<NewList> {
   double diference = 0.00;
   bool checkValue = false;
   final prefs = new PreferenciasUsuario();
-
 
   @override
   void initState() {
@@ -208,12 +205,14 @@ class _NewListState extends State<NewList> {
       textAlign: TextAlign.center,
       onSaved: (value) => productModel.name = value,
       decoration: InputDecoration(
+        labelText: 'Nombre artículo',
         counterText: '',
+        labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        hintText: 'Nombre artículo',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        //hintText: 'Nombre artículo',
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -225,15 +224,18 @@ class _NewListState extends State<NewList> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        hintText: 'Precio',
+        labelText: 'Precio',
         counterText: '',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
       ),
-      onSaved: (value)  {
-        productModel.price = double.parse((value == "")? "0": value);
-        },
+      onSaved: (value) {
+        productModel.price = double.parse((value == "") ? "0" : value);
+      },
       validator: (value) {
-        if(value.isEmpty){
+        if (value.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -253,17 +255,19 @@ class _NewListState extends State<NewList> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        hintText: 'Cantidad',
+        labelText: 'Cantidad',
         counterText: '',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
         //  int complValue = (valor == true) ? 1 : 0; int.parse(value),
-      ), 
+      ),
       onSaved: (value) {
-        
-        productModel.quantity = int.parse( (value == "") ? "0": value);
+        productModel.quantity = int.parse((value == "") ? "0" : value);
       },
       validator: (value) {
-        if(value.isEmpty){
+        if (value.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -277,7 +281,6 @@ class _NewListState extends State<NewList> {
   }
 
   void _subimt() {
-
     var it = items.length;
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
@@ -344,15 +347,16 @@ class _NewListState extends State<NewList> {
       maxLength: 50,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
-
       onSaved: (value) => items[index].name = value,
       decoration: InputDecoration(
+        labelText: 'Nombre artículo',
         counterText: '',
+        labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        hintText: 'Nombre artículo',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        //hintText: 'Nombre artículo',
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -364,13 +368,16 @@ class _NewListState extends State<NewList> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        hintText: 'Precio',
+        labelText: 'Precio',
         counterText: '',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
       ),
-       onSaved: (value)  {
-        items[index].price = double.parse((value == "")? "0": value);
-        },
+      onSaved: (value) {
+        items[index].price = double.parse((value == "") ? "0" : value);
+      },
       //onSaved: (value) => items[index].price = double.parse(value),
       validator: (value) {
         if (utils.isNumeric(value)) {
@@ -388,15 +395,21 @@ class _NewListState extends State<NewList> {
       initialValue: items[index].quantity.toString(),
       maxLength: 6,
       //controller: _controllers[index],
+
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        hintText: 'Cantidad',
+        //hintText: 'Cantidad',
+        labelText: 'Cantidad',
         counterText: '',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
-       onSaved: (value)  {
-        items[index].quantity = int.parse((value == "")? "0": value);
-        },
+      onSaved: (value) {
+        items[index].quantity = int.parse((value == "") ? "0" : value);
+      },
       //onSaved: (value) => items[index].quantity = int.parse(value),
       validator: (value) {
         if (utils.isNumeric(value)) {
@@ -579,7 +592,6 @@ class _NewListState extends State<NewList> {
           //   sugeModel.name = "Yuca";
           // DBProvider.db.sugeInsert(sugeModel);
 
-          
           //   sugeModel.name = "Jabon";
           // DBProvider.db.sugeInsert(sugeModel);
           if (items.length == 0) {
@@ -613,7 +625,6 @@ class _NewListState extends State<NewList> {
           //   sugeModel.name = "Yuca";
           // DBProvider.db.sugeInsert(sugeModel);
 
-          
           //   sugeModel.name = "Jabon";
           // DBProvider.db.sugeInsert(sugeModel);
 
@@ -706,67 +717,91 @@ class _NewListState extends State<NewList> {
                         onTap: () {
                           _mostrarAlertaEditarProducto(context, index);
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 0, bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Icon(
-                                Icons.shopping_basket,
-                                color: utils.cambiarColor(),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(utils.numberFormat(items[index].price),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    Text('Precio')
-                                  ],
+                        child: GestureDetector(
+                          onTap: () {
+                            _mostrarAlertaEditarProducto(context, index);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 0, bottom: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.shopping_basket,
+                                  color: utils.cambiarColor(),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(items[index].quantity.toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    Text('Cantidad')
-                                  ],
+                                SizedBox(
+                                  width: 5,
                                 ),
-                              ),
-
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                        utils.numberFormat(
-                                            items[index].quantity *
+                                GestureDetector(
+                                  onTap: () {
+                                    _mostrarAlertaEditarProducto(
+                                        context, index);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                            utils.numberFormat(
                                                 items[index].price),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    Text('Total')
-                                  ],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text('Precio')
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-
-                              SizedBox(
-                                width: 5,
-                              ),
-                            ],
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    _mostrarAlertaEditarProducto(
+                                        context, index);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(items[index].quantity.toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text('Cantidad')
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    _mostrarAlertaEditarProducto(
+                                        context, index);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                            utils.numberFormat(
+                                                items[index].quantity *
+                                                    items[index].price),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text('Total')
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -784,7 +819,6 @@ class _NewListState extends State<NewList> {
         child: new Row(
       children: <Widget>[
         FlatButton(
-
           onPressed: () => _guardarLista(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -853,8 +887,7 @@ class _NewListState extends State<NewList> {
         fecha: fecha,
         total: total,
         diference: diference,
-        buget: buget
-        );
+        buget: buget);
 
     DBProvider.db.nuevoLista(nuevaLista);
     // var prod = new ProductModel(
@@ -863,19 +896,17 @@ class _NewListState extends State<NewList> {
     //     listId: 6,
     //     price: productModel.price);
 
-        
-        for (var i = 0; i < items.length; i++) {
-          items[i].listId = nuevaLista.id;
-          DBProvider.db.newProd(items[i]);
-        }
-    
-   // DBProvider.db.newProd(prod);
+    for (var i = 0; i < items.length; i++) {
+      items[i].listId = nuevaLista.id;
+      DBProvider.db.newProd(items[i]);
+    }
+
+    // DBProvider.db.newProd(prod);
 
     items = [];
     lisForm.currentState.reset();
   }
 
- 
   void _guardarLista(BuildContext context) {
     showDialog(
         context: context,
@@ -903,7 +934,6 @@ class _NewListState extends State<NewList> {
                     Navigator.pushNamed(context, 'home');
                     prefs.tempTotal = '0.00';
                     prefs.tempBuget = '0.00';
-
                   },
                   child: Text(
                     'Aceptar',

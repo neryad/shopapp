@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
+import 'package:shopapp/src/Shared_Prefs/AppLanguage.dart' as mmg;
+
  
 class SettingPage extends StatefulWidget {
   const SettingPage({Key key}) : super(key: key);
@@ -34,6 +37,7 @@ class _SettingPageState extends State<SettingPage> {
     }
   @override
   Widget build(BuildContext context) {
+   // var appLanguage = Provider.of< mmg.AppLanguage>(context);
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
@@ -97,7 +101,14 @@ class _SettingPageState extends State<SettingPage> {
                 prefs.nombreUsuario = value;
               },
             )
-          )
+          ),
+          RaisedButton(
+                  onPressed: () {
+                   // appLanguage.changeLanguage(Locale("es"));
+                   
+                  },
+                  child: Text('Mensaje'),
+                )
         ]
       ),
      

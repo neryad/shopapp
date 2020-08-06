@@ -1,4 +1,4 @@
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+//import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 //import 'package:shopapp/src/data/data.dart';
 import 'package:shopapp/src/models/List_model.dart';
@@ -35,13 +35,12 @@ class _DetailsPageState extends State<DetailsPage> {
   Color bugetColor = utils.cambiarColor();
   final editFormKey = GlobalKey<FormState>();
   final formKey = GlobalKey<FormState>();
-  GlobalKey<AutoCompleteTextFieldState<Segurencia>> keyS = new GlobalKey();
- // final TextEditingController _typeAheadController = TextEditingController();
+  //GlobalKey<AutoCompleteTextFieldState<Segurencia>> keyS = new GlobalKey();
+  // final TextEditingController _typeAheadController = TextEditingController();
   ProductModel productModel = new ProductModel();
   //@override
   List<ProductModel> articulos = [];
   List<Segurencia> segerecias3 = [];
-
 
   Widget build(BuildContext context) {
     // Lista listaModel = widget.savelist;
@@ -167,7 +166,6 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-
   _bodyWidget(String id, Lista listaArt) {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
@@ -178,7 +176,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
             articulos = art;
           }
-         
+
           articulos.sort((a, b) => a.name.compareTo(b.name));
 
           return Expanded(
@@ -268,66 +266,90 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                         ],
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          _mostrarAlertaEditarProducto(
-                              context, index, listaArt);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 0, bottom: 5),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0, bottom: 5),
+                        child: GestureDetector(
+                          onTap: () {
+                            _mostrarAlertaEditarProducto(
+                                context, index, listaArt);
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Icon(
-                                Icons.shopping_basket,
-                                color: utils.cambiarColor(),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                        utils.numberFormat(
-                                            articulos[index].price),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    Text('Precio')
-                                  ],
+                              GestureDetector(
+                                onTap: () {
+                                  _mostrarAlertaEditarProducto(
+                                      context, index, listaArt);
+                                },
+                                child: Icon(
+                                  Icons.shopping_basket,
+                                  color: utils.cambiarColor(),
                                 ),
                               ),
                               SizedBox(
                                 width: 5,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(articulos[index].quantity.toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    Text('Cantidad')
-                                  ],
+                              GestureDetector(
+                                onTap: () {
+                                  _mostrarAlertaEditarProducto(
+                                      context, index, listaArt);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                          utils.numberFormat(
+                                              articulos[index].price),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text('Precio')
+                                    ],
+                                  ),
                                 ),
                               ),
                               SizedBox(
                                 width: 5,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                        utils.numberFormat(
-                                            articulos[index].quantity *
-                                                articulos[index].price),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    Text('Total')
-                                  ],
+                              GestureDetector(
+                                onTap: () {
+                                  _mostrarAlertaEditarProducto(
+                                      context, index, listaArt);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(articulos[index].quantity.toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text('Cantidad')
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _mostrarAlertaEditarProducto(
+                                      context, index, listaArt);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                          utils.numberFormat(
+                                              articulos[index].quantity *
+                                                  articulos[index].price),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text('Total')
+                                    ],
+                                  ),
                                 ),
                               ),
                               SizedBox(
@@ -501,10 +523,13 @@ class _DetailsPageState extends State<DetailsPage> {
       onSaved: (value) => articulos[index].name = value,
       decoration: InputDecoration(
         counterText: '',
+        labelText: 'Nombre artículo',
+        labelStyle: TextStyle(color: utils.cambiarColor()),
+
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        hintText: 'Nombre artículo',
+        //hintText: 'Nombre artículo',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
@@ -517,9 +542,14 @@ class _DetailsPageState extends State<DetailsPage> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        hintText: 'Precio',
+        //hintText: 'Precio',
+        labelText: 'Precio',
+        labelStyle: TextStyle(color: utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
         counterText: '',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
         articulos[index].price = double.parse((value == "") ? "0" : value);
@@ -546,9 +576,14 @@ class _DetailsPageState extends State<DetailsPage> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        hintText: 'Cantidad',
+        // hintText: 'Cantidad',
+        labelText: 'Cantidad',
+        labelStyle: TextStyle(color: utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
         counterText: '',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
         articulos[index].quantity = int.parse((value == "") ? "0" : value);
@@ -611,7 +646,7 @@ class _DetailsPageState extends State<DetailsPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(' Nuevo artículo'),
+            title: Text('Nuevo artículo'),
             content: Form(
               key: formKey,
               child: SingleChildScrollView(
@@ -696,7 +731,6 @@ class _DetailsPageState extends State<DetailsPage> {
 
   // Widget wawawaw2(int index) {
 
-
   //   return TypeAheadFormField(
   //     initialValue: articulos[index].name,
   //     textFieldConfiguration: TextFieldConfiguration(
@@ -780,8 +814,10 @@ class _DetailsPageState extends State<DetailsPage> {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        hintText: 'Nombre artículo',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        // hintText: 'Nombre artículo',
+        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelText: 'Nombre artículo',
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -793,9 +829,14 @@ class _DetailsPageState extends State<DetailsPage> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        hintText: 'Precio',
+        labelText: 'Precio',
+        labelStyle: TextStyle(color: utils.cambiarColor()),
+        // hintText: 'Precio',
         counterText: '',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
         productModel.price = double.parse((value == "") ? "0" : value);
@@ -822,9 +863,14 @@ class _DetailsPageState extends State<DetailsPage> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        hintText: 'Cantidad',
+        labelText: 'Cantidad',
+        labelStyle: TextStyle(color: utils.cambiarColor()),
+        //hintText: 'Cantidad',
         counterText: '',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: utils.cambiarColor()),
+        ),
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
         productModel.quantity = int.parse((value == "") ? "0" : value);
