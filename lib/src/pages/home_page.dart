@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: new AppBar(
-        title: Text(('title')),
+        title: Text(('Mis listas')),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.delete_forever, ), onPressed: () => _validateEliminar(context),tooltip: 'Borrar todas las listas',)
         ],

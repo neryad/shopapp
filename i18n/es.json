@@ -3,13 +3,21 @@
     "Message" : "Esto es español",
     "settTitle" : "Ajustes",
     "themTitle": "Personalizacíon temas",
+    "nColor":"Naranja",
+    "bColor":"Azul",
+    "geColor":"Verde",
+    "pColor":"Rosado",
+    "gyColor":"Gris",
     "userTitle":"Personalizacíon usuario",
     "userInpText":"Nombre usuario",
     "aboutTitle" : "Acerca de",
     "versionTitle":"Version",
     "authorTitle":"Author",
     "descpTitle":"Descripción",
-    "descpText": "PocketList es una aplicación simple que buscar apoyarte en la organización de tu lista de compras, así cuando salgas, no olvidarás nada. Puedes usarla para lo que quieras, ir al supermercado, ferretería, de compras para el hogar, listar los regalos de San Valentín, navidad, de mamá, papá, en fin... tu escoges, AppName es para ti."
+    "descpText": "PocketList es una aplicación simple que buscar apoyarte en la organización de tu lista de compras, así cuando salgas, no olvidarás nada. Puedes usarla para lo que quieras, ir al supermercado, ferretería, de compras para el hogar, listar los regalos de San Valentín, navidad, de mamá, papá, en fin... tu escoges, AppName es para ti.",
+    "greattin1":"Buenos días",
+    "greattin2":"Buenas tardes",
+    "greattin3":"Buenos noches"
    
   }
 
