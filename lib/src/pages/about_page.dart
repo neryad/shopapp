@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/widgets/Menu_widget.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
+import 'package:shopapp/src/localization/localization_constant.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key key}) : super(key: key);
@@ -12,9 +13,8 @@ class AboutPage extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
-          title: Text(
-            'Acerca de',
-          ),
+           title:Text(getTranlated(context, 'aboutTitle')),
+          //title: Text(getTranlated(context, 'aboutTitle')),
           elevation: 0.0,
         ),
         drawer: MenuWidget(),
@@ -44,7 +44,7 @@ class AboutPage extends StatelessWidget {
                             height: 20.0,
                           ),
                           Text(
-                            'AppName',
+                            'PocketList',
                             style:
                                 TextStyle(fontSize: 22.0, color: Colors.white),
                           ),
@@ -65,7 +65,7 @@ class AboutPage extends StatelessWidget {
                                   Expanded(
                                     child: Column(
                                       children: <Widget>[
-                                        Text('Version',
+                                        Text(getTranlated(context, 'versionTitle'),
                                             style: TextStyle(
                                                 color: utils.cambiarColor(),
                                                 fontSize: 22.0,
@@ -84,7 +84,7 @@ class AboutPage extends StatelessWidget {
                                   Expanded(
                                     child: Column(
                                       children: <Widget>[
-                                        Text('Author',
+                                        Text(getTranlated(context, 'authorTitle'),
                                             style: TextStyle(
                                                 color: utils.cambiarColor(),
                                                 fontSize: 22.0,
@@ -136,7 +136,7 @@ class AboutPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Descripción",
+                        getTranlated(context, 'descpTitle'),
                         style: TextStyle(
                             color: utils.cambiarColor(),
                             fontStyle: FontStyle.normal,
@@ -144,7 +144,7 @@ class AboutPage extends StatelessWidget {
                       ),
                       SizedBox(height: 10.0),
                       Text(
-                        " AppName es una aplicación simple que buscar apoyarte en la organización de tu lista de compras, así cuando salgas, no olvidarás nada. Puedes usarla para lo que quieras, ir al supermercado, ferretería, de compras para el hogar, listar los regalos de San Valentín, navidad, de mamá, papá, en fin... tu escoges, AppName es para ti.",
+                        getTranlated(context, 'descpText'),
                         style: TextStyle(
                             fontSize: 20.0,
                             fontStyle: FontStyle.italic,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:shopapp/main.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:shopapp/src/data/class/language.dart';
+import 'package:shopapp/src/localization/localization_constant.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
-import 'package:shopapp/src/Shared_Prefs/AppLanguage.dart' as mmg;
 
  
 class SettingPage extends StatefulWidget {
@@ -27,7 +28,10 @@ class _SettingPageState extends State<SettingPage> {
     super.initState();
     _textEditingController = new TextEditingController( text: prefs.nombreUsuario);
   }
-
+    void _changeLanguea(Language language) async {
+      Locale _temp = await setLocal(language.languageCode);
+      MyApp.setLocale(context, _temp);
+    }
     _selectedRadio( int valor)  {
     
         prefs.genero = valor;
@@ -41,7 +45,7 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title:Text("Ajustes"),
+        title:Text(getTranlated(context, 'settTitle')),
         backgroundColor: utils.cambiarColor(),
         
       ),
@@ -102,13 +106,26 @@ class _SettingPageState extends State<SettingPage> {
               },
             )
           ),
-          RaisedButton(
-                  onPressed: () {
-                   // appLanguage.changeLanguage(Locale("es"));
-                   
-                  },
-                  child: Text('Mensaje'),
-                )
+          Divider(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton(
+              items: Language.languageList()
+              .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(value: lang,child: Row(children: [Text(lang.name)],))).toList(), 
+              onChanged: (Language language ){
+                _changeLanguea(language);
+              }
+              ),
+          ),
+          // RaisedButton(
+          //         onPressed: () {
+          //           Language language;
+          //           language.languageCode = "es";
+          //          // appLanguage.changeLanguage(Locale("es"));
+          //          _changeLanguea(language);
+          //         },
+          //         child: Text('Mensaje'),
+          //       )
         ]
       ),
      

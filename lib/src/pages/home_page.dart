@@ -4,7 +4,6 @@ import 'package:shopapp/src/pages/list_page.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
-import 'package:shopapp/src/utils/appLocalizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -23,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: new AppBar(
-        title: Text(AppLocalizations.of(context).translate('title')),
+        title: Text(('title')),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.delete_forever, ), onPressed: () => _validateEliminar(context),tooltip: 'Borrar todas las listas',)
         ],

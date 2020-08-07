@@ -1,4 +1,14 @@
 {
     "title": "Hello!",
-    "Message" : "This is English"
+    "Message" : "This is English",
+    "settTitle" : "Settings",
+    "themTitle": "Theme customization",
+    "userTitle":"User customization",
+    "userInpText":"User name",
+    "aboutTitle" : "About",
+    "versionTitle":"Version",
+    "authorTitle":"Author",
+    "descpTitle":"Description",
+    "descpText":"PocketList is a simple application that seeks to support you in organizing your shopping list, so when you go out, you will not forget anything. You can use it for whatever you want, go to the supermarket, hardware store, home shopping, list Valentine's, Christmas, Mom's, Dad's gifts, anyway ... you choose, PocketList is for you."
+
   }
