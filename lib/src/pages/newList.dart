@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:shopapp/src/localization/localization_constant.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
 import 'package:shopapp/src/models/suge.dart';
@@ -55,9 +56,7 @@ class _NewListState extends State<NewList> {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
-          title: Text(
-            'Lista de compra',
-          )),
+          title: Text(getTranlated(context, 'mMyLisTitle'))),
       drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
@@ -120,7 +119,7 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(' Presupuesto'),
+            title: Text(getTranlated(context, 'buget')),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -131,7 +130,7 @@ class _NewListState extends State<NewList> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Cancelar',
+                     getTranlated(context, 'cancel'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -140,7 +139,7 @@ class _NewListState extends State<NewList> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'Aceptar',
+                     getTranlated(context, 'accept'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -154,7 +153,7 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(' Nuevo artículo'),
+            title: Text(getTranlated(context, 'newArt')),
             content: Form(
               key: formKey,
               child: SingleChildScrollView(
@@ -179,7 +178,7 @@ class _NewListState extends State<NewList> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Salir',
+                   getTranlated(context, 'leave'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -189,7 +188,7 @@ class _NewListState extends State<NewList> {
                     //Navigator.of(context).pop();
                   },
                   child: Text(
-                    'Aceptar',
+                     getTranlated(context, 'accept'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -205,7 +204,7 @@ class _NewListState extends State<NewList> {
       textAlign: TextAlign.center,
       onSaved: (value) => productModel.name = value,
       decoration: InputDecoration(
-        labelText: 'Nombre artículo',
+        labelText: getTranlated(context, 'nameArt'),
         counterText: '',
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
@@ -224,7 +223,7 @@ class _NewListState extends State<NewList> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        labelText: 'Precio',
+        labelText: getTranlated(context, 'price'),
         counterText: '',
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
@@ -241,7 +240,7 @@ class _NewListState extends State<NewList> {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Solo numeros';
+          return getTranlated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -255,7 +254,7 @@ class _NewListState extends State<NewList> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        labelText: 'Cantidad',
+        labelText: getTranlated(context, 'quantity'),
         counterText: '',
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
@@ -273,7 +272,7 @@ class _NewListState extends State<NewList> {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Solo numeros';
+          return getTranlated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -301,7 +300,7 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text('Editar artículo'),
+            title: Text(getTranlated(context, 'editArt')),
             content: Form(
               key: editFormKey,
               child: Column(
@@ -317,7 +316,7 @@ class _NewListState extends State<NewList> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Salir',
+                   getTranlated(context, 'leave'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -328,7 +327,7 @@ class _NewListState extends State<NewList> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'Aceptar',
+                    getTranlated(context, 'accept'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -349,7 +348,7 @@ class _NewListState extends State<NewList> {
       textAlign: TextAlign.center,
       onSaved: (value) => items[index].name = value,
       decoration: InputDecoration(
-        labelText: 'Nombre artículo',
+        labelText: getTranlated(context, 'nameArt'),
         counterText: '',
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
@@ -368,7 +367,7 @@ class _NewListState extends State<NewList> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        labelText: 'Precio',
+        labelText: getTranlated(context, 'price'),
         counterText: '',
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
@@ -383,7 +382,7 @@ class _NewListState extends State<NewList> {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Solo numeros';
+          return getTranlated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -398,8 +397,7 @@ class _NewListState extends State<NewList> {
 
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        //hintText: 'Cantidad',
-        labelText: 'Cantidad',
+        labelText: getTranlated(context, 'quantity'),
         counterText: '',
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
@@ -415,7 +413,7 @@ class _NewListState extends State<NewList> {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Solo numeros';
+          return  getTranlated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -432,11 +430,13 @@ class _NewListState extends State<NewList> {
       onSaved: (value) => listaModel.title = value,
       decoration: InputDecoration(
         //counterText: '',
+         labelText: getTranlated(context, 'listName'),
+        labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        hintText: 'Nombre lista',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        //hintText: 'Nombre lista',
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -450,11 +450,13 @@ class _NewListState extends State<NewList> {
       onSaved: (value) => listaModel.superMaret = value,
       decoration: InputDecoration(
         // counterText: '',
+         labelText: getTranlated(context, 'shopName'),
+        labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        hintText: 'Nombre localidad',
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+       // hintText: 'Nombre localidad',
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -465,7 +467,7 @@ class _NewListState extends State<NewList> {
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         counterText: '',
-        hintText: 'Ingresar nuevo presupuesto',
+        hintText: getTranlated(context, 'newBuget'),
         suffixIcon: Icon(
           Icons.account_balance_wallet,
           color: utils.cambiarColor(),
@@ -508,7 +510,7 @@ class _NewListState extends State<NewList> {
                           FlatButton.icon(
                               onPressed: () => _mostrarAlertaBuget(context),
                               icon: Icon(Icons.account_balance_wallet),
-                              label: Text("Presupuesto")),
+                              label: Text(getTranlated(context, 'buget'))),
                         ],
                       ),
                       Spacer(),
@@ -556,7 +558,7 @@ class _NewListState extends State<NewList> {
                       FlatButton.icon(
                           onPressed: () => _mostrarAlertaBuget(context),
                           icon: Icon(Icons.shuffle),
-                          label: Text("Diferencia")),
+                          label: Text(getTranlated(context, 'difference'))),
                       Spacer(),
                       Text(
                         utils.numberFormat(diference),
@@ -608,7 +610,7 @@ class _NewListState extends State<NewList> {
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
-                      'No se han agregado artículos a la lista',
+                        getTranlated(context, 'noList'),
                       style: TextStyle(
                         color: utils.cambiarColor(),
                         fontSize: 18,
@@ -650,7 +652,7 @@ class _NewListState extends State<NewList> {
                             color: Colors.white,
                           ),
                           Text(
-                            "Eliminar",
+                             getTranlated(context, 'delete'),
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -668,7 +670,7 @@ class _NewListState extends State<NewList> {
                 ),
                 key: Key(items[index].name + items.length.toString()),
                 onDismissed: (direction) {
-                  utils.showSnack(context, 'Artículo eliminado de la lista');
+                  utils.showSnack(context,  getTranlated(context, 'offLis'));
                   DBProvider.db.deleteTmpProd(items[index].id);
                   items.removeAt(index);
 
@@ -702,9 +704,9 @@ class _NewListState extends State<NewList> {
 
                               (valor == true)
                                   ? utils.showSnack(
-                                      context, 'Artículo agregado al carrito')
+                                      context,  getTranlated(context, 'onCart'))
                                   : utils.showSnack(context,
-                                      'Artículo removido del carrito'); //   showSnack(context, 'Artículo agregado');
+                                       getTranlated(context, 'ofCart')); //   showSnack(context, 'Artículo agregado');
                             },
                             activeColor: utils.cambiarColor(),
                           ),
@@ -749,7 +751,7 @@ class _NewListState extends State<NewList> {
                                                 items[index].price),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold)),
-                                        Text('Precio')
+                                        Text(getTranlated(context, 'price'))
                                       ],
                                     ),
                                   ),
@@ -769,7 +771,7 @@ class _NewListState extends State<NewList> {
                                         Text(items[index].quantity.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold)),
-                                        Text('Cantidad')
+                                        Text(getTranlated(context, 'quantity'))
                                       ],
                                     ),
                                   ),
@@ -822,7 +824,7 @@ class _NewListState extends State<NewList> {
           onPressed: () => _guardarLista(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[Icon(Icons.save), Text('Guardar lista')],
+            children: <Widget>[Icon(Icons.save), Text(getTranlated(context, 'saveList'))],
           ),
         ),
         FlatButton(
@@ -831,7 +833,7 @@ class _NewListState extends State<NewList> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Icon(Icons.remove_circle_outline),
-              Text('Limpiar lista')
+              Text(getTranlated(context, 'clearList'))
             ],
           ),
         ),
@@ -845,18 +847,18 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text('Eliminar contenido'),
+            title: Text(getTranlated(context, 'deleteCont')),
             actions: <Widget>[
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Salir',
+                    getTranlated(context, 'leave'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
                   onPressed: () => limpiarTodo(),
                   child: Text(
-                    'Aceptar',
+                    getTranlated(context, 'accept'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -913,7 +915,7 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text('Guardar lista'),
+            title: Text(getTranlated(context, 'saveList')),
             content: Form(
               key: lisForm,
               child: Column(
@@ -925,7 +927,7 @@ class _NewListState extends State<NewList> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Salir',
+                    getTranlated(context, 'leave'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -936,7 +938,7 @@ class _NewListState extends State<NewList> {
                     prefs.tempBuget = '0.00';
                   },
                   child: Text(
-                    'Aceptar',
+                    getTranlated(context, 'accept'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],

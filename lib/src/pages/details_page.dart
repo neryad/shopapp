@@ -1,5 +1,6 @@
 //import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:shopapp/src/localization/localization_constant.dart';
 //import 'package:shopapp/src/data/data.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/models/product_model.dart';
@@ -98,7 +99,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               onPressed: () =>
                                   _mostrarAlertaBuget(context, list),
                               icon: Icon(Icons.account_balance_wallet),
-                              label: Text("Presupuesto")),
+                              label: Text(getTranlated(context, 'buget'))),
                         ],
                       ),
                       Spacer(),
@@ -146,7 +147,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       FlatButton.icon(
                           onPressed: () {},
                           icon: Icon(Icons.shuffle),
-                          label: Text("Diferencia")),
+                          label: Text(getTranlated(context, 'difference'))),
                       Spacer(),
                       Text(
                         utils.numberFormat(diference),
@@ -202,7 +203,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             color: Colors.white,
                           ),
                           Text(
-                            "Eliminar",
+                            getTranlated(context, 'delete'),
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -220,7 +221,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
                 key: Key(articulos[index].name + articulos.length.toString()),
                 onDismissed: (direction) {
-                  utils.showSnack(context, 'Artículo eliminado de la lista');
+                  utils.showSnack(context, getTranlated(context, 'offLis'));
                   DBProvider.db.deleteProd(articulos[index].id);
                   articulos.removeAt(index);
 
@@ -255,9 +256,9 @@ class _DetailsPageState extends State<DetailsPage> {
 
                               (valor == true)
                                   ? utils.showSnack(
-                                      context, 'Artículo agregado al carrito')
+                                      context, getTranlated(context, 'onCart'))
                                   : utils.showSnack(context,
-                                      'Artículo removido del carrito'); //   showSnack(context, 'Artículo agregado');
+                                      getTranlated(context, 'ofCart')); //   showSnack(context, 'Artículo agregado');
                             },
                             activeColor: utils.cambiarColor(),
                           ),
@@ -304,7 +305,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                               articulos[index].price),
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
-                                      Text('Precio')
+                                      Text(getTranlated(context, 'price'))
                                     ],
                                   ),
                                 ),
@@ -324,7 +325,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       Text(articulos[index].quantity.toString(),
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
-                                      Text('Cantidad')
+                                      Text(getTranlated(context, 'quantity'))
                                     ],
                                   ),
                                 ),
@@ -374,7 +375,7 @@ class _DetailsPageState extends State<DetailsPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(' Presupuesto'),
+            title: Text(getTranlated(context, 'buget')),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -385,7 +386,7 @@ class _DetailsPageState extends State<DetailsPage> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Cancelar',
+                    getTranlated(context, 'cancel'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -394,7 +395,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'Aceptar',
+                    getTranlated(context, 'accept'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -408,7 +409,7 @@ class _DetailsPageState extends State<DetailsPage> {
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         counterText: '',
-        hintText: 'Ingresar nuevo presupuesto',
+        hintText: getTranlated(context, 'newBuget'),
         suffixIcon: Icon(
           Icons.account_balance_wallet,
           color: utils.cambiarColor(),
@@ -473,7 +474,7 @@ class _DetailsPageState extends State<DetailsPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text('Actulizar artículo'),
+            title: Text(getTranlated(context, 'updArt')),
             content: Form(
               key: editFormKey,
               child: Column(
@@ -490,7 +491,7 @@ class _DetailsPageState extends State<DetailsPage> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Salir',
+                    getTranlated(context, 'leave'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -501,7 +502,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'Aceptar',
+                     getTranlated(context, 'accept'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -523,13 +524,12 @@ class _DetailsPageState extends State<DetailsPage> {
       onSaved: (value) => articulos[index].name = value,
       decoration: InputDecoration(
         counterText: '',
-        labelText: 'Nombre artículo',
+        labelText: getTranlated(context, 'nameArt'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
 
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        //hintText: 'Nombre artículo',
         hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
@@ -542,8 +542,8 @@ class _DetailsPageState extends State<DetailsPage> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        //hintText: 'Precio',
-        labelText: 'Precio',
+        
+        labelText: getTranlated(context, 'price'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
@@ -562,7 +562,7 @@ class _DetailsPageState extends State<DetailsPage> {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Solo numeros';
+          return getTranlated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -576,8 +576,7 @@ class _DetailsPageState extends State<DetailsPage> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        // hintText: 'Cantidad',
-        labelText: 'Cantidad',
+        labelText: getTranlated(context, 'quantity'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
@@ -596,7 +595,7 @@ class _DetailsPageState extends State<DetailsPage> {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Solo numeros';
+          return getTranlated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -646,7 +645,7 @@ class _DetailsPageState extends State<DetailsPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text('Nuevo artículo'),
+            title: Text(getTranlated(context, 'newArt')),
             content: Form(
               key: formKey,
               child: SingleChildScrollView(
@@ -668,7 +667,7 @@ class _DetailsPageState extends State<DetailsPage> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Salir',
+                    getTranlated(context, 'leave'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -678,7 +677,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     _updataLista(list);
                   },
                   child: Text(
-                    'Aceptar',
+                     getTranlated(context, 'accept'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -816,7 +815,7 @@ class _DetailsPageState extends State<DetailsPage> {
         ),
         // hintText: 'Nombre artículo',
         labelStyle: TextStyle(color: utils.cambiarColor()),
-        labelText: 'Nombre artículo',
+        labelText: getTranlated(context, 'nameArt'),
         //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
@@ -829,9 +828,8 @@ class _DetailsPageState extends State<DetailsPage> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        labelText: 'Precio',
+        labelText: getTranlated(context, 'price'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
-        // hintText: 'Precio',
         counterText: '',
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
@@ -863,9 +861,8 @@ class _DetailsPageState extends State<DetailsPage> {
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        labelText: 'Cantidad',
+        labelText: getTranlated(context, 'quantity'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
-        //hintText: 'Cantidad',
         counterText: '',
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
@@ -883,7 +880,7 @@ class _DetailsPageState extends State<DetailsPage> {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Solo numeros';
+          return getTranlated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),

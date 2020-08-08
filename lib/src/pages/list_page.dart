@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopapp/src/localization/localization_constant.dart';
 import 'package:shopapp/src/models/List_model.dart';
 import 'package:shopapp/src/pages/details_page.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
@@ -21,7 +22,7 @@ class _ListPageState extends State<ListPage> {
         child: SingleChildScrollView(
           padding: EdgeInsets.all(8.0),
           child: Column(
-            children: <Widget>[utils.saludos(), _imagen(), _wawa(context)],
+            children: <Widget>[utils.saludos(context), _imagen(), _wawa(context)],
           ),
         ),
       ),
@@ -44,7 +45,7 @@ class _ListPageState extends State<ListPage> {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'No se han registrado listas',
+                getTranlated(context, 'noList'),
                 style: TextStyle(
                   color: utils.cambiarColor(),
                   fontSize: 18,
@@ -72,7 +73,7 @@ class _ListPageState extends State<ListPage> {
                               color: Colors.white,
                             ),
                             Text(
-                              "Eliminar",
+                              getTranlated(context, 'delete'),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,

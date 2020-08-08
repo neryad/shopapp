@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:shopapp/src/localization/localization_constant.dart';
 import 'package:shopapp/src/pages/list_page.dart';
 import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: new AppBar(
-        title: Text(('Mis listas')),
+        title: Text(getTranlated(context, 'mHomeTitle'),),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.delete_forever, ), onPressed: () => _validateEliminar(context),tooltip: 'Borrar todas las listas',)
         ],
@@ -40,18 +41,18 @@ class _HomePageState extends State<HomePage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text('Eliminar todas las listas?'),
+            title: Text(getTranlated(context, 'deleteAllList')),
             actions: <Widget>[
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Salir',
+                    getTranlated(context, 'leave'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
                   onPressed: () => limpiarTodo(),
                   child: Text(
-                    'Aceptar',
+                     getTranlated(context, 'accept'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],

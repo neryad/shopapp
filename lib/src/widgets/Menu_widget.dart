@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
+import 'package:shopapp/src/localization/localization_constant.dart';
 class MenuWidget extends StatelessWidget {
 
 
@@ -16,22 +17,22 @@ class MenuWidget extends StatelessWidget {
           ListTile(
             
             leading: Icon(Icons.home,),
-            title: Text('Mis listas',),
+            title: Text(getTranlated(context, 'mHomeTitle'),),
             onTap: () => {Navigator.pushReplacementNamed(context, 'home')},
           ),
           ListTile(
             leading: Icon(Icons.list),
-            title: Text('Lista de compra'),
+            title: Text(getTranlated(context, 'mMyLisTitle')),
             onTap: () => {Navigator.pushReplacementNamed(context, 'newList')},
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Ajustes'),
+            title: Text(getTranlated(context, 'mSettingTitle')),
             onTap: () => {Navigator.pushReplacementNamed(context, 'settings')},
           ),
           ListTile(
             leading: Icon(Icons.info),
-            title: Text('Acerca de'),
+            title: Text(getTranlated(context, 'mAboutTitle')),
             onTap: () => {Navigator.pushReplacementNamed(context, 'about')},
           )
         ],

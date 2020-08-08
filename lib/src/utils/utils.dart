@@ -2,18 +2,17 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:shopapp/src/localization/localization_constant.dart';
 
 final prefs = new PreferenciasUsuario();
 
 bool isNumeric(String s) {
-
   if (s.isEmpty) return false;
 
   final n = num.tryParse(s);
 
   return (n == null) ? false : true;
 }
-
 
 DateTime now = DateTime.now();
 
@@ -98,43 +97,42 @@ Image cambiarNewImage() {
   );
 }
 
-saludos() {
-
+saludos(BuildContext context) {
+  String greattin1 = getTranlated(context, 'greattin1');
+  String greattin2 = getTranlated(context, 'greattin2');
+  String greattin3 = getTranlated(context, 'greattin3');
   var msg = '';
   if (timeNow <= 11) {
-    msg = 'Buenos días ${prefs.nombreUsuario}';
+    msg = '${greattin1} ${prefs.nombreUsuario}';
   } else if ((timeNow >= 12) && (timeNow <= 16)) {
-    msg = 'Buenas tardes ${prefs.nombreUsuario}';
+    msg = '${greattin2} ${prefs.nombreUsuario}';
   } else if ((timeNow > 16) && (timeNow < 19)) {
-    msg = 'Buenas tardes ${prefs.nombreUsuario}';
+    msg = '${greattin2} ${prefs.nombreUsuario}';
   } else {
-    msg = 'Buenas noches ${prefs.nombreUsuario}';
+    msg = '${greattin3} ${prefs.nombreUsuario}';
   }
   return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
-    
       Text(msg,
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        )),
-  ],);
-
-  
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          )),
+    ],
+  );
 }
 
-
- void showSnack(BuildContext context, String msg) {
-    Flushbar(
-      //title: 'This action is prohibited',
-      message: msg,
-      icon: Icon(
-        Icons.info_outline,
-        size: 28,
-        color: cambiarColor(),
-      ),
-      leftBarIndicatorColor: cambiarColor(),
-      duration: Duration(seconds: 2),
-    )..show(context);
-  }
+void showSnack(BuildContext context, String msg) {
+  Flushbar(
+    //title: 'This action is prohibited',
+    message: msg,
+    icon: Icon(
+      Icons.info_outline,
+      size: 28,
+      color: cambiarColor(),
+    ),
+    leftBarIndicatorColor: cambiarColor(),
+    duration: Duration(seconds: 2),
+  )..show(context);
+}
