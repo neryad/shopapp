@@ -3,6 +3,8 @@
     "Message" : "Esto es español",
     "settTitle" : "Ajustes",
     "themTitle": "Personalizacíon temas",
+    "lngTitle": "Personalizacíon lenguaje",
+    "lnHelp":"Seleccionar lenguaje",
     "nColor":"Naranja",
     "bColor":"Azul",
     "geColor":"Verde",

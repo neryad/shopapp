@@ -3,6 +3,8 @@
     "Message" : "This is English",
     "settTitle" : "Settings",
     "themTitle": "Theme customization",
+    "lngTitle": "Language customization",
+    "lnHelp":"Select language",
     "nColor":"Orange",
     "bColor":"Blue",
     "geColor":"Green",

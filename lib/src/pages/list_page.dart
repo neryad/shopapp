@@ -31,6 +31,7 @@ class _ListPageState extends State<ListPage> {
 
   _wawa(BuildContext context) {
     return Container(
+       key: UniqueKey(),
       height: MediaQuery.of(context).size.height * .6,
       child: FutureBuilder<List<Lista>>(
         future: DBProvider.db.getToadasLista(),

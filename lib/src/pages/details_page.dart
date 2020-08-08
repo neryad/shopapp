@@ -499,6 +499,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     //_subimt();
                     _editDubimt(index);
                     getTotal(list);
+                    _updataLista(list);
                     Navigator.of(context).pop();
                   },
                   child: Text(
@@ -513,6 +514,7 @@ class _DetailsPageState extends State<DetailsPage> {
   void _editDubimt(int index) {
     editFormKey.currentState.save();
     DBProvider.db.updateProd(articulos[index]);
+    
   }
 
   Widget _editarNombreArticulo(int index) {
@@ -847,7 +849,7 @@ class _DetailsPageState extends State<DetailsPage> {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return 'Completar campos';
+          return getTranlated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
