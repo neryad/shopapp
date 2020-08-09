@@ -44,7 +44,8 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     // var appLanguage = Provider.of< mmg.AppLanguage>(context);
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      //resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: true,
       appBar: AppBar(
         actions: [
           Padding(
