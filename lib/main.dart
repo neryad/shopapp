@@ -7,6 +7,7 @@ import 'package:shopapp/src/pages/about_page.dart';
 import 'package:shopapp/src/pages/home_page.dart';
 import 'package:shopapp/src/pages/newList.dart';
 import 'package:shopapp/src/pages/setting_page.dart';
+import 'package:shopapp/src/pages/splashScreen.dart';
 void main() async {
     WidgetsFlutterBinding.ensureInitialized(); 
      final prefs = new PreferenciasUsuario();
@@ -74,7 +75,8 @@ class _MyAppState extends State<MyApp> {
       },
 
       title: 'PocketList',
-      initialRoute: 'home',
+      home: SplashScreen(),
+      //initialRoute: 'home',
       routes: {
         'home' : ( BuildContext context) => HomePage(),
         'newList': ( BuildContext context) => NewList(),
