@@ -2,12 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:shopapp/src/widgets/Menu_widget.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/localization/localization_constant.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+//     final Uri _emailLaunchUri = Uri(
+//   scheme: 'mailto',
+//   path: 'dayern.gomez@hotmail.com',
+//   queryParameters: {
+//     'subject': 'Example Subject & Symbols are allowed!'
+//   }
+// );
+    //   void _sendEmail(String email) async {
+
+    //   var url ="mailto:$email?subject=Feedback PockList";
+    //   if (await canLaunch(url)){
+    //   await launch(url);
+    // }
+    //   }
+
+
+
+    // throw 'noooo';
+    // }
     return Scaffold(
       resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.white,
@@ -157,6 +178,11 @@ class AboutPage extends StatelessWidget {
                   ),
                 )),
               ),
+
+              // FlatButton(onPressed: (){
+              //   launch(_emailLaunchUri.toString());
+              //    // _sendEmail('dayern.gomez@hotmail.com');
+              // }, child: Text('data'))
             ],
           ),
         ));
