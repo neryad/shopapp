@@ -5,7 +5,7 @@ import 'package:shopapp/src/data/class/language.dart';
 import 'package:shopapp/src/localization/localization_constant.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key key}) : super(key: key);
