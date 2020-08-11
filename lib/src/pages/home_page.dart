@@ -25,7 +25,8 @@ class _HomePageState extends State<HomePage> {
       appBar: new AppBar(
         title: Text(getTranlated(context, 'mHomeTitle'),),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.delete_forever, ), onPressed: () => _validateEliminar(context),tooltip: 'Borrar todas las listas',)
+          //IconButton(icon: Icon(Icons.delete_forever, ), onPressed: () => _validateEliminar(context),tooltip: 'Borrar todas las listas',),
+           IconButton(icon: Icon(Icons.add_shopping_cart, ), onPressed: () => {Navigator.pushReplacementNamed(context, 'newList')})
         ],
         elevation: 0.0,
         backgroundColor: utils.cambiarColor(),
