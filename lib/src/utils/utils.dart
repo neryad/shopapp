@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:shopapp/src/localization/localization_constant.dart';
+import 'package:shopapp/src/models/product_model.dart';
 
 final prefs = new PreferenciasUsuario();
-
+ 
 bool isNumeric(String s) {
   if (s.isEmpty) return false;
 
@@ -15,7 +16,7 @@ bool isNumeric(String s) {
 }
 
 DateTime now = DateTime.now();
-
+ List<ProductModel> deleteItems;
 var timeNow = int.parse(DateFormat('kk').format(now));
 
 String numberFormat(double t) {
@@ -103,13 +104,13 @@ saludos(BuildContext context) {
   String greattin3 = getTranlated(context, 'greattin3');
   var msg = '';
   if (timeNow <= 11) {
-    msg = '${greattin1} ${prefs.nombreUsuario}';
+    msg = '$greattin1 ${prefs.nombreUsuario}';
   } else if ((timeNow >= 12) && (timeNow <= 16)) {
-    msg = '${greattin2} ${prefs.nombreUsuario}';
+    msg = '$greattin2 ${prefs.nombreUsuario}';
   } else if ((timeNow > 16) && (timeNow < 19)) {
-    msg = '${greattin2} ${prefs.nombreUsuario}';
+    msg = '$greattin2 ${prefs.nombreUsuario}';
   } else {
-    msg = '${greattin3} ${prefs.nombreUsuario}';
+    msg = '$greattin3 ${prefs.nombreUsuario}';
   }
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -132,6 +133,37 @@ void showSnack(BuildContext context, String msg) {
       size: 28,
       color: cambiarColor(),
     ),
+    mainButton: FlatButton(
+        onPressed: () {},
+        child: Text(
+          "CLAP",
+          style: TextStyle(color: Colors.amber),
+        ),
+      ),
+    leftBarIndicatorColor: cambiarColor(),
+    duration: Duration(seconds: 2),
+  )..show(context);
+}
+
+void showDeleteSnack(BuildContext context, String msg,  deleteItems, int index) {
+  Flushbar(
+    //title: 'This action is prohibited',
+    message: msg,
+    icon: Icon(
+      Icons.info_outline,
+      size: 28,
+      color: cambiarColor(),
+    ),
+    mainButton: FlatButton(
+        onPressed: () {
+          print(deleteItems[index]);
+          deleteItems.insert(index, deleteItems);
+        },
+        child: Text(
+          "CLAP",
+          style: TextStyle(color: Colors.amber),
+        ),
+      ),
     leftBarIndicatorColor: cambiarColor(),
     duration: Duration(seconds: 2),
   )..show(context);

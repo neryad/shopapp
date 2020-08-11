@@ -670,7 +670,9 @@ class _NewListState extends State<NewList> {
                 ),
                 key: Key(items[index].name + items.length.toString()),
                 onDismissed: (direction) {
-                  utils.showSnack(context,  getTranlated(context, 'offLis'));
+                  //wey
+                  utils.showDeleteSnack(context, getTranlated(context, 'offLis'), items, index);
+                 // utils.showSnack(context,  getTranlated(context, 'offLis'));
                   DBProvider.db.deleteTmpProd(items[index].id);
                   items.removeAt(index);
 
