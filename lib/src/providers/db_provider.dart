@@ -67,7 +67,7 @@ class DBProvider {
           'name TEXT,'
           'quantity INTERGER,'
           'price REAL,'
-          'listId INTEGER,'
+          'listId TEXT,'
           'complete INTEGER,'
           'FOREIGN KEY(listId) REFERENCES Lista(id)'
           ')');

@@ -130,7 +130,7 @@ class _NewListState extends State<NewList> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                     getTranlated(context, 'cancel'),
+                     getTranlated(context, 'baclTolist'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -139,7 +139,7 @@ class _NewListState extends State<NewList> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                     getTranlated(context, 'accept'),
+                     getTranlated(context, 'addBuget'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -178,7 +178,7 @@ class _NewListState extends State<NewList> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                   getTranlated(context, 'leave'),
+                   getTranlated(context, 'baclTolist'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -188,7 +188,7 @@ class _NewListState extends State<NewList> {
                     //Navigator.of(context).pop();
                   },
                   child: Text(
-                     getTranlated(context, 'accept'),
+                     getTranlated(context, 'add'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -199,10 +199,17 @@ class _NewListState extends State<NewList> {
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
-      maxLength: 50,
+      maxLength: 40,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
       onSaved: (value) => productModel.name = value,
+      validator: (value){
+        if(utils.isEmpty(value)){
+          return null;
+        } else {
+          return getTranlated(context, 'noEmpty');
+        }
+      },
       decoration: InputDecoration(
         labelText: getTranlated(context, 'nameArt'),
         counterText: '',
@@ -499,40 +506,47 @@ class _NewListState extends State<NewList> {
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Container(
+           
               child: Column(
                 children: <Widget>[
-                  Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                  GestureDetector(
+                     onTap: () => _mostrarAlertaBuget(context),
+                    child: Container(
+                      color: Colors.white,
+                      child: Row(
+                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          FlatButton.icon(
-                              onPressed: () => _mostrarAlertaBuget(context),
-                              icon: Icon(Icons.account_balance_wallet),
-                              label: Text(getTranlated(context, 'buget'))),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              FlatButton.icon(
+                                  onPressed: () => _mostrarAlertaBuget(context),
+                                  icon: Icon(Icons.account_balance_wallet),
+                                  label: Text(getTranlated(context, 'buget'))),
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                utils.numberFormat(buget),
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: bugetColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          )
                         ],
                       ),
-                      Spacer(),
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            utils.numberFormat(buget),
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: bugetColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      )
-                    ],
+                    ),
                   ),
                   Row(
                     children: <Widget>[
                       Column(
                         children: <Widget>[
                           FlatButton.icon(
-                              onPressed: () => _mostrarAlertaBuget(context),
+                              onPressed: () {},
                               icon: Icon(Icons.shopping_cart),
                               label: Text("Total")),
                         ],
@@ -556,7 +570,7 @@ class _NewListState extends State<NewList> {
                     //mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       FlatButton.icon(
-                          onPressed: () => _mostrarAlertaBuget(context),
+                          onPressed: () {},
                           icon: Icon(Icons.shuffle),
                           label: Text(getTranlated(context, 'difference'))),
                       Spacer(),

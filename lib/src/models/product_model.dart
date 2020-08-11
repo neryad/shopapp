@@ -8,7 +8,7 @@ class ProductModel {
     ProductModel({
         this.id,
         this.name,
-        this.quantity = 0,
+        this.quantity,
         this.price,
         this.listId,
         this.complete,

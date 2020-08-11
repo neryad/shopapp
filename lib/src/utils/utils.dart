@@ -15,6 +15,10 @@ bool isNumeric(String s) {
   return (n == null) ? false : true;
 }
 
+bool isEmpty(String s){
+return (s== "") ? false : true;
+}
+
 DateTime now = DateTime.now();
  List<ProductModel> deleteItems;
 var timeNow = int.parse(DateFormat('kk').format(now));
