@@ -3,9 +3,9 @@ import 'package:shopapp/main.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:shopapp/src/data/class/language.dart';
 import 'package:shopapp/src/localization/localization_constant.dart';
+import 'package:shopapp/src/providers/db_provider.dart';
 import 'package:shopapp/src/utils/utils.dart' as utils;
 import 'package:shopapp/src/widgets/Menu_widget.dart';
-
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key key}) : super(key: key);
@@ -17,11 +17,8 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   int _genero;
   TextEditingController _textEditingController;
-  
-  
 
   final prefs = new PreferenciasUsuario();
-  var wawa;
 
   @override
   void initState() {
@@ -33,7 +30,6 @@ class _SettingPageState extends State<SettingPage> {
 
   void _changeLanguea(Language language) async {
     Locale _temp = await setLocal(language.languageCode);
-    wawa = _temp;
     MyApp.setLocale(context, _temp);
   }
 
@@ -54,8 +50,11 @@ class _SettingPageState extends State<SettingPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: DropdownButton(
-              underline: SizedBox(),
-              icon: Icon(Icons.language, color: Colors.white,),
+                underline: SizedBox(),
+                icon: Icon(
+                  Icons.language,
+                  color: Colors.white,
+                ),
                 //hint: new Text(getTranlated(context, 'lnHelp')),
                 items: Language.languageList()
                     .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
@@ -149,6 +148,38 @@ class _SettingPageState extends State<SettingPage> {
               },
             )),
         Divider(),
+        Container(
+          padding: EdgeInsets.all(5.0),
+          child: Text(
+            getTranlated(context, 'dataTitle'),
+            style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+
+        Divider(),
+        Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: FlatButton(
+                color: Colors.red,
+                textColor: Colors.white,
+                //disabledColor: Colors.grey,
+                //disabledTextColor: Colors.black,
+                padding: EdgeInsets.all(8.0),
+                splashColor: Colors.redAccent,
+                onPressed: () {
+                  _validateEliminar(context);
+                  utils.showSnack(context, getTranlated(context, 'dataDelete'));
+                },
+                child: Row(
+                  mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      getTranlated(context, 'deleteAllList'),
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Icon(Icons.delete_forever)
+                  ],
+                ))),
         // Container(
         //   padding: EdgeInsets.all(5.0),
         //   child: Text(
@@ -188,5 +219,42 @@ class _SettingPageState extends State<SettingPage> {
         //       )
       ]),
     );
+  }
+
+    _validateEliminar(BuildContext context){
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(getTranlated(context, 'deleteAllList')),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    getTranlated(context, 'leave'),
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+              FlatButton(
+                  onPressed: () => limpiarTodo(),
+                  child: Text(
+                     getTranlated(context, 'accept'),
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+            ],
+          );
+        });
+  }
+
+    limpiarTodo() {
+    setState(() {
+      DBProvider.db.deleteAllList();
+      //items.clear();
+      setState(() {
+        
+      });
+    });
+    Navigator.of(context).pop();
+    
   }
 }

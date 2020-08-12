@@ -12,6 +12,7 @@
     "gyColor":"Grey",
     "userTitle":"User customization",
     "userInpText":"User name",
+    "dataTitle":"Data configuration",
     "aboutTitle" : "About",
     "versionTitle":"Version",
     "authorTitle":"Author",
@@ -51,8 +52,9 @@
     "deletedList":"Deleted list",
     "onlyNumbers":"Only numbers",
     "noEmpty":"Please complete the field",
-    "deleteAllList":"Delete all lists?",
+    "deleteAllList":"Delete all data of the lists ?",
     "cancel":"Cancel",
-    "updArt":"Update article"
+    "updArt":"Update article",
+    "dataDelete":"All data deleted"
 
   }

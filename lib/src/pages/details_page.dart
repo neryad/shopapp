@@ -520,7 +520,7 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget _editarNombreArticulo(int index) {
     return TextFormField(
       initialValue: articulos[index].name,
-      maxLength: 50,
+       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
       onSaved: (value) => articulos[index].name = value,
@@ -806,7 +806,7 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
-      maxLength: 50,
+       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
       onSaved: (value) => productModel.name = value,

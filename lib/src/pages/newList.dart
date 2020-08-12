@@ -199,7 +199,7 @@ class _NewListState extends State<NewList> {
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
-      maxLength: 40,
+      maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
       onSaved: (value) => productModel.name = value,
@@ -212,7 +212,7 @@ class _NewListState extends State<NewList> {
       },
       decoration: InputDecoration(
         labelText: getTranlated(context, 'nameArt'),
-        counterText: '',
+        //counterText: '',
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
@@ -350,7 +350,7 @@ class _NewListState extends State<NewList> {
   Widget _editarNombreArticulo(int index) {
     return TextFormField(
       initialValue: items[index].name,
-      maxLength: 50,
+      maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
       onSaved: (value) => items[index].name = value,
@@ -707,9 +707,11 @@ class _NewListState extends State<NewList> {
                           Text(
                             items[index].name,
                             style: TextStyle(fontWeight: FontWeight.w900),
+                            overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.start,
                           ),
                           Spacer(),
+                          SizedBox(),
                           Checkbox(
                             value: isComplete,
                             onChanged: (valor) {

@@ -11,6 +11,7 @@
     "pColor":"Rosado",
     "gyColor":"Gris",
     "userTitle":"Personalizacíon usuario",
+    "dataTitle":"Configuración de datos",
     "userInpText":"Nombre usuario",
     "aboutTitle" : "Acerca de",
     "versionTitle":"Version",
@@ -51,9 +52,10 @@
     "deletedList":"Lista eliminada",
     "onlyNumbers":"Solo numeros",
     "noEmpty":"Por favor de completar el campo",
-    "deleteAllList":"Eliminar todas las listas?",
+    "deleteAllList":"Eliminar todos los datos de las listas ?",
     "cancel":"Cancelar",
-    "updArt":"Actulizar artículo"
+    "updArt":"Actulizar artículo",
+    "dataDelete":"Todos los datos eliminados"
    
   }
 
