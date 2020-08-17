@@ -130,7 +130,7 @@ class _NewListState extends State<NewList> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                     getTranlated(context, 'baclTolist'),
+                    getTranlated(context, 'baclTolist'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -139,7 +139,7 @@ class _NewListState extends State<NewList> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                     getTranlated(context, 'addBuget'),
+                    getTranlated(context, 'addBuget'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -178,7 +178,7 @@ class _NewListState extends State<NewList> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                   getTranlated(context, 'baclTolist'),
+                    getTranlated(context, 'baclTolist'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -188,7 +188,7 @@ class _NewListState extends State<NewList> {
                     //Navigator.of(context).pop();
                   },
                   child: Text(
-                     getTranlated(context, 'add'),
+                    getTranlated(context, 'add'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -203,8 +203,8 @@ class _NewListState extends State<NewList> {
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
       onSaved: (value) => productModel.name = value,
-      validator: (value){
-        if(utils.isEmpty(value)){
+      validator: (value) {
+        if (utils.isEmpty(value)) {
           return null;
         } else {
           return getTranlated(context, 'noEmpty');
@@ -323,7 +323,7 @@ class _NewListState extends State<NewList> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                   getTranlated(context, 'leave'),
+                    getTranlated(context, 'leave'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -420,7 +420,7 @@ class _NewListState extends State<NewList> {
         if (utils.isNumeric(value)) {
           return null;
         } else {
-          return  getTranlated(context, 'onlyNumbers');
+          return getTranlated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -437,7 +437,7 @@ class _NewListState extends State<NewList> {
       onSaved: (value) => listaModel.title = value,
       decoration: InputDecoration(
         //counterText: '',
-         labelText: getTranlated(context, 'listName'),
+        labelText: getTranlated(context, 'listName'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
@@ -457,12 +457,12 @@ class _NewListState extends State<NewList> {
       onSaved: (value) => listaModel.superMaret = value,
       decoration: InputDecoration(
         // counterText: '',
-         labelText: getTranlated(context, 'shopName'),
+        labelText: getTranlated(context, 'shopName'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-       // hintText: 'Nombre localidad',
+        // hintText: 'Nombre localidad',
         //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
@@ -506,17 +506,18 @@ class _NewListState extends State<NewList> {
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Container(
-           
               child: Column(
+             
                 children: <Widget>[
                   GestureDetector(
-                     onTap: () => _mostrarAlertaBuget(context),
+                    onTap: () => _mostrarAlertaBuget(context),
                     child: Container(
                       color: Colors.white,
                       child: Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Column(
+                            
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               FlatButton.icon(
@@ -624,7 +625,7 @@ class _NewListState extends State<NewList> {
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
-                        getTranlated(context, 'noList'),
+                      getTranlated(context, 'noList'),
                       style: TextStyle(
                         color: utils.cambiarColor(),
                         fontSize: 18,
@@ -666,7 +667,7 @@ class _NewListState extends State<NewList> {
                             color: Colors.white,
                           ),
                           Text(
-                             getTranlated(context, 'delete'),
+                            getTranlated(context, 'delete'),
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -685,8 +686,9 @@ class _NewListState extends State<NewList> {
                 key: Key(items[index].name + items.length.toString()),
                 onDismissed: (direction) {
                   //wey
-                  utils.showDeleteSnack(context, getTranlated(context, 'offLis'), items, index);
-                 // utils.showSnack(context,  getTranlated(context, 'offLis'));
+                  utils.showDeleteSnack(
+                      context, getTranlated(context, 'offLis'), items, index);
+                  // utils.showSnack(context,  getTranlated(context, 'offLis'));
                   DBProvider.db.deleteTmpProd(items[index].id);
                   items.removeAt(index);
 
@@ -722,9 +724,11 @@ class _NewListState extends State<NewList> {
 
                               (valor == true)
                                   ? utils.showSnack(
-                                      context,  getTranlated(context, 'onCart'))
-                                  : utils.showSnack(context,
-                                       getTranlated(context, 'ofCart')); //   showSnack(context, 'Artículo agregado');
+                                      context, getTranlated(context, 'onCart'))
+                                  : utils.showSnack(
+                                      context,
+                                      getTranlated(context,
+                                          'ofCart')); //   showSnack(context, 'Artículo agregado');
                             },
                             activeColor: utils.cambiarColor(),
                           ),
@@ -839,10 +843,14 @@ class _NewListState extends State<NewList> {
         child: new Row(
       children: <Widget>[
         FlatButton(
-          onPressed: () => _guardarLista(context),
+          //(valor == true) ? 1 : 0;
+          onPressed: () =>  (items.length <= 0) ? null : _guardarLista(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[Icon(Icons.save), Text(getTranlated(context, 'saveList'))],
+            children: <Widget>[
+              Icon(Icons.save),
+              Text(getTranlated(context, 'saveList'))
+            ],
           ),
         ),
         FlatButton(

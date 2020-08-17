@@ -48,7 +48,7 @@ class _SettingPageState extends State<SettingPage> {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child: DropdownButton(
                 underline: SizedBox(),
                 icon: Icon(
@@ -60,7 +60,15 @@ class _SettingPageState extends State<SettingPage> {
                     .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
                         value: lang,
                         child: Row(
-                          children: [Text(lang.name)],
+                          children: [
+                              Text(lang.name),
+                            
+                              SizedBox(width: 5.0,),
+                             
+                               SizedBox(width: 5.0,),
+                                Text(lang.languageCode),
+                           SizedBox(width: 5.0,),
+                            ],
                         )))
                     .toList(),
                 onChanged: (Language language) {
@@ -159,27 +167,44 @@ class _SettingPageState extends State<SettingPage> {
         Divider(),
         Container(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: FlatButton(
-                color: Colors.red,
-                textColor: Colors.white,
-                //disabledColor: Colors.grey,
-                //disabledTextColor: Colors.black,
-                padding: EdgeInsets.all(8.0),
-                splashColor: Colors.redAccent,
-                onPressed: () {
-                  _validateEliminar(context);
-                  utils.showSnack(context, getTranlated(context, 'dataDelete'));
-                },
-                child: Row(
-                  mainAxisAlignment:  MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      getTranlated(context, 'deleteAllList'),
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    Icon(Icons.delete_forever)
-                  ],
-                ))),
+            child: Column(
+              children: [
+                Text(getTranlated(context, 'deletePar'),
+                    style: TextStyle(fontSize: 18)),
+                // FlatButton(
+                // color: Colors.red,
+                // textColor: Colors.white,
+                // //disabledColor: Colors.grey,
+                // //disabledTextColor: Colors.black,
+                // //padding: EdgeInsets.all(8.0),
+                // splashColor: Colors.redAccent,
+                // onPressed: () {
+                //   _validateEliminar(context);
+                //   // utils.showSnack(context, getTranlated(context, 'dataDelete'));
+                // },
+                // child: Row(
+                //   mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     Text(
+                //       getTranlated(context, 'deleteAllList'),
+                //       style: TextStyle(fontSize: 20),
+                //     ),
+
+                //     Icon(Icons.delete_forever)
+                //   ],
+                // )
+                // ),
+                RaisedButton(
+                  color: Colors.red,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    _validateEliminar(context);
+                  },
+                  child: Text(getTranlated(context, 'deleteAllList'),
+                      style: TextStyle(fontSize: 20)),
+                ),
+              ],
+            )),
         // Container(
         //   padding: EdgeInsets.all(5.0),
         //   child: Text(
@@ -221,7 +246,7 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-    _validateEliminar(BuildContext context){
+  _validateEliminar(BuildContext context) {
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -236,9 +261,13 @@ class _SettingPageState extends State<SettingPage> {
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
-                  onPressed: () => limpiarTodo(),
+                  onPressed: () {
+                    limpiarTodo();
+                    utils.showSnack(
+                        context, getTranlated(context, 'dataDelete'));
+                  },
                   child: Text(
-                     getTranlated(context, 'accept'),
+                    getTranlated(context, 'accept'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -246,15 +275,13 @@ class _SettingPageState extends State<SettingPage> {
         });
   }
 
-    limpiarTodo() {
+  limpiarTodo() {
     setState(() {
       DBProvider.db.deleteAllList();
+      DBProvider.db.deleteAllProd();
       //items.clear();
-      setState(() {
-        
-      });
+      setState(() {});
     });
     Navigator.of(context).pop();
-    
   }
 }

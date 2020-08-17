@@ -52,10 +52,11 @@
     "deletedList":"Lista eliminada",
     "onlyNumbers":"Solo numeros",
     "noEmpty":"Por favor de completar el campo",
-    "deleteAllList":"Eliminar todos los datos de las listas ?",
+    "deleteAllList":"Eliminar todos los datos",
     "cancel":"Cancelar",
     "updArt":"Actulizar artículo",
-    "dataDelete":"Todos los datos eliminados"
+    "dataDelete":"Todos los datos eliminados",
+    "deletePar":"Esta acción eliminará todas tus listas."
    
   }
 

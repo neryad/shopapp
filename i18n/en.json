@@ -18,7 +18,7 @@
     "authorTitle":"Author",
     "descpTitle":"Description",
     "descpText":"PocketList is a simple application that seeks to support you in organizing your shopping list, so when you go out, you will not forget anything. You can use it for whatever you want, go to the supermarket, hardware store, home shopping, list Valentine's, Christmas, Mom's, Dad's gifts, anyway ... you choose, PocketList is for you.",
-    "greattin1":"Good mornig",
+    "greattin1":"Good morning",
     "greattin2":"Good afternoon",
     "greattin3":"Good night",
     "mHomeTitle":"My lists",
@@ -52,9 +52,10 @@
     "deletedList":"Deleted list",
     "onlyNumbers":"Only numbers",
     "noEmpty":"Please complete the field",
-    "deleteAllList":"Delete all data of the lists ?",
+    "deleteAllList":"Delete all data",
     "cancel":"Cancel",
     "updArt":"Update article",
-    "dataDelete":"All data deleted"
+    "dataDelete":"All data deleted",
+    "deletePar":"This action will delete all your lists."
 
   }
