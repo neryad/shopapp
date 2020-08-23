@@ -8,32 +8,12 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-//     final Uri _emailLaunchUri = Uri(
-//   scheme: 'mailto',
-//   path: 'dayern.gomez@hotmail.com',
-//   queryParameters: {
-//     'subject': 'Example Subject & Symbols are allowed!'
-//   }
-// );
-    //   void _sendEmail(String email) async {
-
-    //   var url ="mailto:$email?subject=Feedback PockList";
-    //   if (await canLaunch(url)){
-    //   await launch(url);
-    // }
-    //   }
-
-
-
-    // throw 'noooo';
-    // }
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
-           title:Text(getTranlated(context, 'aboutTitle')),
+          title: Text(getTranlated(context, 'aboutTitle')),
           //title: Text(getTranlated(context, 'aboutTitle')),
           elevation: 0.0,
         ),
@@ -85,7 +65,9 @@ class AboutPage extends StatelessWidget {
                                   Expanded(
                                     child: Column(
                                       children: <Widget>[
-                                        Text(getTranlated(context, 'versionTitle'),
+                                        Text(
+                                            getTranlated(
+                                                context, 'versionTitle'),
                                             style: TextStyle(
                                                 color: utils.cambiarColor(),
                                                 fontSize: 22.0,
@@ -104,7 +86,9 @@ class AboutPage extends StatelessWidget {
                                   Expanded(
                                     child: Column(
                                       children: <Widget>[
-                                        Text(getTranlated(context, 'authorTitle'),
+                                        Text(
+                                            getTranlated(
+                                                context, 'authorTitle'),
                                             style: TextStyle(
                                                 color: utils.cambiarColor(),
                                                 fontSize: 22.0,
@@ -120,25 +104,6 @@ class AboutPage extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  //          Expanded(
-                                  //         child: Column(
-                                  //         children: <Widget>[
-                                  //           Text('Version',style:TextStyle(
-                                  //             color: Colors.redAccent,
-                                  //             fontSize: 22.0,
-                                  //             fontWeight: FontWeight.bold
-                                  //           )),
-                                  //             SizedBox(
-                                  //   height: 10.0,
-                                  // ),
-                                  //           Text('1.0.0',style:TextStyle(
-                                  //             color: Colors.redAccent,
-                                  //             fontSize: 22.0,
-                                  //             fontWeight: FontWeight.w200
-                                  //           )),
-                                  //       ],
-                                  //       ),
-                                  //       ),
                                 ],
                               ),
                             ),
@@ -180,11 +145,6 @@ class AboutPage extends StatelessWidget {
                   ),
                 )),
               ),
-
-              // FlatButton(onPressed: (){
-              //   launch(_emailLaunchUri.toString());
-              //    // _sendEmail('dayern.gomez@hotmail.com');
-              // }, child: Text('data'))
             ],
           ),
         ));

@@ -23,10 +23,17 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: new AppBar(
-        title: Text(getTranlated(context, 'mHomeTitle'),),
+        title: Text(
+          getTranlated(context, 'mHomeTitle'),
+        ),
         actions: <Widget>[
           //IconButton(icon: Icon(Icons.delete_forever, ), onPressed: () => _validateEliminar(context),tooltip: 'Borrar todas las listas',),
-           IconButton(icon: Icon(Icons.add_shopping_cart, ), onPressed: () => {Navigator.pushReplacementNamed(context, 'newList')})
+          IconButton(
+              icon: Icon(
+                Icons.add_shopping_cart,
+              ),
+              onPressed: () =>
+                  {Navigator.pushReplacementNamed(context, 'newList')})
         ],
         elevation: 0.0,
         backgroundColor: utils.cambiarColor(),
@@ -36,38 +43,36 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _validateEliminar(BuildContext context){
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(getTranlated(context, 'deleteAllList')),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(
-                    getTranlated(context, 'leave'),
-                    style: TextStyle(color: utils.cambiarColor()),
-                  )),
-              FlatButton(
-                  onPressed: () => limpiarTodo(),
-                  child: Text(
-                     getTranlated(context, 'accept'),
-                    style: TextStyle(color: utils.cambiarColor()),
-                  )),
-            ],
-          );
-        });
-  }
+  // _validateEliminar(BuildContext context){
+  //   return showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text(getTranlated(context, 'deleteAllList')),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //                 onPressed: () => Navigator.of(context).pop(),
+  //                 child: Text(
+  //                   getTranlated(context, 'leave'),
+  //                   style: TextStyle(color: utils.cambiarColor()),
+  //                 )),
+  //             FlatButton(
+  //                 onPressed: () => limpiarTodo(),
+  //                 child: Text(
+  //                    getTranlated(context, 'accept'),
+  //                   style: TextStyle(color: utils.cambiarColor()),
+  //                 )),
+  //           ],
+  //         );
+  //       });
+  // }
 
-    limpiarTodo() {
+  limpiarTodo() {
     setState(() {
       DBProvider.db.deleteAllList();
       //items.clear();
-      setState(() {
-        
-      });
+      setState(() {});
     });
     Navigator.of(context).pop();
   }

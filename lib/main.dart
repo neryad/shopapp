@@ -76,13 +76,12 @@ class _MyAppState extends State<MyApp> {
 
       title: 'PocketList',
       home: SplashScreen(),
-      //initialRoute: 'home',
+      debugShowCheckedModeBanner: false,
       routes: {
         'home' : ( BuildContext context) => HomePage(),
         'newList': ( BuildContext context) => NewList(),
         'settings': ( BuildContext context) => SettingPage(),
         'about': (BuildContext context) => AboutPage(),
-        //'savedList':(BuildContext context) => SavedListState(),
       },
     );
     }

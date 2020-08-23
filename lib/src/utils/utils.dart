@@ -4,7 +4,6 @@ import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:shopapp/src/localization/localization_constant.dart';
 import 'package:shopapp/src/models/product_model.dart';
-import 'package:shopapp/src/providers/db_provider.dart';
 
 final prefs = new PreferenciasUsuario();
  
@@ -142,21 +141,7 @@ void showSnack(BuildContext context, String msg) {
     duration: Duration(seconds: 2),
   )..show(context);
 }
- void _undoProd(List<ProductModel> item, int index) {
-   
-    var it = item.length;
-  print(item[index]);
-    // var prod = new ProductModel(
-    //     name: item.name,
-    //     quantity: productModel.quantity,
-    //     listId: '1',
-    //     price: productModel.price,
-    //     complete: 0);
-    // items.insert(it, prod);
-    // DBProvider.db.tmpProd(prod);
-    
-  
-  }
+
 
 // void showDeleteSnack(BuildContext context, String msg, int index, ProductModel item,  List<ProductModel> items) {
 //   Flushbar(
