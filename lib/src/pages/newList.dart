@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:shopapp/src/localization/localization_constant.dart';
@@ -307,7 +308,7 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'editArt')),
+            title: Text(getTranlated(context, 'EupdArt')),
             content: Form(
               key: editFormKey,
               child: Column(
@@ -334,7 +335,7 @@ class _NewListState extends State<NewList> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    getTranlated(context, 'accept'),
+                    getTranlated(context, 'save'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -686,8 +687,10 @@ class _NewListState extends State<NewList> {
                 key: Key(items[index].name + items.length.toString()),
                 onDismissed: (direction) {
                   //wey
-                  utils.showDeleteSnack(
-                      context, getTranlated(context, 'offLis'), items, index);
+                  var deletedItem = items[index];
+                  //wawa(context, getTranlated(context, 'offLis'), index, deletedItem, items);
+                  showDeleteSnack(
+                      context, getTranlated(context, 'offLis'), index, deletedItem, items);
                   // utils.showSnack(context,  getTranlated(context, 'offLis'));
                   DBProvider.db.deleteTmpProd(items[index].id);
                   items.removeAt(index);
@@ -964,11 +967,42 @@ class _NewListState extends State<NewList> {
                     prefs.tempBuget = '0.00';
                   },
                   child: Text(
-                    getTranlated(context, 'accept'),
+                    getTranlated(context, 'save'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
           );
         });
   }
+
+ void showDeleteSnack(BuildContext context, String msg, int index, ProductModel item,  List<ProductModel> items) {
+  Flushbar(
+    //title: 'This action is prohibited',
+    message: msg,
+    icon: Icon(
+      Icons.info_outline,
+      size: 28,
+      color: utils.cambiarColor(),
+    ),
+    mainButton: FlatButton(
+        onPressed: () {
+          print(item);
+          //_undoProd(item, index);
+           DBProvider.db.tmpProd(item);
+           DBProvider.db.getTmpArticulos();
+          var it = items.length;
+           items.insert(it, item);
+          setState(() {
+            
+          });
+        },
+        child: Text(
+          getTranlated(context, 'undo'),
+          style: TextStyle(color: Colors.amber),
+        ),
+      ),
+    leftBarIndicatorColor: utils.cambiarColor(),
+    duration: Duration(seconds: 3),
+  )..show(context);
+}
 }

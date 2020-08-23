@@ -1,4 +1,5 @@
 //import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shopapp/src/localization/localization_constant.dart';
 //import 'package:shopapp/src/data/data.dart';
@@ -89,32 +90,38 @@ class _DetailsPageState extends State<DetailsPage> {
             child: Container(
               child: Column(
                 children: <Widget>[
-                  Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                               GestureDetector(
+                    onTap: () => _mostrarAlertaBuget(context,list),
+                    child: Container(
+                      color: Colors.white,
+                      child: Row(
+                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          FlatButton.icon(
-                              onPressed: () =>
-                                  _mostrarAlertaBuget(context, list),
-                              icon: Icon(Icons.account_balance_wallet),
-                              label: Text(getTranlated(context, 'buget'))),
+                          Column(
+                            
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              FlatButton.icon(
+                                  onPressed: () => _mostrarAlertaBuget(context,list),
+                                  icon: Icon(Icons.account_balance_wallet),
+                                  label: Text(getTranlated(context, 'buget'))),
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                utils.numberFormat(buget),
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: bugetColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          )
                         ],
                       ),
-                      Spacer(),
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            utils.numberFormat(buget),
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: bugetColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      )
-                    ],
+                    ),
                   ),
                   Row(
                     children: <Widget>[
@@ -221,7 +228,9 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
                 key: Key(articulos[index].name + articulos.length.toString()),
                 onDismissed: (direction) {
-                  utils.showSnack(context, getTranlated(context, 'offLis'));
+                  var deletedItem = articulos[index];
+                  showDeleteSnack(context, getTranlated(context, 'offLis'), index, deletedItem, articulos);
+                  //utils.showSnack(context, getTranlated(context, 'offLis'));
                   DBProvider.db.deleteProd(articulos[index].id);
                   articulos.removeAt(index);
 
@@ -386,7 +395,7 @@ class _DetailsPageState extends State<DetailsPage> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'cancel'),
+                    getTranlated(context, 'baclTolist'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -395,7 +404,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    getTranlated(context, 'accept'),
+                    getTranlated(context, 'save'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -474,7 +483,7 @@ class _DetailsPageState extends State<DetailsPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'updArt')),
+            title: Text(getTranlated(context, 'EupdArt')),
             content: Form(
               key: editFormKey,
               child: Column(
@@ -491,7 +500,7 @@ class _DetailsPageState extends State<DetailsPage> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranlated(context, 'baclTolist'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -503,7 +512,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                     getTranlated(context, 'accept'),
+                     getTranlated(context, 'save'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -669,7 +678,7 @@ class _DetailsPageState extends State<DetailsPage> {
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranlated(context, 'baclTolist'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
               FlatButton(
@@ -679,7 +688,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     _updataLista(list);
                   },
                   child: Text(
-                     getTranlated(context, 'accept'),
+                     getTranlated(context, 'save'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -919,4 +928,35 @@ class _DetailsPageState extends State<DetailsPage> {
 
     DBProvider.db.updatelist(updateLista);
   }
+
+   void showDeleteSnack(BuildContext context, String msg, int index, ProductModel item,  List<ProductModel> items) {
+  Flushbar(
+    //title: 'This action is prohibited',
+    message: msg,
+    icon: Icon(
+      Icons.info_outline,
+      size: 28,
+      color: utils.cambiarColor(),
+    ),
+    mainButton: FlatButton(
+        onPressed: () {
+          print(item);
+          //_undoProd(item, index);
+           DBProvider.db.newProd(item);
+           //DBProvider.db.getTmpArticulos();
+          var it = items.length;
+           items.insert(it, item);
+          setState(() {
+            
+          });
+        },
+        child: Text(
+          getTranlated(context, 'undo'),
+          style: TextStyle(color: Colors.amber),
+        ),
+      ),
+    leftBarIndicatorColor: utils.cambiarColor(),
+    duration: Duration(seconds: 3),
+  )..show(context);
+}
 }
