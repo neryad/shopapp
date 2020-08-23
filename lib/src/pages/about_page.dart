@@ -162,15 +162,18 @@ class AboutPage extends StatelessWidget {
                             fontStyle: FontStyle.normal,
                             fontSize: 28.0),
                       ),
-                      SizedBox(height: 10.0),
-                      Text(
-                        getTranlated(context, 'descpText'),
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black,
-                            letterSpacing: 2.0),
+                      SizedBox(height: 5.0),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          getTranlated(context, 'descpText'),
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              //fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.black,
+                              letterSpacing: 2.0),
+                        ),
                       ),
                       Text('Neryad ©️ 2020')
                     ],
