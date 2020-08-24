@@ -76,7 +76,7 @@ class _MyAppState extends State<MyApp> {
 
       title: 'PocketList',
       home: SplashScreen(),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       routes: {
         'home' : ( BuildContext context) => HomePage(),
         'newList': ( BuildContext context) => NewList(),
