@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:shopapp/src/localization/localization_constant.dart';
+import 'package:shopapp/src/pages/list_page.dart';
+import 'package:shopapp/src/providers/db_provider.dart';
+import 'package:shopapp/src/utils/utils.dart' as utils;
+import 'package:shopapp/src/widgets/Menu_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -7,110 +13,67 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+//Text("Mis listas")
 class _HomePageState extends State<HomePage> {
+  int currentIndex = 0;
+  final prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              _Imagen(),
-              _card(),
-              // _header()
-              // _lista(),
-            ],
-          ),
+      appBar: new AppBar(
+        title: Text(
+          getTranlated(context, 'mHomeTitle'),
         ),
-      ),
-       bottomNavigationBar: __bNavbar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _mostrarAlert(context),
-        child: Icon(Icons.add_shopping_cart),
-        backgroundColor: Color.fromRGBO(255, 111, 94, 1),
-      ),
-    );
-  }
-
-  Widget _Imagen() {
-    return Container(
-      padding: EdgeInsets.all(15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Image(
-            image: AssetImage('assets/undraw_empty_cart_co35.png'),
-            height: 200.00,
-            fit: BoxFit.cover,
-          ),
+        actions: <Widget>[
+          //IconButton(icon: Icon(Icons.delete_forever, ), onPressed: () => _validateEliminar(context),tooltip: 'Borrar todas las listas',),
+          IconButton(
+              icon: Icon(
+                Icons.add_shopping_cart,
+              ),
+              onPressed: () =>
+                  {Navigator.pushReplacementNamed(context, 'newList')})
         ],
+        elevation: 0.0,
+        backgroundColor: utils.cambiarColor(),
       ),
+      body: ListPage(),
+      drawer: MenuWidget(),
     );
   }
 
-  Widget __bNavbar() {
+  // _validateEliminar(BuildContext context){
+  //   return showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text(getTranlated(context, 'deleteAllList')),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //                 onPressed: () => Navigator.of(context).pop(),
+  //                 child: Text(
+  //                   getTranlated(context, 'leave'),
+  //                   style: TextStyle(color: utils.cambiarColor()),
+  //                 )),
+  //             FlatButton(
+  //                 onPressed: () => limpiarTodo(),
+  //                 child: Text(
+  //                    getTranlated(context, 'accept'),
+  //                   style: TextStyle(color: utils.cambiarColor()),
+  //                 )),
+  //           ],
+  //         );
+  //       });
+  // }
 
-    return BottomNavigationBar(
-      items: [
-         BottomNavigationBarItem(icon: Icon(Icons.settings), title: Text('Settings')),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.monetization_on), title: Text('10,000.00', style: TextStyle(fontWeight: FontWeight.bold, fontSize:20.0),)),
-      ]
-    );
-
-  }
-
-  Widget _card() {
-    return Container(
-      height: 100.00,
-      child: Card(
-        
-         elevation: 10.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-           Icon(Icons.shopping_cart, color:  Color.fromRGBO(255, 111, 94, 1)),
-           Text('Pasta'),
-           Text('2'),
-           Text('125'),
-           Text('250.00')
-           
-          ],
-        ),
-      ),
-    );
-
-  }
-
-   void _mostrarAlert(BuildContext context){
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context){
-        return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-          title: Text('Titulo'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children:<Widget>[
-              Text('Este el contenido de la casja'),
-              FlutterLogo(size:100.0)
-            ]
-          ),
-          actions: <Widget>[
-            FlatButton(
-              onPressed: () => Navigator.of(context).pop(), 
-              child: Text('Cancelar')),
-             FlatButton(
-               onPressed: () {
-                 Navigator.of(context).pop();
-               }, 
-               child: Text('Ok'))
-          ],
-        );
-      }
-    );
+  limpiarTodo() {
+    setState(() {
+      DBProvider.db.deleteAllList();
+      //items.clear();
+      setState(() {});
+    });
+    Navigator.of(context).pop();
   }
 }
