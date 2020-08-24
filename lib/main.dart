@@ -49,6 +49,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
     if(_locale == null){
       return Container(child: Center(child: CircularProgressIndicator(),),);
     } else {
@@ -83,6 +84,7 @@ class _MyAppState extends State<MyApp> {
         'settings': ( BuildContext context) => SettingPage(),
         'about': (BuildContext context) => AboutPage(),
       },
+
     );
     }
 
