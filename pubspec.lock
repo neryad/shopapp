@@ -16,11 +16,6 @@ packages:
     source: hosted
     version: "2.0.0"
   characters:
-    dependency: transitive
-    description:
-      name: characters
-      url: "https://pub.dartlang.org"
-    source: hosted
     version: "1.0.0"
   charcode:
     dependency: transitive
@@ -39,21 +34,21 @@ packages:
   collection:
     dependency: transitive
     description:
-      name: collection
+      name: charcode
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.13"
   convert:
     dependency: transitive
     description:
-      name: convert
+      name: clock
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
-  crypto:
+    version: "1.0.1"
+  collection:
     dependency: transitive
     description:
-      name: crypto
+      name: collection
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
@@ -72,11 +67,6 @@ packages:
     source: hosted
     version: "5.2.1"
   flushbar:
-    dependency: "direct main"
-    description:
-      name: flushbar
-      url: "https://pub.dartlang.org"
-    source: hosted
     version: "1.10.4"
   flutter:
     dependency: "direct main"
@@ -224,18 +214,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2+7"
-  sky_engine:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.99"
-  source_span:
-    dependency: transitive
-    description:
-      name: source_span
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.7.0"
   sqflite:
     dependency: "direct main"
     description:
@@ -323,3 +301,4 @@ packages:
 sdks:
   dart: ">=2.9.0-14.0.dev <3.0.0"
   flutter: ">=1.12.13+hotfix.6 <2.0.0"
+
