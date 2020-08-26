@@ -371,7 +371,7 @@ class _NewListState extends State<NewList> {
   Widget _editarPrecioArticulo(int index) {
     return TextFormField(
       initialValue:
-          (items[index].quantity == 0) ? "" : items[index].quantity.toString(),
+          (items[index].price == 0) ? "" : items[index].price.toString(),
       maxLength: 6,
       //controller: _controllers[index],
       textAlign: TextAlign.center,
@@ -741,13 +741,9 @@ class _NewListState extends State<NewList> {
                         ],
                       ),
                       GestureDetector(
-                        onTap: () {
-                          _mostrarAlertaEditarProducto(context, index);
-                        },
-                        child: GestureDetector(
-                          onTap: () {
-                            _mostrarAlertaEditarProducto(context, index);
-                          },
+                        onTap: () =>
+                            _mostrarAlertaEditarProducto(context, index),
+                        child: Container(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 0, bottom: 5),
                             child: Row(
@@ -760,68 +756,49 @@ class _NewListState extends State<NewList> {
                                 SizedBox(
                                   width: 5,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _mostrarAlertaEditarProducto(
-                                        context, index);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                            utils.numberFormat(
-                                                items[index].price),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text(getTranlated(context, 'price'))
-                                      ],
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                          utils
+                                              .numberFormat(items[index].price),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text(getTranlated(context, 'price'))
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _mostrarAlertaEditarProducto(
-                                        context, index);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(items[index].quantity.toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text(getTranlated(context, 'quantity'))
-                                      ],
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(items[index].quantity.toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text(getTranlated(context, 'quantity'))
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _mostrarAlertaEditarProducto(
-                                        context, index);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                            utils.numberFormat(
-                                                items[index].quantity *
-                                                    items[index].price),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text('Total')
-                                      ],
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                          utils.numberFormat(
+                                              items[index].quantity *
+                                                  items[index].price),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text('Total')
+                                    ],
                                   ),
                                 ),
                                 SizedBox(

@@ -279,35 +279,25 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 0, bottom: 5),
-                        child: GestureDetector(
-                          onTap: () {
-                            _mostrarAlertaEditarProducto(
-                                context, index, listaArt);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              GestureDetector(
-                                onTap: () {
-                                  _mostrarAlertaEditarProducto(
-                                      context, index, listaArt);
-                                },
-                                child: Icon(
+                      GestureDetector(
+                        onTap: () {
+                          _mostrarAlertaEditarProducto(
+                              context, index, listaArt);
+                        },
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 0, bottom: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Icon(
                                   Icons.shopping_basket,
                                   color: utils.cambiarColor(),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _mostrarAlertaEditarProducto(
-                                      context, index, listaArt);
-                                },
-                                child: Padding(
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -321,16 +311,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                     ],
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _mostrarAlertaEditarProducto(
-                                      context, index, listaArt);
-                                },
-                                child: Padding(
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Column(
                                     children: <Widget>[
@@ -341,16 +325,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                     ],
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _mostrarAlertaEditarProducto(
-                                      context, index, listaArt);
-                                },
-                                child: Padding(
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Column(
                                     children: <Widget>[
@@ -364,11 +342,11 @@ class _DetailsPageState extends State<DetailsPage> {
                                     ],
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                            ],
+                                SizedBox(
+                                  width: 5,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
