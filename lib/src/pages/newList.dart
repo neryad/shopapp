@@ -370,7 +370,8 @@ class _NewListState extends State<NewList> {
 
   Widget _editarPrecioArticulo(int index) {
     return TextFormField(
-      initialValue: items[index].price.toString(),
+      initialValue:
+          (items[index].quantity == 0) ? "" : items[index].quantity.toString(),
       maxLength: 6,
       //controller: _controllers[index],
       textAlign: TextAlign.center,
@@ -399,7 +400,8 @@ class _NewListState extends State<NewList> {
 
   Widget _editarcantidadArticulo(int index) {
     return TextFormField(
-      initialValue: items[index].quantity.toString(),
+      initialValue:
+          (items[index].quantity == 0) ? "" : items[index].quantity.toString(),
       maxLength: 6,
       //controller: _controllers[index],
 
@@ -508,7 +510,6 @@ class _NewListState extends State<NewList> {
             padding: const EdgeInsets.all(4.0),
             child: Container(
               child: Column(
-             
                 children: <Widget>[
                   GestureDetector(
                     onTap: () => _mostrarAlertaBuget(context),
@@ -518,7 +519,6 @@ class _NewListState extends State<NewList> {
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Column(
-                            
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               FlatButton.icon(
@@ -689,8 +689,8 @@ class _NewListState extends State<NewList> {
                   //wey
                   var deletedItem = items[index];
                   //wawa(context, getTranlated(context, 'offLis'), index, deletedItem, items);
-                  showDeleteSnack(
-                      context, getTranlated(context, 'offLis'), index, deletedItem, items);
+                  showDeleteSnack(context, getTranlated(context, 'offLis'),
+                      index, deletedItem, items);
                   // utils.showSnack(context,  getTranlated(context, 'offLis'));
                   DBProvider.db.deleteTmpProd(items[index].id);
                   items.removeAt(index);
@@ -847,7 +847,7 @@ class _NewListState extends State<NewList> {
       children: <Widget>[
         FlatButton(
           //(valor == true) ? 1 : 0;
-          onPressed: () =>  (items.length <= 0) ? null : _guardarLista(context),
+          onPressed: () => (items.length <= 0) ? null : _guardarLista(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -975,34 +975,33 @@ class _NewListState extends State<NewList> {
         });
   }
 
- void showDeleteSnack(BuildContext context, String msg, int index, ProductModel item,  List<ProductModel> items) {
-  Flushbar(
-    //title: 'This action is prohibited',
-    message: msg,
-    icon: Icon(
-      Icons.info_outline,
-      size: 28,
-      color: utils.cambiarColor(),
-    ),
-    mainButton: FlatButton(
+  void showDeleteSnack(BuildContext context, String msg, int index,
+      ProductModel item, List<ProductModel> items) {
+    Flushbar(
+      //title: 'This action is prohibited',
+      message: msg,
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: utils.cambiarColor(),
+      ),
+      mainButton: FlatButton(
         onPressed: () {
           print(item);
           //_undoProd(item, index);
-           DBProvider.db.tmpProd(item);
-           DBProvider.db.getTmpArticulos();
+          DBProvider.db.tmpProd(item);
+          DBProvider.db.getTmpArticulos();
           var it = items.length;
-           items.insert(it, item);
-          setState(() {
-            
-          });
+          items.insert(it, item);
+          setState(() {});
         },
         child: Text(
           getTranlated(context, 'undo'),
           style: TextStyle(color: Colors.amber),
         ),
       ),
-    leftBarIndicatorColor: utils.cambiarColor(),
-    duration: Duration(seconds: 3),
-  )..show(context);
-}
+      leftBarIndicatorColor: utils.cambiarColor(),
+      duration: Duration(seconds: 3),
+    )..show(context);
+  }
 }
