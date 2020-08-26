@@ -48,7 +48,7 @@ class _SettingPageState extends State<SettingPage> {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(15.0),
             child: DropdownButton(
                 underline: SizedBox(),
                 icon: Icon(
@@ -61,14 +61,18 @@ class _SettingPageState extends State<SettingPage> {
                         value: lang,
                         child: Row(
                           children: [
-                              Text(lang.name),
-                            
-                              SizedBox(width: 5.0,),
-                             
-                               SizedBox(width: 5.0,),
-                                Text(lang.languageCode),
-                           SizedBox(width: 5.0,),
-                            ],
+                            Text(lang.name),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(lang.languageCode),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                          ],
                         )))
                     .toList(),
                 onChanged: (Language language) {
