@@ -48,21 +48,6 @@ class DBProvider {
           'complete INTEGER,'
           'FOREIGN KEY(listId) REFERENCES Lista(id)'
           ')');
-
-      // await db.execute('CREATE TABLE tmpProduct ('
-      //     'id INTEGER PRIMARY KEY,'
-      //     'name TEXT,'
-      //     'quantity INTERGER,'
-      //     'price REAL,'
-      //     'listId TEXT,'
-      //     'complete INTEGER,'
-      //     'FOREIGN KEY(listId) REFERENCES Lista(id)'
-      //     ')');
-
-      // await db.execute('CREATE TABLE suge ('
-      //     'id INTEGER PRIMARY KEY,'
-      //     'name TEXT'
-      //     ')');
     });
   }
 
@@ -83,16 +68,6 @@ class DBProvider {
     return res;
   }
 
-  // newProd(ProductModel productModel) async {
-  //   final db = await database;
-
-  //   final res = db.rawInsert(
-  //       'INSERT Into product (id,name,quantity,price,listId,complete) '
-  //       'VALUES ( ${productModel.id},${productModel.name},${productModel.quantity},${productModel.price},${productModel.listId},${productModel.complete})');
-
-  //   return res;
-  // }
-
   tmpProd(ProductModel productModel) async {
     final db = await database;
     //final res = db.insert('tmpProduct', productModel.toJson());
@@ -101,6 +76,109 @@ class DBProvider {
     return res;
   }
 
+  ///GET PRODUCTS WITH NO LIST ASSIGENDE
+  Future<List<ProductModel>> getArticlesTmp(String id) async {
+    final db = await database;
+    final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
+
+    List<ProductModel> art =
+        res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList() : [];
+    return art;
+  }
+
+  ///GET ALL PRODUSCTS
+  Future<List<ProductModel>> getArticles() async {
+    final db = await database;
+    final res = await db.query('product');
+    List<ProductModel> art =
+        res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList() : [];
+    return art;
+  }
+
+  ///GET ALL LIST
+  Future<List<Lista>> getToadasLista() async {
+    final db = await database;
+
+    final res = await db.query('Lista');
+
+    List<Lista> list =
+        res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
+    return list;
+  }
+
+  ///GET PRODUCST BY LIST ID
+  Future<List<ProductModel>> getProdId(String id) async {
+    final db = await database;
+    final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
+    List<ProductModel> art =
+        res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList() : [];
+    return art;
+  }
+
+  ///DELETE LIST BY ID
+  Future<String> deleteLista(String id) async {
+    final db = await database;
+
+    final res = await db.delete('Lista', where: 'id = ?', whereArgs: [id]);
+
+    return res.toString();
+  }
+
+  ///DELETE PRODUCST BY LIST ID
+  Future<int> deleteProd(int id) async {
+    final db = await database;
+
+    final res = await db.delete('product', where: 'id = ?', whereArgs: [id]);
+
+    return res;
+  }
+
+  ///DELETE ALL PRODUCTS
+  Future<int> deleteAllProd() async {
+    final db = await database;
+
+    final res = await db.rawDelete('Delete FROM product');
+
+    return res;
+  }
+
+  ///DELETE ALL PRODUCTS THAT NO HAVE LIST ASSOGNEDE
+  Future<int> deleteAllTempProd(String id) async {
+    final db = await database;
+    final res = await db.delete('product', where: 'listId=?', whereArgs: [id]);
+
+    return res;
+  }
+
+  ///DELETE ALL LIST
+  Future<int> deleteAllList() async {
+    final db = await database;
+
+    final res = await db.rawDelete('Delete FROM Lista');
+
+    return res;
+  }
+
+  ///EDIT PRODUCTS
+  updateProd(ProductModel prod) async {
+    final db = await database;
+
+    final res = await db.update('product', prod.toJson(),
+        where: 'id = ?', whereArgs: [prod.id]);
+
+    return res;
+  }
+
+  ///EDIT LIST
+  updateList(Lista prod) async {
+    final db = await database;
+
+    final res = await db
+        .update('Lista', prod.toJson(), where: 'id = ?', whereArgs: [prod.id]);
+
+    return res;
+  }
+  //TODO: esto es para la futura sugerencia
   // sugeInsert( Segurencia productModel  ) async {
 
   //   final db =  await database;
@@ -118,141 +196,4 @@ class DBProvider {
   //     List<Segurencia> art = res.isNotEmpty ? res.map((e) => Segurencia.fromJson(e)).toList(): [];
   //     return art;
   // }
-
-  //GET
-
-  Future<List<ProductModel>> getarticulos(String id) async {
-    final db = await database;
-    //final res = await db.query('product');
-
-    final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
-
-    List<ProductModel> art =
-        res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList() : [];
-
-    //List<ProductModel> art = res.isNotEmpty ? ProductModel.fromJson(res.first) : null;
-
-    return art;
-    // List<Lista> list = res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
-
-    // return list;
-  }
-
-  Future<List<ProductModel>> getTmpArticulos() async {
-    final db = await database;
-    final res = await db.query('tmpProduct');
-
-    // final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
-
-    List<ProductModel> art =
-        res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList() : [];
-
-    //List<ProductModel> art = res.isNotEmpty ? ProductModel.fromJson(res.first) : null;
-
-    return art;
-    // List<Lista> list = res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
-
-    // return list;
-  }
-
-  Future<List<Lista>> getToadasLista() async {
-    final db = await database;
-
-    final res = await db.query('Lista');
-
-    List<Lista> list =
-        res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
-
-    return list;
-  }
-
-  //Get by id
-
-  Future<List<ProductModel>> getprodId(String id) async {
-    final db = await database;
-    //final res = await db.query('product', where: 'listId=?', whereArgs: [id]);
-    final res = await db.rawQuery('SELECT * FROM product WHERE listId=?', [id]);
-    //List<Map> result = await db.rawQuery('SELECT * FROM product WHERE listId=?', [id]);
-    List<ProductModel> art =
-        res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList() : [];
-    return art;
-  }
-
-  //Delete
-
-  Future<String> deleteLista(String id) async {
-    final db = await database;
-
-    final res = await db.delete('Lista', where: 'id = ?', whereArgs: [id]);
-
-    return res.toString();
-  }
-
-  Future<int> deleteTmpProd(int id) async {
-    final db = await database;
-
-    final res = await db.delete('tmpProduct', where: 'id = ?', whereArgs: [id]);
-
-    return res;
-  }
-
-  Future<int> deleteProd(int id) async {
-    final db = await database;
-
-    final res = await db.delete('product', where: 'id = ?', whereArgs: [id]);
-
-    return res;
-  }
-
-  Future<int> deleteAllTempProd() async {
-    final db = await database;
-
-    final res = await db.rawDelete('Delete FROM tmpProduct');
-
-    return res;
-  }
-
-  Future<int> deleteAllProd() async {
-    final db = await database;
-
-    final res = await db.rawDelete('Delete FROM product');
-
-    return res;
-  }
-
-  Future<int> deleteAllList() async {
-    final db = await database;
-
-    final res = await db.rawDelete('Delete FROM Lista');
-
-    return res;
-  }
-
-  //pdate
-  updatetempProd(ProductModel prod) async {
-    final db = await database;
-
-    final res = await db.update('tmpProduct', prod.toJson(),
-        where: 'id = ?', whereArgs: [prod.id]);
-
-    return res;
-  }
-
-  updateProd(ProductModel prod) async {
-    final db = await database;
-
-    final res = await db.update('product', prod.toJson(),
-        where: 'id = ?', whereArgs: [prod.id]);
-
-    return res;
-  }
-
-  updatelist(Lista prod) async {
-    final db = await database;
-
-    final res = await db
-        .update('Lista', prod.toJson(), where: 'id = ?', whereArgs: [prod.id]);
-
-    return res;
-  }
 }

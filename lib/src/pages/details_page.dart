@@ -177,7 +177,7 @@ class _DetailsPageState extends State<DetailsPage> {
   _bodyWidget(String id, Lista listaArt) {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
-        future: DBProvider.db.getprodId(id),
+        future: DBProvider.db.getProdId(id),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData && snapshot.data.length > 0) {
             final art = snapshot.data;
@@ -191,8 +191,6 @@ class _DetailsPageState extends State<DetailsPage> {
               child: ListView.builder(
             itemCount: articulos.length,
             itemBuilder: (BuildContext context, int index) {
-              //_controllers.add(new TextEditingController());
-              //var wawa = toBoolean(articulos[index].complete);
               bool isComplete = (articulos[index].complete == 1) ? true : false;
 
               return Dismissible(
@@ -414,7 +412,7 @@ class _DetailsPageState extends State<DetailsPage> {
           return;
         } else {
           prod.buget = double.parse(value);
-          DBProvider.db.updatelist(prod);
+          DBProvider.db.updateList(prod);
           //prefs.tempBuget = buget.toString();
         }
       },
@@ -916,7 +914,7 @@ class _DetailsPageState extends State<DetailsPage> {
         diference: list.diference,
         buget: list.buget);
 
-    DBProvider.db.updatelist(updateLista);
+    DBProvider.db.updateList(updateLista);
   }
 
   void showDeleteSnack(BuildContext context, String msg, int index,

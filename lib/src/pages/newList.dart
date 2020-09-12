@@ -62,7 +62,6 @@ class _NewListState extends State<NewList> {
       body: Column(
         children: <Widget>[
           _header(),
-          //_midHeader(),
           _bodyWidget(),
         ],
       ),
@@ -601,21 +600,14 @@ class _NewListState extends State<NewList> {
   _bodyWidget() {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
-        future: DBProvider.db.getarticulos('tmp'),
+        future: DBProvider.db.getArticlesTmp('tmp'),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData && snapshot.data.length > 0) {
             final tmpArt = snapshot.data;
 
             items = tmpArt;
           }
-          //      sugeModel.name = "Pan";
-          // DBProvider.db.sugeInsert(sugeModel);
-
-          //   sugeModel.name = "Yuca";
-          // DBProvider.db.sugeInsert(sugeModel);
-
-          //   sugeModel.name = "Jabon";
-          // DBProvider.db.sugeInsert(sugeModel);
+          //TODO:hacer seed para futura sugerencias
           if (items.length == 0) {
             return Card(
                 child: Column(
@@ -641,15 +633,6 @@ class _NewListState extends State<NewList> {
           }
 
           items.sort((a, b) => a.name.compareTo(b.name));
-          // sugeModel.name = "Pan";
-          // DBProvider.db.sugeInsert(sugeModel);
-
-          //   sugeModel.name = "Yuca";
-          // DBProvider.db.sugeInsert(sugeModel);
-
-          //   sugeModel.name = "Jabon";
-          // DBProvider.db.sugeInsert(sugeModel);
-
           return Expanded(
               child: ListView.builder(
             itemCount: items.length,
@@ -726,7 +709,7 @@ class _NewListState extends State<NewList> {
                             onChanged: (valor) {
                               int complValue = (valor == true) ? 1 : 0;
                               items[index].complete = complValue;
-                              DBProvider.db.updatetempProd(items[index]);
+                              DBProvider.db.updateProd(items[index]);
                               setState(() {});
 
                               (valor == true)
@@ -878,7 +861,7 @@ class _NewListState extends State<NewList> {
 
   limpiarTodo() {
     setState(() {
-      DBProvider.db.deleteAllTempProd();
+      DBProvider.db.deleteAllTempProd('tmp');
       items.clear();
       getTotal();
       getDiference();
@@ -902,21 +885,10 @@ class _NewListState extends State<NewList> {
         buget: buget);
 
     await DBProvider.db.nuevoLista(nuevaLista);
-    // var prod = new ProductModel(
-    //     name: productModel.name,
-    //     quantity: productModel.quantity,
-    //     listId: 6,
-    //     price: productModel.price);
-    String itemsId = uuid.v4();
     for (var i = 0; i < items.length; i++) {
       items[i].listId = nuevaLista.id;
-
       await DBProvider.db.updateProd(items[i]);
-      print(items[i].id);
-      print(items[i].listId);
     }
-
-    // DBProvider.db.newProd(prod);
 
     items = [];
     lisForm.currentState.reset();
@@ -962,7 +934,6 @@ class _NewListState extends State<NewList> {
   void showDeleteSnack(BuildContext context, String msg, int index,
       ProductModel item, List<ProductModel> items) {
     Flushbar(
-      //title: 'This action is prohibited',
       message: msg,
       icon: Icon(
         Icons.info_outline,
@@ -971,10 +942,9 @@ class _NewListState extends State<NewList> {
       ),
       mainButton: FlatButton(
         onPressed: () {
-          print(item);
           //_undoProd(item, index);
           DBProvider.db.tmpProd(item);
-          DBProvider.db.getTmpArticulos();
+          DBProvider.db.getArticlesTmp('tmp');
           var it = items.length;
           items.insert(it, item);
           setState(() {});
