@@ -885,8 +885,10 @@ class _NewListState extends State<NewList> {
         buget: buget);
 
     await DBProvider.db.nuevoLista(nuevaLista);
+
     for (var i = 0; i < items.length; i++) {
       items[i].listId = nuevaLista.id;
+
       await DBProvider.db.updateProd(items[i]);
     }
 
@@ -934,6 +936,7 @@ class _NewListState extends State<NewList> {
   void showDeleteSnack(BuildContext context, String msg, int index,
       ProductModel item, List<ProductModel> items) {
     Flushbar(
+      //title: 'This action is prohibited',
       message: msg,
       icon: Icon(
         Icons.info_outline,
@@ -942,6 +945,7 @@ class _NewListState extends State<NewList> {
       ),
       mainButton: FlatButton(
         onPressed: () {
+          print(item);
           //_undoProd(item, index);
           DBProvider.db.tmpProd(item);
           DBProvider.db.getArticlesTmp('tmp');
