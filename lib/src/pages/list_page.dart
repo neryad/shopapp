@@ -22,7 +22,11 @@ class _ListPageState extends State<ListPage> {
         child: SingleChildScrollView(
           padding: EdgeInsets.all(8.0),
           child: Column(
-            children: <Widget>[utils.saludos(context), _imagen(), _wawa(context)],
+            children: <Widget>[
+              utils.saludos(context),
+              _imagen(),
+              _wawa(context)
+            ],
           ),
         ),
       ),
@@ -31,7 +35,7 @@ class _ListPageState extends State<ListPage> {
 
   _wawa(BuildContext context) {
     return Container(
-       key: UniqueKey(),
+      key: UniqueKey(),
       height: MediaQuery.of(context).size.height * .6,
       child: FutureBuilder<List<Lista>>(
         future: DBProvider.db.getToadasLista(),
@@ -53,7 +57,6 @@ class _ListPageState extends State<ListPage> {
                 ),
               ),
             );
-
           }
           lista.sort((a, b) => b.fecha.compareTo(a.fecha));
           return ListView.builder(

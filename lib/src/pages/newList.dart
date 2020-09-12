@@ -291,14 +291,18 @@ class _NewListState extends State<NewList> {
     var it = items.length;
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
-    var prod = new ProductModel(
+    var prod = ProductModel(
         name: productModel.name,
         quantity: productModel.quantity,
-        listId: '1',
+        listId: 'tmp',
         price: productModel.price,
         complete: 0);
     items.insert(it, prod);
-    DBProvider.db.tmpProd(prod);
+    // print(prod.listId);
+    // print(prod.id);
+    print(prod.id);
+    DBProvider.db.newProd(prod);
+    print(productModel.id);
     formKey.currentState.reset();
   }
 
@@ -345,7 +349,7 @@ class _NewListState extends State<NewList> {
 
   void _editDubimt(int index) {
     editFormKey.currentState.save();
-    DBProvider.db.updatetempProd(items[index]);
+    DBProvider.db.updateProd(items[index]);
   }
 
   Widget _editarNombreArticulo(int index) {
@@ -597,7 +601,7 @@ class _NewListState extends State<NewList> {
   _bodyWidget() {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
-        future: DBProvider.db.getTmpArticulos(),
+        future: DBProvider.db.getarticulos('tmp'),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData && snapshot.data.length > 0) {
             final tmpArt = snapshot.data;
@@ -692,7 +696,7 @@ class _NewListState extends State<NewList> {
                   showDeleteSnack(context, getTranlated(context, 'offLis'),
                       index, deletedItem, items);
                   // utils.showSnack(context,  getTranlated(context, 'offLis'));
-                  DBProvider.db.deleteTmpProd(items[index].id);
+                  DBProvider.db.deleteProd(items[index].id);
                   items.removeAt(index);
 
                   getTotal();
@@ -882,9 +886,9 @@ class _NewListState extends State<NewList> {
     Navigator.of(context).pop();
   }
 
-  saveList() {
+  saveList() async {
     String lisId = uuid.v4();
-    DBProvider.db.deleteAllTempProd();
+    //DBProvider.db.deleteAllTempProd();
     lisForm.currentState.save();
     DateTime now = new DateTime.now();
     var fecha = '${now.day}/${now.month}/${now.year}';
@@ -897,16 +901,19 @@ class _NewListState extends State<NewList> {
         diference: diference,
         buget: buget);
 
-    DBProvider.db.nuevoLista(nuevaLista);
+    await DBProvider.db.nuevoLista(nuevaLista);
     // var prod = new ProductModel(
     //     name: productModel.name,
     //     quantity: productModel.quantity,
     //     listId: 6,
     //     price: productModel.price);
-
+    String itemsId = uuid.v4();
     for (var i = 0; i < items.length; i++) {
       items[i].listId = nuevaLista.id;
-      DBProvider.db.newProd(items[i]);
+
+      await DBProvider.db.updateProd(items[i]);
+      print(items[i].id);
+      print(items[i].listId);
     }
 
     // DBProvider.db.newProd(prod);
