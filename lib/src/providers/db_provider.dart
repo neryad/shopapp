@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:shopapp/src/models/List_model.dart';
-import 'package:shopapp/src/models/product_model.dart';
-export 'package:shopapp/src/models/product_model.dart';
-//import 'package:shopapp/src/models/suge.dart';
+import 'package:PocketList/src/models/List_model.dart';
+import 'package:PocketList/src/models/product_model.dart';
+export 'package:PocketList/src/models/product_model.dart';
+//import 'package:PocketList/src/models/suge.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {

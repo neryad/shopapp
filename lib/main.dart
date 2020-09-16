@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:shopapp/src/localization/localization.dart';
-import 'package:shopapp/src/localization/localization_constant.dart';
-import 'package:shopapp/src/pages/about_page.dart';
-import 'package:shopapp/src/pages/home_page.dart';
-import 'package:shopapp/src/pages/newList.dart';
-import 'package:shopapp/src/pages/setting_page.dart';
-import 'package:shopapp/src/pages/splashScreen.dart';
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:PocketList/src/localization/localization.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:PocketList/src/pages/about_page.dart';
+import 'package:PocketList/src/pages/home_page.dart';
+import 'package:PocketList/src/pages/newList.dart';
+import 'package:PocketList/src/pages/setting_page.dart';
+import 'package:PocketList/src/pages/splashScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

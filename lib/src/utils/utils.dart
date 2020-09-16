@@ -1,9 +1,9 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flushbar/flushbar.dart';
-import 'package:shopapp/src/localization/localization_constant.dart';
-import 'package:shopapp/src/models/product_model.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:PocketList/src/models/product_model.dart';
 
 final prefs = new PreferenciasUsuario();
 

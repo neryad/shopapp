@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shopapp/src/localization/localization_constant.dart';
-import 'package:shopapp/src/models/List_model.dart';
-import 'package:shopapp/src/pages/details_page.dart';
-import 'package:shopapp/src/providers/db_provider.dart';
-import 'package:shopapp/src/utils/utils.dart' as utils;
+import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:PocketList/src/models/List_model.dart';
+import 'package:PocketList/src/pages/details_page.dart';
+import 'package:PocketList/src/providers/db_provider.dart';
+import 'package:PocketList/src/utils/utils.dart' as utils;
 
 class ListPage extends StatefulWidget {
   ListPage({Key key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shopapp/src/widgets/Menu_widget.dart';
-import 'package:shopapp/src/utils/utils.dart' as utils;
-import 'package:shopapp/src/localization/localization_constant.dart';
+import 'package:PocketList/src/widgets/Menu_widget.dart';
+import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:PocketList/src/localization/localization_constant.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key key}) : super(key: key);

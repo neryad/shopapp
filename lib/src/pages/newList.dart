@@ -1,13 +1,13 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:shopapp/src/localization/localization_constant.dart';
-import 'package:shopapp/src/models/List_model.dart';
-import 'package:shopapp/src/models/product_model.dart';
-import 'package:shopapp/src/models/suge.dart';
-import 'package:shopapp/src/providers/db_provider.dart';
-import 'package:shopapp/src/utils/utils.dart' as utils;
-import 'package:shopapp/src/widgets/Menu_widget.dart';
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:PocketList/src/models/List_model.dart';
+import 'package:PocketList/src/models/product_model.dart';
+import 'package:PocketList/src/models/suge.dart';
+import 'package:PocketList/src/providers/db_provider.dart';
+import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:PocketList/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class NewList extends StatefulWidget {

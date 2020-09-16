@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:shopapp/src/localization/localization_constant.dart';
-import 'package:shopapp/src/pages/list_page.dart';
-import 'package:shopapp/src/providers/db_provider.dart';
-import 'package:shopapp/src/utils/utils.dart' as utils;
-import 'package:shopapp/src/widgets/Menu_widget.dart';
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:PocketList/src/pages/list_page.dart';
+import 'package:PocketList/src/providers/db_provider.dart';
+import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:PocketList/src/widgets/Menu_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);

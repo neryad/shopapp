@@ -1,16 +1,16 @@
 //import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:shopapp/src/localization/localization_constant.dart';
-//import 'package:shopapp/src/data/data.dart';
-import 'package:shopapp/src/models/List_model.dart';
-import 'package:shopapp/src/models/product_model.dart';
-import 'package:shopapp/src/models/suge.dart';
-import 'package:shopapp/src/providers/db_provider.dart';
-import 'package:shopapp/src/utils/utils.dart' as utils;
-import 'package:shopapp/src/widgets/Menu_widget.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
+//import 'package:PocketList/src/data/data.dart';
+import 'package:PocketList/src/models/List_model.dart';
+import 'package:PocketList/src/models/product_model.dart';
+import 'package:PocketList/src/models/suge.dart';
+import 'package:PocketList/src/providers/db_provider.dart';
+import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:PocketList/src/widgets/Menu_widget.dart';
 //import 'package:flutter_typeahead/flutter_typeahead.dart';
-// import 'package:shopapp/src/data/data.dart';
+// import 'package:PocketList/src/data/data.dart';
 
 class DetailsPage extends StatefulWidget {
   final Lista savelist;
