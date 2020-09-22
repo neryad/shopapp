@@ -1,13 +1,13 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:shopapp/src/localization/localization_constant.dart';
-import 'package:shopapp/src/models/List_model.dart';
-import 'package:shopapp/src/models/product_model.dart';
-import 'package:shopapp/src/models/suge.dart';
-import 'package:shopapp/src/providers/db_provider.dart';
-import 'package:shopapp/src/utils/utils.dart' as utils;
-import 'package:shopapp/src/widgets/Menu_widget.dart';
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:PocketList/src/models/List_model.dart';
+import 'package:PocketList/src/models/product_model.dart';
+import 'package:PocketList/src/models/suge.dart';
+import 'package:PocketList/src/providers/db_provider.dart';
+import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:PocketList/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class NewList extends StatefulWidget {
@@ -62,7 +62,6 @@ class _NewListState extends State<NewList> {
       body: Column(
         children: <Widget>[
           _header(),
-          //_midHeader(),
           _bodyWidget(),
         ],
       ),
@@ -291,14 +290,18 @@ class _NewListState extends State<NewList> {
     var it = items.length;
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
-    var prod = new ProductModel(
+    var prod = ProductModel(
         name: productModel.name,
         quantity: productModel.quantity,
-        listId: '1',
+        listId: 'tmp',
         price: productModel.price,
         complete: 0);
     items.insert(it, prod);
-    DBProvider.db.tmpProd(prod);
+    // print(prod.listId);
+    // print(prod.id);
+    print(prod.id);
+    DBProvider.db.newProd(prod);
+    print(productModel.id);
     formKey.currentState.reset();
   }
 
@@ -345,7 +348,7 @@ class _NewListState extends State<NewList> {
 
   void _editDubimt(int index) {
     editFormKey.currentState.save();
-    DBProvider.db.updatetempProd(items[index]);
+    DBProvider.db.updateProd(items[index]);
   }
 
   Widget _editarNombreArticulo(int index) {
@@ -370,7 +373,8 @@ class _NewListState extends State<NewList> {
 
   Widget _editarPrecioArticulo(int index) {
     return TextFormField(
-      initialValue: items[index].price.toString(),
+      initialValue:
+          (items[index].price == 0) ? "" : items[index].price.toString(),
       maxLength: 6,
       //controller: _controllers[index],
       textAlign: TextAlign.center,
@@ -399,7 +403,8 @@ class _NewListState extends State<NewList> {
 
   Widget _editarcantidadArticulo(int index) {
     return TextFormField(
-      initialValue: items[index].quantity.toString(),
+      initialValue:
+          (items[index].quantity == 0) ? "" : items[index].quantity.toString(),
       maxLength: 6,
       //controller: _controllers[index],
 
@@ -508,7 +513,6 @@ class _NewListState extends State<NewList> {
             padding: const EdgeInsets.all(4.0),
             child: Container(
               child: Column(
-             
                 children: <Widget>[
                   GestureDetector(
                     onTap: () => _mostrarAlertaBuget(context),
@@ -518,7 +522,6 @@ class _NewListState extends State<NewList> {
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Column(
-                            
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               FlatButton.icon(
@@ -597,21 +600,14 @@ class _NewListState extends State<NewList> {
   _bodyWidget() {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
-        future: DBProvider.db.getTmpArticulos(),
+        future: DBProvider.db.getArticlesTmp('tmp'),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData && snapshot.data.length > 0) {
             final tmpArt = snapshot.data;
 
             items = tmpArt;
           }
-          //      sugeModel.name = "Pan";
-          // DBProvider.db.sugeInsert(sugeModel);
-
-          //   sugeModel.name = "Yuca";
-          // DBProvider.db.sugeInsert(sugeModel);
-
-          //   sugeModel.name = "Jabon";
-          // DBProvider.db.sugeInsert(sugeModel);
+          //TODO:hacer seed para futura sugerencias
           if (items.length == 0) {
             return Card(
                 child: Column(
@@ -637,15 +633,6 @@ class _NewListState extends State<NewList> {
           }
 
           items.sort((a, b) => a.name.compareTo(b.name));
-          // sugeModel.name = "Pan";
-          // DBProvider.db.sugeInsert(sugeModel);
-
-          //   sugeModel.name = "Yuca";
-          // DBProvider.db.sugeInsert(sugeModel);
-
-          //   sugeModel.name = "Jabon";
-          // DBProvider.db.sugeInsert(sugeModel);
-
           return Expanded(
               child: ListView.builder(
             itemCount: items.length,
@@ -689,10 +676,10 @@ class _NewListState extends State<NewList> {
                   //wey
                   var deletedItem = items[index];
                   //wawa(context, getTranlated(context, 'offLis'), index, deletedItem, items);
-                  showDeleteSnack(
-                      context, getTranlated(context, 'offLis'), index, deletedItem, items);
+                  showDeleteSnack(context, getTranlated(context, 'offLis'),
+                      index, deletedItem, items);
                   // utils.showSnack(context,  getTranlated(context, 'offLis'));
-                  DBProvider.db.deleteTmpProd(items[index].id);
+                  DBProvider.db.deleteProd(items[index].id);
                   items.removeAt(index);
 
                   getTotal();
@@ -722,7 +709,7 @@ class _NewListState extends State<NewList> {
                             onChanged: (valor) {
                               int complValue = (valor == true) ? 1 : 0;
                               items[index].complete = complValue;
-                              DBProvider.db.updatetempProd(items[index]);
+                              DBProvider.db.updateProd(items[index]);
                               setState(() {});
 
                               (valor == true)
@@ -741,13 +728,9 @@ class _NewListState extends State<NewList> {
                         ],
                       ),
                       GestureDetector(
-                        onTap: () {
-                          _mostrarAlertaEditarProducto(context, index);
-                        },
-                        child: GestureDetector(
-                          onTap: () {
-                            _mostrarAlertaEditarProducto(context, index);
-                          },
+                        onTap: () =>
+                            _mostrarAlertaEditarProducto(context, index),
+                        child: Container(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 0, bottom: 5),
                             child: Row(
@@ -760,68 +743,49 @@ class _NewListState extends State<NewList> {
                                 SizedBox(
                                   width: 5,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _mostrarAlertaEditarProducto(
-                                        context, index);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                            utils.numberFormat(
-                                                items[index].price),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text(getTranlated(context, 'price'))
-                                      ],
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                          utils
+                                              .numberFormat(items[index].price),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text(getTranlated(context, 'price'))
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _mostrarAlertaEditarProducto(
-                                        context, index);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(items[index].quantity.toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text(getTranlated(context, 'quantity'))
-                                      ],
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(items[index].quantity.toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text(getTranlated(context, 'quantity'))
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _mostrarAlertaEditarProducto(
-                                        context, index);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                            utils.numberFormat(
-                                                items[index].quantity *
-                                                    items[index].price),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text('Total')
-                                      ],
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                          utils.numberFormat(
+                                              items[index].quantity *
+                                                  items[index].price),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text('Total')
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
@@ -847,7 +811,7 @@ class _NewListState extends State<NewList> {
       children: <Widget>[
         FlatButton(
           //(valor == true) ? 1 : 0;
-          onPressed: () =>  (items.length <= 0) ? null : _guardarLista(context),
+          onPressed: () => (items.length <= 0) ? null : _guardarLista(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -897,7 +861,7 @@ class _NewListState extends State<NewList> {
 
   limpiarTodo() {
     setState(() {
-      DBProvider.db.deleteAllTempProd();
+      DBProvider.db.deleteAllTempProd('tmp');
       items.clear();
       getTotal();
       getDiference();
@@ -905,9 +869,9 @@ class _NewListState extends State<NewList> {
     Navigator.of(context).pop();
   }
 
-  saveList() {
+  saveList() async {
     String lisId = uuid.v4();
-    DBProvider.db.deleteAllTempProd();
+    //DBProvider.db.deleteAllTempProd();
     lisForm.currentState.save();
     DateTime now = new DateTime.now();
     var fecha = '${now.day}/${now.month}/${now.year}';
@@ -920,19 +884,13 @@ class _NewListState extends State<NewList> {
         diference: diference,
         buget: buget);
 
-    DBProvider.db.nuevoLista(nuevaLista);
-    // var prod = new ProductModel(
-    //     name: productModel.name,
-    //     quantity: productModel.quantity,
-    //     listId: 6,
-    //     price: productModel.price);
+    await DBProvider.db.nuevoLista(nuevaLista);
 
     for (var i = 0; i < items.length; i++) {
       items[i].listId = nuevaLista.id;
-      DBProvider.db.newProd(items[i]);
-    }
 
-    // DBProvider.db.newProd(prod);
+      await DBProvider.db.updateProd(items[i]);
+    }
 
     items = [];
     lisForm.currentState.reset();
@@ -975,34 +933,33 @@ class _NewListState extends State<NewList> {
         });
   }
 
- void showDeleteSnack(BuildContext context, String msg, int index, ProductModel item,  List<ProductModel> items) {
-  Flushbar(
-    //title: 'This action is prohibited',
-    message: msg,
-    icon: Icon(
-      Icons.info_outline,
-      size: 28,
-      color: utils.cambiarColor(),
-    ),
-    mainButton: FlatButton(
+  void showDeleteSnack(BuildContext context, String msg, int index,
+      ProductModel item, List<ProductModel> items) {
+    Flushbar(
+      //title: 'This action is prohibited',
+      message: msg,
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: utils.cambiarColor(),
+      ),
+      mainButton: FlatButton(
         onPressed: () {
           print(item);
           //_undoProd(item, index);
-           DBProvider.db.tmpProd(item);
-           DBProvider.db.getTmpArticulos();
+          DBProvider.db.tmpProd(item);
+          DBProvider.db.getArticlesTmp('tmp');
           var it = items.length;
-           items.insert(it, item);
-          setState(() {
-            
-          });
+          items.insert(it, item);
+          setState(() {});
         },
         child: Text(
           getTranlated(context, 'undo'),
           style: TextStyle(color: Colors.amber),
         ),
       ),
-    leftBarIndicatorColor: utils.cambiarColor(),
-    duration: Duration(seconds: 3),
-  )..show(context);
-}
+      leftBarIndicatorColor: utils.cambiarColor(),
+      duration: Duration(seconds: 3),
+    )..show(context);
+  }
 }

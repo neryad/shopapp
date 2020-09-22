@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:shopapp/main.dart';
-import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:shopapp/src/data/class/language.dart';
-import 'package:shopapp/src/localization/localization_constant.dart';
-import 'package:shopapp/src/providers/db_provider.dart';
-import 'package:shopapp/src/utils/utils.dart' as utils;
-import 'package:shopapp/src/widgets/Menu_widget.dart';
+import 'package:PocketList/main.dart';
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:PocketList/src/data/class/language.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:PocketList/src/providers/db_provider.dart';
+import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:PocketList/src/widgets/Menu_widget.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key key}) : super(key: key);
@@ -48,7 +48,7 @@ class _SettingPageState extends State<SettingPage> {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(15.0),
             child: DropdownButton(
                 underline: SizedBox(),
                 icon: Icon(
@@ -61,14 +61,18 @@ class _SettingPageState extends State<SettingPage> {
                         value: lang,
                         child: Row(
                           children: [
-                              Text(lang.name),
-                            
-                              SizedBox(width: 5.0,),
-                             
-                               SizedBox(width: 5.0,),
-                                Text(lang.languageCode),
-                           SizedBox(width: 5.0,),
-                            ],
+                            Text(lang.name),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(lang.languageCode),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                          ],
                         )))
                     .toList(),
                 onChanged: (Language language) {

@@ -1,7 +1,7 @@
 //import 'dart:math';
 
-//import 'package:shopapp/src/models/suge.dart';
-//import 'package:shopapp/src/providers/db_provider.dart';
+//import 'package:PocketList/src/models/suge.dart';
+//import 'package:PocketList/src/providers/db_provider.dart';
 
 // class BackendService {
 //    static List<Segurencia> players;
@@ -15,7 +15,7 @@
 //           //Segurencia se = new Segurencia();
 //           //se .name = items[i];
 //           //DBProvider.db.sugeInsert(new Segurencia(name:items[i]));
-          
+
 //         }
 //         print('ta lindo');
 //       } else {
@@ -33,7 +33,6 @@
 //     // });
 //   }
 // }
-
 
 // class PlayersViewModel {
 //   static List<Segurencia> players;

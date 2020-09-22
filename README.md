@@ -1,4 +1,4 @@
-# shopapp
+# PocketList
 
 A new Flutter project.
 

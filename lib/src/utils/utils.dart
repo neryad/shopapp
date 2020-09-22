@@ -1,12 +1,12 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:shopapp/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flushbar/flushbar.dart';
-import 'package:shopapp/src/localization/localization_constant.dart';
-import 'package:shopapp/src/models/product_model.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:PocketList/src/models/product_model.dart';
 
 final prefs = new PreferenciasUsuario();
- 
+
 bool isNumeric(String s) {
   if (s.isEmpty) return false;
 
@@ -15,12 +15,12 @@ bool isNumeric(String s) {
   return (n == null) ? false : true;
 }
 
-bool isEmpty(String s){
-return (s== "") ? false : true;
+bool isEmpty(String s) {
+  return (s == "") ? false : true;
 }
 
 DateTime now = DateTime.now();
- List<ProductModel> deleteItems;
+List<ProductModel> deleteItems;
 var timeNow = int.parse(DateFormat('kk').format(now));
 
 String numberFormat(double t) {
@@ -141,7 +141,6 @@ void showSnack(BuildContext context, String msg) {
     duration: Duration(seconds: 2),
   )..show(context);
 }
-
 
 // void showDeleteSnack(BuildContext context, String msg, int index, ProductModel item,  List<ProductModel> items) {
 //   Flushbar(

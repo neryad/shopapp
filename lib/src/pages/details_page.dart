@@ -1,16 +1,16 @@
 //import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:shopapp/src/localization/localization_constant.dart';
-//import 'package:shopapp/src/data/data.dart';
-import 'package:shopapp/src/models/List_model.dart';
-import 'package:shopapp/src/models/product_model.dart';
-import 'package:shopapp/src/models/suge.dart';
-import 'package:shopapp/src/providers/db_provider.dart';
-import 'package:shopapp/src/utils/utils.dart' as utils;
-import 'package:shopapp/src/widgets/Menu_widget.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
+//import 'package:PocketList/src/data/data.dart';
+import 'package:PocketList/src/models/List_model.dart';
+import 'package:PocketList/src/models/product_model.dart';
+import 'package:PocketList/src/models/suge.dart';
+import 'package:PocketList/src/providers/db_provider.dart';
+import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:PocketList/src/widgets/Menu_widget.dart';
 //import 'package:flutter_typeahead/flutter_typeahead.dart';
-// import 'package:shopapp/src/data/data.dart';
+// import 'package:PocketList/src/data/data.dart';
 
 class DetailsPage extends StatefulWidget {
   final Lista savelist;
@@ -90,19 +90,19 @@ class _DetailsPageState extends State<DetailsPage> {
             child: Container(
               child: Column(
                 children: <Widget>[
-                               GestureDetector(
-                    onTap: () => _mostrarAlertaBuget(context,list),
+                  GestureDetector(
+                    onTap: () => _mostrarAlertaBuget(context, list),
                     child: Container(
                       color: Colors.white,
                       child: Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Column(
-                            
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               FlatButton.icon(
-                                  onPressed: () => _mostrarAlertaBuget(context,list),
+                                  onPressed: () =>
+                                      _mostrarAlertaBuget(context, list),
                                   icon: Icon(Icons.account_balance_wallet),
                                   label: Text(getTranlated(context, 'buget'))),
                             ],
@@ -177,7 +177,7 @@ class _DetailsPageState extends State<DetailsPage> {
   _bodyWidget(String id, Lista listaArt) {
     return FutureBuilder<List<ProductModel>>(
         // builder: null
-        future: DBProvider.db.getprodId(id),
+        future: DBProvider.db.getProdId(id),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData && snapshot.data.length > 0) {
             final art = snapshot.data;
@@ -191,8 +191,6 @@ class _DetailsPageState extends State<DetailsPage> {
               child: ListView.builder(
             itemCount: articulos.length,
             itemBuilder: (BuildContext context, int index) {
-              //_controllers.add(new TextEditingController());
-              //var wawa = toBoolean(articulos[index].complete);
               bool isComplete = (articulos[index].complete == 1) ? true : false;
 
               return Dismissible(
@@ -229,7 +227,8 @@ class _DetailsPageState extends State<DetailsPage> {
                 key: Key(articulos[index].name + articulos.length.toString()),
                 onDismissed: (direction) {
                   var deletedItem = articulos[index];
-                  showDeleteSnack(context, getTranlated(context, 'offLis'), index, deletedItem, articulos);
+                  showDeleteSnack(context, getTranlated(context, 'offLis'),
+                      index, deletedItem, articulos);
                   //utils.showSnack(context, getTranlated(context, 'offLis'));
                   DBProvider.db.deleteProd(articulos[index].id);
                   articulos.removeAt(index);
@@ -266,8 +265,10 @@ class _DetailsPageState extends State<DetailsPage> {
                               (valor == true)
                                   ? utils.showSnack(
                                       context, getTranlated(context, 'onCart'))
-                                  : utils.showSnack(context,
-                                      getTranlated(context, 'ofCart')); //   showSnack(context, 'Artículo agregado');
+                                  : utils.showSnack(
+                                      context,
+                                      getTranlated(context,
+                                          'ofCart')); //   showSnack(context, 'Artículo agregado');
                             },
                             activeColor: utils.cambiarColor(),
                           ),
@@ -276,35 +277,25 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 0, bottom: 5),
-                        child: GestureDetector(
-                          onTap: () {
-                            _mostrarAlertaEditarProducto(
-                                context, index, listaArt);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              GestureDetector(
-                                onTap: () {
-                                  _mostrarAlertaEditarProducto(
-                                      context, index, listaArt);
-                                },
-                                child: Icon(
+                      GestureDetector(
+                        onTap: () {
+                          _mostrarAlertaEditarProducto(
+                              context, index, listaArt);
+                        },
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 0, bottom: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Icon(
                                   Icons.shopping_basket,
                                   color: utils.cambiarColor(),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _mostrarAlertaEditarProducto(
-                                      context, index, listaArt);
-                                },
-                                child: Padding(
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -318,16 +309,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                     ],
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _mostrarAlertaEditarProducto(
-                                      context, index, listaArt);
-                                },
-                                child: Padding(
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Column(
                                     children: <Widget>[
@@ -338,16 +323,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                     ],
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _mostrarAlertaEditarProducto(
-                                      context, index, listaArt);
-                                },
-                                child: Padding(
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Column(
                                     children: <Widget>[
@@ -361,11 +340,11 @@ class _DetailsPageState extends State<DetailsPage> {
                                     ],
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                            ],
+                                SizedBox(
+                                  width: 5,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -433,7 +412,7 @@ class _DetailsPageState extends State<DetailsPage> {
           return;
         } else {
           prod.buget = double.parse(value);
-          DBProvider.db.updatelist(prod);
+          DBProvider.db.updateList(prod);
           //prefs.tempBuget = buget.toString();
         }
       },
@@ -512,7 +491,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                     getTranlated(context, 'save'),
+                    getTranlated(context, 'save'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -523,13 +502,12 @@ class _DetailsPageState extends State<DetailsPage> {
   void _editDubimt(int index) {
     editFormKey.currentState.save();
     DBProvider.db.updateProd(articulos[index]);
-    
   }
 
   Widget _editarNombreArticulo(int index) {
     return TextFormField(
       initialValue: articulos[index].name,
-       maxLength: 33,
+      maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
       onSaved: (value) => articulos[index].name = value,
@@ -537,7 +515,6 @@ class _DetailsPageState extends State<DetailsPage> {
         counterText: '',
         labelText: getTranlated(context, 'nameArt'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
-
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
@@ -548,12 +525,13 @@ class _DetailsPageState extends State<DetailsPage> {
 
   Widget _editarPrecioArticulo(int index) {
     return TextFormField(
-      initialValue: articulos[index].price.toString(),
+      initialValue: (articulos[index].price == 0)
+          ? ""
+          : articulos[index].price.toString(),
       maxLength: 6,
       //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        
         labelText: getTranlated(context, 'price'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
@@ -582,7 +560,10 @@ class _DetailsPageState extends State<DetailsPage> {
 
   Widget _editarcantidadArticulo(int index) {
     return TextFormField(
-      initialValue: articulos[index].quantity.toString(),
+      //int.parse((value == "") ? "0" : value);
+      initialValue: (articulos[index].quantity == 0)
+          ? ""
+          : articulos[index].quantity.toString(),
       maxLength: 6,
       //controller: _controllers[index],
       textAlign: TextAlign.center,
@@ -688,7 +669,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     _updataLista(list);
                   },
                   child: Text(
-                     getTranlated(context, 'save'),
+                    getTranlated(context, 'save'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
@@ -815,9 +796,16 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
-       maxLength: 33,
+      maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
+      validator: (value) {
+        if (utils.isEmpty(value)) {
+          return null;
+        } else {
+          return getTranlated(context, 'noEmpty');
+        }
+      },
       onSaved: (value) => productModel.name = value,
       decoration: InputDecoration(
         counterText: '',
@@ -926,37 +914,36 @@ class _DetailsPageState extends State<DetailsPage> {
         diference: list.diference,
         buget: list.buget);
 
-    DBProvider.db.updatelist(updateLista);
+    DBProvider.db.updateList(updateLista);
   }
 
-   void showDeleteSnack(BuildContext context, String msg, int index, ProductModel item,  List<ProductModel> items) {
-  Flushbar(
-    //title: 'This action is prohibited',
-    message: msg,
-    icon: Icon(
-      Icons.info_outline,
-      size: 28,
-      color: utils.cambiarColor(),
-    ),
-    mainButton: FlatButton(
+  void showDeleteSnack(BuildContext context, String msg, int index,
+      ProductModel item, List<ProductModel> items) {
+    Flushbar(
+      //title: 'This action is prohibited',
+      message: msg,
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: utils.cambiarColor(),
+      ),
+      mainButton: FlatButton(
         onPressed: () {
           print(item);
           //_undoProd(item, index);
-           DBProvider.db.newProd(item);
-           //DBProvider.db.getTmpArticulos();
+          DBProvider.db.newProd(item);
+          //DBProvider.db.getTmpArticulos();
           var it = items.length;
-           items.insert(it, item);
-          setState(() {
-            
-          });
+          items.insert(it, item);
+          setState(() {});
         },
         child: Text(
           getTranlated(context, 'undo'),
           style: TextStyle(color: Colors.amber),
         ),
       ),
-    leftBarIndicatorColor: utils.cambiarColor(),
-    duration: Duration(seconds: 3),
-  )..show(context);
-}
+      leftBarIndicatorColor: utils.cambiarColor(),
+      duration: Duration(seconds: 3),
+    )..show(context);
+  }
 }
