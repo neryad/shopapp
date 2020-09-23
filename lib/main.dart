@@ -1,3 +1,4 @@
+import 'package:PocketList/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
@@ -47,6 +48,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final prefs = new PreferenciasUsuario();
     if (_locale == null) {
       return Container(
         child: Center(
@@ -58,7 +60,7 @@ class _MyAppState extends State<MyApp> {
         locale: _locale,
         supportedLocales: [
           Locale('en', 'US'),
-          Locale('es', 'ES'),
+          Locale('es', 'US'),
         ],
         localizationsDelegates: [
           Localization.delegate,
@@ -77,6 +79,7 @@ class _MyAppState extends State<MyApp> {
           return supportedLocales.first;
         },
         title: 'PocketList',
+        initialRoute: prefs.ultimaPagina,
         home: SplashScreen(),
         debugShowCheckedModeBanner: true,
         routes: {
@@ -84,6 +87,7 @@ class _MyAppState extends State<MyApp> {
           'newList': (BuildContext context) => NewList(),
           'settings': (BuildContext context) => SettingPage(),
           'about': (BuildContext context) => AboutPage(),
+          'splahs': (BuildContext context) => SplashScreen(),
         },
       );
     }

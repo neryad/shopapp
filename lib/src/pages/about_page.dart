@@ -1,10 +1,23 @@
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/widgets/Menu_widget.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:PocketList/src/localization/localization_constant.dart';
 
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatefulWidget {
   const AboutPage({Key key}) : super(key: key);
+
+  @override
+  _AboutPageState createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
+  final prefs = new PreferenciasUsuario();
+
+  @override
+  void initState() {
+    prefs.ultimaPagina = 'about';
+  }
 
   @override
   Widget build(BuildContext context) {

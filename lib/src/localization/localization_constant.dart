@@ -27,7 +27,7 @@ Locale _locale(String languageCode) {
       break;
 
     case SPANISH:
-      _temp = Locale(languageCode, 'ES');
+      _temp = Locale(languageCode, 'US');
       break;
 
     default:

@@ -57,5 +57,6 @@
   "updArt": "Article updated",
   "dataDelete": "All data deleted",
   "deletePar": "This action will delete all your lists.",
+  "deleteDialo": "Remember that this action will erase all the information from your lists",
   "undo": "Undo"
 }

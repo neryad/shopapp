@@ -35,6 +35,7 @@ class _DetailsPageState extends State<DetailsPage> {
   double diference;
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
+  bool focusInpt = true;
   final editFormKey = GlobalKey<FormState>();
   final formKey = GlobalKey<FormState>();
   //GlobalKey<AutoCompleteTextFieldState<Segurencia>> keyS = new GlobalKey();
@@ -796,6 +797,7 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
+      autofocus: focusInpt,
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
@@ -900,6 +902,7 @@ class _DetailsPageState extends State<DetailsPage> {
     DBProvider.db.newProd(prod);
 
     formKey.currentState.reset();
+    setState(() {});
   }
 
   _updataLista(Lista list) {

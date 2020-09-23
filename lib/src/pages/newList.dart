@@ -22,10 +22,12 @@ class _NewListState extends State<NewList> {
   double total = 0.00;
   double diference = 0.00;
   bool checkValue = false;
+  bool focusInpt = true;
   final prefs = new PreferenciasUsuario();
 
   @override
   void initState() {
+    prefs.ultimaPagina = 'newList';
     total = double.parse(prefs.tempTotal);
     buget = double.parse(prefs.tempBuget);
     super.initState();
@@ -199,6 +201,7 @@ class _NewListState extends State<NewList> {
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
+      autofocus: focusInpt,
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
@@ -303,6 +306,7 @@ class _NewListState extends State<NewList> {
     DBProvider.db.newProd(prod);
     print(productModel.id);
     formKey.currentState.reset();
+    setState(() {});
   }
 
   void _mostrarAlertaEditarProducto(BuildContext context, int index) {
