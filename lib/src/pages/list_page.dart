@@ -49,14 +49,62 @@ class _ListPageState extends State<ListPage> {
           if (lista.length == 0) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                getTranlated(context, 'noList'),
-                style: TextStyle(
-                  color: utils.cambiarColor(),
-                  fontSize: 18,
-                ),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    getTranlated(context, 'noList'),
+                    style: TextStyle(
+                      color: utils.cambiarColor(),
+                      fontSize: 18,
+                    ),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "",
+                        ),
+                        WidgetSpan(
+                          child: Icon(Icons.add_shopping_cart),
+                        ),
+                        TextSpan(
+                          text: " ",
+                        ),
+                        TextSpan(
+                          text: getTranlated(context, 'noList2'),
+                          style: TextStyle(
+                            color: utils.cambiarColor(),
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                  //    RichText(
+                  //   // WidgetSpan(
+                  //   //   child: Icon(
+                  //   //     Icons.add_shopping_cart,
+                  //   //   ),
+                  //   // ),
+                  //   TextSpan(
+                  //     text: getTranlated(context, 'noList2'),
+                  //     style: TextStyle(
+                  //       color: utils.cambiarColor(),
+                  //       fontSize: 18,
+                  //     ),
+                  //   ),
+                  // ),
+                ],
               ),
             );
+            // Text(
+            //   getTranlated(context, 'noList'),
+            //   style: TextStyle(
+            //     color: utils.cambiarColor(),
+            //     fontSize: 18,
+            //   ),
+            // ),
+            // );
           }
           lista.sort((a, b) => b.fecha.compareTo(a.fecha));
           return ListView.builder(

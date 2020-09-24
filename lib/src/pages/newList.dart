@@ -623,16 +623,63 @@ class _NewListState extends State<NewList> {
                       utils.cambiarNewImage(),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      getTranlated(context, 'noList'),
-                      style: TextStyle(
-                        color: utils.cambiarColor(),
-                        fontSize: 18,
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        getTranlated(context, 'noItems'),
+                        style: TextStyle(
+                          color: utils.cambiarColor(),
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
-                  )
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "",
+                            ),
+                            WidgetSpan(
+                              child: Icon(Icons.add_shopping_cart),
+                            ),
+                            TextSpan(
+                              text: " ",
+                            ),
+                            TextSpan(
+                              text: getTranlated(context, 'noItems2'),
+                              style: TextStyle(
+                                color: utils.cambiarColor(),
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                      //    RichText(
+                      //   // WidgetSpan(
+                      //   //   child: Icon(
+                      //   //     Icons.add_shopping_cart,
+                      //   //   ),
+                      //   // ),
+                      //   TextSpan(
+                      //     text: getTranlated(context, 'noList2'),
+                      //     style: TextStyle(
+                      //       color: utils.cambiarColor(),
+                      //       fontSize: 18,
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(5.0),
+                  //   child: Text(
+                  //     getTranlated(context, 'noList'),
+                  //     style: TextStyle(
+                  //       color: utils.cambiarColor(),
+                  //       fontSize: 18,
+                  //     ),
+                  //   ),
+                  // )
                 ]));
           }
 
