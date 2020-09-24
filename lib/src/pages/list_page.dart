@@ -1,3 +1,4 @@
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/List_model.dart';
@@ -13,6 +14,13 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  final prefs = new PreferenciasUsuario();
+  @override
+  void initState() {
+    prefs.ultimaPagina = 'newList';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

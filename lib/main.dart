@@ -9,6 +9,7 @@ import 'package:PocketList/src/pages/home_page.dart';
 import 'package:PocketList/src/pages/newList.dart';
 import 'package:PocketList/src/pages/setting_page.dart';
 import 'package:PocketList/src/pages/splashScreen.dart';
+import 'package:PocketList/src/pages/help_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -88,6 +89,7 @@ class _MyAppState extends State<MyApp> {
           'settings': (BuildContext context) => SettingPage(),
           'about': (BuildContext context) => AboutPage(),
           'splahs': (BuildContext context) => SplashScreen(),
+          'help': (BuildContext context) => HelpPage(),
         },
       );
     }
