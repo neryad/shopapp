@@ -18,6 +18,12 @@ class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   final prefs = new PreferenciasUsuario();
   @override
+  void initState() {
+    super.initState();
+    prefs.ultimaPagina = 'home';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,

@@ -17,7 +17,7 @@ class _ListPageState extends State<ListPage> {
   final prefs = new PreferenciasUsuario();
   @override
   void initState() {
-    prefs.ultimaPagina = 'newList';
+    prefs.ultimaPagina = 'home';
     super.initState();
   }
 
@@ -151,7 +151,8 @@ class _ListPageState extends State<ListPage> {
                   ),
                   key: Key(lista[i].title + lista.length.toString()),
                   onDismissed: (direction) {
-                    utils.showSnack(context, 'Lista eliminada');
+                    utils.showSnack(
+                        context, getTranlated(context, 'deletedList'));
                     DBProvider.db.deleteLista(lista[i].id);
                     lista.removeAt(i);
                     setState(() {});

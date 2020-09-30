@@ -1,3 +1,4 @@
+import 'package:PocketList/src/pages/details_page.dart';
 import 'package:PocketList/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -90,6 +91,7 @@ class _MyAppState extends State<MyApp> {
           'about': (BuildContext context) => AboutPage(),
           'splahs': (BuildContext context) => SplashScreen(),
           'help': (BuildContext context) => HelpPage(),
+          'detailsPage': (BuildContext context) => DetailsPage(),
         },
       );
     }

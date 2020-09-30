@@ -1,4 +1,5 @@
 //import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
@@ -27,9 +28,11 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     //_loadData();
+    prefs.ultimaPagina = 'home';
     super.initState();
   }
 
+  final prefs = new PreferenciasUsuario();
   double buget;
   double total;
   double diference;
