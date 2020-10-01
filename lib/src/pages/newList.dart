@@ -22,10 +22,12 @@ class _NewListState extends State<NewList> {
   double total = 0.00;
   double diference = 0.00;
   bool checkValue = false;
+  bool focusInpt = true;
   final prefs = new PreferenciasUsuario();
 
   @override
   void initState() {
+    prefs.ultimaPagina = 'newList';
     total = double.parse(prefs.tempTotal);
     buget = double.parse(prefs.tempBuget);
     super.initState();
@@ -199,6 +201,7 @@ class _NewListState extends State<NewList> {
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
+      autofocus: focusInpt,
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
@@ -303,6 +306,7 @@ class _NewListState extends State<NewList> {
     DBProvider.db.newProd(prod);
     print(productModel.id);
     formKey.currentState.reset();
+    setState(() {});
   }
 
   void _mostrarAlertaEditarProducto(BuildContext context, int index) {
@@ -619,16 +623,63 @@ class _NewListState extends State<NewList> {
                       utils.cambiarNewImage(),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      getTranlated(context, 'noList'),
-                      style: TextStyle(
-                        color: utils.cambiarColor(),
-                        fontSize: 18,
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        getTranlated(context, 'noItems'),
+                        style: TextStyle(
+                          color: utils.cambiarColor(),
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
-                  )
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "",
+                            ),
+                            WidgetSpan(
+                              child: Icon(Icons.add_shopping_cart),
+                            ),
+                            TextSpan(
+                              text: " ",
+                            ),
+                            TextSpan(
+                              text: getTranlated(context, 'noItems2'),
+                              style: TextStyle(
+                                color: utils.cambiarColor(),
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                      //    RichText(
+                      //   // WidgetSpan(
+                      //   //   child: Icon(
+                      //   //     Icons.add_shopping_cart,
+                      //   //   ),
+                      //   // ),
+                      //   TextSpan(
+                      //     text: getTranlated(context, 'noList2'),
+                      //     style: TextStyle(
+                      //       color: utils.cambiarColor(),
+                      //       fontSize: 18,
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(5.0),
+                  //   child: Text(
+                  //     getTranlated(context, 'noList'),
+                  //     style: TextStyle(
+                  //       color: utils.cambiarColor(),
+                  //       fontSize: 18,
+                  //     ),
+                  //   ),
+                  // )
                 ]));
           }
 

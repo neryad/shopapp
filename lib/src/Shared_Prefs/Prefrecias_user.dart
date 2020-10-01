@@ -1,4 +1,3 @@
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +18,6 @@ class PreferenciasUsuario {
   }
 
   Color defaultColor = Color.fromRGBO(255, 111, 94, 1);
-
 
   get genero {
     return _prefs.getInt('genero') ?? 1;
@@ -45,18 +43,27 @@ class PreferenciasUsuario {
     _prefs.setString('nombreUsuario', value);
   }
 
-   get tempTotal{
+  get ultimaPagina {
+    return _prefs.getString('ultimaPagina') ?? 'home';
+  }
+
+  set ultimaPagina(String value) {
+    _prefs.setString('ultimaPagina', value);
+  }
+
+  get tempTotal {
     return _prefs.getString('tempTotal') ?? '0.00';
   }
-   set tempTotal(String value) {
+
+  set tempTotal(String value) {
     _prefs.setString('tempTotal', value);
   }
 
-  get tempBuget{
+  get tempBuget {
     return _prefs.getString('tempBuget') ?? '0.00';
   }
-   set tempBuget(String value) {
+
+  set tempBuget(String value) {
     _prefs.setString('tempBuget', value);
   }
-
 }

@@ -6,6 +6,9 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/product_model.dart';
 
 final prefs = new PreferenciasUsuario();
+DateTime now = DateTime.now();
+List<ProductModel> deleteItems;
+var timeNow = int.parse(DateFormat('kk').format(now));
 
 bool isNumeric(String s) {
   if (s.isEmpty) return false;
@@ -18,10 +21,6 @@ bool isNumeric(String s) {
 bool isEmpty(String s) {
   return (s == "") ? false : true;
 }
-
-DateTime now = DateTime.now();
-List<ProductModel> deleteItems;
-var timeNow = int.parse(DateFormat('kk').format(now));
 
 String numberFormat(double t) {
   NumberFormat f = new NumberFormat("#,##0.00", "en_US");

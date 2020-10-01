@@ -23,6 +23,7 @@ class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     _genero = prefs.genero;
+    prefs.ultimaPagina = 'settings';
     super.initState();
     _textEditingController =
         new TextEditingController(text: prefs.nombreUsuario);
@@ -257,6 +258,7 @@ class _SettingPageState extends State<SettingPage> {
         builder: (context) {
           return AlertDialog(
             title: Text(getTranlated(context, 'deleteAllList')),
+            content: new Text(getTranlated(context, 'deleteDialo')),
             actions: <Widget>[
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),

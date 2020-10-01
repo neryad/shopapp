@@ -1,4 +1,5 @@
 //import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
@@ -27,14 +28,17 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     //_loadData();
+    prefs.ultimaPagina = 'home';
     super.initState();
   }
 
+  final prefs = new PreferenciasUsuario();
   double buget;
   double total;
   double diference;
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
+  bool focusInpt = true;
   final editFormKey = GlobalKey<FormState>();
   final formKey = GlobalKey<FormState>();
   //GlobalKey<AutoCompleteTextFieldState<Segurencia>> keyS = new GlobalKey();
@@ -796,6 +800,7 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
+      autofocus: focusInpt,
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
@@ -900,6 +905,7 @@ class _DetailsPageState extends State<DetailsPage> {
     DBProvider.db.newProd(prod);
 
     formKey.currentState.reset();
+    setState(() {});
   }
 
   _updataLista(Lista list) {

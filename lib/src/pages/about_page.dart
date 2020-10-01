@@ -1,10 +1,29 @@
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/widgets/Menu_widget.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:package_info/package_info.dart';
 
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatefulWidget {
   const AboutPage({Key key}) : super(key: key);
+
+  @override
+  _AboutPageState createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
+  final prefs = new PreferenciasUsuario();
+  String appName;
+  String packageName;
+  String version = '1.0.0';
+  String buildNumber;
+
+  @override
+  void initState() {
+    //getBuildAndVersion();
+    prefs.ultimaPagina = 'about';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +94,7 @@ class AboutPage extends StatelessWidget {
                                         SizedBox(
                                           height: 10.0,
                                         ),
-                                        Text('0.0.1',
+                                        Text(version,
                                             style: TextStyle(
                                                 color: utils.cambiarColor(),
                                                 fontSize: 22.0,
@@ -140,7 +159,15 @@ class AboutPage extends StatelessWidget {
                               letterSpacing: 2.0),
                         ),
                       ),
-                      Text('Neryad ©️ 2020')
+                      Divider(),
+                      Row(
+                        children: [
+                          Text(
+                            'Neryad ©️ 2020',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 )),
@@ -148,5 +175,13 @@ class AboutPage extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  getBuildAndVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    appName = packageInfo.appName;
+    packageName = packageInfo.packageName;
+    version = packageInfo.version;
+    buildNumber = packageInfo.buildNumber;
   }
 }
