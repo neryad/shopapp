@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
         title: 'PocketList',
         initialRoute: prefs.ultimaPagina,
         home: SplashScreen(),
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         routes: {
           'home': (BuildContext context) => HomePage(),
           'newList': (BuildContext context) => NewList(),
