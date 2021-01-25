@@ -37,7 +37,7 @@ Color cambiarColor() {
   } else if (prefs.genero == 4) {
     return Color(0xffb0FF1493);
   } else {
-    return Color(0xffb04e4e4e);
+    return Color(0xffb424242);
   }
 }
 

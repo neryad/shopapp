@@ -33,12 +33,12 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   final prefs = new PreferenciasUsuario();
+  FocusNode myFocusNode = FocusNode();
   double buget;
   double total;
   double diference;
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
-  bool focusInpt = true;
   final editFormKey = GlobalKey<FormState>();
   final formKey = GlobalKey<FormState>();
   //GlobalKey<AutoCompleteTextFieldState<Segurencia>> keyS = new GlobalKey();
@@ -69,15 +69,7 @@ class _DetailsPageState extends State<DetailsPage> {
           _bodyWidget(listaModel.id, listaModel)
         ],
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () {
-          _mostrarAlertaProducto(context, listaModel);
-        },
-        backgroundColor: utils.cambiarColor(),
-        child: Icon(Icons.add_shopping_cart),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      // bottomNavigationBar: _bNavbar(context, listaModel),
+      bottomNavigationBar: _bNavbar(context, listaModel),
     );
   }
 
@@ -598,43 +590,6 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  // _validateEliminarList(BuildContext context, Lista list) {
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (context) {
-  //         return AlertDialog(
-  //           title: Text('Eliminar contenido'),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //                 onPressed: () => Navigator.of(context).pop(),
-  //                 child: Text(
-  //                   'Salir',
-  //                   style: TextStyle(color: utils.cambiarColor()),
-  //                 )),
-  //             FlatButton(
-  //                 onPressed: () => limpiarTodo(list),
-  //                 child: Text(
-  //                   'Aceptar',
-  //                   style: TextStyle(color: utils.cambiarColor()),
-  //                 )),
-  //           ],
-  //         );
-  //       });
-  // }
-
-  // limpiarTodo(Lista list) {
-  //   setState(() {
-  //     DBProvider.db.deleteAllProd();
-  //     articulos.clear();
-  //     getTotal(list);
-  //     getDiference(list);
-  //     DBProvider.db.updatelist(list);
-  //     utils.showSnack(context, 'Lista limpiada');
-  //   });
-  //   Navigator.of(context).pop();
-  // }
-
   void _mostrarAlertaProducto(BuildContext context, Lista list) {
     showDialog(
         context: context,
@@ -800,7 +755,7 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
-      autofocus: focusInpt,
+      focusNode: myFocusNode,
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
@@ -906,6 +861,26 @@ class _DetailsPageState extends State<DetailsPage> {
 
     formKey.currentState.reset();
     setState(() {});
+    myFocusNode.requestFocus();
+  }
+
+  Widget _bNavbar(BuildContext context, Lista list) {
+    return BottomAppBar(
+        child: new Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        FlatButton(
+          onPressed: () => _mostrarAlertaProducto(context, list),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Icon(Icons.add_shopping_cart, color: utils.cambiarColor()),
+              //Text(getTranlated(context, 'clearList'))
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 
   _updataLista(Lista list) {

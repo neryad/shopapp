@@ -1,6 +1,6 @@
 import 'package:PocketList/src/pages/details_page.dart';
-import 'package:PocketList/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization.dart';
@@ -16,7 +16,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = new PreferenciasUsuario();
   await prefs.initPrefes();
-  runApp(new MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(MyApp()));
+  //runApp(new MyApp());
 }
 
 class MyApp extends StatefulWidget {

@@ -22,7 +22,8 @@ class _NewListState extends State<NewList> {
   double total = 0.00;
   double diference = 0.00;
   bool checkValue = false;
-  bool focusInpt = true;
+  FocusNode myFocusNode = FocusNode();
+
   final prefs = new PreferenciasUsuario();
 
   @override
@@ -67,14 +68,6 @@ class _NewListState extends State<NewList> {
           _bodyWidget(),
         ],
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () {
-          _mostrarAlertaProducto(context);
-        },
-        backgroundColor: utils.cambiarColor(),
-        child: Icon(Icons.add_shopping_cart),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: _bNavbar(context),
     );
   }
@@ -200,8 +193,7 @@ class _NewListState extends State<NewList> {
 
   Widget _crearNombreArticulo() {
     return TextFormField(
-      //  initialValue: productModel.name,
-      autofocus: focusInpt,
+      focusNode: myFocusNode,
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
@@ -215,13 +207,10 @@ class _NewListState extends State<NewList> {
       },
       decoration: InputDecoration(
         labelText: getTranlated(context, 'nameArt'),
-        //counterText: '',
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        //hintText: 'Nombre artículo',
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -300,13 +289,11 @@ class _NewListState extends State<NewList> {
         price: productModel.price,
         complete: 0);
     items.insert(it, prod);
-    // print(prod.listId);
-    // print(prod.id);
-    print(prod.id);
     DBProvider.db.newProd(prod);
     print(productModel.id);
     formKey.currentState.reset();
     setState(() {});
+    myFocusNode.requestFocus();
   }
 
   void _mostrarAlertaEditarProducto(BuildContext context, int index) {
@@ -369,8 +356,6 @@ class _NewListState extends State<NewList> {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        //hintText: 'Nombre artículo',
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -380,7 +365,6 @@ class _NewListState extends State<NewList> {
       initialValue:
           (items[index].price == 0) ? "" : items[index].price.toString(),
       maxLength: 6,
-      //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'price'),
@@ -393,7 +377,6 @@ class _NewListState extends State<NewList> {
       onSaved: (value) {
         items[index].price = double.parse((value == "") ? "0" : value);
       },
-      //onSaved: (value) => items[index].price = double.parse(value),
       validator: (value) {
         if (utils.isNumeric(value)) {
           return null;
@@ -410,8 +393,6 @@ class _NewListState extends State<NewList> {
       initialValue:
           (items[index].quantity == 0) ? "" : items[index].quantity.toString(),
       maxLength: 6,
-      //controller: _controllers[index],
-
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'quantity'),
@@ -420,12 +401,10 @@ class _NewListState extends State<NewList> {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
         items[index].quantity = int.parse((value == "") ? "0" : value);
       },
-      //onSaved: (value) => items[index].quantity = int.parse(value),
       validator: (value) {
         if (utils.isNumeric(value)) {
           return null;
@@ -446,14 +425,11 @@ class _NewListState extends State<NewList> {
       textAlign: TextAlign.center,
       onSaved: (value) => listaModel.title = value,
       decoration: InputDecoration(
-        //counterText: '',
         labelText: getTranlated(context, 'listName'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        //hintText: 'Nombre lista',
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -859,25 +835,41 @@ class _NewListState extends State<NewList> {
   Widget _bNavbar(BuildContext context) {
     return BottomAppBar(
         child: new Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        FlatButton(
-          //(valor == true) ? 1 : 0;
-          onPressed: () => (items.length <= 0) ? null : _guardarLista(context),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Icon(Icons.save),
-              Text(getTranlated(context, 'saveList'))
-            ],
-          ),
+        Row(
+          children: [
+            FlatButton(
+              //(valor == true) ? 1 : 0;
+              onPressed: () =>
+                  (items.length <= 0) ? null : _guardarLista(context),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Icon(Icons.save),
+                  Text(getTranlated(context, 'saveList'))
+                ],
+              ),
+            ),
+            FlatButton(
+              onPressed: () => _validateEliminarList(context),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Icon(Icons.remove_circle_outline),
+                  Text(getTranlated(context, 'clearList'))
+                ],
+              ),
+            ),
+          ],
         ),
         FlatButton(
-          onPressed: () => _validateEliminarList(context),
+          onPressed: () => _mostrarAlertaProducto(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Icon(Icons.remove_circle_outline),
-              Text(getTranlated(context, 'clearList'))
+              Icon(Icons.add_shopping_cart, color: utils.cambiarColor()),
+              //Text(getTranlated(context, 'clearList'))
             ],
           ),
         ),

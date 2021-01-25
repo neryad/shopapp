@@ -87,13 +87,12 @@ class _SettingPageState extends State<SettingPage> {
       drawer: MenuWidget(),
       body: ListView(children: <Widget>[
         Container(
-          padding: EdgeInsets.all(5.0),
+          padding: EdgeInsets.all(15.0),
           child: Text(
             getTranlated(context, 'themTitle'),
-            style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
         ),
-
         Divider(),
         RadioListTile(
           title: Text(
@@ -142,10 +141,10 @@ class _SettingPageState extends State<SettingPage> {
         ),
         Divider(),
         Container(
-          padding: EdgeInsets.all(5.0),
+          padding: EdgeInsets.all(15.0),
           child: Text(
             getTranlated(context, 'userTitle'),
-            style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
         ),
         Container(
@@ -162,13 +161,12 @@ class _SettingPageState extends State<SettingPage> {
             )),
         Divider(),
         Container(
-          padding: EdgeInsets.all(5.0),
+          padding: EdgeInsets.all(15.0),
           child: Text(
             getTranlated(context, 'dataTitle'),
-            style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
         ),
-
         Divider(),
         Container(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -176,29 +174,6 @@ class _SettingPageState extends State<SettingPage> {
               children: [
                 Text(getTranlated(context, 'deletePar'),
                     style: TextStyle(fontSize: 18)),
-                // FlatButton(
-                // color: Colors.red,
-                // textColor: Colors.white,
-                // //disabledColor: Colors.grey,
-                // //disabledTextColor: Colors.black,
-                // //padding: EdgeInsets.all(8.0),
-                // splashColor: Colors.redAccent,
-                // onPressed: () {
-                //   _validateEliminar(context);
-                //   // utils.showSnack(context, getTranlated(context, 'dataDelete'));
-                // },
-                // child: Row(
-                //   mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     Text(
-                //       getTranlated(context, 'deleteAllList'),
-                //       style: TextStyle(fontSize: 20),
-                //     ),
-
-                //     Icon(Icons.delete_forever)
-                //   ],
-                // )
-                // ),
                 RaisedButton(
                   color: Colors.red,
                   textColor: Colors.white,
@@ -210,43 +185,6 @@ class _SettingPageState extends State<SettingPage> {
                 ),
               ],
             )),
-        // Container(
-        //   padding: EdgeInsets.all(5.0),
-        //   child: Text(
-        //     getTranlated(context, 'lngTitle'),
-        //     style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
-        //   ),
-        // ),
-        // Container(
-        //   child: Padding(
-        //     padding: EdgeInsets.symmetric(horizontal: 20.0),
-        //     child: DropdownButton(
-        //         hint: new Text(getTranlated(context, 'lnHelp')),
-        //         items: Language.languageList()
-        //             .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
-        //                 value: lang,
-        //                 child: Row(
-        //                   children: [Text(lang.name)],
-        //                 )))
-        //             .toList(),
-        //         onChanged: (Language language) {
-        //           _changeLanguea(language);
-        //         }),
-        //   ),
-        // ),
-        // Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 20.0),
-        //   child: Text('Current language : ${wawa}'),
-        // ),
-        // RaisedButton(
-        //         onPressed: () {
-        //           Language language;
-        //           language.languageCode = "es";
-        //          // appLanguage.changeLanguage(Locale("es"));
-        //          _changeLanguea(language);
-        //         },
-        //         child: Text('Mensaje'),
-        //       )
       ]),
     );
   }
