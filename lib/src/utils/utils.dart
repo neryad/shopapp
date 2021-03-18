@@ -19,7 +19,7 @@ bool isNumeric(String s) {
 }
 
 bool isEmpty(String s) {
-  return (s == "") ? false : true;
+  return (s == " ") ? false : true;
 }
 
 String numberFormat(double t) {

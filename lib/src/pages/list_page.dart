@@ -33,7 +33,7 @@ class _ListPageState extends State<ListPage> {
             children: <Widget>[
               utils.saludos(context),
               _imagen(),
-              _wawa(context)
+              _listContainer(context)
             ],
           ),
         ),
@@ -41,7 +41,7 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  _wawa(BuildContext context) {
+  _listContainer(BuildContext context) {
     return Container(
       key: UniqueKey(),
       height: MediaQuery.of(context).size.height * .6,
@@ -88,31 +88,9 @@ class _ListPageState extends State<ListPage> {
                       ],
                     ),
                   )
-                  //    RichText(
-                  //   // WidgetSpan(
-                  //   //   child: Icon(
-                  //   //     Icons.add_shopping_cart,
-                  //   //   ),
-                  //   // ),
-                  //   TextSpan(
-                  //     text: getTranlated(context, 'noList2'),
-                  //     style: TextStyle(
-                  //       color: utils.cambiarColor(),
-                  //       fontSize: 18,
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             );
-            // Text(
-            //   getTranlated(context, 'noList'),
-            //   style: TextStyle(
-            //     color: utils.cambiarColor(),
-            //     fontSize: 18,
-            //   ),
-            // ),
-            // );
           }
           lista.sort((a, b) => b.fecha.compareTo(a.fecha));
           return ListView.builder(

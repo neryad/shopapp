@@ -281,6 +281,7 @@ class _NewListState extends State<NewList> {
   void _subimt() {
     var it = items.length;
     if (!formKey.currentState.validate()) return;
+
     formKey.currentState.save();
     var prod = ProductModel(
         name: productModel.name,

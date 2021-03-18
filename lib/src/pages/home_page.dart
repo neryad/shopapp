@@ -32,20 +32,16 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           getTranlated(context, 'mHomeTitle'),
         ),
-        actions: <Widget>[
-          //IconButton(icon: Icon(Icons.delete_forever, ), onPressed: () => _validateEliminar(context),tooltip: 'Borrar todas las listas',),
-          IconButton(
-              icon: Icon(
-                Icons.add_shopping_cart,
-              ),
-              onPressed: () =>
-                  {Navigator.pushReplacementNamed(context, 'newList')})
-        ],
         elevation: 0.0,
         backgroundColor: utils.cambiarColor(),
       ),
       body: ListPage(),
       drawer: MenuWidget(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {Navigator.pushReplacementNamed(context, 'newList')},
+        child: const Icon(Icons.add),
+        backgroundColor: utils.cambiarColor(),
+      ),
     );
   }
 
@@ -77,7 +73,6 @@ class _HomePageState extends State<HomePage> {
   limpiarTodo() {
     setState(() {
       DBProvider.db.deleteAllList();
-      //items.clear();
       setState(() {});
     });
     Navigator.of(context).pop();
