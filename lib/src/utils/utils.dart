@@ -28,13 +28,13 @@ String numberFormat(double t) {
 }
 
 Color cambiarColor() {
-  if (prefs.genero == 1) {
+  if (prefs.color == 1) {
     return Color.fromRGBO(255, 111, 94, 1);
-  } else if (prefs.genero == 2) {
+  } else if (prefs.color == 2) {
     return Color(0xffb0e5c68);
-  } else if (prefs.genero == 3) {
+  } else if (prefs.color == 3) {
     return Color(0xffb02b7600);
-  } else if (prefs.genero == 4) {
+  } else if (prefs.color == 4) {
     return Color(0xffb0FF1493);
   } else {
     return Color(0xffb424242);
@@ -43,13 +43,13 @@ Color cambiarColor() {
 
 BoxDecoration cambiarHeaderImage() {
   var img = '';
-  if (prefs.genero == 1) {
+  if (prefs.color == 1) {
     img = 'assets/undraw_shopping_app_flsj.png';
-  } else if (prefs.genero == 2) {
+  } else if (prefs.color == 2) {
     img = 'assets/undraw_shopping_app_flsj_A.png';
-  } else if (prefs.genero == 3) {
+  } else if (prefs.color == 3) {
     img = 'assets/undraw_shopping_app_flsj_G.png';
-  } else if (prefs.genero == 4) {
+  } else if (prefs.color == 4) {
     img = 'assets/undraw_shopping_app_flsj_R.png';
   } else {
     img = 'assets/undraw_shopping_app_flsj_GR.png';
@@ -61,13 +61,13 @@ BoxDecoration cambiarHeaderImage() {
 
 Image cambiarHomeImage() {
   var img;
-  if (prefs.genero == 1) {
+  if (prefs.color == 1) {
     img = 'assets/undraw_empty_cart_co35.png';
-  } else if (prefs.genero == 2) {
+  } else if (prefs.color == 2) {
     img = 'assets/undraw_empty_cart_co35_A.png';
-  } else if (prefs.genero == 3) {
+  } else if (prefs.color == 3) {
     img = 'assets/undraw_empty_cart_co35_G.png';
-  } else if (prefs.genero == 4) {
+  } else if (prefs.color == 4) {
     img = 'assets/undraw_empty_cart_co35_R.png';
   } else {
     img = 'assets/undraw_empty_cart_co35_GR.png';
@@ -82,13 +82,13 @@ Image cambiarHomeImage() {
 
 Image cambiarNewImage() {
   var img;
-  if (prefs.genero == 1) {
+  if (prefs.color == 1) {
     img = 'assets/add_to_cart.png';
-  } else if (prefs.genero == 2) {
+  } else if (prefs.color == 2) {
     img = 'assets/add_to_cart_A.png';
-  } else if (prefs.genero == 3) {
+  } else if (prefs.color == 3) {
     img = 'assets/add_to_cart_G.png';
-  } else if (prefs.genero == 4) {
+  } else if (prefs.color == 4) {
     img = 'assets/add_to_cart_R.png';
   } else {
     img = 'assets/add_to_cart_GR.png';

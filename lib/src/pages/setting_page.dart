@@ -15,14 +15,14 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  int _genero;
+  int _color;
   TextEditingController _textEditingController;
 
   final prefs = new PreferenciasUsuario();
 
   @override
   void initState() {
-    _genero = prefs.genero;
+    _color = prefs.color;
     prefs.ultimaPagina = 'settings';
     super.initState();
     _textEditingController =
@@ -35,8 +35,8 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   _selectedRadio(int valor) {
-    prefs.genero = valor;
-    _genero = valor;
+    prefs.color = valor;
+    _color = valor;
     setState(() {});
   }
 
@@ -100,7 +100,7 @@ class _SettingPageState extends State<SettingPage> {
             style: TextStyle(fontSize: 20),
           ),
           value: 1,
-          groupValue: _genero,
+          groupValue: _color,
           onChanged: _selectedRadio,
         ),
         RadioListTile(
@@ -109,7 +109,7 @@ class _SettingPageState extends State<SettingPage> {
             style: TextStyle(fontSize: 20),
           ),
           value: 2,
-          groupValue: _genero,
+          groupValue: _color,
           onChanged: _selectedRadio,
         ),
         RadioListTile(
@@ -118,7 +118,7 @@ class _SettingPageState extends State<SettingPage> {
             style: TextStyle(fontSize: 20),
           ),
           value: 3,
-          groupValue: _genero,
+          groupValue: _color,
           onChanged: _selectedRadio,
         ),
         RadioListTile(
@@ -127,7 +127,7 @@ class _SettingPageState extends State<SettingPage> {
             style: TextStyle(fontSize: 20),
           ),
           value: 4,
-          groupValue: _genero,
+          groupValue: _color,
           onChanged: _selectedRadio,
         ),
         RadioListTile(
@@ -136,7 +136,7 @@ class _SettingPageState extends State<SettingPage> {
             style: TextStyle(fontSize: 20),
           ),
           value: 5,
-          groupValue: _genero,
+          groupValue: _color,
           onChanged: _selectedRadio,
         ),
         Divider(),

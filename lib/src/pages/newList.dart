@@ -40,6 +40,7 @@ class _NewListState extends State<NewList> {
 
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
+  final bugetController = TextEditingController();
 
   var uuid = Uuid();
 
@@ -130,7 +131,7 @@ class _NewListState extends State<NewList> {
                   )),
               FlatButton(
                   onPressed: () {
-                    getTotal();
+                    saveBudget(bugetController.text);
                     Navigator.of(context).pop();
                   },
                   child: Text(
@@ -458,7 +459,9 @@ class _NewListState extends State<NewList> {
   Widget _crearBuget() {
     return TextField(
       maxLength: 6,
-      keyboardType: TextInputType.number,
+      controller: bugetController,
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+
       decoration: InputDecoration(
         counterText: '',
         hintText: getTranlated(context, 'newBuget'),
@@ -470,15 +473,13 @@ class _NewListState extends State<NewList> {
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
       ),
-      onChanged: (value) {
-        setState(() {});
-        if (value == null) {
-          return;
-        } else {
-          buget = double.parse(value);
-          prefs.tempBuget = buget.toString();
-        }
-      },
+
+      // onChanged: (value) {
+      //   setState(() {});
+      //   if (value == null) {
+      //     return;
+      //   }
+      // },
     );
   }
 
@@ -505,10 +506,33 @@ class _NewListState extends State<NewList> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              FlatButton.icon(
-                                  onPressed: () => _mostrarAlertaBuget(context),
-                                  icon: Icon(Icons.account_balance_wallet),
-                                  label: Text(getTranlated(context, 'buget'))),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.account_balance_wallet,
+                                        color: utils.cambiarColor()),
+                                    Text(getTranlated(context, 'buget'),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold
+                                            //color: bugetColor,
+                                            )),
+                                  ],
+                                ),
+                              ),
+                              // FlatButton.icon(
+                              //     onPressed: () => _mostrarAlertaBuget(context),
+                              //     icon: Icon(
+                              //       Icons.account_balance_wallet,
+                              //       color: utils.cambiarColor(),
+                              //     ),
+                              //     label: Text(
+                              //       getTranlated(context, 'buget'),
+                              //       style:
+                              //           TextStyle(fontWeight: FontWeight.bold),
+                              //     )),
                             ],
                           ),
                           Spacer(),
@@ -527,38 +551,61 @@ class _NewListState extends State<NewList> {
                       ),
                     ),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          FlatButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.shopping_cart),
-                              label: Text("Total")),
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            utils.numberFormat(total),
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: utils.cambiarColor(),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      )
-                    ],
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.shopping_cart),
+                                  Text('Total',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        //color: bugetColor,
+                                      )),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Spacer(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              utils.numberFormat(total),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: utils.cambiarColor(),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   Row(
                     //mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      FlatButton.icon(
-                          onPressed: () {},
-                          icon: Icon(Icons.shuffle),
-                          label: Text(getTranlated(context, 'difference'))),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.shuffle),
+                            Text(getTranlated(context, 'difference'),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  //color: bugetColor,
+                                )),
+                          ],
+                        ),
+                      ),
                       Spacer(),
                       Text(
                         utils.numberFormat(diference),
@@ -631,32 +678,8 @@ class _NewListState extends State<NewList> {
                           ],
                         ),
                       )
-                      //    RichText(
-                      //   // WidgetSpan(
-                      //   //   child: Icon(
-                      //   //     Icons.add_shopping_cart,
-                      //   //   ),
-                      //   // ),
-                      //   TextSpan(
-                      //     text: getTranlated(context, 'noList2'),
-                      //     style: TextStyle(
-                      //       color: utils.cambiarColor(),
-                      //       fontSize: 18,
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(5.0),
-                  //   child: Text(
-                  //     getTranlated(context, 'noList'),
-                  //     style: TextStyle(
-                  //       color: utils.cambiarColor(),
-                  //       fontSize: 18,
-                  //     ),
-                  //   ),
-                  // )
                 ]));
           }
 
@@ -835,34 +858,29 @@ class _NewListState extends State<NewList> {
 
   Widget _bNavbar(BuildContext context) {
     return BottomAppBar(
-        child: new Row(
+        child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Row(
-          children: [
-            FlatButton(
-              //(valor == true) ? 1 : 0;
-              onPressed: () =>
-                  (items.length <= 0) ? null : _guardarLista(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Icon(Icons.save),
-                  Text(getTranlated(context, 'saveList'))
-                ],
-              ),
-            ),
-            FlatButton(
-              onPressed: () => _validateEliminarList(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Icon(Icons.remove_circle_outline),
-                  Text(getTranlated(context, 'clearList'))
-                ],
-              ),
-            ),
-          ],
+      children: [
+        FlatButton(
+          //(valor == true) ? 1 : 0;
+          onPressed: () => (items.length <= 0) ? null : _guardarLista(context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Icon(Icons.save),
+              Text(getTranlated(context, 'saveList'))
+            ],
+          ),
+        ),
+        FlatButton(
+          onPressed: () => _validateEliminarList(context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Icon(Icons.remove_circle_outline, color: Colors.red[400]),
+              Text(getTranlated(context, 'clearList'))
+            ],
+          ),
         ),
         FlatButton(
           onPressed: () => _mostrarAlertaProducto(context),
@@ -911,6 +929,18 @@ class _NewListState extends State<NewList> {
       getDiference();
     });
     Navigator.of(context).pop();
+  }
+
+  saveBudget(String value) {
+    if (value.isEmpty) {
+      return;
+    }
+
+    buget = double.parse(value);
+    prefs.tempBuget = buget.toString();
+    getTotal();
+    bugetController.clear();
+    setState(() {});
   }
 
   saveList() async {

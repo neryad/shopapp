@@ -18,13 +18,13 @@ class PreferenciasUsuario {
   }
 
   Color defaultColor = Color.fromRGBO(255, 111, 94, 1);
-  // TODO: Cambiar genero por colorTheme
-  get genero {
-    return _prefs.getInt('genero') ?? 1;
+  // TODO: Cambiar color por colorTheme
+  get color {
+    return _prefs.getInt('color') ?? 1;
   }
 
-  set genero(int value) {
-    _prefs.setInt('genero', value);
+  set color(int value) {
+    _prefs.setInt('color', value);
   }
 
   get colorSecundario {
