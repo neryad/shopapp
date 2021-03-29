@@ -45,7 +45,7 @@ class _SettingPageState extends State<SettingPage> {
     // var appLanguage = Provider.of< mmg.AppLanguage>(context);
     return Scaffold(
       //resizeToAvoidBottomPadding: false,
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         actions: [
           Padding(

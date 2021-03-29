@@ -58,7 +58,7 @@ class _NewListState extends State<NewList> {
     //loadSharedPrefs();
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: utils.cambiarColor(),

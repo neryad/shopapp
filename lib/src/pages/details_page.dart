@@ -54,7 +54,7 @@ class _DetailsPageState extends State<DetailsPage> {
     //buget = listaModel.total;
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
