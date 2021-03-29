@@ -18,7 +18,6 @@ class PreferenciasUsuario {
   }
 
   Color defaultColor = Color.fromRGBO(255, 111, 94, 1);
-  // TODO: Cambiar color por colorTheme
   get color {
     return _prefs.getInt('color') ?? 1;
   }

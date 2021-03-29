@@ -26,7 +26,7 @@ class DBProvider {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
 
     final path = join(documentsDirectory.path, 'List.db');
-
+      print(path);
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute('CREATE TABLE Lista ('
@@ -48,6 +48,11 @@ class DBProvider {
           'complete INTEGER,'
           'FOREIGN KEY(listId) REFERENCES Lista(id)'
           ')');
+
+      // await db.execute('CREATE TABLE favorites ('
+      //     'id INTEGER PRIMARY KEY AUTOINCREMENT,'
+      //     'name TEXT'
+      //     ')');
     });
   }
 

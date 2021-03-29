@@ -7,7 +7,7 @@ import 'package:PocketList/src/localization/localization.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/pages/about_page.dart';
 import 'package:PocketList/src/pages/home_page.dart';
-import 'package:PocketList/src/pages/newList.dart';
+import 'package:PocketList/src/pages/New-List/newList.dart';
 import 'package:PocketList/src/pages/setting_page.dart';
 import 'package:PocketList/src/pages/splashScreen.dart';
 import 'package:PocketList/src/pages/help_page.dart';

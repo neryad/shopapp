@@ -21,6 +21,7 @@ class _NewListState extends State<NewList> {
   double buget = 00.00;
   double total = 0.00;
   double diference = 0.00;
+  int totalItems = 0;
   bool checkValue = false;
   FocusNode myFocusNode = FocusNode();
 
@@ -60,8 +61,19 @@ class _NewListState extends State<NewList> {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-          backgroundColor: utils.cambiarColor(),
-          title: Text(getTranlated(context, 'mMyLisTitle'))),
+        backgroundColor: utils.cambiarColor(),
+        title: Text(getTranlated(context, 'mMyLisTitle')),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Text('Items: $totalItems/${items.length}'),
+              ],
+            ),
+          )
+        ],
+      ),
       drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
@@ -683,7 +695,8 @@ class _NewListState extends State<NewList> {
                 ]));
           }
 
-          items.sort((a, b) => a.name.compareTo(b.name));
+          items.sort(
+              (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
           return Expanded(
               child: ListView.builder(
             itemCount: items.length,
@@ -762,14 +775,16 @@ class _NewListState extends State<NewList> {
                               items[index].complete = complValue;
                               DBProvider.db.updateProd(items[index]);
                               setState(() {});
+                              //**  papu  */
 
                               (valor == true)
                                   ? utils.showSnack(
                                       context, getTranlated(context, 'onCart'))
                                   : utils.showSnack(
-                                      context,
-                                      getTranlated(context,
-                                          'ofCart')); //   showSnack(context, 'Artículo agregado');
+                                      context, getTranlated(context, 'ofCart'));
+
+                              updatedCount(
+                                  valor); //   showSnack(context, 'Artículo agregado');
                             },
                             activeColor: utils.cambiarColor(),
                           ),
@@ -1007,6 +1022,18 @@ class _NewListState extends State<NewList> {
         });
   }
 
+  updatedCount(bool value) {
+    if (value == true) {
+      totalItems += 1;
+    } else {
+      totalItems -= 1;
+    }
+
+    if (totalItems == items.length) {
+      showcompletedSnack(context, 'Lista de compra completa');
+    }
+  }
+
   void showDeleteSnack(BuildContext context, String msg, int index,
       ProductModel item, List<ProductModel> items) {
     Flushbar(
@@ -1019,7 +1046,6 @@ class _NewListState extends State<NewList> {
       ),
       mainButton: FlatButton(
         onPressed: () {
-          print(item);
           //_undoProd(item, index);
           DBProvider.db.tmpProd(item);
           DBProvider.db.getArticlesTmp('tmp');
@@ -1032,6 +1058,34 @@ class _NewListState extends State<NewList> {
           style: TextStyle(color: Colors.amber),
         ),
       ),
+      leftBarIndicatorColor: utils.cambiarColor(),
+      duration: Duration(seconds: 3),
+    )..show(context);
+  }
+
+  void showcompletedSnack(BuildContext context, String msg) {
+    Flushbar(
+      //title: 'This action is prohibited',
+      message: msg,
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: utils.cambiarColor(),
+      ),
+      // mainButton: FlatButton(
+      //   onPressed: () {
+      //     //_undoProd(item, index);
+      //     DBProvider.db.tmpProd(item);
+      //     DBProvider.db.getArticlesTmp('tmp');
+      //     var it = items.length;
+      //     items.insert(it, item);
+      //     setState(() {});
+      //   },
+      //   child: Text(
+      //     getTranlated(context, 'undo'),
+      //     style: TextStyle(color: Colors.amber),
+      //   ),
+      // ),
       leftBarIndicatorColor: utils.cambiarColor(),
       duration: Duration(seconds: 3),
     )..show(context);
