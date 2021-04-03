@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:math';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
@@ -5,6 +8,15 @@ import 'package:PocketList/src/pages/list_page.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:PocketList/src/widgets/Menu_widget.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+// import 'package:pdf/widgets.dart';
+
+import 'package:share_extend/share_extend.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+final pdf = pw.Document();
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -13,7 +25,6 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-//Text("Mis listas")
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   final prefs = new PreferenciasUsuario();
@@ -44,31 +55,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  // _validateEliminar(BuildContext context){
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (context) {
-  //         return AlertDialog(
-  //           title: Text(getTranlated(context, 'deleteAllList')),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //                 onPressed: () => Navigator.of(context).pop(),
-  //                 child: Text(
-  //                   getTranlated(context, 'leave'),
-  //                   style: TextStyle(color: utils.cambiarColor()),
-  //                 )),
-  //             FlatButton(
-  //                 onPressed: () => limpiarTodo(),
-  //                 child: Text(
-  //                    getTranlated(context, 'accept'),
-  //                   style: TextStyle(color: utils.cambiarColor()),
-  //                 )),
-  //           ],
-  //         );
-  //       });
-  // }
 
   limpiarTodo() {
     setState(() {

@@ -39,8 +39,7 @@ class _HelpPageState extends State<HelpPage> {
     } else {
       pdfasset = "assets/help/es.pdf";
     }
-    print(_locale);
-    print(pdfasset);
+
     try {
       final doc = await PDFDocument.fromAsset(pdfasset);
       setState(() {
