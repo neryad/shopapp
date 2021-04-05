@@ -6,9 +6,6 @@ import 'package:PocketList/src/models/List_model.dart';
 import 'package:PocketList/src/pages/details_page.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'dart:io';
-import 'dart:math';
-import 'package:path_provider/path_provider.dart';
 
 class ListPage extends StatefulWidget {
   ListPage({Key key}) : super(key: key);
@@ -23,7 +20,6 @@ class _ListPageState extends State<ListPage> {
   void initState() {
     prefs.ultimaPagina = 'home';
     super.initState();
-    //deleteFile();
   }
 
   @override
@@ -170,7 +166,6 @@ class _ListPageState extends State<ListPage> {
           margin: EdgeInsets.symmetric(horizontal: 8.0),
           padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            // color: Color(0xFFF5F7FB),
             borderRadius: BorderRadius.circular(4.0),
           ),
           child: Column(
@@ -194,8 +189,6 @@ class _ListPageState extends State<ListPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
-                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //crossAxisAlignment: CrossAxisAlignment
                     children: [
                       CircleAvatar(
                           backgroundColor: Color(0xFFF5F7FB),
@@ -270,8 +263,6 @@ class _ListPageState extends State<ListPage> {
                   TextButton(
                       onPressed: () {
                         _validateEliminar(context, lista.id);
-                        //lista.removeAt(i);
-                        // setState(() {});
                       },
                       child: Icon(
                         Icons.delete_forever_outlined,
