@@ -26,7 +26,7 @@ class DBProvider {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
 
     final path = join(documentsDirectory.path, 'List.db');
-      print(path);
+    print(path);
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute('CREATE TABLE Lista ('
@@ -109,6 +109,15 @@ class DBProvider {
     List<Lista> list =
         res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
     return list;
+  }
+
+  ///GET PRODUCST BY LIST ID
+  Future<Lista> getListId(String id) async {
+    final db = await database;
+    final res = await db.query('Lista', where: 'id =?', whereArgs: [id]);
+    Lista art = res.isNotEmpty ? res.map((e) => Lista.fromJson(e)).first : [];
+    //return result.isNotEmpty ? Product.fromMap(result.first) : Null;
+    return art;
   }
 
   ///GET PRODUCST BY LIST ID

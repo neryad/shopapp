@@ -141,31 +141,25 @@ void showSnack(BuildContext context, String msg) {
   )..show(context);
 }
 
-// void showDeleteSnack(BuildContext context, String msg, int index, ProductModel item,  List<ProductModel> items) {
-//   Flushbar(
-//     //title: 'This action is prohibited',
-//     message: msg,
-//     icon: Icon(
-//       Icons.info_outline,
-//       size: 28,
-//       color: cambiarColor(),
-//     ),
-//     mainButton: FlatButton(
-//         onPressed: () {
-//           print(item);
-//           //_undoProd(item, index);
-//            DBProvider.db.tmpProd(item);
-//            DBProvider.db.getTmpArticulos();
-//           var it = items.length;
-//            items.insert(it, item);
+// Future<String> get _localPath async {
+//   final directory = await getApplicationDocumentsDirectory();
 
-//         },
-//         child: Text(
-//           "Undo",
-//           style: TextStyle(color: Colors.amber),
-//         ),
-//       ),
-//     leftBarIndicatorColor: cambiarColor(),
-//     duration: Duration(seconds: 2),
-//   )..show(context);
+//   return directory.path;
+// }
+
+// Future<File> get _localFile async {
+//   final path = await _localPath;
+//   print('path ${path}');
+//   return File('$path/lista.pdf');
+// }
+
+// Future<int> deleteFile(String name) async {
+//   final dir = await getApplicationDocumentsDirectory();
+//   final file = File('${dir.path}/$name.pdf');
+//   try {
+//     await file.delete();
+//     return 1;
+//   } catch (e) {
+//     return 0;
+//   }
 // }

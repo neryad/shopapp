@@ -31,6 +31,7 @@ class _SettingPageState extends State<SettingPage> {
 
   void _changeLanguea(Language language) async {
     Locale _temp = await setLocal(language.languageCode);
+    prefs.lnge = language.languageCode;
     MyApp.setLocale(context, _temp);
   }
 

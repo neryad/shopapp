@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:PocketList/src/localization/localization.dart';
@@ -8,6 +9,7 @@ String getTranlated(BuildContext context, String key) {
   return Localization.of(context).getTranslatedValue(key);
 }
 
+final prefsU = new PreferenciasUsuario();
 // Langue code
 
 const String ENGLISH = 'en';
@@ -50,5 +52,6 @@ Locale _locale(String languageCode) {
 Future<Locale> getLocale() async {
   SharedPreferences _prefs = await SharedPreferences.getInstance();
   String languageCode = _prefs.getString(LANGUAGE_CODE) ?? defaultLocale;
+  prefsU.lnge = languageCode;
   return _locale(languageCode);
 }

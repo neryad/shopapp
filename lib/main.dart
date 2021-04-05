@@ -1,4 +1,5 @@
 import 'package:PocketList/src/pages/details_page.dart';
+import 'package:PocketList/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -37,6 +38,7 @@ class _MyAppState extends State<MyApp> {
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
+      prefs.lnge = locale.languageCode;
     });
   }
 
@@ -45,6 +47,7 @@ class _MyAppState extends State<MyApp> {
     getLocale().then((locale) {
       setState(() {
         this._locale = locale;
+        prefs.lnge = locale.languageCode;
       });
     });
     super.didChangeDependencies();

@@ -63,5 +63,7 @@
   "dataDelete": "Todos los datos eliminados",
   "deletePar": "Esta acción eliminará todas tus listas.",
   "deleteDialo": "Recuerda que esta accion borrara todo las informacion de tus listas",
+  "deleteListDia": "Seguro que desea borrar está lista?",
+  "date": "Fecha:",
   "undo": "Deshacer"
 }

@@ -1,18 +1,14 @@
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:PocketList/src/utils/pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/List_model.dart';
 import 'package:PocketList/src/pages/details_page.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:share_extend/share_extend.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'dart:io';
 import 'dart:math';
 import 'package:path_provider/path_provider.dart';
-
-final pdf = pw.Document();
 
 class ListPage extends StatefulWidget {
   ListPage({Key key}) : super(key: key);
@@ -108,48 +104,47 @@ class _ListPageState extends State<ListPage> {
               itemCount: lista.length,
               itemBuilder: (context, i) {
                 return Dismissible(
-                    direction: DismissDirection.endToStart,
-                    background: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        color: Colors.red,
-                        child: Align(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Icon(
-                                Icons.delete,
+                  direction: DismissDirection.endToStart,
+                  background: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      color: Colors.red,
+                      child: Align(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              getTranlated(context, 'delete'),
+                              style: TextStyle(
                                 color: Colors.white,
+                                fontWeight: FontWeight.w700,
                               ),
-                              Text(
-                                getTranlated(context, 'delete'),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                textAlign: TextAlign.right,
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                            ],
-                          ),
-                          alignment: Alignment.centerRight,
+                              textAlign: TextAlign.right,
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                          ],
                         ),
+                        alignment: Alignment.centerRight,
                       ),
                     ),
-                    key: Key(lista[i].title + lista.length.toString()),
-                    onDismissed: (direction) {
-                      utils.showSnack(
-                          context, getTranlated(context, 'deletedList'));
-                      DBProvider.db.deleteLista(lista[i].id);
-                      lista.removeAt(i);
-                      setState(() {});
-                    },
-                    child: card(lista[i])
+                  ),
+                  key: Key(lista[i].title + lista.length.toString()),
+                  onDismissed: (direction) {
+                    utils.showSnack(
+                        context, getTranlated(context, 'deletedList'));
 
-                    //_card(lista[i]),
-                    );
+                    DBProvider.db.deleteLista(lista[i].id);
+                    lista.removeAt(i);
+                    setState(() {});
+                  },
+                  child: card(lista[i]),
+                );
               });
         },
       ),
@@ -172,7 +167,7 @@ class _ListPageState extends State<ListPage> {
     return Card(
       elevation: 8,
       child: Container(
-          // margin: EdgeInsets.symmetric(horizontal: 8.0),
+          margin: EdgeInsets.symmetric(horizontal: 8.0),
           padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             // color: Color(0xFFF5F7FB),
@@ -183,10 +178,24 @@ class _ListPageState extends State<ListPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    lista.fecha,
+                    style: TextStyle(
+                      color: Colors.black45,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //crossAxisAlignment: CrossAxisAlignment.,
                 children: [
                   Column(
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //crossAxisAlignment: CrossAxisAlignment
                     children: [
                       CircleAvatar(
                           backgroundColor: Color(0xFFF5F7FB),
@@ -246,12 +255,8 @@ class _ListPageState extends State<ListPage> {
                 children: [
                   TextButton(
                       onPressed: () async {
-                        String name = getRandomString(5);
-
-                        await writeOnPdf(context, lista.id, name);
-                        Future.delayed(Duration(seconds: 15), () {
-                          deleteFile(name);
-                        });
+                        final pdf = await ApiPdf.generateTAble(lista.id);
+                        ApiPdf.openFile(pdf);
                       },
                       child: Icon(Icons.share)),
                   TextButton(
@@ -264,12 +269,9 @@ class _ListPageState extends State<ListPage> {
                       child: Icon(Icons.edit, color: Colors.yellow[600])),
                   TextButton(
                       onPressed: () {
-                        utils.showSnack(
-                            context, getTranlated(context, 'deletedList'));
-                        DBProvider.db.deleteLista(lista.id);
-                        // TODO : revisar el flushbR
+                        _validateEliminar(context, lista.id);
                         //lista.removeAt(i);
-                        setState(() {});
+                        // setState(() {});
                       },
                       child: Icon(
                         Icons.delete_forever_outlined,
@@ -282,179 +284,35 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  // Widget _card(Lista lista) {
-  //   return GestureDetector(
-  //     onTap: () {
-  //       var route = new MaterialPageRoute(
-  //           builder: (BuildContext context) => DetailsPage(savelist: lista));
-  //       Navigator.of(context).push(route);
-  //     },
-  //     child: Container(
-  //       height: 100.00,
-  //       child: Card(
-  //         elevation: 10.0,
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //           children: <Widget>[
-  //             Row(
-  //               children: [
-  //                 Icon(Icons.shopping_basket, color: utils.cambiarColor()),
-  //                 Column(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   children: <Widget>[
-  //                     Text(lista.title),
-  //                     Text(lista.superMaret,
-  //                         style: TextStyle(
-  //                           fontWeight: FontWeight.bold,
-  //                         )),
-  //                   ],
-  //                 ),
-  //                 Column(
-  //                     mainAxisAlignment: MainAxisAlignment.center,
-  //                     children: <Widget>[
-  //                       Text(lista.fecha),
-  //                       Text(
-  //                         utils.numberFormat(lista.total),
-  //                         style: TextStyle(
-  //                           fontWeight: FontWeight.bold,
-  //                         ),
-  //                       )
-  //                     ]),
-  //               ],
-  //             ),
-  //             Row(
-  //               children: [
-  //                 new FlatButton.icon(
-  //                   // Un icono puede recibir muchos atributos, aqui solo usaremos icono, tamaño y color
-  //                   icon: const Icon(Icons.delete_forever_sharp,
-  //                       color: Colors.red),
-  //                   label: const Text('Like'),
-  //                   // Esto mostrara 'Me encanta' por la terminal
-  //                   onPressed: () {
-  //                     print('Me encanta');
-  //                   },
-  //                 ),
-  //                 new FlatButton.icon(
-  //                   icon: const Icon(Icons.edit, color: Colors.yellow),
-  //                   label: const Text('Comment'),
-  //                   onPressed: () {
-  //                     print('Comenta algo');
-  //                   },
-  //                 ),
-  //                 new FlatButton.icon(
-  //                   icon: const Icon(Icons.share, color: Colors.blueAccent),
-  //                   label: const Text('Share'),
-  //                   onPressed: () {
-  //                     print('Compartelo');
-  //                   },
-  //                 )
-  //               ],
-  //             ),
-  //             // Icon(Icons.shopping_basket, color: utils.cambiarColor()),
-  //             // Column(
-  //             //   mainAxisAlignment: MainAxisAlignment.center,
-  //             //   children: <Widget>[
-  //             //     Text(lista.title),
-  //             //     Text(lista.superMaret,
-  //             //         style: TextStyle(
-  //             //           fontWeight: FontWeight.bold,
-  //             //         )),
-  //             //   ],
-  //             // ),
-  //             // Column(
-  //             //     mainAxisAlignment: MainAxisAlignment.center,
-  //             //     children: <Widget>[
-  //             //       Text(lista.fecha),
-  //             //       Text(
-  //             //         utils.numberFormat(lista.total),
-  //             //         style: TextStyle(
-  //             //           fontWeight: FontWeight.bold,
-  //             //         ),
-  //             //       )
-  //             //     ]),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  String getRandomString(int len) {
-    var r = Random();
-    const _chars =
-        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
-        .join();
-  }
-
-  writeOnPdf(BuildContext context, String id, String name) async {
-    final titles = ['Name', 'Price', 'Quantity'];
-    final data = await DBProvider.db.getProdId(id);
-    final filterData = data.map((e) {
-      return [e.name, e.quantity, e.price];
-    }).toList();
-
-    pdf.addPage(pw.MultiPage(
-      pageFormat: PdfPageFormat.a5,
-      margin: pw.EdgeInsets.all(32),
-      build: (pw.Context context) {
-        return <pw.Widget>[
-          pw.Header(level: 0, child: pw.Text("Pocketlist")),
-          pw.Table.fromTextArray(
-              data: filterData,
-              headers: titles,
-              border: null,
-              headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-              cellHeight: 30,
-              cellAlignments: {
-                0: pw.Alignment.topLeft,
-                1: pw.Alignment.centerRight,
-                2: pw.Alignment.centerRight,
-              })
-        ];
-      },
-    ));
-    final bytes = await pdf.save();
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/$name.pdf');
-    await file.writeAsBytes(bytes);
-    final url = file.path;
-    //await openFile(file);
-    ShareExtend.share(url, 'file');
-    //await file.delete();
-    // if (File(url).existsSync()) {
-    //   print('object');
-    //   await deleteFile();
-    // }
-  }
-
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-
-    return directory.path;
-  }
-
-  Future<File> get _localFile async {
-    final path = await _localPath;
-    print('path ${path}');
-    return File('$path/lista.pdf');
-  }
-
-  Future<int> deleteFile(String name) async {
-    // final directory = await getApplicationDocumentsDirectory();
-    // final path = directory.path;
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/$name.pdf');
-    //  final dir = await getApplicationDocumentsDirectory();
-    // final file = File('${dir.path}/lista.pdf');
-    // await file.writeAsBytes(bytes);
-    // final url = file.path;
-    try {
-      //final file = await _localFile;
-
-      await file.delete();
-    } catch (e) {
-      return 0;
-    }
+  _validateEliminar(BuildContext context, String id) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(getTranlated(context, 'delete')),
+            content: new Text(getTranlated(context, 'deleteListDia')),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    getTranlated(context, 'leave'),
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+              TextButton(
+                  onPressed: () {
+                    DBProvider.db.deleteLista(id);
+                    Navigator.of(context).pop();
+                    utils.showSnack(
+                        context, getTranlated(context, 'deletedList'));
+                    setState(() {});
+                  },
+                  child: Text(
+                    getTranlated(context, 'accept'),
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+            ],
+          );
+        });
   }
 }
