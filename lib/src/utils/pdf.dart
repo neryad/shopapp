@@ -10,26 +10,25 @@ import 'package:pdf/widgets.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 
 final prefs = new PreferenciasUsuario();
-String datePdf, bugetPdf, quatiyPdf, namePdf, pricePdf;
-
-//final lnge = prefs.lnge.toString();
+String datePdf, bugetPdf, quatiyPdf, namePdf, pricePdf, toalQaPdf;
 
 class ApiPdf {
   static Future<File> generateTAble(String id) async {
-    List<String> mList = ['es', 'en'];
-    var myStr = 'dubai'; //or your textFieldController.text
+//or your textFieldController.text
     if ((prefs.lnge) == 'en') {
       datePdf = 'Date:';
-      bugetPdf = 'Buget:';
+      bugetPdf = 'Budget:';
       quatiyPdf = 'Quantity';
       namePdf = 'Name';
       pricePdf = 'Price';
+      toalQaPdf = 'Total quantity';
     } else {
       datePdf = 'Fecha:';
       bugetPdf = 'Presupuesto:';
       quatiyPdf = 'Cantidad';
       namePdf = 'Nombre';
       pricePdf = 'Precio';
+      toalQaPdf = 'Total cantidad';
     }
     final pdf = Document();
 
@@ -76,9 +75,11 @@ class ApiPdf {
   }
 
   static Widget buildTable(List<ProductModel> products) {
-    final headers = [namePdf, pricePdf, quatiyPdf];
+    final headers = [namePdf, pricePdf, quatiyPdf, toalQaPdf];
+
     final filterData = products.map((e) {
-      return [e.name, e.price, e.quantity];
+      final total = e.price * e.quantity;
+      return [e.name, e.price, e.quantity, total];
     }).toList();
     return Table.fromTextArray(
         data: filterData,
@@ -126,9 +127,9 @@ class ApiPdf {
                   Text(
                     list.fecha,
                   ),
-                  Text('\$  ${utils.numberFormat(list.total)}'),
+                  Text('\$  ${utils.numberFormat(list.buget)}'),
                   Text(
-                    '\$  ${utils.numberFormat(list.buget)}',
+                    '\$  ${utils.numberFormat(list.total)}',
                   ),
                 ],
               ),
