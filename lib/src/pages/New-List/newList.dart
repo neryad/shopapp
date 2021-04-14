@@ -7,7 +7,7 @@ import 'package:PocketList/src/models/product_model.dart';
 import 'package:PocketList/src/models/suge.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:PocketList/src/widgets/Menu_widget.dart';
+//import 'package:PocketList/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class NewList extends StatefulWidget {
@@ -74,7 +74,8 @@ class _NewListState extends State<NewList> {
           )
         ],
       ),
-      drawer: MenuWidget(),
+      //drawer: Icon(Icons.arrow_back),
+      // drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
           _header(),
@@ -525,6 +526,9 @@ class _NewListState extends State<NewList> {
                                   children: [
                                     Icon(Icons.account_balance_wallet,
                                         color: utils.cambiarColor()),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
                                     Text(getTranlated(context, 'buget'),
                                         style: TextStyle(
                                             fontSize: 16,
@@ -534,17 +538,6 @@ class _NewListState extends State<NewList> {
                                   ],
                                 ),
                               ),
-                              // FlatButton.icon(
-                              //     onPressed: () => _mostrarAlertaBuget(context),
-                              //     icon: Icon(
-                              //       Icons.account_balance_wallet,
-                              //       color: utils.cambiarColor(),
-                              //     ),
-                              //     label: Text(
-                              //       getTranlated(context, 'buget'),
-                              //       style:
-                              //           TextStyle(fontWeight: FontWeight.bold),
-                              //     )),
                             ],
                           ),
                           Spacer(),
@@ -575,6 +568,9 @@ class _NewListState extends State<NewList> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(Icons.shopping_cart),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
                                   Text('Total',
                                       style: TextStyle(
                                         fontSize: 16,
@@ -610,6 +606,9 @@ class _NewListState extends State<NewList> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(Icons.shuffle),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Text(getTranlated(context, 'difference'),
                                 style: TextStyle(
                                   fontSize: 16,

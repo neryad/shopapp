@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:PocketList/src/pages/New-List/newList.dart';
 import 'package:PocketList/src/utils/pdf.dart';
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,22 @@ class _HomePageState extends State<HomePage> {
       body: ListPage(),
       drawer: MenuWidget(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {Navigator.pushReplacementNamed(context, 'newList')},
+        onPressed: () => {
+          Navigator.pop(context),
+
+          //  Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => SecondRoute()),
+          // );
+          //
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => NewList(),
+          //     ))
+
+          Navigator.pushNamed(context, 'newList')
+        },
         child: const Icon(Icons.add),
         backgroundColor: utils.cambiarColor(),
       ),

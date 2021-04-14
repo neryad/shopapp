@@ -76,7 +76,7 @@ class _HelpPageState extends State<HelpPage> {
               // showIndicator: false,
               showPicker: false,
             ),
-      drawer: MenuWidget(),
+      //drawer: MenuWidget(),
     );
   }
 }

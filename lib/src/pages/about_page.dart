@@ -36,7 +36,7 @@ class _AboutPageState extends State<AboutPage> {
           //title: Text(getTranlated(context, 'aboutTitle')),
           elevation: 0.0,
         ),
-        drawer: MenuWidget(),
+        // drawer: MenuWidget(),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[

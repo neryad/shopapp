@@ -85,7 +85,7 @@ class _SettingPageState extends State<SettingPage> {
         title: Text(getTranlated(context, 'settTitle')),
         backgroundColor: utils.cambiarColor(),
       ),
-      drawer: MenuWidget(),
+      //  drawer: MenuWidget(),
       body: ListView(children: <Widget>[
         Container(
           padding: EdgeInsets.all(15.0),

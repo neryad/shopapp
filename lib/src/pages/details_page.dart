@@ -61,7 +61,7 @@ class _DetailsPageState extends State<DetailsPage> {
           title: Text(
             listaModel.title,
           )),
-      drawer: MenuWidget(),
+      // drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
           _header(listaModel.total, listaModel.buget, listaModel.diference,
@@ -96,11 +96,27 @@ class _DetailsPageState extends State<DetailsPage> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              FlatButton.icon(
-                                  onPressed: () =>
-                                      _mostrarAlertaBuget(context, list),
-                                  icon: Icon(Icons.account_balance_wallet),
-                                  label: Text(getTranlated(context, 'buget'))),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.account_balance_wallet,
+                                        color: utils.cambiarColor()),
+                                    SizedBox(width: 5),
+                                    Text(getTranlated(context, 'buget'),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold))
+                                  ],
+                                ),
+                              ),
+                              // FlatButton.icon(
+                              //     onPressed: () =>
+                              //         _mostrarAlertaBuget(context, list),
+                              //     icon: Icon(Icons.account_balance_wallet),
+                              //     label: Text(getTranlated(context, 'buget'))
+                              //   ),
                             ],
                           ),
                           Spacer(),
@@ -119,47 +135,79 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          FlatButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.shopping_cart),
-                              label: Text("Total")),
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            utils.numberFormat(total),
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: utils.cambiarColor(),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      )
-                    ],
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.shopping_cart),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text('Total', style: TextStyle(fontSize: 16))
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              utils.numberFormat(total),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: utils.cambiarColor(),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                  Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      FlatButton.icon(
-                          onPressed: () {},
-                          icon: Icon(Icons.shuffle),
-                          label: Text(getTranlated(context, 'difference'))),
-                      Spacer(),
-                      Text(
-                        utils.numberFormat(diference),
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: bugetColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  Container(
+                    child: Row(
+                      //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.shuffle),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text('difference',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        //color: bugetColor,
+                                      )),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Spacer(),
+                        Text(
+                          utils.numberFormat(diference),
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: bugetColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
