@@ -1,4 +1,6 @@
 import 'package:PocketList/src/pages/details_page.dart';
+import 'package:PocketList/src/pages/settings/pages/color_page.dart';
+import 'package:PocketList/src/pages/settings/pages/user.dart';
 import 'package:PocketList/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,13 +11,14 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/pages/about_page.dart';
 import 'package:PocketList/src/pages/home_page.dart';
 import 'package:PocketList/src/pages/New-List/newList.dart';
-import 'package:PocketList/src/pages/setting_page.dart';
+import 'package:PocketList/src/pages/settings/setting_page.dart';
 import 'package:PocketList/src/pages/splashScreen.dart';
 import 'package:PocketList/src/pages/help_page.dart';
 
+final prefs = new PreferenciasUsuario();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = new PreferenciasUsuario();
+  // final prefs = new PreferenciasUsuario();
   await prefs.initPrefes();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(MyApp()));
@@ -23,6 +26,11 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
+  static void stateSet(BuildContext context) {
+    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
+    state.setState(() {});
+  }
+
   static void setLocale(BuildContext context, Locale locale) {
     _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
     state.setLocale(locale);
@@ -97,6 +105,8 @@ class _MyAppState extends State<MyApp> {
           'splahs': (BuildContext context) => SplashScreen(),
           'help': (BuildContext context) => HelpPage(),
           'detailsPage': (BuildContext context) => DetailsPage(),
+          'colorPage': (BuildContext context) => ColorPage(),
+          'userPage': (BuildContext context) => UserPage(),
         },
       );
     }

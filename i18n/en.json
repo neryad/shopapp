@@ -65,5 +65,7 @@
   "deleteDialo": "Remember that this action will erase all the information from your lists",
   "deleteListDia": "Are you sure you want to delete this list?",
   "date": "Date:",
-  "undo": "Undo"
+  "undo": "Undo",
+  "userNameConf": "Username Settings",
+  "changeComplete": "Changes applied"
 }

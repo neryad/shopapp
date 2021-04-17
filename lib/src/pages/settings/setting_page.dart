@@ -6,6 +6,7 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:PocketList/src/widgets/Menu_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key key}) : super(key: key);
@@ -15,15 +16,15 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  int _color;
+  //int _color;
   TextEditingController _textEditingController;
 
   final prefs = new PreferenciasUsuario();
 
   @override
   void initState() {
-    _color = prefs.color;
-    prefs.ultimaPagina = 'settings';
+    //_color = prefs.color;
+    // prefs.ultimaPagina = 'settings';
     super.initState();
     _textEditingController =
         new TextEditingController(text: prefs.nombreUsuario);
@@ -33,12 +34,6 @@ class _SettingPageState extends State<SettingPage> {
     Locale _temp = await setLocal(language.languageCode);
     prefs.lnge = language.languageCode;
     MyApp.setLocale(context, _temp);
-  }
-
-  _selectedRadio(int valor) {
-    prefs.color = valor;
-    _color = valor;
-    setState(() {});
   }
 
   @override
@@ -87,79 +82,33 @@ class _SettingPageState extends State<SettingPage> {
       ),
       //  drawer: MenuWidget(),
       body: ListView(children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(15.0),
-          child: Text(
-            getTranlated(context, 'themTitle'),
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          ),
+        ListTile(
+          leading: Icon(Icons.color_lens),
+          title: Text(getTranlated(context, 'themTitle'),
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: utils.cambiarColor())),
+          onTap: () => {
+            // Navigator.pop(context),
+            Navigator.pushNamed(context, 'colorPage')
+          },
+          trailing: Icon(Icons.arrow_forward_ios_rounded),
         ),
         Divider(),
-        RadioListTile(
-          title: Text(
-            getTranlated(context, 'nColor'),
-            style: TextStyle(fontSize: 20),
-          ),
-          value: 1,
-          groupValue: _color,
-          onChanged: _selectedRadio,
+        ListTile(
+          leading: Icon(Icons.person_sharp),
+          title: Text(getTranlated(context, 'userTitle'),
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: utils.cambiarColor())),
+          onTap: () => {
+            // Navigator.pop(context),
+            Navigator.pushNamed(context, 'userPage')
+          },
+          trailing: Icon(Icons.arrow_forward_ios_rounded),
         ),
-        RadioListTile(
-          title: Text(
-            getTranlated(context, 'bColor'),
-            style: TextStyle(fontSize: 20),
-          ),
-          value: 2,
-          groupValue: _color,
-          onChanged: _selectedRadio,
-        ),
-        RadioListTile(
-          title: Text(
-            getTranlated(context, 'geColor'),
-            style: TextStyle(fontSize: 20),
-          ),
-          value: 3,
-          groupValue: _color,
-          onChanged: _selectedRadio,
-        ),
-        RadioListTile(
-          title: Text(
-            getTranlated(context, 'pColor'),
-            style: TextStyle(fontSize: 20),
-          ),
-          value: 4,
-          groupValue: _color,
-          onChanged: _selectedRadio,
-        ),
-        RadioListTile(
-          title: Text(
-            getTranlated(context, 'gyColor'),
-            style: TextStyle(fontSize: 20),
-          ),
-          value: 5,
-          groupValue: _color,
-          onChanged: _selectedRadio,
-        ),
-        Divider(),
-        Container(
-          padding: EdgeInsets.all(15.0),
-          child: Text(
-            getTranlated(context, 'userTitle'),
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextField(
-              controller: _textEditingController,
-              decoration: InputDecoration(
-                labelText: getTranlated(context, 'userInpText'),
-                // helperText: getTranlated(context, 'userInpText')
-              ),
-              onChanged: (value) {
-                prefs.nombreUsuario = value;
-              },
-            )),
         Divider(),
         Container(
           padding: EdgeInsets.all(15.0),

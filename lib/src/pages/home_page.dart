@@ -18,6 +18,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:share_extend/share_extend.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'help_page.dart';
+
 final pdf = pw.Document();
 
 class HomePage extends StatefulWidget {
@@ -49,15 +51,80 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: utils.cambiarColor(),
       ),
       body: ListPage(),
-      drawer: MenuWidget(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(''),
+              decoration: utils.cambiarHeaderImage(),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.home,
+              ),
+              title: Text(
+                getTranlated(context, 'mHomeTitle'),
+              ),
+              onTap: () => {
+                // Navigator.pop(context),
+                Navigator.pushNamed(context, 'home')
+                // Navigator.pushReplacementNamed(context, 'home')
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.list),
+              title: Text(getTranlated(context, 'mMyLisTitle')),
+              onTap: () => {
+                // Navigator.pop(context),
+                Navigator.pushNamed(context, 'newList')
+                // Navigator.pushReplacementNamed(context, 'newList')
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text(getTranlated(context, 'mSettingTitle')),
+              onTap: () => {
+                //Navigator.pop(context),
+                Navigator.pushNamed(context, 'settings')
+                //Navigator.pushReplacementNamed(context, 'settings')
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text(getTranlated(context, 'mAboutTitle')),
+              onTap: () => {
+                // Navigator.pop(context),
+                Navigator.pushNamed(context, 'about')
+              },
+              //{Navigator.pushReplacementNamed(context, 'about')}
+            ),
+            ListTile(
+              leading: Icon(Icons.help),
+              title: Text(getTranlated(context, 'mHelp')),
+              onTap: () => {
+                // Navigator.pop(context),
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => new HelpPage(),
+                    ))
+                //Navigator.pushNamed(context, 'help')
+              },
+            )
+          ],
+        ),
+      ),
+      //MenuWidget(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
-          Navigator.pop(context),
-
-          //  Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => SecondRoute()),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return NewList();
+            }),
+          )
+          //Navigator.pop(context),
           //
           // Navigator.push(
           //     context,
@@ -65,7 +132,7 @@ class _HomePageState extends State<HomePage> {
           //       builder: (context) => NewList(),
           //     ))
 
-          Navigator.pushNamed(context, 'newList')
+          //Navigator.pushNamed(context, 'newList')
         },
         child: const Icon(Icons.add),
         backgroundColor: utils.cambiarColor(),
