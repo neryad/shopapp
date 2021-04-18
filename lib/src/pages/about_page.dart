@@ -22,7 +22,7 @@ class _AboutPageState extends State<AboutPage> {
   @override
   void initState() {
     //getBuildAndVersion();
-    prefs.ultimaPagina = 'about';
+    //prefs.ultimaPagina = 'about';
   }
 
   @override

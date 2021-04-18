@@ -22,7 +22,7 @@ class _HelpPageState extends State<HelpPage> {
 
   @override
   void initState() {
-    prefs.ultimaPagina = 'help';
+    //prefs.ultimaPagina = 'help';
     super.initState();
     _initPdf();
   }
