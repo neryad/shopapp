@@ -49,23 +49,24 @@ Color cambiarColor() {
 
 BoxDecoration cambiarHeaderImage() {
   var img = '';
-  if (prefs.color == 1) {
-    img = 'assets/undraw_shopping_app_flsj.png';
-  } else if (prefs.color == 2) {
-    img = 'assets/undraw_shopping_app_flsj_A.png';
-  } else if (prefs.color == 3) {
-    img = 'assets/undraw_shopping_app_flsj_G.png';
-  } else if (prefs.color == 4) {
-    img = 'assets/undraw_shopping_app_flsj_R.png';
-  } else if (prefs.color == 5) {
-    img = 'assets/undraw_shopping_app_flsj_GR.png';
-  } else if (prefs.color == 6) {
-    img = 'assets/undraw_shopping_app_flsj-dp.png';
-  } else if (prefs.color == 7) {
-    img = 'assets/undraw_shopping_app_flsj-Red.png';
-  } else {
-    img = 'assets/undraw_shopping_app_flsj.png';
-  }
+  img = 'assets/shopping_app_${prefs.color}.png';
+  // if (prefs.color == 1) {
+  //   img = 'assets/undraw_shopping_app_flsj.png';
+  // } else if (prefs.color == 2) {
+  //   img = 'assets/undraw_shopping_app_flsj_A.png';
+  // } else if (prefs.color == 3) {
+  //   img = 'assets/undraw_shopping_app_flsj_G.png';
+  // } else if (prefs.color == 4) {
+  //   img = 'assets/undraw_shopping_app_flsj_R.png';
+  // } else if (prefs.color == 5) {
+  //   img = 'assets/undraw_shopping_app_flsj_GR.png';
+  // } else if (prefs.color == 6) {
+  //   img = 'assets/undraw_shopping_app_flsj-dp.png';
+  // } else if (prefs.color == 7) {
+  //   img = 'assets/undraw_shopping_app_flsj-Red.png';
+  // } else {
+  //   img = 'assets/undraw_shopping_app_flsj.png';
+  // }
 
   return BoxDecoration(
       image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover));
@@ -73,23 +74,24 @@ BoxDecoration cambiarHeaderImage() {
 
 Image cambiarHomeImage() {
   var img;
-  if (prefs.color == 1) {
-    img = 'assets/undraw_empty_cart_co35.png';
-  } else if (prefs.color == 2) {
-    img = 'assets/undraw_empty_cart_co35_A.png';
-  } else if (prefs.color == 3) {
-    img = 'assets/undraw_empty_cart_co35_G.png';
-  } else if (prefs.color == 4) {
-    img = 'assets/undraw_empty_cart_co35_R.png';
-  } else if (prefs.color == 5) {
-    img = 'assets/undraw_empty_cart_co35_GR.png';
-  } else if (prefs.color == 6) {
-    img = 'assets/undraw_empty_cart_co35-dp.png';
-  } else if (prefs.color == 7) {
-    img = 'assets/undraw_empty_cart_co35-Red.png';
-  } else {
-    img = 'assets/undraw_empty_cart_co35.png';
-  }
+  img = 'assets/empty_cart_${prefs.color}.png';
+  // if (prefs.color == 1) {
+  //   img = 'assets/undraw_empty_cart_co35.png';
+  // } else if (prefs.color == 2) {
+  //   img = 'assets/undraw_empty_cart_co35_A.png';
+  // } else if (prefs.color == 3) {
+  //   img = 'assets/undraw_empty_cart_co35_G.png';
+  // } else if (prefs.color == 4) {
+  //   img = 'assets/undraw_empty_cart_co35_R.png';
+  // } else if (prefs.color == 5) {
+  //   img = 'assets/undraw_empty_cart_co35_GR.png';
+  // } else if (prefs.color == 6) {
+  //   img = 'assets/undraw_empty_cart_co35-dp.png';
+  // } else if (prefs.color == 7) {
+  //   img = 'assets/undraw_empty_cart_co35-Red.png';
+  // } else {
+  //   img = 'assets/undraw_empty_cart_co35.png';
+  // }
 
   return Image(
     image: AssetImage(img),
@@ -100,23 +102,24 @@ Image cambiarHomeImage() {
 
 Image cambiarNewImage() {
   var img;
-  if (prefs.color == 1) {
-    img = 'assets/add_to_cart.png';
-  } else if (prefs.color == 2) {
-    img = 'assets/add_to_cart_A.png';
-  } else if (prefs.color == 3) {
-    img = 'assets/add_to_cart_G.png';
-  } else if (prefs.color == 4) {
-    img = 'assets/add_to_cart_R.png';
-  } else if (prefs.color == 5) {
-    img = 'assets/add_to_cart_GR.png';
-  } else if (prefs.color == 6) {
-    img = 'assets/undraw_add_to_cart_vkjp-dp.png';
-  } else if (prefs.color == 7) {
-    img = 'assets/undraw_add_to_cart_vkjp-Red.png';
-  } else {
-    img = 'assets/add_to_cart.png';
-  }
+  img = 'assets/add_to_cart_${prefs.color}.png';
+  // if (prefs.color == 1) {
+  //   img = 'assets/add_to_cart.png';
+  // } else if (prefs.color == 2) {
+  //   img = 'assets/add_to_cart_A.png';
+  // } else if (prefs.color == 3) {
+  //   img = 'assets/add_to_cart_G.png';
+  // } else if (prefs.color == 4) {
+  //   img = 'assets/add_to_cart_R.png';
+  // } else if (prefs.color == 5) {
+  //   img = 'assets/add_to_cart_GR.png';
+  // } else if (prefs.color == 6) {
+  //   img = 'assets/undraw_add_to_cart_vkjp-dp.png';
+  // } else if (prefs.color == 7) {
+  //   img = 'assets/undraw_add_to_cart_vkjp-Red.png';
+  // } else {
+  //   img = 'assets/add_to_cart.png';
+  // }
 
   return Image(
     image: AssetImage(img),
