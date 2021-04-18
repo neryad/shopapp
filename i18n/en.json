@@ -8,6 +8,8 @@
   "geColor": "Green",
   "pColor": "Pink",
   "gyColor": "Grey",
+  "dpColor": "Deep-Purple",
+  "rColor": "Red",
   "userTitle": "User customization",
   "userInpText": "User name",
   "dataTitle": "Data administration",

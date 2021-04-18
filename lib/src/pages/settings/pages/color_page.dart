@@ -3,7 +3,6 @@ import 'package:PocketList/src/data/class/language.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:PocketList/src/localization/localization_constant.dart';
-
 import '../../../../main.dart';
 
 class ColorPage extends StatefulWidget {
@@ -15,14 +14,7 @@ class ColorPage extends StatefulWidget {
 
 class _ColorPageState extends State<ColorPage> {
   int _color;
-  //TextEditingController _textEditingController;
-
   final prefs = new PreferenciasUsuario();
-  // void _changeLanguea(Language language) async {
-  //   Locale _temp = await setLocal(language.languageCode);
-  //   prefs.lnge = language.languageCode;
-  //   MyApp.setLocale(context, _temp);
-  // }
 
   @override
   void initState() {
@@ -112,6 +104,32 @@ class _ColorPageState extends State<ColorPage> {
               onChanged: _selectedRadio,
               secondary: CircleAvatar(
                 backgroundColor: Color(0xffb424242),
+              ),
+            ),
+            Divider(),
+            RadioListTile(
+              title: Text(
+                getTranlated(context, 'dpColor'),
+                style: TextStyle(fontSize: 20),
+              ),
+              value: 6,
+              groupValue: _color,
+              onChanged: _selectedRadio,
+              secondary: CircleAvatar(
+                backgroundColor: Color(0xff7e57c2),
+              ),
+            ),
+            Divider(),
+            RadioListTile(
+              title: Text(
+                getTranlated(context, 'rColor'),
+                style: TextStyle(fontSize: 20),
+              ),
+              value: 7,
+              groupValue: _color,
+              onChanged: _selectedRadio,
+              secondary: CircleAvatar(
+                backgroundColor: Color(0xffe53935),
               ),
             ),
             Divider()

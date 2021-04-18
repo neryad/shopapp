@@ -36,8 +36,14 @@ Color cambiarColor() {
     return Color(0xffb02b7600);
   } else if (prefs.color == 4) {
     return Color(0xffb0FF1493);
-  } else {
+  } else if (prefs.color == 5) {
     return Color(0xffb424242);
+  } else if (prefs.color == 6) {
+    return Color(0xff7e57c2);
+  } else if (prefs.color == 7) {
+    return Color(0xffe53935);
+  } else {
+    return Color.fromRGBO(255, 111, 94, 1);
   }
 }
 
@@ -51,8 +57,14 @@ BoxDecoration cambiarHeaderImage() {
     img = 'assets/undraw_shopping_app_flsj_G.png';
   } else if (prefs.color == 4) {
     img = 'assets/undraw_shopping_app_flsj_R.png';
-  } else {
+  } else if (prefs.color == 5) {
     img = 'assets/undraw_shopping_app_flsj_GR.png';
+  } else if (prefs.color == 6) {
+    img = 'assets/undraw_shopping_app_flsj-dp.png';
+  } else if (prefs.color == 7) {
+    img = 'assets/undraw_shopping_app_flsj-Red.png';
+  } else {
+    img = 'assets/undraw_shopping_app_flsj.png';
   }
 
   return BoxDecoration(
@@ -69,8 +81,14 @@ Image cambiarHomeImage() {
     img = 'assets/undraw_empty_cart_co35_G.png';
   } else if (prefs.color == 4) {
     img = 'assets/undraw_empty_cart_co35_R.png';
-  } else {
+  } else if (prefs.color == 5) {
     img = 'assets/undraw_empty_cart_co35_GR.png';
+  } else if (prefs.color == 6) {
+    img = 'assets/undraw_empty_cart_co35-dp.png';
+  } else if (prefs.color == 7) {
+    img = 'assets/undraw_empty_cart_co35-Red.png';
+  } else {
+    img = 'assets/undraw_empty_cart_co35.png';
   }
 
   return Image(
@@ -90,8 +108,14 @@ Image cambiarNewImage() {
     img = 'assets/add_to_cart_G.png';
   } else if (prefs.color == 4) {
     img = 'assets/add_to_cart_R.png';
-  } else {
+  } else if (prefs.color == 5) {
     img = 'assets/add_to_cart_GR.png';
+  } else if (prefs.color == 6) {
+    img = 'assets/undraw_add_to_cart_vkjp-dp.png';
+  } else if (prefs.color == 7) {
+    img = 'assets/undraw_add_to_cart_vkjp-Red.png';
+  } else {
+    img = 'assets/add_to_cart.png';
   }
 
   return Image(
