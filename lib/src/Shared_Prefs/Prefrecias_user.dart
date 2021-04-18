@@ -34,6 +34,14 @@ class PreferenciasUsuario {
     _prefs.setBool('colorSecundario', value);
   }
 
+  get darkLightTheme {
+    return _prefs.getBool('darkLightTheme') ?? false;
+  }
+
+  set darkLightTheme(bool value) {
+    _prefs.setBool('darkLightTheme', value);
+  }
+
   get nombreUsuario {
     return _prefs.getString('nombreUsuario') ?? '';
   }

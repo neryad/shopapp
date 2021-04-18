@@ -72,45 +72,67 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     } else {
-      return MaterialApp(
-        locale: _locale,
-        supportedLocales: [
-          Locale('en', 'US'),
-          Locale('es', 'US'),
-        ],
-        localizationsDelegates: [
-          Localization.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          //GlobalCupertinoLocalizations.delegate
-        ],
-        localeResolutionCallback: (deviceLocale, supportedLocales) {
-          for (var locale in supportedLocales) {
-            if (locale.languageCode == deviceLocale.languageCode &&
-                locale.countryCode == deviceLocale.countryCode) {
-              return deviceLocale;
-            }
-          }
-
-          return supportedLocales.first;
-        },
-        title: 'PocketList',
-        initialRoute: prefs.ultimaPagina,
-        home: SplashScreen(),
-        debugShowCheckedModeBanner: true,
-        routes: {
-          'home': (BuildContext context) => HomePage(),
-          'newList': (BuildContext context) => NewList(),
-          'settings': (BuildContext context) => SettingPage(),
-          'about': (BuildContext context) => AboutPage(),
-          'splahs': (BuildContext context) => SplashScreen(),
-          'help': (BuildContext context) => HelpPage(),
-          'detailsPage': (BuildContext context) => DetailsPage(),
-          'colorPage': (BuildContext context) => ColorPage(),
-          'userPage': (BuildContext context) => UserPage(),
-          'dataPage': (BuildContext context) => DataPage()
-        },
-      );
+      return DarkLightTheme(locale: _locale, prefs: prefs);
     }
+  }
+}
+
+ThemeData darktheme = ThemeData(brightness: Brightness.dark);
+
+ThemeData lightTheme = ThemeData(brightness: Brightness.light);
+
+class DarkLightTheme extends StatelessWidget {
+  const DarkLightTheme({
+    Key key,
+    @required Locale locale,
+    @required this.prefs,
+  })  : _locale = locale,
+        super(key: key);
+
+  final Locale _locale;
+  final PreferenciasUsuario prefs;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: prefs.darkLightTheme ? darktheme : lightTheme,
+      locale: _locale,
+      supportedLocales: [
+        Locale('en', 'US'),
+        Locale('es', 'US'),
+      ],
+      localizationsDelegates: [
+        Localization.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        //GlobalCupertinoLocalizations.delegate
+      ],
+      localeResolutionCallback: (deviceLocale, supportedLocales) {
+        for (var locale in supportedLocales) {
+          if (locale.languageCode == deviceLocale.languageCode &&
+              locale.countryCode == deviceLocale.countryCode) {
+            return deviceLocale;
+          }
+        }
+
+        return supportedLocales.first;
+      },
+      title: 'PocketList',
+      initialRoute: prefs.ultimaPagina,
+      home: SplashScreen(),
+      debugShowCheckedModeBanner: true,
+      routes: {
+        'home': (BuildContext context) => HomePage(),
+        'newList': (BuildContext context) => NewList(),
+        'settings': (BuildContext context) => SettingPage(),
+        'about': (BuildContext context) => AboutPage(),
+        'splahs': (BuildContext context) => SplashScreen(),
+        'help': (BuildContext context) => HelpPage(),
+        'detailsPage': (BuildContext context) => DetailsPage(),
+        'colorPage': (BuildContext context) => ColorPage(),
+        'userPage': (BuildContext context) => UserPage(),
+        'dataPage': (BuildContext context) => DataPage()
+      },
+    );
   }
 }

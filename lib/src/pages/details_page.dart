@@ -55,7 +55,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[200],
+      // backgroundColor: Colors.grey[200],
       appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
           title: Text(
@@ -77,7 +77,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Container(
       padding: EdgeInsets.only(left: 5.0, right: 10.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
       ),
       child: Column(
         children: <Widget>[
@@ -89,7 +89,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   GestureDetector(
                     onTap: () => _mostrarAlertaBuget(context, list),
                     child: Container(
-                      color: Colors.white,
+                      //color: Colors.white,
                       child: Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[

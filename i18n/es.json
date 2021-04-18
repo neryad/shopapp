@@ -10,6 +10,7 @@
   "gyColor": "Gris",
   "dpColor": "Morado oscuro",
   "rColor": "Rojo",
+  "darkMode": "Modo oscuro",
   "userTitle": "Personalización de usuario",
   "dataTitle": "Administración de datos",
   "userInpText": "Nombre usuario",

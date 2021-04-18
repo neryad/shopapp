@@ -26,14 +26,22 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       body: Container(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              utils.saludos(context),
-              _imagen(),
+              // utils.saludos(context),
+              Container(
+                color: Colors.white,
+                child: Column(children: [
+                  _imagen(),
+                ]),
+              ),
+
+              //utils.saludos(context),
+              // _imagen(),
               _listContainer(context)
             ],
           ),

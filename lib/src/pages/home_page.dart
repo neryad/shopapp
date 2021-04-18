@@ -44,9 +44,20 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: new AppBar(
-        title: Text(
-          getTranlated(context, 'mHomeTitle'),
-        ),
+        title: Column(mainAxisAlignment: MainAxisAlignment.center,
+            //crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                children: [Text(getTranlated(context, 'mHomeTitle'))],
+              ),
+              Column(
+                children: [Text(utils.saludos(context))],
+              )
+              // Text(
+              //   getTranlated(context, 'mHomeTitle'),
+              // ),
+              // utils.saludos(context),
+            ]),
         elevation: 0.0,
         backgroundColor: utils.cambiarColor(),
       ),
@@ -124,17 +135,11 @@ class _HomePageState extends State<HomePage> {
               return NewList();
             }),
           )
-          //Navigator.pop(context),
-          //
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => NewList(),
-          //     ))
-
-          //Navigator.pushNamed(context, 'newList')
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         backgroundColor: utils.cambiarColor(),
       ),
     );

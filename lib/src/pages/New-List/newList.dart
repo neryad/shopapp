@@ -29,7 +29,7 @@ class _NewListState extends State<NewList> {
 
   @override
   void initState() {
-    prefs.ultimaPagina = 'newList';
+    // prefs.ultimaPagina = 'newList';
     total = double.parse(prefs.tempTotal);
     buget = double.parse(prefs.tempBuget);
     super.initState();
@@ -59,7 +59,7 @@ class _NewListState extends State<NewList> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[200],
+      // backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: utils.cambiarColor(),
         title: Text(getTranlated(context, 'mMyLisTitle')),
@@ -500,19 +500,20 @@ class _NewListState extends State<NewList> {
     return Container(
       padding: EdgeInsets.only(left: 5.0, right: 10.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
       ),
       child: Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Container(
+              //color: Theme.of(context).primaryColor,
               child: Column(
                 children: <Widget>[
                   GestureDetector(
                     onTap: () => _mostrarAlertaBuget(context),
                     child: Container(
-                      color: Colors.white,
+                      // color: Theme.of(context).primaryColor,
                       child: Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
@@ -649,49 +650,52 @@ class _NewListState extends State<NewList> {
           //TODO:hacer seed para futura sugerencias
           if (items.length == 0) {
             return Card(
-                child: Column(
-                    // padding: EdgeInsets.all(15.0),
-                    children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      utils.cambiarNewImage(),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        getTranlated(context, 'noItems'),
-                        style: TextStyle(
-                          color: utils.cambiarColor(),
-                          fontSize: 18,
+                child: Container(
+              color: Colors.white,
+              child: Column(
+                  // padding: EdgeInsets.all(15.0),
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        utils.cambiarNewImage(),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          getTranlated(context, 'noItems'),
+                          style: TextStyle(
+                            color: utils.cambiarColor(),
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "",
-                            ),
-                            WidgetSpan(
-                              child: Icon(Icons.add_shopping_cart),
-                            ),
-                            TextSpan(
-                              text: " ",
-                            ),
-                            TextSpan(
-                              text: getTranlated(context, 'noItems2'),
-                              style: TextStyle(
-                                color: utils.cambiarColor(),
-                                fontSize: 18,
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "",
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ]));
+                              WidgetSpan(
+                                child: Icon(Icons.add_shopping_cart),
+                              ),
+                              TextSpan(
+                                text: " ",
+                              ),
+                              TextSpan(
+                                text: getTranlated(context, 'noItems2'),
+                                style: TextStyle(
+                                  color: utils.cambiarColor(),
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ]),
+            ));
           }
 
           items.sort(

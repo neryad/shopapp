@@ -17,10 +17,14 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   //int _color;
+  // ThemeData darktheme = ThemeData(brightness: Brightness.dark);
+
+  // ThemeData lightTheme = ThemeData(brightness: Brightness.light);
+
   TextEditingController _textEditingController;
 
   final prefs = new PreferenciasUsuario();
-
+  var light = false;
   @override
   void initState() {
     //_color = prefs.color;
@@ -85,9 +89,10 @@ class _SettingPageState extends State<SettingPage> {
           leading: Icon(Icons.color_lens),
           title: Text(getTranlated(context, 'themTitle'),
               style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: utils.cambiarColor())),
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                //color: utils.cambiarColor()
+              )),
           onTap: () => {
             // Navigator.pop(context),
             Navigator.pushNamed(context, 'colorPage')
@@ -99,9 +104,10 @@ class _SettingPageState extends State<SettingPage> {
           leading: Icon(Icons.person_sharp),
           title: Text(getTranlated(context, 'userTitle'),
               style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: utils.cambiarColor())),
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                //color: utils.cambiarColor()
+              )),
           onTap: () => {
             // Navigator.pop(context),
             Navigator.pushNamed(context, 'userPage')
@@ -113,9 +119,10 @@ class _SettingPageState extends State<SettingPage> {
           leading: Icon(Icons.data_usage),
           title: Text(getTranlated(context, 'dataTitle'),
               style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: utils.cambiarColor())),
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                //color: utils.cambiarColor()
+              )),
           onTap: () => {
             // Navigator.pop(context),
             Navigator.pushNamed(context, 'dataPage')
@@ -123,7 +130,31 @@ class _SettingPageState extends State<SettingPage> {
           trailing: Icon(Icons.arrow_forward_ios_rounded),
         ),
         Divider(),
+        SwitchListTile(
+          title: Text(getTranlated(context, 'darkMode'),
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                //color: utils.cambiarColor()
+              )),
+          value: prefs.darkLightTheme,
+          onChanged: (state) {
+            setState(() {
+              light = state;
+              _selectedRadio(light);
+              print(light);
+            });
+          },
+          secondary: const Icon(Icons.lightbulb_outline),
+        ),
+        Divider()
       ]),
     );
+  }
+
+  _selectedRadio(bool valor) {
+    prefs.darkLightTheme = valor;
+    light = valor;
+    MyApp.stateSet(context);
   }
 }

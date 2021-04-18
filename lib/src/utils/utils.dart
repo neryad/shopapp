@@ -96,7 +96,7 @@ Image cambiarHomeImage() {
   return Image(
     image: AssetImage(img),
     height: 150.00,
-    fit: BoxFit.cover,
+    fit: BoxFit.fitWidth,
   );
 }
 
@@ -142,16 +142,18 @@ saludos(BuildContext context) {
   } else {
     msg = '$greattin3 ${prefs.nombreUsuario}';
   }
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[
-      Text(msg,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          )),
-    ],
-  );
+  return msg;
+
+  // Row(
+  //   mainAxisAlignment: MainAxisAlignment.center,
+  //   children: <Widget>[
+  //     Text(msg,
+  //         style: TextStyle(
+  //           fontSize: 20,
+  //           fontWeight: FontWeight.bold,
+  //         )),
+  //   ],
+  // );
 }
 
 void showSnack(BuildContext context, String msg) {
