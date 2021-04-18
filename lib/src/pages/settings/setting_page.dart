@@ -38,7 +38,6 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    // var appLanguage = Provider.of< mmg.AppLanguage>(context);
     return Scaffold(
       //resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: true,
@@ -110,72 +109,21 @@ class _SettingPageState extends State<SettingPage> {
           trailing: Icon(Icons.arrow_forward_ios_rounded),
         ),
         Divider(),
-        Container(
-          padding: EdgeInsets.all(15.0),
-          child: Text(
-            getTranlated(context, 'dataTitle'),
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          ),
+        ListTile(
+          leading: Icon(Icons.data_usage),
+          title: Text(getTranlated(context, 'dataTitle'),
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: utils.cambiarColor())),
+          onTap: () => {
+            // Navigator.pop(context),
+            Navigator.pushNamed(context, 'dataPage')
+          },
+          trailing: Icon(Icons.arrow_forward_ios_rounded),
         ),
         Divider(),
-        Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              children: [
-                Text(getTranlated(context, 'deletePar'),
-                    style: TextStyle(fontSize: 18)),
-                RaisedButton(
-                  color: Colors.red,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    _validateEliminar(context);
-                  },
-                  child: Text(getTranlated(context, 'deleteAllList'),
-                      style: TextStyle(fontSize: 20)),
-                ),
-              ],
-            )),
       ]),
     );
-  }
-
-  _validateEliminar(BuildContext context) {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(getTranlated(context, 'deleteAllList')),
-            content: new Text(getTranlated(context, 'deleteDialo')),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(
-                    getTranlated(context, 'leave'),
-                    style: TextStyle(color: utils.cambiarColor()),
-                  )),
-              FlatButton(
-                  onPressed: () {
-                    limpiarTodo();
-                    utils.showSnack(
-                        context, getTranlated(context, 'dataDelete'));
-                  },
-                  child: Text(
-                    getTranlated(context, 'accept'),
-                    style: TextStyle(color: utils.cambiarColor()),
-                  )),
-            ],
-          );
-        });
-  }
-
-  limpiarTodo() {
-    setState(() {
-      DBProvider.db.deleteAllList();
-      DBProvider.db.deleteAllProd();
-      //items.clear();
-      setState(() {});
-    });
-    Navigator.of(context).pop();
   }
 }

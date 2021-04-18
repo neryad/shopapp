@@ -1,5 +1,6 @@
 import 'package:PocketList/src/pages/details_page.dart';
 import 'package:PocketList/src/pages/settings/pages/color_page.dart';
+import 'package:PocketList/src/pages/settings/pages/data.dart';
 import 'package:PocketList/src/pages/settings/pages/user.dart';
 import 'package:PocketList/src/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -107,6 +108,7 @@ class _MyAppState extends State<MyApp> {
           'detailsPage': (BuildContext context) => DetailsPage(),
           'colorPage': (BuildContext context) => ColorPage(),
           'userPage': (BuildContext context) => UserPage(),
+          'dataPage': (BuildContext context) => DataPage()
         },
       );
     }
