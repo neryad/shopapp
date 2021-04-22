@@ -44,20 +44,31 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: new AppBar(
-        title: Column(mainAxisAlignment: MainAxisAlignment.center,
-            //crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                children: [Text(getTranlated(context, 'mHomeTitle'))],
-              ),
-              Column(
-                children: [Text(utils.saludos(context))],
-              )
-              // Text(
-              //   getTranlated(context, 'mHomeTitle'),
-              // ),
-              // utils.saludos(context),
-            ]),
+        title: utils.saludos(context)
+
+        // Container(
+        //   child: Column(
+        //       //mainAxisAlignment: MainAxisAlignment.center,
+        //       //crossAxisAlignment: CrossAxisAlignment.center,
+        //       //crossAxisAlignment: CrossAxisAlignment.center,
+        //       children: [
+        //         Row(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           crossAxisAlignment: CrossAxisAlignment.center,
+        //           children: [Text(getTranlated(context, 'mHomeTitle'))],
+        //         ),
+        //         Row(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           crossAxisAlignment: CrossAxisAlignment.center,
+        //           children: [Text(utils.saludos(context))],
+        //         )
+        //         // Text(
+        //         //   getTranlated(context, 'mHomeTitle'),
+        //         // ),
+        //         // utils.saludos(context),
+        //       ]),
+        // )
+        ,
         elevation: 0.0,
         backgroundColor: utils.cambiarColor(),
       ),

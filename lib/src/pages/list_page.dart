@@ -186,7 +186,7 @@ class _ListPageState extends State<ListPage> {
                   Text(
                     lista.fecha,
                     style: TextStyle(
-                      color: Colors.black45,
+                      //color: Colors.black45,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w300,
                     ),
@@ -194,12 +194,13 @@ class _ListPageState extends State<ListPage> {
                 ],
               ),
               Row(
+                //TODO: revisar el color
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     children: [
                       CircleAvatar(
-                          backgroundColor: Color(0xFFF5F7FB),
+                          backgroundColor: Colors.black12,
                           child: Icon(
                             Icons.shopping_bag_sharp,
                             color: utils.cambiarColor(),
@@ -213,7 +214,7 @@ class _ListPageState extends State<ListPage> {
                         Text(
                           lista.title,
                           style: TextStyle(
-                            color: Colors.black,
+                            //color: Colors.black,
                             fontSize: 18.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -223,7 +224,7 @@ class _ListPageState extends State<ListPage> {
                         Text(
                           lista.superMaret,
                           style: TextStyle(
-                            color: Colors.black45,
+                            //color: Colors.black45,
                             fontSize: 16.0,
                             fontWeight: FontWeight.w300,
                           ),

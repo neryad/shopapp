@@ -54,8 +54,7 @@ class _AboutPageState extends State<AboutPage> {
                             radius: 55,
                             backgroundColor: Colors.black38,
                             child: CircleAvatar(
-                              backgroundImage: AssetImage(
-                                  'assets/undraw_online_groceries_a02y.png'),
+                              backgroundImage: AssetImage('assets/logo.png'),
                               radius: 50.0,
                             ),
                           ),

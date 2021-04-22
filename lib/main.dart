@@ -1,3 +1,4 @@
+import 'package:PocketList/src/pages/about/pages/authorPage.dart';
 import 'package:PocketList/src/pages/details_page.dart';
 import 'package:PocketList/src/pages/settings/pages/color_page.dart';
 import 'package:PocketList/src/pages/settings/pages/data.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:PocketList/src/pages/about_page.dart';
+import 'package:PocketList/src/pages/about/about_page.dart';
 import 'package:PocketList/src/pages/home_page.dart';
 import 'package:PocketList/src/pages/New-List/newList.dart';
 import 'package:PocketList/src/pages/settings/setting_page.dart';
@@ -131,7 +132,8 @@ class DarkLightTheme extends StatelessWidget {
         'detailsPage': (BuildContext context) => DetailsPage(),
         'colorPage': (BuildContext context) => ColorPage(),
         'userPage': (BuildContext context) => UserPage(),
-        'dataPage': (BuildContext context) => DataPage()
+        'dataPage': (BuildContext context) => DataPage(),
+        'authorPage': (BuildContext context) => AuthorPage(),
       },
     );
   }
