@@ -48,101 +48,112 @@ class _AboutPageState extends State<AboutPage> {
           elevation: 0.0,
         ),
         // drawer: MenuWidget(),
-        body: ListView(
-          children: [
-            Container(
-              decoration: BoxDecoration(color: utils.cambiarColor()),
-              child: Container(
-                  width: double.infinity,
-                  height: 225,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        CircleAvatar(
-                          radius: 55,
-                          backgroundColor: Colors.black38,
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/logo.png'),
-                            radius: 50.0,
+        body: Container(
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(color: utils.cambiarColor()),
+                child: Container(
+                    width: double.infinity,
+                    height: 225,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          CircleAvatar(
+                            radius: 55,
+                            backgroundColor: Colors.black38,
+                            child: CircleAvatar(
+                              backgroundImage: AssetImage('assets/logo.png'),
+                              radius: 50.0,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        Text(
-                          'PocketList',
-                          style: TextStyle(fontSize: 22.0, color: Colors.white),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                      ],
-                    ),
-                  )),
-            ),
-            ListTile(
-              title: Text(getTranlated(context, 'versionTitle'),
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  )),
-              trailing: Text(
-                _packageInfo.version,
-                //version.toString(),
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Text(
+                            'PocketList',
+                            style:
+                                TextStyle(fontSize: 22.0, color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                        ],
+                      ),
+                    )),
               ),
-              //subtitle: Text('Build: ${_packageInfo.buildNumber}'),
-            ),
-            Divider(),
-            ListTile(
-              title: Text(getTranlated(context, 'authorTitle'),
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  )),
-              onTap: () => {Navigator.pushNamed(context, 'authorPage')},
-              trailing: Icon(Icons.arrow_forward_ios),
-              subtitle: Text('Neryad'),
-            ),
-            Divider(),
-            ListTile(
-              title: Text(getTranlated(context, 'aImgs'),
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  )),
-              subtitle: Text(getTranlated(context, 'aImgs2')),
-              onTap: () => {_launchURL('https://undraw.co/illustrations')},
-              trailing: Icon(Icons.arrow_forward_ios),
-            ),
-            Divider(),
-            ListTile(
-              title: Text(getTranlated(context, 'lDesign'),
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  )),
-              onTap: () =>
-                  {_launchURL('https://www.instagram.com/plus.logodesign/')},
-              trailing: Icon(Icons.arrow_forward_ios),
-              subtitle: Text(getTranlated(context, 'studio')),
-            ),
-            Divider(),
-            ListTile(
-              title: Text(getTranlated(context, 'dantions'),
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  )),
-              subtitle: Text(getTranlated(context, 'aboutDonation')),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                _launchURL('https://www.buymeacoffee.com/neryad');
-              },
-            ),
-          ],
+              Expanded(
+                  child: ListView(
+                children: [
+                  ListTile(
+                    title: Text(getTranlated(context, 'versionTitle'),
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    trailing: Text(
+                      _packageInfo.version,
+                      //version.toString(),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                    ),
+                    //subtitle: Text('Build: ${_packageInfo.buildNumber}'),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text(getTranlated(context, 'authorTitle'),
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    onTap: () => {Navigator.pushNamed(context, 'authorPage')},
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    subtitle: Text('Neryad'),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text(getTranlated(context, 'aImgs'),
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    subtitle: Text(getTranlated(context, 'aImgs2')),
+                    onTap: () =>
+                        {_launchURL('https://undraw.co/illustrations')},
+                    trailing: Icon(Icons.arrow_forward_ios),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text(getTranlated(context, 'lDesign'),
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    onTap: () => {
+                      _launchURL('https://www.instagram.com/plus.logodesign/')
+                    },
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    subtitle: Text(getTranlated(context, 'studio')),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text(getTranlated(context, 'dantions'),
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    subtitle: Text(getTranlated(context, 'aboutDonation')),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      _launchURL('https://www.buymeacoffee.com/neryad');
+                    },
+                  ),
+                ],
+              ))
+            ],
+          ),
         ));
   }
 
