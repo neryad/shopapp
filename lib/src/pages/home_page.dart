@@ -113,6 +113,15 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.new_releases_sharp),
+              title: Text(getTranlated(context, 'mNewsTitle')),
+              onTap: () => {
+                //Navigator.pop(context),
+                Navigator.pushNamed(context, 'newsPage')
+                //Navigator.pushReplacementNamed(context, 'settings')
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.info),
               title: Text(getTranlated(context, 'mAboutTitle')),
               onTap: () => {

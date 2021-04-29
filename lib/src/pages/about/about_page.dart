@@ -15,15 +15,26 @@ class AboutPage extends StatefulWidget {
 
 class _AboutPageState extends State<AboutPage> {
   final prefs = new PreferenciasUsuario();
-  String appName;
-  String packageName;
-  String version = '1.0.0';
-  String buildNumber;
+
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+  );
 
   @override
   void initState() {
+    _initPackageInfo();
     //getBuildAndVersion();
     //prefs.ultimaPagina = 'about';
+  }
+
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
   }
 
   @override
@@ -34,7 +45,6 @@ class _AboutPageState extends State<AboutPage> {
         appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
           title: Text(getTranlated(context, 'aboutTitle')),
-          //title: Text(getTranlated(context, 'aboutTitle')),
           elevation: 0.0,
         ),
         // drawer: MenuWidget(),
@@ -79,9 +89,11 @@ class _AboutPageState extends State<AboutPage> {
                     fontWeight: FontWeight.bold,
                   )),
               trailing: Text(
-                version.toString(),
+                _packageInfo.version,
+                //version.toString(),
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
               ),
+              //subtitle: Text('Build: ${_packageInfo.buildNumber}'),
             ),
             Divider(),
             ListTile(
@@ -90,192 +102,50 @@ class _AboutPageState extends State<AboutPage> {
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   )),
-              onTap: () => {
-                // Navigator.pop(context),
-                Navigator.pushNamed(context, 'authorPage')
-              },
+              onTap: () => {Navigator.pushNamed(context, 'authorPage')},
               trailing: Icon(Icons.arrow_forward_ios),
               subtitle: Text('Neryad'),
             ),
             Divider(),
             ListTile(
-              title: Text('Assets images',
-                  //Text(getTranlated(context, 'versionTitle'),
+              title: Text(getTranlated(context, 'aImgs'),
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   )),
-              subtitle: Text(
-                  'All images used in this application were from undraw.co, click to see their website'),
+              subtitle: Text(getTranlated(context, 'aImgs2')),
               onTap: () => {_launchURL('https://undraw.co/illustrations')},
               trailing: Icon(Icons.arrow_forward_ios),
             ),
             Divider(),
             ListTile(
-              title: Text('Logo and icon desing',
-                  //Text(getTranlated(context, 'versionTitle'),
+              title: Text(getTranlated(context, 'lDesign'),
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   )),
-              onTap: () => {
-                // Navigator.pop(context),
-                Navigator.pushNamed(context, 'colorPage')
-              },
+              onTap: () =>
+                  {_launchURL('https://www.instagram.com/plus.logodesign/')},
               trailing: Icon(Icons.arrow_forward_ios),
-              subtitle: Text('logo & icon was made by anthony'),
+              subtitle: Text(getTranlated(context, 'studio')),
             ),
             Divider(),
+            ListTile(
+              title: Text(getTranlated(context, 'dantions'),
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  )),
+              subtitle: Text(getTranlated(context, 'aboutDonation')),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                _launchURL('https://www.buymeacoffee.com/neryad');
+              },
+            ),
           ],
-        )
-        // SingleChildScrollView(
-        //   child: Column(
-        //     children: <Widget>[
-        //       Container(
-        //         decoration: BoxDecoration(color: utils.cambiarColor()),
-        //         child: Container(
-        //             width: double.infinity,
-        //             height: 300,
-        //             child: Center(
-        //               child: Column(
-        //                 mainAxisAlignment: MainAxisAlignment.center,
-        //                 crossAxisAlignment: CrossAxisAlignment.center,
-        //                 children: <Widget>[
-        //                   CircleAvatar(
-        //                     radius: 55,
-        //                     backgroundColor: Colors.black38,
-        //                     child: CircleAvatar(
-        //                       backgroundImage: AssetImage('assets/logo.png'),
-        //                       radius: 50.0,
-        //                     ),
-        //                   ),
-        //                   SizedBox(
-        //                     height: 20.0,
-        //                   ),
-        //                   Text(
-        //                     'PocketList',
-        //                     style:
-        //                         TextStyle(fontSize: 22.0, color: Colors.white),
-        //                   ),
-        //                   SizedBox(
-        //                     height: 10.0,
-        //                   ),
-        //                   Card(
-        //                     margin: EdgeInsets.symmetric(
-        //                         horizontal: 20.0, vertical: 8.0),
-        //                     clipBehavior: Clip.antiAlias,
-        //                     color: Colors.white,
-        //                     elevation: 8.0,
-        //                     child: Padding(
-        //                       padding: const EdgeInsets.symmetric(
-        //                           horizontal: 22.0, vertical: 8.0),
-        //                       child: Row(
-        //                         children: <Widget>[
-        //                           Expanded(
-        //                             child: Column(
-        //                               children: <Widget>[
-        //                                 Text(
-        //                                     getTranlated(
-        //                                         context, 'versionTitle'),
-        //                                     style: TextStyle(
-        //                                         color: utils.cambiarColor(),
-        //                                         fontSize: 22.0,
-        //                                         fontWeight: FontWeight.bold)),
-        //                                 SizedBox(
-        //                                   height: 10.0,
-        //                                 ),
-        //                                 Text(version,
-        //                                     style: TextStyle(
-        //                                         color: utils.cambiarColor(),
-        //                                         fontSize: 22.0,
-        //                                         fontWeight: FontWeight.w200)),
-        //                               ],
-        //                             ),
-        //                           ),
-        //                           Expanded(
-        //                             child: Column(
-        //                               children: <Widget>[
-        //                                 Text(
-        //                                     getTranlated(
-        //                                         context, 'authorTitle'),
-        //                                     style: TextStyle(
-        //                                         color: utils.cambiarColor(),
-        //                                         fontSize: 22.0,
-        //                                         fontWeight: FontWeight.bold)),
-        //                                 SizedBox(
-        //                                   height: 10.0,
-        //                                 ),
-        //                                 Text('Neryad',
-        //                                     style: TextStyle(
-        //                                         color: utils.cambiarColor(),
-        //                                         fontSize: 22.0,
-        //                                         fontWeight: FontWeight.w200)),
-        //                               ],
-        //                             ),
-        //                           ),
-        //                         ],
-        //                       ),
-        //                     ),
-        //                   ),
-        //                 ],
-        //               ),
-        //             )),
-        //       ),
-        //       Card(
-        //         child: Container(
-        //             child: Padding(
-        //           padding: const EdgeInsets.symmetric(
-        //               horizontal: 30.0, vertical: 8.0),
-        //           child: Column(
-        //             crossAxisAlignment: CrossAxisAlignment.start,
-        //             children: <Widget>[
-        //               Text(
-        //                 getTranlated(context, 'descpTitle'),
-        //                 style: TextStyle(
-        //                     color: utils.cambiarColor(),
-        //                     fontStyle: FontStyle.normal,
-        //                     fontSize: 28.0),
-        //               ),
-        //               SizedBox(height: 5.0),
-        //               Padding(
-        //                 padding: const EdgeInsets.all(8.0),
-        //                 child: Text(
-        //                   getTranlated(context, 'descpText'),
-        //                   style: TextStyle(
-        //                       fontSize: 20.0,
-        //                       //fontStyle: FontStyle.italic,
-        //                       fontWeight: FontWeight.w300,
-        //                       color: Colors.black,
-        //                       letterSpacing: 2.0),
-        //                 ),
-        //               ),
-        //               Divider(),
-        //               Row(
-        //                 children: [
-        //                   Text(
-        //                     'Neryad ©️ 2020',
-        //                     style: TextStyle(fontWeight: FontWeight.bold),
-        //                   ),
-        //                 ],
-        //               )
-        //             ],
-        //           ),
-        //         )),
-        //       ),
-        //     ],
-        //   ),
-        // )
-        );
+        ));
   }
 
   void _launchURL(String url) async =>
       await canLaunch(url) ? await launch(url) : throw 'Could not launch';
-
-  getBuildAndVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    appName = packageInfo.appName;
-    packageName = packageInfo.packageName;
-    version = packageInfo.version;
-    buildNumber = packageInfo.buildNumber;
-  }
 }

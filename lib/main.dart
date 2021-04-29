@@ -1,5 +1,6 @@
 import 'package:PocketList/src/pages/about/pages/authorPage.dart';
 import 'package:PocketList/src/pages/details_page.dart';
+import 'package:PocketList/src/pages/news/news.dart';
 import 'package:PocketList/src/pages/settings/pages/color_page.dart';
 import 'package:PocketList/src/pages/settings/pages/data.dart';
 import 'package:PocketList/src/pages/settings/pages/user.dart';
@@ -134,6 +135,7 @@ class DarkLightTheme extends StatelessWidget {
         'userPage': (BuildContext context) => UserPage(),
         'dataPage': (BuildContext context) => DataPage(),
         'authorPage': (BuildContext context) => AuthorPage(),
+        'newsPage': (BuildContext context) => NewsPage(),
       },
     );
   }
