@@ -15,7 +15,6 @@ import 'package:PocketList/src/pages/about/about_page.dart';
 import 'package:PocketList/src/pages/home_page.dart';
 import 'package:PocketList/src/pages/New-List/newList.dart';
 import 'package:PocketList/src/pages/settings/setting_page.dart';
-import 'package:PocketList/src/pages/splashScreen.dart';
 import 'package:PocketList/src/pages/help_page.dart';
 
 final prefs = new PreferenciasUsuario();
@@ -129,7 +128,6 @@ class DarkLightTheme extends StatelessWidget {
         'newList': (BuildContext context) => NewList(),
         'settings': (BuildContext context) => SettingPage(),
         'about': (BuildContext context) => AboutPage(),
-        'splahs': (BuildContext context) => SplashScreen(),
         'help': (BuildContext context) => HelpPage(),
         'detailsPage': (BuildContext context) => DetailsPage(),
         'colorPage': (BuildContext context) => ColorPage(),
