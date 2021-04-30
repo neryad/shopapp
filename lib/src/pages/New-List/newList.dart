@@ -891,7 +891,8 @@ class _NewListState extends State<NewList> {
           ),
         ),
         FlatButton(
-          onPressed: () => _validateEliminarList(context),
+          onPressed: () =>
+              (items.length <= 0) ? null : _validateEliminarList(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
