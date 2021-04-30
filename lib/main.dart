@@ -120,8 +120,9 @@ class DarkLightTheme extends StatelessWidget {
         return supportedLocales.first;
       },
       title: 'PocketList',
-      initialRoute: prefs.ultimaPagina,
-      home: SplashScreen(),
+      initialRoute: 'home',
+      home: HomePage(),
+      // home: SplashScreen(),
       debugShowCheckedModeBanner: true,
       routes: {
         'home': (BuildContext context) => HomePage(),
