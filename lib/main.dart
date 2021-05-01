@@ -116,7 +116,6 @@ class DarkLightTheme extends StatelessWidget {
           }
         }
 
-<<<<<<< HEAD
         return supportedLocales.first;
       },
       title: 'PocketList',
@@ -138,24 +137,5 @@ class DarkLightTheme extends StatelessWidget {
         'newsPage': (BuildContext context) => NewsPage(),
       },
     );
-=======
-          return supportedLocales.first;
-        },
-        title: 'PocketList',
-        initialRoute: prefs.ultimaPagina,
-        home: SplashScreen(),
-        debugShowCheckedModeBanner: false,
-        routes: {
-          'home': (BuildContext context) => HomePage(),
-          'newList': (BuildContext context) => NewList(),
-          'settings': (BuildContext context) => SettingPage(),
-          'about': (BuildContext context) => AboutPage(),
-          'splahs': (BuildContext context) => SplashScreen(),
-          'help': (BuildContext context) => HelpPage(),
-          'detailsPage': (BuildContext context) => DetailsPage(),
-        },
-      );
-    }
->>>>>>> master
   }
 }
