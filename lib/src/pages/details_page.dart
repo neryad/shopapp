@@ -9,7 +9,6 @@ import 'package:PocketList/src/models/product_model.dart';
 import 'package:PocketList/src/models/suge.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:PocketList/src/widgets/Menu_widget.dart';
 //import 'package:flutter_typeahead/flutter_typeahead.dart';
 // import 'package:PocketList/src/data/data.dart';
 

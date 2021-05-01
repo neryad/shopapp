@@ -4,7 +4,6 @@ import 'package:PocketList/src/pages/news/news.dart';
 import 'package:PocketList/src/pages/settings/pages/color_page.dart';
 import 'package:PocketList/src/pages/settings/pages/data.dart';
 import 'package:PocketList/src/pages/settings/pages/user.dart';
-import 'package:PocketList/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
