@@ -7,7 +7,7 @@ import 'package:PocketList/src/models/product_model.dart';
 import 'package:PocketList/src/models/suge.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:PocketList/src/widgets/Menu_widget.dart';
+//import 'package:PocketList/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class NewList extends StatefulWidget {
@@ -21,13 +21,15 @@ class _NewListState extends State<NewList> {
   double buget = 00.00;
   double total = 0.00;
   double diference = 0.00;
+  int totalItems = 0;
   bool checkValue = false;
-  bool focusInpt = true;
+  FocusNode myFocusNode = FocusNode();
+
   final prefs = new PreferenciasUsuario();
 
   @override
   void initState() {
-    prefs.ultimaPagina = 'newList';
+    // prefs.ultimaPagina = 'newList';
     total = double.parse(prefs.tempTotal);
     buget = double.parse(prefs.tempBuget);
     super.initState();
@@ -39,6 +41,7 @@ class _NewListState extends State<NewList> {
 
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
+  final bugetController = TextEditingController();
 
   var uuid = Uuid();
 
@@ -55,26 +58,30 @@ class _NewListState extends State<NewList> {
     //loadSharedPrefs();
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.grey[200],
+      resizeToAvoidBottomInset: false,
+      // backgroundColor: Colors.grey[200],
       appBar: AppBar(
-          backgroundColor: utils.cambiarColor(),
-          title: Text(getTranlated(context, 'mMyLisTitle'))),
-      drawer: MenuWidget(),
+        backgroundColor: utils.cambiarColor(),
+        title: Text(getTranlated(context, 'mMyLisTitle')),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Text('Items: $totalItems/${items.length}'),
+              ],
+            ),
+          )
+        ],
+      ),
+      //drawer: Icon(Icons.arrow_back),
+      // drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
           _header(),
           _bodyWidget(),
         ],
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () {
-          _mostrarAlertaProducto(context);
-        },
-        backgroundColor: utils.cambiarColor(),
-        child: Icon(Icons.add_shopping_cart),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: _bNavbar(context),
     );
   }
@@ -137,7 +144,7 @@ class _NewListState extends State<NewList> {
                   )),
               FlatButton(
                   onPressed: () {
-                    getTotal();
+                    saveBudget(bugetController.text);
                     Navigator.of(context).pop();
                   },
                   child: Text(
@@ -200,8 +207,7 @@ class _NewListState extends State<NewList> {
 
   Widget _crearNombreArticulo() {
     return TextFormField(
-      //  initialValue: productModel.name,
-      autofocus: focusInpt,
+      focusNode: myFocusNode,
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
@@ -215,13 +221,10 @@ class _NewListState extends State<NewList> {
       },
       decoration: InputDecoration(
         labelText: getTranlated(context, 'nameArt'),
-        //counterText: '',
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        //hintText: 'Nombre artículo',
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -292,6 +295,7 @@ class _NewListState extends State<NewList> {
   void _subimt() {
     var it = items.length;
     if (!formKey.currentState.validate()) return;
+
     formKey.currentState.save();
     var prod = ProductModel(
         name: productModel.name,
@@ -300,13 +304,11 @@ class _NewListState extends State<NewList> {
         price: productModel.price,
         complete: 0);
     items.insert(it, prod);
-    // print(prod.listId);
-    // print(prod.id);
-    print(prod.id);
     DBProvider.db.newProd(prod);
     print(productModel.id);
     formKey.currentState.reset();
     setState(() {});
+    myFocusNode.requestFocus();
   }
 
   void _mostrarAlertaEditarProducto(BuildContext context, int index) {
@@ -369,8 +371,6 @@ class _NewListState extends State<NewList> {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        //hintText: 'Nombre artículo',
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -380,7 +380,6 @@ class _NewListState extends State<NewList> {
       initialValue:
           (items[index].price == 0) ? "" : items[index].price.toString(),
       maxLength: 6,
-      //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'price'),
@@ -393,7 +392,6 @@ class _NewListState extends State<NewList> {
       onSaved: (value) {
         items[index].price = double.parse((value == "") ? "0" : value);
       },
-      //onSaved: (value) => items[index].price = double.parse(value),
       validator: (value) {
         if (utils.isNumeric(value)) {
           return null;
@@ -410,8 +408,6 @@ class _NewListState extends State<NewList> {
       initialValue:
           (items[index].quantity == 0) ? "" : items[index].quantity.toString(),
       maxLength: 6,
-      //controller: _controllers[index],
-
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'quantity'),
@@ -420,12 +416,10 @@ class _NewListState extends State<NewList> {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
         items[index].quantity = int.parse((value == "") ? "0" : value);
       },
-      //onSaved: (value) => items[index].quantity = int.parse(value),
       validator: (value) {
         if (utils.isNumeric(value)) {
           return null;
@@ -446,14 +440,11 @@ class _NewListState extends State<NewList> {
       textAlign: TextAlign.center,
       onSaved: (value) => listaModel.title = value,
       decoration: InputDecoration(
-        //counterText: '',
         labelText: getTranlated(context, 'listName'),
         labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        //hintText: 'Nombre lista',
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -481,7 +472,9 @@ class _NewListState extends State<NewList> {
   Widget _crearBuget() {
     return TextField(
       maxLength: 6,
-      keyboardType: TextInputType.number,
+      controller: bugetController,
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+
       decoration: InputDecoration(
         counterText: '',
         hintText: getTranlated(context, 'newBuget'),
@@ -493,15 +486,13 @@ class _NewListState extends State<NewList> {
           borderSide: BorderSide(color: utils.cambiarColor()),
         ),
       ),
-      onChanged: (value) {
-        setState(() {});
-        if (value == null) {
-          return;
-        } else {
-          buget = double.parse(value);
-          prefs.tempBuget = buget.toString();
-        }
-      },
+
+      // onChanged: (value) {
+      //   setState(() {});
+      //   if (value == null) {
+      //     return;
+      //   }
+      // },
     );
   }
 
@@ -509,29 +500,45 @@ class _NewListState extends State<NewList> {
     return Container(
       padding: EdgeInsets.only(left: 5.0, right: 10.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
       ),
       child: Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Container(
+              //color: Theme.of(context).primaryColor,
               child: Column(
                 children: <Widget>[
                   GestureDetector(
                     onTap: () => _mostrarAlertaBuget(context),
                     child: Container(
-                      color: Colors.white,
+                      // color: Theme.of(context).primaryColor,
                       child: Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              FlatButton.icon(
-                                  onPressed: () => _mostrarAlertaBuget(context),
-                                  icon: Icon(Icons.account_balance_wallet),
-                                  label: Text(getTranlated(context, 'buget'))),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.account_balance_wallet,
+                                        color: utils.cambiarColor()),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(getTranlated(context, 'buget'),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold
+                                            //color: bugetColor,
+                                            )),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                           Spacer(),
@@ -550,38 +557,67 @@ class _NewListState extends State<NewList> {
                       ),
                     ),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          FlatButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.shopping_cart),
-                              label: Text("Total")),
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            utils.numberFormat(total),
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: utils.cambiarColor(),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      )
-                    ],
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.shopping_cart),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text('Total',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        //color: bugetColor,
+                                      )),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Spacer(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              utils.numberFormat(total),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: utils.cambiarColor(),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   Row(
                     //mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      FlatButton.icon(
-                          onPressed: () {},
-                          icon: Icon(Icons.shuffle),
-                          label: Text(getTranlated(context, 'difference'))),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.shuffle),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(getTranlated(context, 'difference'),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  //color: bugetColor,
+                                )),
+                          ],
+                        ),
+                      ),
                       Spacer(),
                       Text(
                         utils.numberFormat(diference),
@@ -614,76 +650,56 @@ class _NewListState extends State<NewList> {
           //TODO:hacer seed para futura sugerencias
           if (items.length == 0) {
             return Card(
-                child: Column(
-                    // padding: EdgeInsets.all(15.0),
-                    children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      utils.cambiarNewImage(),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        getTranlated(context, 'noItems'),
-                        style: TextStyle(
-                          color: utils.cambiarColor(),
-                          fontSize: 18,
+                child: Container(
+              color: Colors.white,
+              child: Column(
+                  // padding: EdgeInsets.all(15.0),
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        utils.cambiarNewImage(),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          getTranlated(context, 'noItems'),
+                          style: TextStyle(
+                            color: utils.cambiarColor(),
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "",
-                            ),
-                            WidgetSpan(
-                              child: Icon(Icons.add_shopping_cart),
-                            ),
-                            TextSpan(
-                              text: " ",
-                            ),
-                            TextSpan(
-                              text: getTranlated(context, 'noItems2'),
-                              style: TextStyle(
-                                color: utils.cambiarColor(),
-                                fontSize: 18,
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "",
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                      //    RichText(
-                      //   // WidgetSpan(
-                      //   //   child: Icon(
-                      //   //     Icons.add_shopping_cart,
-                      //   //   ),
-                      //   // ),
-                      //   TextSpan(
-                      //     text: getTranlated(context, 'noList2'),
-                      //     style: TextStyle(
-                      //       color: utils.cambiarColor(),
-                      //       fontSize: 18,
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(5.0),
-                  //   child: Text(
-                  //     getTranlated(context, 'noList'),
-                  //     style: TextStyle(
-                  //       color: utils.cambiarColor(),
-                  //       fontSize: 18,
-                  //     ),
-                  //   ),
-                  // )
-                ]));
+                              WidgetSpan(
+                                child: Icon(Icons.add_shopping_cart),
+                              ),
+                              TextSpan(
+                                text: " ",
+                              ),
+                              TextSpan(
+                                text: getTranlated(context, 'noItems2'),
+                                style: TextStyle(
+                                  color: utils.cambiarColor(),
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ]),
+            ));
           }
 
-          items.sort((a, b) => a.name.compareTo(b.name));
+          items.sort(
+              (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
           return Expanded(
               child: ListView.builder(
             itemCount: items.length,
@@ -762,14 +778,16 @@ class _NewListState extends State<NewList> {
                               items[index].complete = complValue;
                               DBProvider.db.updateProd(items[index]);
                               setState(() {});
+                              //**  papu  */
 
                               (valor == true)
                                   ? utils.showSnack(
                                       context, getTranlated(context, 'onCart'))
                                   : utils.showSnack(
-                                      context,
-                                      getTranlated(context,
-                                          'ofCart')); //   showSnack(context, 'Artículo agregado');
+                                      context, getTranlated(context, 'ofCart'));
+
+                              updatedCount(
+                                  valor); //   showSnack(context, 'Artículo agregado');
                             },
                             activeColor: utils.cambiarColor(),
                           ),
@@ -858,8 +876,9 @@ class _NewListState extends State<NewList> {
 
   Widget _bNavbar(BuildContext context) {
     return BottomAppBar(
-        child: new Row(
-      children: <Widget>[
+        child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
         FlatButton(
           //(valor == true) ? 1 : 0;
           onPressed: () => (items.length <= 0) ? null : _guardarLista(context),
@@ -872,12 +891,23 @@ class _NewListState extends State<NewList> {
           ),
         ),
         FlatButton(
-          onPressed: () => _validateEliminarList(context),
+          onPressed: () =>
+              (items.length <= 0) ? null : _validateEliminarList(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Icon(Icons.remove_circle_outline),
+              Icon(Icons.remove_circle_outline, color: Colors.red[400]),
               Text(getTranlated(context, 'clearList'))
+            ],
+          ),
+        ),
+        FlatButton(
+          onPressed: () => _mostrarAlertaProducto(context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Icon(Icons.add_shopping_cart, color: utils.cambiarColor()),
+              //Text(getTranlated(context, 'clearList'))
             ],
           ),
         ),
@@ -918,6 +948,18 @@ class _NewListState extends State<NewList> {
       getDiference();
     });
     Navigator.of(context).pop();
+  }
+
+  saveBudget(String value) {
+    if (value.isEmpty) {
+      return;
+    }
+
+    buget = double.parse(value);
+    prefs.tempBuget = buget.toString();
+    getTotal();
+    bugetController.clear();
+    setState(() {});
   }
 
   saveList() async {
@@ -984,6 +1026,18 @@ class _NewListState extends State<NewList> {
         });
   }
 
+  updatedCount(bool value) {
+    if (value == true) {
+      totalItems += 1;
+    } else {
+      totalItems -= 1;
+    }
+
+    if (totalItems == items.length) {
+      showcompletedSnack(context, 'Lista de compra completa');
+    }
+  }
+
   void showDeleteSnack(BuildContext context, String msg, int index,
       ProductModel item, List<ProductModel> items) {
     Flushbar(
@@ -996,7 +1050,6 @@ class _NewListState extends State<NewList> {
       ),
       mainButton: FlatButton(
         onPressed: () {
-          print(item);
           //_undoProd(item, index);
           DBProvider.db.tmpProd(item);
           DBProvider.db.getArticlesTmp('tmp');
@@ -1009,6 +1062,34 @@ class _NewListState extends State<NewList> {
           style: TextStyle(color: Colors.amber),
         ),
       ),
+      leftBarIndicatorColor: utils.cambiarColor(),
+      duration: Duration(seconds: 3),
+    )..show(context);
+  }
+
+  void showcompletedSnack(BuildContext context, String msg) {
+    Flushbar(
+      //title: 'This action is prohibited',
+      message: msg,
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: utils.cambiarColor(),
+      ),
+      // mainButton: FlatButton(
+      //   onPressed: () {
+      //     //_undoProd(item, index);
+      //     DBProvider.db.tmpProd(item);
+      //     DBProvider.db.getArticlesTmp('tmp');
+      //     var it = items.length;
+      //     items.insert(it, item);
+      //     setState(() {});
+      //   },
+      //   child: Text(
+      //     getTranlated(context, 'undo'),
+      //     style: TextStyle(color: Colors.amber),
+      //   ),
+      // ),
       leftBarIndicatorColor: utils.cambiarColor(),
       duration: Duration(seconds: 3),
     )..show(context);

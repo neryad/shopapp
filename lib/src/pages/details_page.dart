@@ -33,12 +33,12 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   final prefs = new PreferenciasUsuario();
+  FocusNode myFocusNode = FocusNode();
   double buget;
   double total;
   double diference;
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
-  bool focusInpt = true;
   final editFormKey = GlobalKey<FormState>();
   final formKey = GlobalKey<FormState>();
   //GlobalKey<AutoCompleteTextFieldState<Segurencia>> keyS = new GlobalKey();
@@ -54,14 +54,14 @@ class _DetailsPageState extends State<DetailsPage> {
     //buget = listaModel.total;
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.grey[200],
+      resizeToAvoidBottomInset: false,
+      // backgroundColor: Colors.grey[200],
       appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
           title: Text(
             listaModel.title,
           )),
-      drawer: MenuWidget(),
+      // drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
           _header(listaModel.total, listaModel.buget, listaModel.diference,
@@ -69,15 +69,7 @@ class _DetailsPageState extends State<DetailsPage> {
           _bodyWidget(listaModel.id, listaModel)
         ],
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () {
-          _mostrarAlertaProducto(context, listaModel);
-        },
-        backgroundColor: utils.cambiarColor(),
-        child: Icon(Icons.add_shopping_cart),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      // bottomNavigationBar: _bNavbar(context, listaModel),
+      bottomNavigationBar: _bNavbar(context, listaModel),
     );
   }
 
@@ -85,7 +77,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Container(
       padding: EdgeInsets.only(left: 5.0, right: 10.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
       ),
       child: Column(
         children: <Widget>[
@@ -97,18 +89,34 @@ class _DetailsPageState extends State<DetailsPage> {
                   GestureDetector(
                     onTap: () => _mostrarAlertaBuget(context, list),
                     child: Container(
-                      color: Colors.white,
+                      //color: Colors.white,
                       child: Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              FlatButton.icon(
-                                  onPressed: () =>
-                                      _mostrarAlertaBuget(context, list),
-                                  icon: Icon(Icons.account_balance_wallet),
-                                  label: Text(getTranlated(context, 'buget'))),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.account_balance_wallet,
+                                        color: utils.cambiarColor()),
+                                    SizedBox(width: 5),
+                                    Text(getTranlated(context, 'buget'),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold))
+                                  ],
+                                ),
+                              ),
+                              // FlatButton.icon(
+                              //     onPressed: () =>
+                              //         _mostrarAlertaBuget(context, list),
+                              //     icon: Icon(Icons.account_balance_wallet),
+                              //     label: Text(getTranlated(context, 'buget'))
+                              //   ),
                             ],
                           ),
                           Spacer(),
@@ -127,47 +135,79 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          FlatButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.shopping_cart),
-                              label: Text("Total")),
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            utils.numberFormat(total),
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: utils.cambiarColor(),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      )
-                    ],
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.shopping_cart),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text('Total', style: TextStyle(fontSize: 16))
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              utils.numberFormat(total),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: utils.cambiarColor(),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                  Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      FlatButton.icon(
-                          onPressed: () {},
-                          icon: Icon(Icons.shuffle),
-                          label: Text(getTranlated(context, 'difference'))),
-                      Spacer(),
-                      Text(
-                        utils.numberFormat(diference),
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: bugetColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  Container(
+                    child: Row(
+                      //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.shuffle),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text('difference',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        //color: bugetColor,
+                                      )),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Spacer(),
+                        Text(
+                          utils.numberFormat(diference),
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: bugetColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -598,43 +638,6 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  // _validateEliminarList(BuildContext context, Lista list) {
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (context) {
-  //         return AlertDialog(
-  //           title: Text('Eliminar contenido'),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //                 onPressed: () => Navigator.of(context).pop(),
-  //                 child: Text(
-  //                   'Salir',
-  //                   style: TextStyle(color: utils.cambiarColor()),
-  //                 )),
-  //             FlatButton(
-  //                 onPressed: () => limpiarTodo(list),
-  //                 child: Text(
-  //                   'Aceptar',
-  //                   style: TextStyle(color: utils.cambiarColor()),
-  //                 )),
-  //           ],
-  //         );
-  //       });
-  // }
-
-  // limpiarTodo(Lista list) {
-  //   setState(() {
-  //     DBProvider.db.deleteAllProd();
-  //     articulos.clear();
-  //     getTotal(list);
-  //     getDiference(list);
-  //     DBProvider.db.updatelist(list);
-  //     utils.showSnack(context, 'Lista limpiada');
-  //   });
-  //   Navigator.of(context).pop();
-  // }
-
   void _mostrarAlertaProducto(BuildContext context, Lista list) {
     showDialog(
         context: context,
@@ -800,7 +803,7 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
-      autofocus: focusInpt,
+      focusNode: myFocusNode,
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
@@ -906,6 +909,26 @@ class _DetailsPageState extends State<DetailsPage> {
 
     formKey.currentState.reset();
     setState(() {});
+    myFocusNode.requestFocus();
+  }
+
+  Widget _bNavbar(BuildContext context, Lista list) {
+    return BottomAppBar(
+        child: new Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        FlatButton(
+          onPressed: () => _mostrarAlertaProducto(context, list),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Icon(Icons.add_shopping_cart, color: utils.cambiarColor()),
+              //Text(getTranlated(context, 'clearList'))
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 
   _updataLista(Lista list) {

@@ -22,7 +22,7 @@ class _HelpPageState extends State<HelpPage> {
 
   @override
   void initState() {
-    prefs.ultimaPagina = 'help';
+    //prefs.ultimaPagina = 'help';
     super.initState();
     _initPdf();
   }
@@ -39,8 +39,7 @@ class _HelpPageState extends State<HelpPage> {
     } else {
       pdfasset = "assets/help/es.pdf";
     }
-    print(_locale);
-    print(pdfasset);
+
     try {
       final doc = await PDFDocument.fromAsset(pdfasset);
       setState(() {
@@ -55,7 +54,7 @@ class _HelpPageState extends State<HelpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: new AppBar(
         title: Text(
@@ -77,7 +76,7 @@ class _HelpPageState extends State<HelpPage> {
               // showIndicator: false,
               showPicker: false,
             ),
-      drawer: MenuWidget(),
+      //drawer: MenuWidget(),
     );
   }
 }

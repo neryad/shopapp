@@ -22,13 +22,13 @@ class _AboutPageState extends State<AboutPage> {
   @override
   void initState() {
     //getBuildAndVersion();
-    prefs.ultimaPagina = 'about';
+    //prefs.ultimaPagina = 'about';
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
@@ -36,7 +36,7 @@ class _AboutPageState extends State<AboutPage> {
           //title: Text(getTranlated(context, 'aboutTitle')),
           elevation: 0.0,
         ),
-        drawer: MenuWidget(),
+        // drawer: MenuWidget(),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -54,8 +54,7 @@ class _AboutPageState extends State<AboutPage> {
                             radius: 55,
                             backgroundColor: Colors.black38,
                             child: CircleAvatar(
-                              backgroundImage: AssetImage(
-                                  'assets/undraw_online_groceries_a02y.png'),
+                              backgroundImage: AssetImage('assets/logo.png'),
                               radius: 50.0,
                             ),
                           ),

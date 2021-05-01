@@ -1,4 +1,5 @@
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:PocketList/src/utils/pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/List_model.dart';
@@ -24,16 +25,24 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
+      //backgroundColor: Colors.white,
       body: Container(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              utils.saludos(context),
-              _imagen(),
-              _wawa(context)
+              // utils.saludos(context),
+              Container(
+                color: Colors.white,
+                child: Column(children: [
+                  _imagen(),
+                ]),
+              ),
+
+              //utils.saludos(context),
+              // _imagen(),
+              _listContainer(context)
             ],
           ),
         ),
@@ -41,7 +50,7 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  _wawa(BuildContext context) {
+  _listContainer(BuildContext context) {
     return Container(
       key: UniqueKey(),
       height: MediaQuery.of(context).size.height * .6,
@@ -70,7 +79,7 @@ class _ListPageState extends State<ListPage> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "",
+                          text: " ",
                         ),
                         WidgetSpan(
                           child: Icon(Icons.add_shopping_cart),
@@ -88,34 +97,14 @@ class _ListPageState extends State<ListPage> {
                       ],
                     ),
                   )
-                  //    RichText(
-                  //   // WidgetSpan(
-                  //   //   child: Icon(
-                  //   //     Icons.add_shopping_cart,
-                  //   //   ),
-                  //   // ),
-                  //   TextSpan(
-                  //     text: getTranlated(context, 'noList2'),
-                  //     style: TextStyle(
-                  //       color: utils.cambiarColor(),
-                  //       fontSize: 18,
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             );
-            // Text(
-            //   getTranlated(context, 'noList'),
-            //   style: TextStyle(
-            //     color: utils.cambiarColor(),
-            //     fontSize: 18,
-            //   ),
-            // ),
-            // );
           }
           lista.sort((a, b) => b.fecha.compareTo(a.fecha));
           return ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
               itemCount: lista.length,
               itemBuilder: (context, i) {
                 return Dismissible(
@@ -153,11 +142,12 @@ class _ListPageState extends State<ListPage> {
                   onDismissed: (direction) {
                     utils.showSnack(
                         context, getTranlated(context, 'deletedList'));
+
                     DBProvider.db.deleteLista(lista[i].id);
                     lista.removeAt(i);
                     setState(() {});
                   },
-                  child: _card(lista[i]),
+                  child: card(lista[i]),
                 );
               });
         },
@@ -177,46 +167,152 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  Widget _card(Lista lista) {
-    return GestureDetector(
-      onTap: () {
-        var route = new MaterialPageRoute(
-            builder: (BuildContext context) => DetailsPage(savelist: lista));
-        Navigator.of(context).push(route);
-      },
+  Widget card(Lista lista) {
+    return Card(
+      elevation: 8,
       child: Container(
-        height: 100.00,
-        child: Card(
-          elevation: 10.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Icon(Icons.shopping_basket, color: utils.cambiarColor()),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(lista.title),
-                  Text(lista.superMaret,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      )),
+          margin: EdgeInsets.symmetric(horizontal: 8.0),
+          padding: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    lista.fecha,
+                    style: TextStyle(
+                      //color: Colors.black45,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
                 ],
               ),
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(lista.fecha),
-                    Text(
-                      utils.numberFormat(lista.total),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ]),
+              Row(
+                //TODO: revisar el color
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      CircleAvatar(
+                          backgroundColor: Colors.black12,
+                          child: Icon(
+                            Icons.shopping_bag_sharp,
+                            color: utils.cambiarColor(),
+                          ))
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(children: [
+                        Text(
+                          lista.title,
+                          style: TextStyle(
+                            //color: Colors.black,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ]),
+                      Row(children: [
+                        Text(
+                          lista.superMaret,
+                          style: TextStyle(
+                            //color: Colors.black45,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ])
+                    ],
+                  ),
+
+                  Column(
+                    children: [
+                      Row(children: [
+                        Text(
+                          '\$  ${utils.numberFormat(lista.total)}',
+                          style: TextStyle(
+                            color: utils.cambiarColor(),
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ])
+                    ],
+                  ),
+
+                  // Column(),
+                ],
+              ),
+              // Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                      onPressed: () async {
+                        final pdf = await ApiPdf.generateTAble(lista.id);
+                        ApiPdf.openFile(pdf);
+                      },
+                      child: Icon(Icons.share)),
+                  TextButton(
+                      onPressed: () {
+                        var route = new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                DetailsPage(savelist: lista));
+                        Navigator.of(context).push(route);
+                      },
+                      child: Icon(Icons.edit, color: Colors.yellow[600])),
+                  TextButton(
+                      onPressed: () {
+                        _validateEliminar(context, lista.id);
+                      },
+                      child: Icon(
+                        Icons.delete_forever_outlined,
+                        color: Colors.red[500],
+                      ))
+                ],
+              )
             ],
-          ),
-        ),
-      ),
+          )),
     );
+  }
+
+  _validateEliminar(BuildContext context, String id) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(getTranlated(context, 'delete')),
+            content: new Text(getTranlated(context, 'deleteListDia')),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    getTranlated(context, 'leave'),
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+              TextButton(
+                  onPressed: () {
+                    DBProvider.db.deleteLista(id);
+                    Navigator.of(context).pop();
+                    utils.showSnack(
+                        context, getTranlated(context, 'deletedList'));
+                    setState(() {});
+                  },
+                  child: Text(
+                    getTranlated(context, 'accept'),
+                    style: TextStyle(color: utils.cambiarColor()),
+                  )),
+            ],
+          );
+        });
   }
 }

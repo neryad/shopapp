@@ -1,3 +1,8 @@
+import 'dart:io';
+import 'dart:math';
+import 'package:PocketList/src/pages/New-List/newList.dart';
+import 'package:PocketList/src/utils/pdf.dart';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
@@ -5,6 +10,17 @@ import 'package:PocketList/src/pages/list_page.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:PocketList/src/widgets/Menu_widget.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+// import 'package:pdf/widgets.dart';
+
+import 'package:share_extend/share_extend.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'help_page.dart';
+
+final pdf = pw.Document();
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -13,7 +29,6 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-//Text("Mis listas")
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   final prefs = new PreferenciasUsuario();
@@ -26,58 +41,133 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: new AppBar(
-        title: Text(
-          getTranlated(context, 'mHomeTitle'),
-        ),
-        actions: <Widget>[
-          //IconButton(icon: Icon(Icons.delete_forever, ), onPressed: () => _validateEliminar(context),tooltip: 'Borrar todas las listas',),
-          IconButton(
-              icon: Icon(
-                Icons.add_shopping_cart,
-              ),
-              onPressed: () =>
-                  {Navigator.pushReplacementNamed(context, 'newList')})
-        ],
+        title: utils.saludos(context)
+
+        // Container(
+        //   child: Column(
+        //       //mainAxisAlignment: MainAxisAlignment.center,
+        //       //crossAxisAlignment: CrossAxisAlignment.center,
+        //       //crossAxisAlignment: CrossAxisAlignment.center,
+        //       children: [
+        //         Row(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           crossAxisAlignment: CrossAxisAlignment.center,
+        //           children: [Text(getTranlated(context, 'mHomeTitle'))],
+        //         ),
+        //         Row(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           crossAxisAlignment: CrossAxisAlignment.center,
+        //           children: [Text(utils.saludos(context))],
+        //         )
+        //         // Text(
+        //         //   getTranlated(context, 'mHomeTitle'),
+        //         // ),
+        //         // utils.saludos(context),
+        //       ]),
+        // )
+        ,
         elevation: 0.0,
         backgroundColor: utils.cambiarColor(),
       ),
       body: ListPage(),
-      drawer: MenuWidget(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(''),
+              decoration: utils.cambiarHeaderImage(),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.home,
+              ),
+              title: Text(
+                getTranlated(context, 'mHomeTitle'),
+              ),
+              onTap: () => {
+                // Navigator.pop(context),
+                Navigator.pushNamed(context, 'home')
+                // Navigator.pushReplacementNamed(context, 'home')
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.list),
+              title: Text(getTranlated(context, 'mMyLisTitle')),
+              onTap: () => {
+                // Navigator.pop(context),
+                Navigator.pushNamed(context, 'newList')
+                // Navigator.pushReplacementNamed(context, 'newList')
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text(getTranlated(context, 'mSettingTitle')),
+              onTap: () => {
+                //Navigator.pop(context),
+                Navigator.pushNamed(context, 'settings')
+                //Navigator.pushReplacementNamed(context, 'settings')
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.new_releases_sharp),
+              title: Text(getTranlated(context, 'mNewsTitle')),
+              onTap: () => {
+                //Navigator.pop(context),
+                Navigator.pushNamed(context, 'newsPage')
+                //Navigator.pushReplacementNamed(context, 'settings')
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text(getTranlated(context, 'mAboutTitle')),
+              onTap: () => {
+                // Navigator.pop(context),
+                Navigator.pushNamed(context, 'about')
+              },
+              //{Navigator.pushReplacementNamed(context, 'about')}
+            ),
+            ListTile(
+              leading: Icon(Icons.help),
+              title: Text(getTranlated(context, 'mHelp')),
+              onTap: () => {
+                // Navigator.pop(context),
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => new HelpPage(),
+                    ))
+                //Navigator.pushNamed(context, 'help')
+              },
+            )
+          ],
+        ),
+      ),
+      //MenuWidget(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return NewList();
+            }),
+          )
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        backgroundColor: utils.cambiarColor(),
+      ),
     );
   }
-
-  // _validateEliminar(BuildContext context){
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (context) {
-  //         return AlertDialog(
-  //           title: Text(getTranlated(context, 'deleteAllList')),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //                 onPressed: () => Navigator.of(context).pop(),
-  //                 child: Text(
-  //                   getTranlated(context, 'leave'),
-  //                   style: TextStyle(color: utils.cambiarColor()),
-  //                 )),
-  //             FlatButton(
-  //                 onPressed: () => limpiarTodo(),
-  //                 child: Text(
-  //                    getTranlated(context, 'accept'),
-  //                   style: TextStyle(color: utils.cambiarColor()),
-  //                 )),
-  //           ],
-  //         );
-  //       });
-  // }
 
   limpiarTodo() {
     setState(() {
       DBProvider.db.deleteAllList();
-      //items.clear();
       setState(() {});
     });
     Navigator.of(context).pop();

@@ -18,13 +18,12 @@ class PreferenciasUsuario {
   }
 
   Color defaultColor = Color.fromRGBO(255, 111, 94, 1);
-
-  get genero {
-    return _prefs.getInt('genero') ?? 1;
+  get color {
+    return _prefs.getInt('color') ?? 1;
   }
 
-  set genero(int value) {
-    _prefs.setInt('genero', value);
+  set color(int value) {
+    _prefs.setInt('color', value);
   }
 
   get colorSecundario {
@@ -35,12 +34,28 @@ class PreferenciasUsuario {
     _prefs.setBool('colorSecundario', value);
   }
 
+  get darkLightTheme {
+    return _prefs.getBool('darkLightTheme') ?? false;
+  }
+
+  set darkLightTheme(bool value) {
+    _prefs.setBool('darkLightTheme', value);
+  }
+
   get nombreUsuario {
     return _prefs.getString('nombreUsuario') ?? '';
   }
 
   set nombreUsuario(String value) {
     _prefs.setString('nombreUsuario', value);
+  }
+
+  get lnge {
+    return _prefs.getString('lnge');
+  }
+
+  set lnge(String value) {
+    _prefs.setString('lnge', value);
   }
 
   get ultimaPagina {
