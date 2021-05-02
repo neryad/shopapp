@@ -47,40 +47,40 @@ class _SettingPageState extends State<SettingPage> {
       //resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: DropdownButton(
-                underline: SizedBox(),
-                icon: Icon(
-                  Icons.language,
-                  color: Colors.white,
-                ),
-                //hint: new Text(getTranlated(context, 'lnHelp')),
-                items: Language.languageList()
-                    .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
-                        value: lang,
-                        child: Row(
-                          children: [
-                            Text(lang.name),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(lang.languageCode),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                          ],
-                        )))
-                    .toList(),
-                onChanged: (Language language) {
-                  _changeLanguea(language);
-                }),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.all(15.0),
+        //     child: DropdownButton(
+        //         underline: SizedBox(),
+        //         icon: Icon(
+        //           Icons.language,
+        //           color: Colors.white,
+        //         ),
+        //         //hint: new Text(getTranlated(context, 'lnHelp')),
+        //         items: Language.languageList()
+        //             .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
+        //                 value: lang,
+        //                 child: Row(
+        //                   children: [
+        //                     Text(lang.name),
+        //                     SizedBox(
+        //                       width: 5.0,
+        //                     ),
+        //                     SizedBox(
+        //                       width: 5.0,
+        //                     ),
+        //                     Text(lang.languageCode),
+        //                     SizedBox(
+        //                       width: 5.0,
+        //                     ),
+        //                   ],
+        //                 )))
+        //             .toList(),
+        //         onChanged: (Language language) {
+        //           _changeLanguea(language);
+        //         }),
+        //   ),
+        // ],
         title: Text(getTranlated(context, 'settTitle')),
         backgroundColor: utils.cambiarColor(),
       ),
@@ -149,6 +149,100 @@ class _SettingPageState extends State<SettingPage> {
           secondary: const Icon(Icons.lightbulb_outline),
         ),
         Divider(),
+        ListTile(
+          leading: Icon(Icons.language),
+          title: Text(getTranlated(context, 'lngTitle'),
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                //color: utils.cambiarColor()
+              )),
+          onTap: () => {
+            // Navigator.pop(context),
+            //Navigator.pushNamed(context, 'dataPage')
+          },
+          trailing: SizedBox(
+            child: DropdownButton(
+                underline: SizedBox(),
+                icon: Icon(
+                  Icons.keyboard_arrow_down,
+                  //color: Colors.white,
+                ),
+                //hint: new Text(getTranlated(context, 'lnHelp')),
+                items: Language.languageList()
+                    .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
+                        value: lang,
+                        child: Row(
+                          children: [
+                            // Text(lang.name),
+                            // SizedBox(
+                            //   width: 5.0,
+                            // ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(lang.flag),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(lang.languageCode),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                          ],
+                        )))
+                    .toList(),
+                onChanged: (Language language) {
+                  _changeLanguea(language);
+                }),
+          ),
+        ),
+        Divider(),
+
+        // DropdownButton(
+        //     underline: SizedBox(),
+        //     icon: Icon(
+        //       Icons.arrow_drop_down,
+        //       //color: Colors.white,
+        //     ),
+        //     //hint: new Text(getTranlated(context, 'lnHelp')),
+        //     items: Language.languageList()
+        //         .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
+        //             value: lang,
+        //             child: Row(
+        //               children: [
+        //                 Text(lang.name),
+        //                 SizedBox(
+        //                   width: 5.0,
+        //                 ),
+        //                 SizedBox(
+        //                   width: 5.0,
+        //                 ),
+        //                 Text(lang.languageCode),
+        //                 SizedBox(
+        //                   width: 5.0,
+        //                 ),
+        //               ],
+        //             )))
+        //         .toList(),
+        //     onChanged: (Language language) {
+        //       _changeLanguea(language);
+        //     }),
+        // ListTile(
+        //   leading: Icon(Icons.language),
+        //   title: Text(getTranlated(context, 'lngTitle'),
+        //       style: TextStyle(
+        //         fontSize: 20.0,
+        //         fontWeight: FontWeight.bold,
+        //         //color: utils.cambiarColor()
+        //       )),
+        //   onTap: () => {
+        //     // Navigator.pop(context),
+        //     Navigator.pushNamed(context, 'lngPage')
+        //   },
+        //   trailing: Icon(Icons.arrow_forward_ios_rounded),
+        // ),
+
         ListTile(
           title: Text(getTranlated(context, 'Terms'),
               style: TextStyle(

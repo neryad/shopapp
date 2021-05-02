@@ -1,26 +1,14 @@
-import 'dart:io';
-import 'dart:math';
 import 'package:PocketList/src/pages/New-List/newList.dart';
-import 'package:PocketList/src/utils/pdf.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/pages/list_page.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:PocketList/src/widgets/Menu_widget.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-// import 'package:pdf/widgets.dart';
-
-import 'package:share_extend/share_extend.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'help_page.dart';
 
-final pdf = pw.Document();
+// final pdf = pw.Document();
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -44,31 +32,7 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: new AppBar(
-        title: utils.saludos(context)
-
-        // Container(
-        //   child: Column(
-        //       //mainAxisAlignment: MainAxisAlignment.center,
-        //       //crossAxisAlignment: CrossAxisAlignment.center,
-        //       //crossAxisAlignment: CrossAxisAlignment.center,
-        //       children: [
-        //         Row(
-        //           mainAxisAlignment: MainAxisAlignment.center,
-        //           crossAxisAlignment: CrossAxisAlignment.center,
-        //           children: [Text(getTranlated(context, 'mHomeTitle'))],
-        //         ),
-        //         Row(
-        //           mainAxisAlignment: MainAxisAlignment.center,
-        //           crossAxisAlignment: CrossAxisAlignment.center,
-        //           children: [Text(utils.saludos(context))],
-        //         )
-        //         // Text(
-        //         //   getTranlated(context, 'mHomeTitle'),
-        //         // ),
-        //         // utils.saludos(context),
-        //       ]),
-        // )
-        ,
+        title: utils.saludos(context),
         elevation: 0.0,
         backgroundColor: utils.cambiarColor(),
       ),
