@@ -264,7 +264,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${BUILT_PRODUCTS_DIR}/advance_pdf_viewer/advance_pdf_viewer.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_keyboard_visibility/flutter_keyboard_visibility.framework",
 				"${BUILT_PRODUCTS_DIR}/open_file/open_file.framework",
 				"${BUILT_PRODUCTS_DIR}/package_info/package_info.framework",
@@ -277,7 +276,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/advance_pdf_viewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_keyboard_visibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/open_file.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/package_info.framework",
@@ -383,7 +381,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 4V2P792W6T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -397,8 +397,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.neryad.PocketList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -520,7 +522,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 4V2P792W6T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -534,6 +536,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.neryad.PocketList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -550,7 +553,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 4V2P792W6T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -564,8 +569,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.neryad.PocketList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
