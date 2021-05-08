@@ -23,7 +23,6 @@ dependencies:
   uuid:
   flushbar:
   shared_preferences:
-  advance_pdf_viewer:
   sqflite:
   path_provider:
   pdf: ^3.1.0

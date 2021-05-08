@@ -41,7 +41,9 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
-
+aaptOptions {
+    cruncherEnabled = false
+}
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.neryad.PocketList"
@@ -64,6 +66,8 @@ buildTypes {
     release {
         signingConfig signingConfigs.release
     }
+
+
 }
 
 }

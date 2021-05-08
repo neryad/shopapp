@@ -127,7 +127,7 @@ class DarkLightTheme extends StatelessWidget {
         'newList': (BuildContext context) => NewList(),
         'settings': (BuildContext context) => SettingPage(),
         'about': (BuildContext context) => AboutPage(),
-        'help': (BuildContext context) => HelpPage(),
+        // 'help': (BuildContext context) => HelpPage(),
         'detailsPage': (BuildContext context) => DetailsPage(),
         'colorPage': (BuildContext context) => ColorPage(),
         'userPage': (BuildContext context) => UserPage(),

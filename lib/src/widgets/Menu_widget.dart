@@ -56,19 +56,19 @@ class MenuWidget extends StatelessWidget {
                 {Navigator.pop(context), Navigator.pushNamed(context, 'about')},
             //{Navigator.pushReplacementNamed(context, 'about')}
           ),
-          ListTile(
-            leading: Icon(Icons.help),
-            title: Text(getTranlated(context, 'mHelp')),
-            onTap: () => {
-              Navigator.pop(context),
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => new HelpPage(),
-                  ))
-              //Navigator.pushNamed(context, 'help')
-            },
-          )
+          // ListTile(
+          //   leading: Icon(Icons.help),
+          //   title: Text(getTranlated(context, 'mHelp')),
+          //   onTap: () => {
+          //     Navigator.pop(context),
+          //     Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) => new HelpPage(),
+          //         ))
+          //     //Navigator.pushNamed(context, 'help')
+          //   },
+          // )
         ],
       ),
     );
