@@ -114,19 +114,19 @@ class _AuthorPageState extends State<AuthorPage> {
                       _launchURL('https://www.instagram.com/neryad_dev/');
                     },
                   ),
-                  ListTile(
-                    title: Text(getTranlated(context, 'authorDonation'),
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    subtitle: Text(getTranlated(context, 'authorDonation2')),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      _launchURL('https://www.buymeacoffee.com/neryad');
-                    },
-                  ),
-                  Divider(),
+                  // ListTile(
+                  //   title: Text(getTranlated(context, 'authorDonation'),
+                  //       style: TextStyle(
+                  //         fontSize: 20.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       )),
+                  //   subtitle: Text(getTranlated(context, 'authorDonation2')),
+                  //   trailing: Icon(Icons.arrow_forward_ios),
+                  //   onTap: () {
+                  //     _launchURL('https://www.buymeacoffee.com/neryad');
+                  //   },
+                  // ),
+                  // Divider(),
                 ],
               )),
             ],

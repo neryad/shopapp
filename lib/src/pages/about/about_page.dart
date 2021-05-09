@@ -137,18 +137,18 @@ class _AboutPageState extends State<AboutPage> {
                     subtitle: Text(getTranlated(context, 'studio')),
                   ),
                   Divider(),
-                  ListTile(
-                    title: Text(getTranlated(context, 'dantions'),
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    subtitle: Text(getTranlated(context, 'aboutDonation')),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      _launchURL('https://www.buymeacoffee.com/neryad');
-                    },
-                  ),
+                  // ListTile(
+                  //   title: Text(getTranlated(context, 'dantions'),
+                  //       style: TextStyle(
+                  //         fontSize: 20.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       )),
+                  //   subtitle: Text(getTranlated(context, 'aboutDonation')),
+                  //   trailing: Icon(Icons.arrow_forward_ios),
+                  //   onTap: () {
+                  //     _launchURL('https://www.buymeacoffee.com/neryad');
+                  //   },
+                  // ),
                 ],
               ))
             ],
