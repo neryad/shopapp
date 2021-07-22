@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
@@ -137,18 +139,21 @@ class _AboutPageState extends State<AboutPage> {
                     subtitle: Text(getTranlated(context, 'studio')),
                   ),
                   Divider(),
-                  // ListTile(
-                  //   title: Text(getTranlated(context, 'dantions'),
-                  //       style: TextStyle(
-                  //         fontSize: 20.0,
-                  //         fontWeight: FontWeight.bold,
-                  //       )),
-                  //   subtitle: Text(getTranlated(context, 'aboutDonation')),
-                  //   trailing: Icon(Icons.arrow_forward_ios),
-                  //   onTap: () {
-                  //     _launchURL('https://www.buymeacoffee.com/neryad');
-                  //   },
-                  // ),
+                  Platform.isIOS
+                      ? Container()
+                      : ListTile(
+                          title: Text(getTranlated(context, 'dantions'),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          subtitle:
+                              Text(getTranlated(context, 'aboutDonation')),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            _launchURL('https://www.buymeacoffee.com/neryad');
+                          },
+                        ),
                 ],
               ))
             ],

@@ -1,6 +1,6 @@
 //import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:flushbar/flushbar.dart';
+//import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 //import 'package:PocketList/src/data/data.dart';
@@ -9,6 +9,10 @@ import 'package:PocketList/src/models/product_model.dart';
 import 'package:PocketList/src/models/suge.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:another_flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:another_flushbar/flushbar_route.dart';
+
 //import 'package:flutter_typeahead/flutter_typeahead.dart';
 // import 'package:PocketList/src/data/data.dart';
 
@@ -36,6 +40,7 @@ class _DetailsPageState extends State<DetailsPage> {
   double buget;
   double total;
   double diference;
+  int totalItems = 0;
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
   final editFormKey = GlobalKey<FormState>();
@@ -56,10 +61,21 @@ class _DetailsPageState extends State<DetailsPage> {
       resizeToAvoidBottomInset: false,
       // backgroundColor: Colors.grey[200],
       appBar: AppBar(
-          backgroundColor: utils.cambiarColor(),
-          title: Text(
-            listaModel.title,
-          )),
+        backgroundColor: utils.cambiarColor(),
+        title: Text(
+          listaModel.title,
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Text('Items: $totalItems/${articulos.length}'),
+              ],
+            ),
+          )
+        ],
+      ),
       // drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
@@ -101,7 +117,9 @@ class _DetailsPageState extends State<DetailsPage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Icon(Icons.account_balance_wallet,
-                                        color: utils.cambiarColor()),
+                                        color: (prefs.color == 5)
+                                            ? Colors.white
+                                            : utils.cambiarColor()),
                                     SizedBox(width: 5),
                                     Text(getTranlated(context, 'buget'),
                                         style: TextStyle(
@@ -125,7 +143,9 @@ class _DetailsPageState extends State<DetailsPage> {
                                 utils.numberFormat(buget),
                                 style: TextStyle(
                                     fontSize: 18,
-                                    color: bugetColor,
+                                    color: (prefs.color == 5)
+                                        ? Colors.white
+                                        : bugetColor,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -163,7 +183,9 @@ class _DetailsPageState extends State<DetailsPage> {
                               utils.numberFormat(total),
                               style: TextStyle(
                                   fontSize: 18,
-                                  color: utils.cambiarColor(),
+                                  color: (prefs.color == 5)
+                                      ? Colors.white
+                                      : utils.cambiarColor(),
                                   fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -202,7 +224,9 @@ class _DetailsPageState extends State<DetailsPage> {
                           utils.numberFormat(diference),
                           style: TextStyle(
                               fontSize: 18,
-                              color: bugetColor,
+                              color: (prefs.color == 5)
+                                  ? Colors.white
+                                  : bugetColor,
                               fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -283,116 +307,147 @@ class _DetailsPageState extends State<DetailsPage> {
                 },
                 child: Container(
                   child: Card(
+                      color: isComplete
+                          ? Color(0xffc3c3c3)
+                          : prefs.color == 5
+                              ? utils.cambiarColor()
+                              : prefs.darkLightTheme
+                                  ? ThemeData.dark().cardColor
+                                  : ThemeData().cardColor,
                       child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            articulos[index].name,
-                            style: TextStyle(fontWeight: FontWeight.w900),
-                            textAlign: TextAlign.start,
-                          ),
-                          Spacer(),
-                          Checkbox(
-                            value: isComplete,
-                            onChanged: (valor) {
-                              int complValue = (valor == true) ? 1 : 0;
-                              articulos[index].complete = complValue;
-                              DBProvider.db.updateProd(articulos[index]);
-                              setState(() {});
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                articulos[index].name,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  decoration: isComplete
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  decorationColor: utils.cambiarColor(),
+                                  decorationStyle: TextDecorationStyle.solid,
+                                  decorationThickness: 3,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                              Spacer(),
+                              Checkbox(
+                                value: isComplete,
+                                onChanged: (valor) {
+                                  int complValue = (valor == true) ? 1 : 0;
+                                  articulos[index].complete = complValue;
+                                  DBProvider.db.updateProd(articulos[index]);
 
-                              (valor == true)
-                                  ? utils.showSnack(
-                                      context, getTranlated(context, 'onCart'))
-                                  : utils.showSnack(
-                                      context,
-                                      getTranlated(context,
-                                          'ofCart')); //   showSnack(context, 'Artículo agregado');
+                                  setState(() {});
+
+                                  (valor == true)
+                                      ? utils.showSnack(context,
+                                          getTranlated(context, 'onCart'))
+                                      : utils.showSnack(context,
+                                          getTranlated(context, 'ofCart'));
+                                  updatedCount(
+                                      valor); //   showSnack(context, 'Artículo agregado');
+                                },
+                                activeColor: isComplete
+                                    ? Colors.black
+                                    : (prefs.color == 5)
+                                        ? Colors.white
+                                        : utils.cambiarColor(),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              _mostrarAlertaEditarProducto(
+                                  context, index, listaArt);
                             },
-                            activeColor: utils.cambiarColor(),
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          _mostrarAlertaEditarProducto(
-                              context, index, listaArt);
-                        },
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 0, bottom: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.shopping_basket,
-                                  color: utils.cambiarColor(),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                          utils.numberFormat(
-                                              articulos[index].price),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text(getTranlated(context, 'price'))
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(articulos[index].quantity.toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text(getTranlated(context, 'quantity'))
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                          utils.numberFormat(
-                                              articulos[index].quantity *
+                            child: Container(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 0, bottom: 5),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.shopping_basket,
+                                      color: isComplete
+                                          ? Colors.black
+                                          : (prefs.color == 5)
+                                              ? Colors.white
+                                              : utils.cambiarColor(),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                              utils.numberFormat(
                                                   articulos[index].price),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text('Total')
-                                    ],
-                                  ),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(getTranlated(context, 'price'))
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                              articulos[index]
+                                                  .quantity
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(
+                                              getTranlated(context, 'quantity'))
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                              utils.numberFormat(
+                                                  articulos[index].quantity *
+                                                      articulos[index].price),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text('Total')
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  )),
+                        ],
+                      )),
                 ),
               );
             },
@@ -418,7 +473,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'baclTolist'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
               FlatButton(
                   onPressed: () {
@@ -427,7 +485,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   },
                   child: Text(
                     getTranlated(context, 'save'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
             ],
           );
@@ -443,10 +504,11 @@ class _DetailsPageState extends State<DetailsPage> {
         hintText: getTranlated(context, 'newBuget'),
         suffixIcon: Icon(
           Icons.account_balance_wallet,
-          color: utils.cambiarColor(),
+          color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
       ),
       onChanged: (value) {
@@ -523,7 +585,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'baclTolist'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
               FlatButton(
                   onPressed: () {
@@ -535,7 +600,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   },
                   child: Text(
                     getTranlated(context, 'save'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
             ],
           );
@@ -557,11 +625,14 @@ class _DetailsPageState extends State<DetailsPage> {
       decoration: InputDecoration(
         counterText: '',
         labelText: getTranlated(context, 'nameArt'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
-        hintStyle: TextStyle(color: utils.cambiarColor()),
+        hintStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
       ),
     );
   }
@@ -576,9 +647,11 @@ class _DetailsPageState extends State<DetailsPage> {
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'price'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
         counterText: '',
         //hintStyle: TextStyle(color: utils.cambiarColor()),
@@ -612,9 +685,11 @@ class _DetailsPageState extends State<DetailsPage> {
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'quantity'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
         counterText: '',
         //hintStyle: TextStyle(color: utils.cambiarColor()),
@@ -666,7 +741,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'baclTolist'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
               FlatButton(
                   onPressed: () {
@@ -676,7 +754,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   },
                   child: Text(
                     getTranlated(context, 'save'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
             ],
           );
@@ -817,10 +898,12 @@ class _DetailsPageState extends State<DetailsPage> {
       decoration: InputDecoration(
         counterText: '',
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
         // hintText: 'Nombre artículo',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         labelText: getTranlated(context, 'nameArt'),
         //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
@@ -835,10 +918,12 @@ class _DetailsPageState extends State<DetailsPage> {
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'price'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         counterText: '',
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
         //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
@@ -868,10 +953,12 @@ class _DetailsPageState extends State<DetailsPage> {
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'quantity'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         counterText: '',
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
         //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
@@ -921,7 +1008,9 @@ class _DetailsPageState extends State<DetailsPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Icon(Icons.add_shopping_cart, color: utils.cambiarColor()),
+              Icon(Icons.add_shopping_cart,
+                  color:
+                      (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
               //Text(getTranlated(context, 'clearList'))
             ],
           ),
@@ -953,11 +1042,11 @@ class _DetailsPageState extends State<DetailsPage> {
       icon: Icon(
         Icons.info_outline,
         size: 28,
-        color: utils.cambiarColor(),
+        color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       ),
       mainButton: FlatButton(
         onPressed: () {
-          print(item);
+          //print(item);
           //_undoProd(item, index);
           DBProvider.db.newProd(item);
           //DBProvider.db.getTmpArticulos();
@@ -970,8 +1059,50 @@ class _DetailsPageState extends State<DetailsPage> {
           style: TextStyle(color: Colors.amber),
         ),
       ),
-      leftBarIndicatorColor: utils.cambiarColor(),
+      leftBarIndicatorColor:
+          (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       duration: Duration(seconds: 3),
     )..show(context);
+  }
+
+  void showcompletedSnack(BuildContext context, String msg) {
+    Flushbar(
+      //title: 'This action is prohibited',
+      message: msg,
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
+      ),
+      // mainButton: FlatButton(
+      //   onPressed: () {
+      //     //_undoProd(item, index);
+      //     DBProvider.db.tmpProd(item);
+      //     DBProvider.db.getArticlesTmp('tmp');
+      //     var it = items.length;
+      //     items.insert(it, item);
+      //     setState(() {});
+      //   },
+      //   child: Text(
+      //     getTranlated(context, 'undo'),
+      //     style: TextStyle(color: Colors.amber),
+      //   ),
+      // ),
+      leftBarIndicatorColor:
+          (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
+      duration: Duration(seconds: 3),
+    )..show(context);
+  }
+
+  updatedCount(bool value) {
+    if (value == true) {
+      totalItems += 1;
+    } else {
+      totalItems -= 1;
+    }
+
+    if (totalItems == articulos.length) {
+      showcompletedSnack(context, 'Lista de compra completa');
+    }
   }
 }

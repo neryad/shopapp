@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
@@ -114,19 +116,35 @@ class _AuthorPageState extends State<AuthorPage> {
                       _launchURL('https://www.instagram.com/neryad_dev/');
                     },
                   ),
-                  // ListTile(
-                  //   title: Text(getTranlated(context, 'authorDonation'),
-                  //       style: TextStyle(
-                  //         fontSize: 20.0,
-                  //         fontWeight: FontWeight.bold,
-                  //       )),
-                  //   subtitle: Text(getTranlated(context, 'authorDonation2')),
-                  //   trailing: Icon(Icons.arrow_forward_ios),
-                  //   onTap: () {
-                  //     _launchURL('https://www.buymeacoffee.com/neryad');
-                  //   },
-                  // ),
-                  // Divider(),
+                  Divider(),
+                  ListTile(
+                    title: Text(getTranlated(context, 'webPageTitle'),
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    subtitle: Text(getTranlated(context, 'webPageSubTitle')),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      _launchURL('https://neryad.dev/');
+                    },
+                  ),
+                  Platform.isIOS
+                      ? Container()
+                      : ListTile(
+                          title: Text(getTranlated(context, 'authorDonation'),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          subtitle:
+                              Text(getTranlated(context, 'authorDonation2')),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            _launchURL('https://www.buymeacoffee.com/neryad');
+                          },
+                        ),
+                  //Divider(),
                 ],
               )),
             ],

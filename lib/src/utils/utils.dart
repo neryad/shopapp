@@ -1,9 +1,12 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:flushbar/flushbar.dart';
+//import 'package:flushbar/flushbar.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/product_model.dart';
+import 'package:another_flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:another_flushbar/flushbar_route.dart';
 
 final prefs = new PreferenciasUsuario();
 DateTime now = DateTime.now();
@@ -163,9 +166,9 @@ void showSnack(BuildContext context, String msg) {
     icon: Icon(
       Icons.info_outline,
       size: 28,
-      color: cambiarColor(),
+      color: (prefs.color == 5) ? Colors.white : cambiarColor(),
     ),
-    leftBarIndicatorColor: cambiarColor(),
+    leftBarIndicatorColor: (prefs.color == 5) ? Colors.white : cambiarColor(),
     duration: Duration(seconds: 2),
   )..show(context);
 }

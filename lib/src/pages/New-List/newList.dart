@@ -1,4 +1,4 @@
-import 'package:flushbar/flushbar.dart';
+//import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
@@ -9,6 +9,9 @@ import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 //import 'package:PocketList/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
+import 'package:another_flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:another_flushbar/flushbar_route.dart';
 
 class NewList extends StatefulWidget {
   NewList({Key key}) : super(key: key);
@@ -140,7 +143,10 @@ class _NewListState extends State<NewList> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'baclTolist'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
               FlatButton(
                   onPressed: () {
@@ -149,7 +155,10 @@ class _NewListState extends State<NewList> {
                   },
                   child: Text(
                     getTranlated(context, 'addBuget'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
             ],
           );
@@ -188,7 +197,10 @@ class _NewListState extends State<NewList> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'baclTolist'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
               FlatButton(
                   onPressed: () {
@@ -198,7 +210,10 @@ class _NewListState extends State<NewList> {
                   },
                   child: Text(
                     getTranlated(context, 'add'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
             ],
           );
@@ -221,9 +236,11 @@ class _NewListState extends State<NewList> {
       },
       decoration: InputDecoration(
         labelText: getTranlated(context, 'nameArt'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
       ),
     );
@@ -238,9 +255,11 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         labelText: getTranlated(context, 'price'),
         counterText: '',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
       ),
       onSaved: (value) {
@@ -269,9 +288,11 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         labelText: getTranlated(context, 'quantity'),
         counterText: '',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
         //  int complValue = (valor == true) ? 1 : 0; int.parse(value),
       ),
@@ -305,7 +326,7 @@ class _NewListState extends State<NewList> {
         complete: 0);
     items.insert(it, prod);
     DBProvider.db.newProd(prod);
-    print(productModel.id);
+    //print(productModel.id);
     formKey.currentState.reset();
     setState(() {});
     myFocusNode.requestFocus();
@@ -334,7 +355,10 @@ class _NewListState extends State<NewList> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
               FlatButton(
                   onPressed: () {
@@ -345,7 +369,10 @@ class _NewListState extends State<NewList> {
                   },
                   child: Text(
                     getTranlated(context, 'save'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
             ],
           );
@@ -367,9 +394,11 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         labelText: getTranlated(context, 'nameArt'),
         counterText: '',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
       ),
     );
@@ -384,9 +413,11 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         labelText: getTranlated(context, 'price'),
         counterText: '',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
       ),
       onSaved: (value) {
@@ -412,9 +443,11 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         labelText: getTranlated(context, 'quantity'),
         counterText: '',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
       ),
       onSaved: (value) {
@@ -441,9 +474,11 @@ class _NewListState extends State<NewList> {
       onSaved: (value) => listaModel.title = value,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'listName'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
       ),
     );
@@ -459,9 +494,11 @@ class _NewListState extends State<NewList> {
       decoration: InputDecoration(
         // counterText: '',
         labelText: getTranlated(context, 'shopName'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
         // hintText: 'Nombre localidad',
         //hintStyle: TextStyle(color: utils.cambiarColor()),
@@ -480,10 +517,11 @@ class _NewListState extends State<NewList> {
         hintText: getTranlated(context, 'newBuget'),
         suffixIcon: Icon(
           Icons.account_balance_wallet,
-          color: utils.cambiarColor(),
+          color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
       ),
 
@@ -526,7 +564,9 @@ class _NewListState extends State<NewList> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Icon(Icons.account_balance_wallet,
-                                        color: utils.cambiarColor()),
+                                        color: (prefs.color == 5)
+                                            ? Colors.white
+                                            : utils.cambiarColor()),
                                     SizedBox(
                                       width: 5,
                                     ),
@@ -548,7 +588,9 @@ class _NewListState extends State<NewList> {
                                 utils.numberFormat(buget),
                                 style: TextStyle(
                                     fontSize: 18,
-                                    color: bugetColor,
+                                    color: (prefs.color == 5)
+                                        ? Colors.white
+                                        : bugetColor,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -590,7 +632,9 @@ class _NewListState extends State<NewList> {
                               utils.numberFormat(total),
                               style: TextStyle(
                                   fontSize: 18,
-                                  color: utils.cambiarColor(),
+                                  color: (prefs.color == 5)
+                                      ? Colors.white
+                                      : utils.cambiarColor(),
                                   fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -623,7 +667,8 @@ class _NewListState extends State<NewList> {
                         utils.numberFormat(diference),
                         style: TextStyle(
                             fontSize: 18,
-                            color: bugetColor,
+                            color:
+                                (prefs.color == 5) ? Colors.white : bugetColor,
                             fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -677,7 +722,8 @@ class _NewListState extends State<NewList> {
                                 text: "",
                               ),
                               WidgetSpan(
-                                child: Icon(Icons.add_shopping_cart),
+                                child: Icon(Icons.add_shopping_cart,
+                                    color: utils.cambiarColor()),
                               ),
                               TextSpan(
                                 text: " ",
@@ -753,120 +799,151 @@ class _NewListState extends State<NewList> {
                   getDiference();
                   setState(() {});
                 },
+                // Color(0xff424242)
+                //#595959
+
                 child: Container(
                   child: Card(
+                      color: isComplete
+                          ? Color(0xffc3c3c3)
+                          : prefs.color == 5
+                              ? utils.cambiarColor()
+                              : prefs.darkLightTheme
+                                  ? ThemeData.dark().cardColor
+                                  : ThemeData().cardColor,
                       child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            items[index].name,
-                            style: TextStyle(fontWeight: FontWeight.w900),
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.start,
-                          ),
-                          Spacer(),
-                          SizedBox(),
-                          Checkbox(
-                            value: isComplete,
-                            onChanged: (valor) {
-                              int complValue = (valor == true) ? 1 : 0;
-                              items[index].complete = complValue;
-                              DBProvider.db.updateProd(items[index]);
-                              setState(() {});
-                              //**  papu  */
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                items[index].name,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  decoration: isComplete
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  decorationColor: utils.cambiarColor(),
+                                  decorationStyle: TextDecorationStyle.solid,
+                                  decorationThickness: 3,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.start,
+                              ),
+                              Spacer(),
+                              SizedBox(),
+                              Checkbox(
+                                value: isComplete,
+                                onChanged: (valor) {
+                                  //print(ThemeData.dark().cardColor);
+                                  int complValue = (valor == true) ? 1 : 0;
+                                  items[index].complete = complValue;
+                                  DBProvider.db.updateProd(items[index]);
+                                  setState(() {});
+                                  //**  papu  */
 
-                              (valor == true)
-                                  ? utils.showSnack(
-                                      context, getTranlated(context, 'onCart'))
-                                  : utils.showSnack(
-                                      context, getTranlated(context, 'ofCart'));
+                                  (valor == true)
+                                      ? utils.showSnack(context,
+                                          getTranlated(context, 'onCart'))
+                                      : utils.showSnack(context,
+                                          getTranlated(context, 'ofCart'));
 
-                              updatedCount(
-                                  valor); //   showSnack(context, 'Artículo agregado');
-                            },
-                            activeColor: utils.cambiarColor(),
+                                  updatedCount(
+                                      valor); //   showSnack(context, 'Artículo agregado');
+                                },
+                                activeColor: isComplete
+                                    ? Colors.black
+                                    : (prefs.color == 5)
+                                        ? Colors.white
+                                        : utils.cambiarColor(),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: () =>
-                            _mostrarAlertaEditarProducto(context, index),
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 0, bottom: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.shopping_basket,
-                                  color: utils.cambiarColor(),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                          utils
-                                              .numberFormat(items[index].price),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text(getTranlated(context, 'price'))
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(items[index].quantity.toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text(getTranlated(context, 'quantity'))
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                          utils.numberFormat(
-                                              items[index].quantity *
+                          GestureDetector(
+                            onTap: () =>
+                                _mostrarAlertaEditarProducto(context, index),
+                            child: Container(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 0, bottom: 5),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.shopping_basket,
+                                      color: isComplete
+                                          ? Colors.black
+                                          : (prefs.color == 5)
+                                              ? Colors.white
+                                              : utils.cambiarColor(),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                              utils.numberFormat(
                                                   items[index].price),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text('Total')
-                                    ],
-                                  ),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(getTranlated(context, 'price'))
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(items[index].quantity.toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(
+                                              getTranlated(context, 'quantity'))
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                              utils.numberFormat(
+                                                  items[index].quantity *
+                                                      items[index].price),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text('Total')
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  )),
+                        ],
+                      )),
                 ),
               );
             },
@@ -906,7 +983,9 @@ class _NewListState extends State<NewList> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Icon(Icons.add_shopping_cart, color: utils.cambiarColor()),
+              Icon(Icons.add_shopping_cart,
+                  color:
+                      (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
               //Text(getTranlated(context, 'clearList'))
             ],
           ),
@@ -927,13 +1006,19 @@ class _NewListState extends State<NewList> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
               FlatButton(
                   onPressed: () => limpiarTodo(),
                   child: Text(
                     getTranlated(context, 'accept'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
             ],
           );
@@ -1008,7 +1093,10 @@ class _NewListState extends State<NewList> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
               FlatButton(
                   onPressed: () {
@@ -1019,7 +1107,10 @@ class _NewListState extends State<NewList> {
                   },
                   child: Text(
                     getTranlated(context, 'save'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
             ],
           );
@@ -1046,7 +1137,7 @@ class _NewListState extends State<NewList> {
       icon: Icon(
         Icons.info_outline,
         size: 28,
-        color: utils.cambiarColor(),
+        color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       ),
       mainButton: FlatButton(
         onPressed: () {
@@ -1059,10 +1150,12 @@ class _NewListState extends State<NewList> {
         },
         child: Text(
           getTranlated(context, 'undo'),
-          style: TextStyle(color: Colors.amber),
+          style: TextStyle(
+              color: (prefs.color == 5) ? Colors.white : Colors.amber),
         ),
       ),
-      leftBarIndicatorColor: utils.cambiarColor(),
+      leftBarIndicatorColor:
+          (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       duration: Duration(seconds: 3),
     )..show(context);
   }
@@ -1074,7 +1167,7 @@ class _NewListState extends State<NewList> {
       icon: Icon(
         Icons.info_outline,
         size: 28,
-        color: utils.cambiarColor(),
+        color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       ),
       // mainButton: FlatButton(
       //   onPressed: () {
@@ -1090,7 +1183,8 @@ class _NewListState extends State<NewList> {
       //     style: TextStyle(color: Colors.amber),
       //   ),
       // ),
-      leftBarIndicatorColor: utils.cambiarColor(),
+      leftBarIndicatorColor:
+          (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       duration: Duration(seconds: 3),
     )..show(context);
   }

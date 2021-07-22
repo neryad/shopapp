@@ -143,7 +143,7 @@ class _SettingPageState extends State<SettingPage> {
             setState(() {
               light = state;
               _selectedRadio(light);
-              print(light);
+              //print(light);
             });
           },
           secondary: const Icon(Icons.lightbulb_outline),
@@ -275,6 +275,7 @@ class _SettingPageState extends State<SettingPage> {
 
   _selectedRadio(bool valor) {
     prefs.darkLightTheme = valor;
+
     light = valor;
     MyApp.stateSet(context);
   }

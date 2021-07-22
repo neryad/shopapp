@@ -71,7 +71,9 @@ class _ListPageState extends State<ListPage> {
                   Text(
                     getTranlated(context, 'noList'),
                     style: TextStyle(
-                      color: utils.cambiarColor(),
+                      color: (prefs.color == 5)
+                          ? Colors.white
+                          : utils.cambiarColor(),
                       fontSize: 18,
                     ),
                   ),
@@ -90,7 +92,9 @@ class _ListPageState extends State<ListPage> {
                         TextSpan(
                           text: getTranlated(context, 'noList2'),
                           style: TextStyle(
-                            color: utils.cambiarColor(),
+                            color: (prefs.color == 5)
+                                ? Colors.white
+                                : utils.cambiarColor(),
                             fontSize: 18,
                           ),
                         ),
@@ -203,7 +207,9 @@ class _ListPageState extends State<ListPage> {
                           backgroundColor: Colors.black12,
                           child: Icon(
                             Icons.shopping_bag_sharp,
-                            color: utils.cambiarColor(),
+                            color: (prefs.color == 5)
+                                ? Colors.white
+                                : utils.cambiarColor(),
                           ))
                     ],
                   ),
@@ -215,6 +221,7 @@ class _ListPageState extends State<ListPage> {
                           lista.title,
                           style: TextStyle(
                             //color: Colors.black,
+
                             fontSize: 18.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -239,7 +246,9 @@ class _ListPageState extends State<ListPage> {
                         Text(
                           '\$  ${utils.numberFormat(lista.total)}',
                           style: TextStyle(
-                            color: utils.cambiarColor(),
+                            color: (prefs.color == 5)
+                                ? Colors.white
+                                : utils.cambiarColor(),
                             fontSize: 16.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -297,7 +306,10 @@ class _ListPageState extends State<ListPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
               TextButton(
                   onPressed: () {
@@ -309,7 +321,10 @@ class _ListPageState extends State<ListPage> {
                   },
                   child: Text(
                     getTranlated(context, 'accept'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
                   )),
             ],
           );

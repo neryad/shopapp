@@ -14,14 +14,14 @@ description: A new Flutter project.
 version: 2.0.0+1
 
 environment:
-  sdk: '>=2.2.0 <3.0.0'
+  sdk: '>=2.2.2 <3.0.0'
 
 dependencies:
   intl:
   package_info:
   flutter_typeahead:
   uuid:
-  flushbar:
+  another_flushbar: ^1.10.24
   shared_preferences:
   sqflite:
   path_provider:

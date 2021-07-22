@@ -31,6 +31,7 @@ class MenuWidget extends StatelessWidget {
               // Navigator.pushReplacementNamed(context, 'home')
             },
           ),
+
           ListTile(
             leading: Icon(Icons.list),
             title: Text(getTranlated(context, 'mMyLisTitle')),
@@ -40,6 +41,7 @@ class MenuWidget extends StatelessWidget {
               // Navigator.pushReplacementNamed(context, 'newList')
             },
           ),
+
           ListTile(
             leading: Icon(Icons.settings),
             title: Text(getTranlated(context, 'mSettingTitle')),
@@ -49,13 +51,21 @@ class MenuWidget extends StatelessWidget {
               // Navigator.pushReplacementNamed(context, 'settings')
             },
           ),
-          ListTile(
-            leading: Icon(Icons.info),
-            title: Text(getTranlated(context, 'mAboutTitle')),
-            onTap: () =>
-                {Navigator.pop(context), Navigator.pushNamed(context, 'about')},
-            //{Navigator.pushReplacementNamed(context, 'about')}
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.info),
+          //   title: Text(getTranlated(context, 'mAboutTitle')),
+          //   onTap: () =>
+          //       {Navigator.pop(context), Navigator.pushNamed(context, 'about')},
+          //   //{Navigator.pushReplacementNamed(context, 'about')}
+          // ),
+
+          // ListTile(
+          //   leading: Icon(Icons.info),
+          //   title: Text(getTranlated(context, 'mAboutTitle')),
+          //   onTap: () =>
+          //       {Navigator.pop(context), Navigator.pushNamed(context, 'about')},
+          //   //{Navigator.pushReplacementNamed(context, 'about')}
+          // ),
           // ListTile(
           //   leading: Icon(Icons.help),
           //   title: Text(getTranlated(context, 'mHelp')),
