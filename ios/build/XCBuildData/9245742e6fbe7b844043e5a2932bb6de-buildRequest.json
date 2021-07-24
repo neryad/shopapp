@@ -1,0 +1,58 @@
+{
+  "buildCommand" : "build",
+  "configuredTargets" : [
+    {
+      "guid" : "22b338913ec41dd1050f7019d779e7fa88a783a885d8b0b3beb2e9f90bde3f49"
+    }
+  ],
+  "continueBuildingAfterErrors" : false,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "iphoneos",
+      "sdk" : "iphoneos14.5",
+      "sdkVariant" : "iphoneos",
+      "supportedArchitectures" : [
+        "arm64v8",
+        "arm64",
+        "armv8"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "",
+      "buildProductsPath" : "",
+      "derivedDataPath" : "/Users/neryad/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/neryad/Library/Developer/Xcode/DerivedData/Runner-bafgjsxxkoyrhxadviztzndebyas/Index/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/neryad/Library/Developer/Xcode/DerivedData/Runner-bafgjsxxkoyrhxadviztzndebyas/Index/PrecompiledHeaders",
+      "pchPath" : ""
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "iPhone9,4",
+          "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "14.7",
+          "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+          "ENABLE_PREVIEWS" : "NO",
+          "TARGET_DEVICE_IDENTIFIER" : "4cd63e5c741ccd2eecc958ba5e7d438675ca50e8",
+          "TARGET_DEVICE_MODEL" : "iPhone9,4",
+          "TARGET_DEVICE_OS_VERSION" : "14.7",
+          "TARGET_DEVICE_PLATFORM_NAME" : "iphoneos"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "shouldCollectMetrics" : false,
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
