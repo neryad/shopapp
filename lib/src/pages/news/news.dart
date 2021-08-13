@@ -83,92 +83,92 @@ class _NewsPageState extends State<NewsPage> {
               Expanded(
                   child: ListView(
                 children: [
+                  // ListTile(
+                  //   title: Text(getTranlated(context, 'new1'),
+                  //       style: TextStyle(
+                  //         fontSize: 16.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       )),
+                  //   trailing: ElevatedButton(
+                  //     style:
+                  //         ElevatedButton.styleFrom(primary: Colors.green[300]),
+                  //     onPressed: () {},
+                  //     child: (Text(getTranlated(context, 'new0'))),
+                  //   ),
+                  // ),
+                  // Divider(),
+                  // ListTile(
+                  //   title: Text(getTranlated(context, 'new2'),
+                  //       style: TextStyle(
+                  //         fontSize: 16.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       )),
+                  //   trailing: ElevatedButton(
+                  //     style:
+                  //         ElevatedButton.styleFrom(primary: Colors.green[300]),
+                  //     onPressed: () {},
+                  //     child: (Text(getTranlated(context, 'new0'))),
+                  //   ),
+                  // ),
+                  // Divider(),
+                  // ListTile(
+                  //   title: Text(getTranlated(context, 'new3'),
+                  //       style: TextStyle(
+                  //         fontSize: 16.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       )),
+                  //   trailing: ElevatedButton(
+                  //     style:
+                  //         ElevatedButton.styleFrom(primary: Colors.green[300]),
+                  //     onPressed: () {},
+                  //     child: (Text(getTranlated(context, 'new0'))),
+                  //   ),
+                  // ),
+                  // Divider(),
+                  // ListTile(
+                  //   title: Text(getTranlated(context, 'new4'),
+                  //       style: TextStyle(
+                  //         fontSize: 16.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       )),
+                  //   trailing: ElevatedButton(
+                  //     style:
+                  //         ElevatedButton.styleFrom(primary: Colors.green[300]),
+                  //     onPressed: () {},
+                  //     child: (Text(getTranlated(context, 'new0'))),
+                  //   ),
+                  // ),
+                  // Divider(),
+                  // ListTile(
+                  //   title: Text(getTranlated(context, 'new5'),
+                  //       style: TextStyle(
+                  //         fontSize: 16.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       )),
+                  //   trailing: ElevatedButton(
+                  //     style:
+                  //         ElevatedButton.styleFrom(primary: Colors.green[300]),
+                  //     onPressed: () {},
+                  //     child: (Text(getTranlated(context, 'new0'))),
+                  //   ),
+                  // ),
+                  // Divider(),
+                  // ListTile(
+                  //   title: Text(getTranlated(context, 'new6'),
+                  //       style: TextStyle(
+                  //         fontSize: 16.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       )),
+                  //   trailing: ElevatedButton(
+                  //     style:
+                  //         ElevatedButton.styleFrom(primary: Colors.green[300]),
+                  //     onPressed: () {},
+                  //     child: (Text(getTranlated(context, 'new0'))),
+                  //   ),
+                  // ),
+                  // Divider(),
                   ListTile(
                     title: Text(getTranlated(context, 'new1'),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
-                      onPressed: () {},
-                      child: (Text(getTranlated(context, 'new0'))),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(getTranlated(context, 'new2'),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
-                      onPressed: () {},
-                      child: (Text(getTranlated(context, 'new0'))),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(getTranlated(context, 'new3'),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
-                      onPressed: () {},
-                      child: (Text(getTranlated(context, 'new0'))),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(getTranlated(context, 'new4'),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
-                      onPressed: () {},
-                      child: (Text(getTranlated(context, 'new0'))),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(getTranlated(context, 'new5'),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
-                      onPressed: () {},
-                      child: (Text(getTranlated(context, 'new0'))),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(getTranlated(context, 'new6'),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
-                      onPressed: () {},
-                      child: (Text(getTranlated(context, 'new0'))),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(getTranlated(context, 'new7'),
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
@@ -194,35 +194,35 @@ class _NewsPageState extends State<NewsPage> {
                       child: (Text(getTranlated(context, 'fix0'))),
                     ),
                   ),
-                  Divider(),
-                  ListTile(
-                    title: Text(getTranlated(context, 'fix2'),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    trailing: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.amberAccent[400]),
-                      onPressed: () {},
-                      child: (Text(getTranlated(context, 'fix0'))),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(getTranlated(context, 'fix3'),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    trailing: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.amberAccent[400]),
-                      onPressed: () {},
-                      child: (Text(getTranlated(context, 'fix0'))),
-                    ),
-                  ),
-                  Divider(),
+                  // Divider(),
+                  // ListTile(
+                  //   title: Text(getTranlated(context, 'fix2'),
+                  //       style: TextStyle(
+                  //         fontSize: 16.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       )),
+                  //   trailing: ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(
+                  //         primary: Colors.amberAccent[400]),
+                  //     onPressed: () {},
+                  //     child: (Text(getTranlated(context, 'fix0'))),
+                  //   ),
+                  // ),
+                  // Divider(),
+                  // ListTile(
+                  //   title: Text(getTranlated(context, 'fix3'),
+                  //       style: TextStyle(
+                  //         fontSize: 16.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       )),
+                  //   trailing: ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(
+                  //         primary: Colors.amberAccent[400]),
+                  //     onPressed: () {},
+                  //     child: (Text(getTranlated(context, 'fix0'))),
+                  //   ),
+                  // ),
+                  // Divider(),
                 ],
               ))
             ],

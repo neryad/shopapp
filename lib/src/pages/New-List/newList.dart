@@ -1,4 +1,6 @@
 //import 'package:flushbar/flushbar.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
@@ -844,7 +846,12 @@ class _NewListState extends State<NewList> {
                                   DBProvider.db.updateProd(items[index]);
                                   setState(() {});
                                   //**  papu  */
-
+                                  print(items[index]);
+                                  final ProductModel first =
+                                      items.removeAt(index);
+                                  print(first);
+                                  items.add(first);
+                                  setState(() {});
                                   (valor == true)
                                       ? utils.showSnack(context,
                                           getTranlated(context, 'onCart'))
