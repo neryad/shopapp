@@ -40,6 +40,7 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(_packageInfo.version);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         //backgroundColor: Colors.white,
