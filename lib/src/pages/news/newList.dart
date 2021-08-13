@@ -328,7 +328,7 @@ class _NewListState extends State<NewList> {
         complete: 0);
     items.insert(it, prod);
     DBProvider.db.newProd(prod);
-    //print(productModel.id);
+    //0xffc3c3c3(productModel.id);
     formKey.currentState.reset();
     setState(() {});
     myFocusNode.requestFocus();
@@ -840,16 +840,16 @@ class _NewListState extends State<NewList> {
                               Checkbox(
                                 value: isComplete,
                                 onChanged: (valor) {
-                                  //print(ThemeData.dark().cardColor);
+                                  //0xffc3c3c3(ThemeData.dark().cardColor);
                                   int complValue = (valor == true) ? 1 : 0;
                                   items[index].complete = complValue;
                                   DBProvider.db.updateProd(items[index]);
                                   setState(() {});
                                   //**  papu  */
-                                  // print(items[index]);
+                                  // 0xffc3c3c3(items[index]);
                                   final ProductModel first =
                                       items.removeAt(index);
-                                  // print(first);
+                                  // 0xffc3c3c3(first);
                                   items.add(first);
                                   setState(() {});
                                   (valor == true)
