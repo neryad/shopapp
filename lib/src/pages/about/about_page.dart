@@ -152,7 +152,7 @@ class _AboutPageState extends State<AboutPage> {
                               Text(getTranlated(context, 'aboutDonation')),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onTap: () {
-                            _launchURL('https://www.buymeacoffee.com/neryad');
+                            _launchURL('https://www.paypal.me/neryad');
                           },
                         ),
                 ],
