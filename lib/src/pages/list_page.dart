@@ -16,6 +16,8 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
   final prefs = new PreferenciasUsuario();
+  final lisForm = GlobalKey<FormState>();
+  Lista listaModel = new Lista();
   @override
   void initState() {
     prefs.ultimaPagina = 'home';
@@ -271,13 +273,24 @@ class _ListPageState extends State<ListPage> {
                       },
                       child: Icon(Icons.share)),
                   TextButton(
+                      onPressed: () async {
+                        // saveList(lista.id);
+                        listaModel = lista;
+                        _editarLista(context, lista);
+                      },
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.yellow[600],
+                      )),
+                  TextButton(
                       onPressed: () {
                         var route = new MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 DetailsPage(savelist: lista));
                         Navigator.of(context).push(route);
                       },
-                      child: Icon(Icons.edit, color: Colors.yellow[600])),
+                      child: Icon(Icons.remove_red_eye,
+                          color: Colors.deepPurpleAccent)),
                   TextButton(
                       onPressed: () {
                         _validateEliminar(context, lista.id);
@@ -329,5 +342,99 @@ class _ListPageState extends State<ListPage> {
             ],
           );
         });
+  }
+
+  Widget _nombrelista() {
+    //weo
+    return TextFormField(
+      initialValue: listaModel.title,
+      maxLength: 25,
+      textCapitalization: TextCapitalization.sentences,
+      textAlign: TextAlign.center,
+      onSaved: (value) => listaModel.title = value,
+      decoration: InputDecoration(
+        labelText: getTranlated(context, 'listName'),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        ),
+      ),
+    );
+  }
+
+  Widget _nombresupermeacdo() {
+    return TextFormField(
+      initialValue: listaModel.superMaret,
+      maxLength: 20,
+      textCapitalization: TextCapitalization.sentences,
+      textAlign: TextAlign.center,
+      onSaved: (value) => listaModel.superMaret = value,
+      decoration: InputDecoration(
+        // counterText: '',
+        labelText: getTranlated(context, 'shopName'),
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        ),
+        // hintText: 'Nombre localidad',
+        //hintStyle: TextStyle(color: utils.cambiarColor()),
+      ),
+    );
+  }
+
+  void _editarLista(BuildContext context, Lista lista) {
+    listaModel = lista;
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(getTranlated(context, 'saveList')),
+            content: Form(
+              key: lisForm,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[_nombrelista(), _nombresupermeacdo()],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    getTranlated(context, 'leave'),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
+                  )),
+              FlatButton(
+                  onPressed: () {
+                    saveList(lista);
+                    Navigator.pushNamed(context, 'home');
+                  },
+                  child: Text(
+                    getTranlated(context, 'save'),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
+                  )),
+            ],
+          );
+        });
+  }
+
+  saveList(Lista lista) async {
+    lisForm.currentState.save();
+    try {
+      await DBProvider.db.updateList(lista);
+    } catch (e) {
+      print(e);
+    }
   }
 }
