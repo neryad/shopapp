@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/List_model.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:open_file/open_file.dart';
@@ -10,7 +11,15 @@ import 'package:pdf/widgets.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 
 final prefs = new PreferenciasUsuario();
-String datePdf, bugetPdf, quatiyPdf, namePdf, pricePdf, toalQaPdf;
+String datePdf,
+    bugetPdf,
+    quatiyPdf,
+    namePdf,
+    pricePdf,
+    toalQaPdf,
+    statusPdf,
+    bought,
+    notBought;
 
 class ApiPdf {
   static Future<File> generateTAble(String id) async {
@@ -19,29 +28,35 @@ class ApiPdf {
       datePdf = 'Date:';
       bugetPdf = 'Budget:';
       quatiyPdf = 'Quantity';
+      statusPdf = 'Status';
       namePdf = 'Name';
       pricePdf = 'Price';
       toalQaPdf = 'Total quantity';
+      bought = 'Bought';
+      notBought = 'Not bought';
     } else {
       datePdf = 'Fecha:';
       bugetPdf = 'Presupuesto:';
       quatiyPdf = 'Cantidad';
+      statusPdf = 'Estado';
       namePdf = 'Nombre';
       pricePdf = 'Precio';
       toalQaPdf = 'Total cantidad';
+      bought = 'Comprado';
+      notBought = 'No comprado';
     }
     final pdf = Document();
 
     final listData = await DBProvider.db.getListId(id);
 
     final data = await DBProvider.db.getProdId(id);
-
+    data.sort((a, b) => a.name.compareTo(b.name));
     pdf.addPage(MultiPage(
         build: (context) => [
               buildTitle(listData),
               buildSubTitle(listData),
               Divider(),
-              buildTable(data),
+              buildTable(data, context),
               //buildTotal(listData),
               Divider()
             ]));
@@ -74,12 +89,18 @@ class ApiPdf {
     ]);
   }
 
-  static Widget buildTable(List<ProductModel> products) {
-    final headers = [namePdf, pricePdf, quatiyPdf, toalQaPdf];
+  static Widget buildTable(List<ProductModel> products, context) {
+    final headers = [namePdf, pricePdf, quatiyPdf, statusPdf, toalQaPdf];
 
     final filterData = products.map((e) {
       final total = e.price * e.quantity;
-      return [e.name, e.price, e.quantity, total];
+      return [
+        e.name,
+        e.price,
+        e.quantity,
+        e.complete == 1 ? bought : notBought,
+        total
+      ];
     }).toList();
     return Table.fromTextArray(
         data: filterData,
