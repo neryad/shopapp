@@ -5,6 +5,7 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/pages/list_page.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:url_launcher/url_launcher.dart';
 
 import 'help_page.dart';
 
@@ -86,6 +87,11 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.mail),
+              title: Text(getTranlated(context, 'mContact')),
+              onTap: () => {_launchURL()},
+            ),
+            ListTile(
               leading: Icon(Icons.info),
               title: Text(getTranlated(context, 'mAboutTitle')),
               onTap: () => {
@@ -135,5 +141,20 @@ class _HomePageState extends State<HomePage> {
       setState(() {});
     });
     Navigator.of(context).pop();
+  }
+
+  void _launchURL1(String url) async =>
+      await canLaunch(url) ? await launch(url) : throw 'Could not launch';
+  void _launchURL() async {
+    final Uri params = Uri(
+        scheme: 'mailto',
+        path: 'neryadg@gmail.com',
+        query: 'subject=Contact from Pocketlist');
+    String url = params.toString();
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print('Could not launch $url');
+    }
   }
 }
