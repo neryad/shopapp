@@ -70,7 +70,7 @@ class _DetailsPageState extends State<DetailsPage> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                Text('Items: $totalItems/${articulos.length}'),
+                // Text('Items: $totalItems/${articulos.length}'),
 
                 //    if (articulos[index].complete == 1) {
                 //   totalItems += 1;

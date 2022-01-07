@@ -73,7 +73,7 @@ class _NewListState extends State<NewList> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                Text('Items: $totalItems/${items.length}'),
+                // Text('Items: $totalItems/${items.length}'),
               ],
             ),
           )
