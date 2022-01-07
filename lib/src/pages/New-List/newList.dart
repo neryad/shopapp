@@ -1032,6 +1032,52 @@ class _NewListState extends State<NewList> {
         });
   }
 
+  _validateGuardaroEliminarList(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            // title: Text(getTranlated(context, 'deleteCont')),
+            title: Text(getTranlated(context, 'listComplete')),
+            actions: <Widget>[
+              FlatButton(
+                  // onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => {
+                        Navigator.of(context).pop(),
+                        _validateEliminarList(context),
+                      },
+                  child: Text(
+                    getTranlated(context, 'clearList'),
+                    style: TextStyle(
+                        color: (prefs.color == 5) ? Colors.white : Colors.red),
+                  )),
+              FlatButton(
+                onPressed: () =>
+                    {Navigator.of(context).pop(), _guardarLista(context)},
+                child: Text(
+                  getTranlated(context, 'save'),
+                  style: TextStyle(
+                      color: (prefs.color == 5)
+                          ? Colors.white
+                          : utils.cambiarColor()),
+                ),
+              ),
+              FlatButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                  getTranlated(context, 'leave'),
+                  style: TextStyle(
+                      color: (prefs.color == 5) ? Colors.white : Colors.black),
+                ),
+              )
+
+              // onPressed: () => Navigator.of(context).pop(),
+            ],
+          );
+        });
+  }
+
   limpiarTodo() {
     setState(() {
       DBProvider.db.deleteAllTempProd('tmp');
@@ -1133,6 +1179,7 @@ class _NewListState extends State<NewList> {
 
     if (totalItems == items.length) {
       showcompletedSnack(context, 'Lista de compra completa');
+      _validateGuardaroEliminarList(context);
     }
   }
 

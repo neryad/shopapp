@@ -71,6 +71,11 @@ class _DetailsPageState extends State<DetailsPage> {
             child: Row(
               children: [
                 Text('Items: $totalItems/${articulos.length}'),
+
+                //    if (articulos[index].complete == 1) {
+                //   totalItems += 1;
+                //
+                // }
               ],
             ),
           )
@@ -259,7 +264,9 @@ class _DetailsPageState extends State<DetailsPage> {
             itemCount: articulos.length,
             itemBuilder: (BuildContext context, int index) {
               bool isComplete = (articulos[index].complete == 1) ? true : false;
-
+              if (articulos[index].complete == 1) {
+                totalItems += 1;
+              }
               return Dismissible(
                 direction: DismissDirection.endToStart,
                 background: Padding(
