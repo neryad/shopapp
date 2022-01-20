@@ -99,5 +99,6 @@
   "pdfStatus": "Bought",
   "webPageSubTitle": "Come a visit my web",
   "mContact": "Contact",
-  "listComplete": "List completed, you want to keep it?"
+  "listComplete": "List completed, you want to keep it?",
+  "msgImporExporlist": "You do not have registered lists yet"
 }

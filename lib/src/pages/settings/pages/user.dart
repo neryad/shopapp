@@ -97,5 +97,3 @@ class _UserPageState extends State<UserPage> {
     )..show(context);
   }
 }
-
-//TODO: poner flusbar aqui

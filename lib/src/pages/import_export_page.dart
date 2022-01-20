@@ -4,7 +4,8 @@ import 'dart:io';
 
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/models/List_model.dart';
-import 'package:PocketList/src/models/csv_data.dart';
+import 'package:another_flushbar/flushbar.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -30,6 +31,23 @@ class ImportExportPage extends StatefulWidget {
 class _ImportExportPageState extends State<ImportExportPage> {
   Lista listaModel = new Lista();
   List articulos = [];
+  String filePlaceHolder,
+      titleCsv,
+      dateCsv,
+      storeCsv,
+      bugetCsv,
+      totalCsv,
+      difrenceCsv,
+      bought,
+      nameProdCsv,
+      priceProdCsv,
+      quantityProdCsv,
+      statusProdCsv,
+      notBought,
+      errorMsgImport,
+      successMsgImport,
+      errorMsgExport,
+      successMsgExport;
   var uuid = Uuid();
   var _paths;
   var employeeData;
@@ -37,6 +55,44 @@ class _ImportExportPageState extends State<ImportExportPage> {
   FileType _pickingType = FileType.custom;
   @override
   Widget build(BuildContext context) {
+    if (prefs.lnge == 'en') {
+      filePlaceHolder = 'List imported from PocketList';
+      dateCsv = 'Date';
+      bugetCsv = 'Budget';
+      bought = 'Bought';
+      notBought = 'Not bought';
+      storeCsv = 'Store';
+      titleCsv = 'List name';
+      bugetCsv = 'Buget';
+      difrenceCsv = 'Diference';
+      totalCsv = 'Total';
+      nameProdCsv = 'Name';
+      priceProdCsv = 'Price';
+      quantityProdCsv = 'Quantity';
+      statusProdCsv = 'Status';
+      errorMsgImport = 'An error occurred while trying to import the list';
+      successMsgImport = 'List imported successfully';
+      errorMsgExport = 'An error occurred while trying to export the list';
+      errorMsgExport = 'List exported successfully';
+    } else {
+      filePlaceHolder = 'Lista importada desde PocketList';
+      dateCsv = 'Fecha';
+      titleCsv = 'Nombre lista';
+      bugetCsv = 'Presupuesto';
+      difrenceCsv = 'Diferencia';
+      totalCsv = 'Total';
+      bought = 'Comprado';
+      notBought = 'No comprado';
+      storeCsv = 'Tienda';
+      nameProdCsv = 'Nombre';
+      priceProdCsv = 'Precio';
+      quantityProdCsv = 'Cantidad';
+      statusProdCsv = 'Estatus';
+      errorMsgImport = 'Sucedió un error al intentar importar la lista';
+      successMsgImport = 'Lista importada correctamente';
+      errorMsgExport = 'Sucedió un error al intentar exportar la lista';
+      successMsgExport = 'Lista exportada correctamente';
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Import / Export listas'),
@@ -55,16 +111,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
               )),
         ],
       ),
-      body: (Container(
-        child: _listView(context),
-      )),
+      body: (_listView(context)),
     );
   }
 
   _listView(BuildContext context) {
     return Container(
       key: UniqueKey(),
-      height: MediaQuery.of(context).size.height * .6,
       child: FutureBuilder<List<Lista>>(
         future: DBProvider.db.getToadasLista(),
         builder: (context, AsyncSnapshot<List<Lista>> snapshot) {
@@ -74,46 +127,25 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
           final lista = snapshot.data;
 
-          //TODO : Cambiar mensaje
           if (lista.length == 0) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    getTranlated(context, 'noList'),
-                    style: TextStyle(
-                      color: (prefs.color == 5)
-                          ? Colors.white
-                          : utils.cambiarColor(),
-                      fontSize: 18,
+              child: Container(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      getTranlated(context, 'msgImporExporlist'),
+                      style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor(),
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: " ",
-                        ),
-                        WidgetSpan(
-                          child: Icon(Icons.add_shopping_cart),
-                        ),
-                        TextSpan(
-                          text: " ",
-                        ),
-                        TextSpan(
-                          text: getTranlated(context, 'noList2'),
-                          style: TextStyle(
-                            color: (prefs.color == 5)
-                                ? Colors.white
-                                : utils.cambiarColor(),
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                  ],
+                ),
               ),
             );
           }
@@ -171,50 +203,49 @@ class _ImportExportPageState extends State<ImportExportPage> {
   }
 
   Future<void> _generateCsv(context, String id) async {
-    List<Lista> lista = await DBProvider.db.getListIds(id);
-    List<ProductModel> productModel = await DBProvider.db.getProdId(id);
-    // final loco = lista.addAll(productModel.toList());
-    List<List<String>> csvData = [
-      //tittlos
-      <String>[
-        'Titulo',
-        'fecha',
-        'Supermecado',
-        'Presuspuesto',
-        'total',
-        'diferencia'
-      ],
-      ...lista.map((e) => [
-            e.title,
-            e.fecha,
-            e.superMaret,
-            e.buget.toString(),
-            e.total.toString(),
-            e.diference.toString()
-          ]),
-      // headers
-      <String>['Name', 'compeltado', 'cantidad', 'Comprado'],
-      // data
-      ...productModel.map((item) => [
-            item.name,
-            item.price.toString(),
-            item.quantity.toString(),
-            item.complete.toString()
-          ]),
-    ];
+    try {
+      List<Lista> lista = await DBProvider.db.getListIds(id);
+      List<ProductModel> productModel = await DBProvider.db.getProdId(id);
 
-    String csv = const ListToCsvConverter().convert(csvData);
+      List<List<String>> csvData = [
+        <String>[titleCsv, dateCsv, storeCsv, bugetCsv, totalCsv, difrenceCsv],
+        ...lista.map((e) => [
+              e.title,
+              e.fecha,
+              e.superMaret,
+              e.buget.toString(),
+              e.total.toString(),
+              e.diference.toString()
+            ]),
+        // headers
+        <String>[nameProdCsv, priceProdCsv, quantityProdCsv, statusProdCsv],
+        // data
+        ...productModel.map((item) => [
+              item.name,
+              item.price.toString(),
+              item.quantity.toString(),
+              item.complete == 1 ? bought : notBought
+            ]),
+      ];
 
-    DateTime now = new DateTime.now();
-    var fecha = '${now.day}/${now.month}/${now.year}';
-    var filename = csvData[1][0];
-    //TODO: Cambiar nombre de archivo
-    // final String dir = (await getExternalStorageDirectory()).path;
-    final String dir = '/storage/emulated/0/Download';
-    final String path = '$dir/$filename.csv';
+      String csv = const ListToCsvConverter().convert(csvData);
 
-    final File file = File(path);
-    await file.writeAsString(csv);
+      DateTime now = new DateTime.now();
+
+      var fileName = csvData[1][0];
+      Directory dir = await getExternalStorageDirectory();
+      String appDocPath = dir.path;
+
+      final File file =
+          File(appDocPath + Platform.pathSeparator + fileName + '.csv');
+
+      await file.writeAsString(csv);
+
+      await Share.shareFiles([file.path], text: filePlaceHolder);
+      showMsg(context, successMsgExport);
+    } catch (e) {
+      showMsg(context, '$errorMsgExport');
+    }
   }
 
   pickFile() async {
@@ -222,8 +253,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       type: FileType.custom,
       allowedExtensions: ['csv'],
     );
-    //TODO: fix de la pantalla que se corta
-    // TODO: flusbar en caso psotivo y negtivo al agregar archivo
+
     if (result != null) {
       File file = File(result.files.single.path);
       final input = new File(file.path).openRead();
@@ -233,37 +263,59 @@ class _ImportExportPageState extends State<ImportExportPage> {
           .transform(new CsvToListConverter())
           .toList();
 
-      await saveList(fields);
+      await saveList(context, fields);
+      setState(() {});
     }
   }
 
-  saveList(List<dynamic> importedList) async {
-    String lisId = uuid.v4();
-    final listaImportada = Lista(
-        id: lisId,
-        title: importedList[1][0],
-        superMaret: importedList[1][2],
-        fecha: importedList[1][1],
-        total: importedList[1][4],
-        diference: importedList[1][5],
-        buget: importedList[1][3]);
+  saveList(BuildContext context, List<dynamic> importedList) async {
+    try {
+      String lisId = uuid.v4();
+      final listaImportada = Lista(
+          id: lisId,
+          title: importedList[1][0],
+          superMaret: importedList[1][2],
+          fecha: importedList[1][1],
+          total: importedList[1][4],
+          diference: importedList[1][5],
+          buget: importedList[1][3]);
 
-    await DBProvider.db.nuevoLista(listaImportada);
-    ProductModel productModel = new ProductModel();
+      await DBProvider.db.nuevoLista(listaImportada);
+      ProductModel productModel = new ProductModel();
 
-    var importedItems = importedList.getRange(2, importedList.length).toList();
-    var finalItems = importedItems.getRange(1, importedItems.length).toList();
+      var importedItems =
+          importedList.getRange(2, importedList.length).toList();
+      var finalItems = importedItems.getRange(1, importedItems.length).toList();
 
-    for (var item in finalItems) {
-      var index = finalItems.indexOf(item);
+      for (var item in finalItems) {
+        var index = finalItems.indexOf(item);
 
-      var tet = ProductModel(
-          name: finalItems[index][0],
-          price: finalItems[index][1],
-          quantity: finalItems[index][2],
-          complete: finalItems[index][3],
-          listId: listaImportada.id);
-      await DBProvider.db.newProd(tet);
+        var tet = ProductModel(
+            name: finalItems[index][0],
+            price: finalItems[index][1],
+            quantity: finalItems[index][2],
+            complete: (finalItems[index][3] == bought) ? 1 : 0,
+            listId: listaImportada.id);
+        await DBProvider.db.newProd(tet);
+        showMsg(context, successMsgExport);
+      }
+    } catch (e) {
+      showMsg(context, errorMsgImport);
     }
+  }
+
+  void showMsg(BuildContext context, String msg) {
+    Flushbar(
+      //title: 'This action is prohibited',
+      message: msg,
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
+      ),
+      leftBarIndicatorColor:
+          (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
+      duration: Duration(seconds: 3),
+    )..show(context);
   }
 }

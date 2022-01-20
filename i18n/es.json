@@ -99,5 +99,6 @@
   "webPageSubTitle": "Ven y visita mi web",
   "pdfStatus": "Bought",
   "mContact": "Contáctame",
-  "listComplete": "Lista completada, desea conservarla?"
+  "listComplete": "Lista completada, desea conservarla?",
+  "msgImporExporlist": "Aún no tienes listas registradas"
 }

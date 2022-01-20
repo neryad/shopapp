@@ -200,7 +200,6 @@ class _ListPageState extends State<ListPage> {
                 ],
               ),
               Row(
-                //TODO: revisar el color
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(

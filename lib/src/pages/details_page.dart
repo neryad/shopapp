@@ -385,7 +385,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Icon(
-                                      Icons.shopping_basket,
+                                      Icons.edit,
                                       color: isComplete
                                           ? Colors.black
                                           : (prefs.color == 5)
