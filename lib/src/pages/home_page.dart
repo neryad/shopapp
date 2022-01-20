@@ -69,6 +69,15 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
+              leading: Transform.rotate(
+                  angle: 3.14 / 2,
+                  child: Icon(
+                    Icons.sync_alt,
+                  )),
+              title: Text('Import/exportar'),
+              onTap: () => {Navigator.pushNamed(context, 'exportImport')},
+            ),
+            ListTile(
               leading: Icon(Icons.settings),
               title: Text(getTranlated(context, 'mSettingTitle')),
               onTap: () => {

@@ -120,6 +120,17 @@ class DBProvider {
     return art;
   }
 
+  Future<List<Lista>> getListIds(String id) async {
+    final db = await database;
+    final res = await db.query('Lista', where: 'id =?', whereArgs: [id]);
+    List<Lista> list =
+        res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
+    return list;
+    // Lista art = res.isNotEmpty ? res.map((e) => Lista.fromJson(e)).first : [];
+    // //return result.isNotEmpty ? Product.fromMap(result.first) : Null;
+    // return art;
+  }
+
   ///GET PRODUCST BY LIST ID
   Future<List<ProductModel>> getProdId(String id) async {
     final db = await database;

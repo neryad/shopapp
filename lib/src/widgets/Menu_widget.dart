@@ -9,7 +9,9 @@ class MenuWidget extends StatelessWidget {
   Locale _locale;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -41,7 +43,11 @@ class MenuWidget extends StatelessWidget {
               // Navigator.pushReplacementNamed(context, 'newList')
             },
           ),
-
+          ListTile(
+            leading: Icon(Icons.sync),
+            title: Text('Import/exportar'),
+            onTap: () => {},
+          ),
           ListTile(
             leading: Icon(Icons.settings),
             title: Text(getTranlated(context, 'mSettingTitle')),
