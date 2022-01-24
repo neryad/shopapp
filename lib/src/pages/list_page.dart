@@ -6,6 +6,7 @@ import 'package:PocketList/src/models/List_model.dart';
 import 'package:PocketList/src/pages/details_page.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:share_plus/share_plus.dart';
 
 class ListPage extends StatefulWidget {
   ListPage({Key key}) : super(key: key);
@@ -268,7 +269,8 @@ class _ListPageState extends State<ListPage> {
                   TextButton(
                       onPressed: () async {
                         final pdf = await ApiPdf.generateTAble(lista.id);
-                        ApiPdf.openFile(pdf);
+                        await Share.shareFiles([pdf.path]);
+                        // ApiPdf.openFile(pdf);
                       },
                       child: Icon(Icons.share)),
                   TextButton(

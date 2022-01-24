@@ -47,7 +47,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
       errorMsgImport,
       successMsgImport,
       errorMsgExport,
-      successMsgExport;
+      successMsgExport,
+      succestitle,
+      strExport,
+      strImported;
   var uuid = Uuid();
   var _paths;
   var employeeData;
@@ -74,6 +77,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
       successMsgImport = 'List imported successfully';
       errorMsgExport = 'An error occurred while trying to export the list';
       errorMsgExport = 'List exported successfully';
+      strExport = 'Export';
+      strImported = 'Import';
     } else {
       filePlaceHolder = 'Lista importada desde PocketList';
       dateCsv = 'Fecha';
@@ -92,6 +97,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
       successMsgImport = 'Lista importada correctamente';
       errorMsgExport = 'Sucedió un error al intentar exportar la lista';
       successMsgExport = 'Lista exportada correctamente';
+      strExport = 'Exportar';
+      strImported = 'Importar';
     }
     return Scaffold(
       appBar: AppBar(
@@ -233,7 +240,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
       DateTime now = new DateTime.now();
 
       var fileName = csvData[1][0];
-      Directory dir = await getExternalStorageDirectory();
+      // Directory dir = await getExternalStorageDirectory();
+      Directory dir = Platform.isAndroid
+          ? await getExternalStorageDirectory()
+          : await getApplicationSupportDirectory();
       String appDocPath = dir.path;
 
       final File file =
@@ -242,9 +252,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
       await file.writeAsString(csv);
 
       await Share.shareFiles([file.path], text: filePlaceHolder);
-      showMsg(context, successMsgExport);
+      showMsg(context, successMsgExport, strExport);
     } catch (e) {
-      showMsg(context, '$errorMsgExport');
+      showMsg(context, '$errorMsgExport', strExport);
     }
   }
 
@@ -297,25 +307,46 @@ class _ImportExportPageState extends State<ImportExportPage> {
             complete: (finalItems[index][3] == bought) ? 1 : 0,
             listId: listaImportada.id);
         await DBProvider.db.newProd(tet);
-        showMsg(context, successMsgExport);
+        showMsg(context, successMsgImport, strImported);
       }
     } catch (e) {
-      showMsg(context, errorMsgImport);
+      showMsg(context, errorMsgImport, strImported);
     }
   }
 
-  void showMsg(BuildContext context, String msg) {
+  void showMsg(BuildContext context, String msg, String title) {
     Flushbar(
-      //title: 'This action is prohibited',
+      title: title,
+      titleText: Text(title,
+          style: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
+          )),
       message: msg,
+      messageText: Text(msg,
+          style: TextStyle(
+            color: Colors.white,
+          )),
       icon: Icon(
         Icons.info_outline,
         size: 28,
-        color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
+        color: Colors.white,
       ),
       leftBarIndicatorColor:
           (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       duration: Duration(seconds: 3),
     )..show(context);
+
+    //////////
+    // Flushbar(
+    //   title: "Hey Ninja", //ignored since titleText != null
+    //   message:
+    //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry", //ignored since messageText != null
+    //   titleText: Text(
+    //     "Hello Hero",
+    //   ),
+    //   messageText: Text(
+    //     "You killed that giant monster in the city. Congratulations!",
+    //   ),
+    // )..show(context);
   }
 }
