@@ -845,7 +845,7 @@ class _NewListState extends State<NewList> {
                                   items[index].complete = complValue;
                                   DBProvider.db.updateProd(items[index]);
                                   setState(() {});
-                                  //**  papu  */
+
                                   // print(items[index]);
                                   final ProductModel first =
                                       items.removeAt(index);

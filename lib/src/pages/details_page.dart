@@ -264,9 +264,18 @@ class _DetailsPageState extends State<DetailsPage> {
             itemCount: articulos.length,
             itemBuilder: (BuildContext context, int index) {
               bool isComplete = (articulos[index].complete == 1) ? true : false;
-              if (articulos[index].complete == 1) {
-                totalItems += 1;
-              }
+              // totalItems = articulos.length;
+              // if (articulos[index].complete == 0) {
+              //   totalItems -= 1;
+              // }
+              // (articulos[index].complete == 1)
+              //     ? totalItems += 1
+              //     : totalItems -= 1;
+              // totalItems = articulos.length;
+              // (articulos[index].complete == 0)
+              //     ? totalItems -= 1
+              //     : totalItems += 0;
+              /** aqui */
               return Dismissible(
                 direction: DismissDirection.endToStart,
                 background: Padding(
@@ -1102,14 +1111,97 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   updatedCount(bool value) {
-    if (value == true) {
-      totalItems += 1;
-    } else {
-      totalItems -= 1;
+    for (var i = 0; i < articulos.length; i++) {
+      totalItems += (articulos[i].complete == true) ? 1 : 0;
     }
 
-    if (totalItems == articulos.length) {
-      showcompletedSnack(context, 'Lista de compra completa');
+    if (value == false) {
+      totalItems -= 1;
+    } else {
+      totalItems += 1;
     }
+    if (totalItems <= 0) {
+      totalItems = 0;
+    }
+    if (totalItems == articulos.length) {
+      _validateGuardaroEliminarList(context);
+    }
+  }
+
+  limpiarTodo() {
+    setState(() {
+      DBProvider.db.deleteAllTempProd('tmp');
+      articulos.clear();
+      // getTotal();
+      // getDiference();
+    });
+    Navigator.of(context).pop();
+  }
+
+  _validateEliminarList(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(getTranlated(context, 'deleteCont')),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    getTranlated(context, 'leave'),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
+                  )),
+              FlatButton(
+                  onPressed: () => limpiarTodo(),
+                  child: Text(
+                    getTranlated(context, 'accept'),
+                    style: TextStyle(
+                        color: (prefs.color == 5)
+                            ? Colors.white
+                            : utils.cambiarColor()),
+                  )),
+            ],
+          );
+        });
+  }
+
+  _validateGuardaroEliminarList(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            // title: Text(getTranlated(context, 'deleteCont')),
+            title: Text(getTranlated(context, 'listComplete')),
+            actions: <Widget>[
+              FlatButton(
+                  // onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => {
+                        Navigator.of(context).pop(),
+                        _validateEliminarList(context),
+                      },
+                  child: Text(
+                    getTranlated(context, 'clearList'),
+                    style: TextStyle(
+                        color: (prefs.color == 5) ? Colors.white : Colors.red),
+                  )),
+
+              FlatButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                  getTranlated(context, 'leave'),
+                  style: TextStyle(
+                      color: (prefs.color == 5) ? Colors.white : Colors.black),
+                ),
+              )
+
+              // onPressed: () => Navigator.of(context).pop(),
+            ],
+          );
+        });
   }
 }
