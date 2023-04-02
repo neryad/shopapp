@@ -1,5 +1,8 @@
+import 'package:PocketList/config/router/app_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+
+import 'config/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,35 +23,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final AppTheme appTheme = AppTheme();
+    return MaterialApp.router(
+      theme: appTheme.getTheme(),
+      routerConfig: appRouter,
       title: 'Material App',
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Column(children: [
-            Text('aImgs'.tr()),
-            ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    context.setLocale(const Locale('en'));
-                  });
-                },
-                child: const Text('to EN')),
-            ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    context.setLocale(const Locale('es'));
-                  });
-                },
-                child: const Text('to ES'))
-          ]),
-        ),
-      ),
     );
   }
 }
