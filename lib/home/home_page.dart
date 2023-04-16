@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
         title: const Text('Buenas tardes Neryad'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
             Center(
@@ -23,33 +23,6 @@ class HomePage extends StatelessWidget {
                 date: 'April 4, 2023',
                 total: '\$25.00',
               ),
-
-              //     Card(
-              //   elevation: 1,
-              //   child: Padding(
-              //     padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-              //     child: Column(
-              //       children: [
-              //         Align(
-              //           alignment: Alignment.topRight,
-              //           child: IconButton(
-              //               onPressed: () {},
-              //               icon: const Icon(Icons.more_vert_rounded)),
-              //         ),
-              //         Align(
-              //           alignment: Alignment.bottomLeft,
-              //           child: Row(
-              //             children: [
-              //               IconButton(
-              //                   onPressed: () {},
-              //                   icon: Icon(Icons.energy_savings_leaf))
-              //             ],
-              //           ),
-              //         )
-              //       ],
-              //     ),
-              //   ),
-              // )
 
               //Text(
               //  'Aun no tiene listas registradas, presione el botn + para crear una nueva'),
@@ -83,42 +56,45 @@ class MyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme;
     return Card(
       elevation: 4,
       // borderRadius: BorderRadius.circular(8),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(iconData),
-                SizedBox(width: 16),
-                Text(title, style: Theme.of(context).textTheme.headline6),
+                const SizedBox(width: 16),
+                Text(title, style: textStyle.headlineSmall),
               ],
             ),
-            SizedBox(height: 4),
-            Text(subtitle, style: Theme.of(context).textTheme.bodyText2),
-            SizedBox(height: 8),
+            const SizedBox(height: 4),
+            Text(subtitle, style: textStyle.bodyMedium),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Text(date),
-                Spacer(),
-                Text(total, style: Theme.of(context).textTheme.headline6),
+                const Spacer(),
+                Text(total, style: textStyle.headlineSmall),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
-                IconButton(
-                    onPressed: () {}, icon: Icon(Icons.edit_note_outlined)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.share_outlined)),
+                // IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(Icons.receipt_long_outlined)),
+                IconButton(
+                    onPressed: () {}, icon: const Icon(Icons.share_outlined)),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
                       Icons.delete_outline,
                     )),
               ],

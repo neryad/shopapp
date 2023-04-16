@@ -7,6 +7,7 @@ const colorList = <Color>[
   Color(0xffb424242),
   Color(0xff7e57c2),
   Color(0xffe53935),
+  Color.fromARGB(255, 6, 14, 133),
 ];
 
 class AppTheme {
@@ -21,7 +22,7 @@ class AppTheme {
   ThemeData getTheme() => ThemeData(
       useMaterial3: true,
       brightness: isDarkmode ? Brightness.dark : Brightness.light,
-      colorSchemeSeed: colorList[0],
+      colorSchemeSeed: colorList[selectedColor],
       appBarTheme: const AppBarTheme(centerTitle: false));
 
   AppTheme copyWith({int? selectedColor, bool? isDarkmode}) => AppTheme(
