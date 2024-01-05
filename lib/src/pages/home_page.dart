@@ -7,7 +7,6 @@ import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:url_launcher/url_launcher.dart';
 
-import 'help_page.dart';
 
 // final pdf = pw.Document();
 

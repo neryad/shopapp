@@ -14,25 +14,24 @@ description: A new Flutter project.
 version: 3.0.0+1
 
 environment:
-  sdk: '>=2.2.2 <3.0.0'
+  sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
-  intl:
-  package_info:
-  flutter_typeahead:
-  uuid:
+  intl: ^0.18.1
+  package_info_plus: ^5.0.1
+  uuid: ^4.2.2
   another_flushbar: ^1.10.24
   shared_preferences:
-  sqflite:
-  path_provider:
+  sqflite: ^2.3.0
+  path_provider: ^2.1.1
   pdf: ^3.1.0
-  share_extend:
+  share_extend: ^2.0.0
   open_file: ^3.1.0
-  url_launcher:
+  url_launcher: ^6.2.2
   csv: ^5.0.0
-  file_picker: ^4.3.1
-  permission_handler: ^7.1.0
-  share_plus:
+  file_picker: ^6.1.1
+  permission_handler: ^11.1.0
+  share_plus: ^7.2.1
 
   flutter:
     sdk: flutter

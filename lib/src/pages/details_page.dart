@@ -5,13 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 //import 'package:PocketList/src/data/data.dart';
 import 'package:PocketList/src/models/List_model.dart';
-import 'package:PocketList/src/models/product_model.dart';
 import 'package:PocketList/src/models/suge.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:another_flushbar/flushbar.dart';
-import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:another_flushbar/flushbar_route.dart';
 
 //import 'package:flutter_typeahead/flutter_typeahead.dart';
 // import 'package:PocketList/src/data/data.dart';
@@ -529,35 +526,29 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
       onChanged: (value) {
         setState(() {});
-        if (value == null) {
-          return;
-        } else {
-          prod.buget = double.parse(value);
-          DBProvider.db.updateList(prod);
-          //prefs.tempBuget = buget.toString();
-        }
-      },
+        prod.buget = double.parse(value);
+        DBProvider.db.updateList(prod);
+        //prefs.tempBuget = buget.toString();
+            },
     );
   }
 
   void getTotal(Lista list) {
-    if (articulos != null) {
-      list.total = 0;
-      for (int i = 0; i < articulos.length; i++) {
-        setState(() {
-          list.total += (articulos[i].price * articulos[i].quantity);
+    list.total = 0;
+    for (int i = 0; i < articulos.length; i++) {
+      setState(() {
+        list.total += (articulos[i].price * articulos[i].quantity);
 
-          getDiference(list);
-          if (list.total > list.buget) {
-            bugetColor = Colors.red[900];
-          } else {
-            bugetColor = utils.cambiarColor();
-          }
-        });
-      }
-      //prefs.tempTotal = total.toString();
+        getDiference(list);
+        if (list.total > list.buget) {
+          bugetColor = Colors.red[900];
+        } else {
+          bugetColor = utils.cambiarColor();
+        }
+      });
     }
-  }
+    //prefs.tempTotal = total.toString();
+    }
 
   void getDiference(Lista list) {
     if (list.total == 0) {

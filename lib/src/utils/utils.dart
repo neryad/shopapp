@@ -5,8 +5,6 @@ import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/product_model.dart';
 import 'package:another_flushbar/flushbar.dart';
-import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:another_flushbar/flushbar_route.dart';
 
 final prefs = new PreferenciasUsuario();
 DateTime now = DateTime.now();

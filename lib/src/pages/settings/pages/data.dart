@@ -3,7 +3,6 @@ import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 
-import '../../../../main.dart';
 
 class DataPage extends StatefulWidget {
   DataPage({Key key}) : super(key: key);

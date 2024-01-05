@@ -1,19 +1,15 @@
 //import 'package:flushbar/flushbar.dart';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/List_model.dart';
-import 'package:PocketList/src/models/product_model.dart';
 import 'package:PocketList/src/models/suge.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 //import 'package:PocketList/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
 import 'package:another_flushbar/flushbar.dart';
-import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:another_flushbar/flushbar_route.dart';
 
 class NewList extends StatefulWidget {
   NewList({Key key}) : super(key: key);
@@ -92,23 +88,21 @@ class _NewListState extends State<NewList> {
   }
 
   void getTotal() {
-    if (items != null) {
-      total = 0;
-      for (int i = 0; i < items.length; i++) {
-        setState(() {
-          total += (items[i].price * items[i].quantity);
+    total = 0;
+    for (int i = 0; i < items.length; i++) {
+      setState(() {
+        total += (items[i].price * items[i].quantity);
 
-          getDiference();
-          if (total > buget) {
-            bugetColor = Colors.red[900];
-          } else {
-            bugetColor = utils.cambiarColor();
-          }
-        });
-      }
-      prefs.tempTotal = total.toString();
+        getDiference();
+        if (total > buget) {
+          bugetColor = Colors.red[900];
+        } else {
+          bugetColor = utils.cambiarColor();
+        }
+      });
     }
-  }
+    prefs.tempTotal = total.toString();
+    }
 
   void getDiference() {
     if (total == 0) {

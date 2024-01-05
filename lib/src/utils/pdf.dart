@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/List_model.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:open_file/open_file.dart';

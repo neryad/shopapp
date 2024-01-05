@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
@@ -11,9 +10,7 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:PocketList/src/pages/list_page.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -264,19 +261,17 @@ class _ImportExportPageState extends State<ImportExportPage> {
       allowedExtensions: ['csv'],
     );
 
-    if (result != null) {
-      File file = File(result.files.single.path);
-      final input = new File(file.path).openRead();
+    File file = File(result.files.single.path);
+    final input = new File(file.path).openRead();
 
-      final fields = await input
-          .transform(utf8.decoder)
-          .transform(new CsvToListConverter())
-          .toList();
+    final fields = await input
+        .transform(utf8.decoder)
+        .transform(new CsvToListConverter())
+        .toList();
 
-      await saveList(context, fields);
-      setState(() {});
+    await saveList(context, fields);
+    setState(() {});
     }
-  }
 
   saveList(BuildContext context, List<dynamic> importedList) async {
     try {
