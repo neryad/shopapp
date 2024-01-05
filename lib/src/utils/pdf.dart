@@ -10,7 +10,7 @@ import 'package:pdf/widgets.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 
 final prefs = new PreferenciasUsuario();
-String datePdf,
+late String datePdf,
     bugetPdf,
     quatiyPdf,
     namePdf,
@@ -49,7 +49,7 @@ class ApiPdf {
     final listData = await DBProvider.db.getListId(id);
 
     final data = await DBProvider.db.getProdId(id);
-    data.sort((a, b) => a.name.compareTo(b.name));
+    data.sort((a, b) => a.name!.compareTo(b.name!));
     pdf.addPage(MultiPage(
         build: (context) => [
               buildTitle(listData),
@@ -63,8 +63,8 @@ class ApiPdf {
     return saveDocument(name: 'Pocketlist', pdf: pdf);
   }
 
-  static Future<File> saveDocument({String name, Document pdf}) async {
-    final bytes = await pdf.save();
+  static Future<File> saveDocument({String? name, Document? pdf}) async {
+    final bytes = await pdf!.save();
     final dir = await getApplicationDocumentsDirectory();
     final file = File('${dir.path}/$name.pdf');
     await file.writeAsBytes(bytes);
@@ -80,10 +80,10 @@ class ApiPdf {
 
   static Widget buildTitle(Lista list) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Text(list.title, style: TextStyle(fontSize: 24)),
+      Text(list.title!, style: TextStyle(fontSize: 24)),
       //Divider(),
       //SizedBox(height: 0.8 * PdfPageFormat.cm),
-      Text(list.superMaret),
+      Text(list.superMaret!),
       //SizedBox(height: 0.8 * PdfPageFormat.cm),
     ]);
   }
@@ -92,7 +92,7 @@ class ApiPdf {
     final headers = [namePdf, pricePdf, quatiyPdf, statusPdf, toalQaPdf];
 
     final filterData = products.map((e) {
-      final total = e.price * e.quantity;
+      final total = e.price! * e.quantity!;
       return [
         e.name,
         e.price,
@@ -145,11 +145,11 @@ class ApiPdf {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    list.fecha,
+                    list.fecha!,
                   ),
-                  Text('\$  ${utils.numberFormat(list.buget)}'),
+                  Text('\$  ${utils.numberFormat(list.buget!)}'),
                   Text(
-                    '\$  ${utils.numberFormat(list.total)}',
+                    '\$  ${utils.numberFormat(list.total!)}',
                   ),
                 ],
               ),
@@ -175,7 +175,7 @@ class ApiPdf {
                         child: Row(children: [
                           Expanded(
                               child: Text(
-                                  'Total : \$  ${utils.numberFormat(list.total)}')),
+                                  'Total : \$  ${utils.numberFormat(list.total!)}')),
                           SizedBox(height: 2 * PdfPageFormat.mm),
                           Container(height: 1, color: PdfColors.grey400),
                           SizedBox(height: 0.5 * PdfPageFormat.mm),

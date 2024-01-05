@@ -12,8 +12,8 @@ class Segurencia {
     this.name,
   });
 
-  String id;
-  String name;
+  String? id;
+  String? name;
 
   factory Segurencia.fromJson(Map<String, dynamic> json) => Segurencia(
         id: json["id"],

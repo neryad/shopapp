@@ -7,7 +7,7 @@ import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends StatefulWidget {
-  const SettingPage({Key key}) : super(key: key);
+  const SettingPage({Key? key}) : super(key: key);
 
   @override
   _SettingPageState createState() => _SettingPageState();
@@ -19,7 +19,7 @@ class _SettingPageState extends State<SettingPage> {
 
   // ThemeData lightTheme = ThemeData(brightness: Brightness.light);
 
-  TextEditingController _textEditingController;
+  late TextEditingController _textEditingController;
 
   final prefs = new PreferenciasUsuario();
   var light = false;
@@ -78,14 +78,14 @@ class _SettingPageState extends State<SettingPage> {
         //         }),
         //   ),
         // ],
-        title: Text(getTranlated(context, 'settTitle')),
+        title: Text(getTranlated(context, 'settTitle')!),
         backgroundColor: utils.cambiarColor(),
       ),
       //  drawer: MenuWidget(),
       body: ListView(children: <Widget>[
         ListTile(
           leading: Icon(Icons.color_lens),
-          title: Text(getTranlated(context, 'themTitle'),
+          title: Text(getTranlated(context, 'themTitle')!,
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -100,7 +100,7 @@ class _SettingPageState extends State<SettingPage> {
         Divider(),
         ListTile(
           leading: Icon(Icons.person_sharp),
-          title: Text(getTranlated(context, 'userTitle'),
+          title: Text(getTranlated(context, 'userTitle')!,
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -115,7 +115,7 @@ class _SettingPageState extends State<SettingPage> {
         Divider(),
         ListTile(
           leading: Icon(Icons.data_usage),
-          title: Text(getTranlated(context, 'dataTitle'),
+          title: Text(getTranlated(context, 'dataTitle')!,
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -129,7 +129,7 @@ class _SettingPageState extends State<SettingPage> {
         ),
         Divider(),
         SwitchListTile(
-          title: Text(getTranlated(context, 'darkMode'),
+          title: Text(getTranlated(context, 'darkMode')!,
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -148,7 +148,7 @@ class _SettingPageState extends State<SettingPage> {
         Divider(),
         ListTile(
           leading: Icon(Icons.language),
-          title: Text(getTranlated(context, 'lngTitle'),
+          title: Text(getTranlated(context, 'lngTitle')!,
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -189,8 +189,8 @@ class _SettingPageState extends State<SettingPage> {
                           ],
                         )))
                     .toList(),
-                onChanged: (Language language) {
-                  _changeLanguea(language);
+                onChanged: (Language? language) {
+                  _changeLanguea(language!);
                 }),
           ),
         ),
@@ -241,7 +241,7 @@ class _SettingPageState extends State<SettingPage> {
         // ),
 
         ListTile(
-          title: Text(getTranlated(context, 'Terms'),
+          title: Text(getTranlated(context, 'Terms')!,
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -254,7 +254,7 @@ class _SettingPageState extends State<SettingPage> {
         ),
         Divider(),
         ListTile(
-          title: Text(getTranlated(context, 'privacyPol'),
+          title: Text(getTranlated(context, 'privacyPol')!,
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -277,6 +277,7 @@ class _SettingPageState extends State<SettingPage> {
     MyApp.stateSet(context);
   }
 
-  void _launchURL(String url) async =>
-      await canLaunch(url) ? await launch(url) : throw 'Could not launch';
+  void _launchURL(String url) async => await canLaunchUrl(Uri.parse(url))
+      ? await launchUrl(Uri.parse(url))
+      : throw 'Could not launch';
 }

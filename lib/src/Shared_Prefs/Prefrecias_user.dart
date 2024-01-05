@@ -11,22 +11,29 @@ class PreferenciasUsuario {
 
   PreferenciasUsuario._internal();
 
-  SharedPreferences _prefs;
-
-  initPrefes() async {
-    this._prefs = await SharedPreferences.getInstance();
-  }
+  late SharedPreferences _prefs;
 
   Color defaultColor = Color.fromRGBO(255, 111, 94, 1);
-  get color {
+
+  Future<void> initPrefes() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
+  int get color {
+    //final int colosr = _prefs.getInt('color') ?? 1;
     return _prefs.getInt('color') ?? 1;
   }
 
+  // final int? color = _prefs.getInt('color') ?? 1;
+  // get color {
+  //   return _prefs.getInt('color') ?? 1;
+  // }
+
   set color(int value) {
-    _prefs.setInt('color', value);
+    _prefs.setInt('color', value!);
   }
 
-  get colorSecundario {
+  bool get colorSecundario {
     return _prefs.getBool('colorSecundario') ?? false;
   }
 
@@ -34,7 +41,7 @@ class PreferenciasUsuario {
     _prefs.setBool('colorSecundario', value);
   }
 
-  get darkLightTheme {
+  bool get darkLightTheme {
     return _prefs.getBool('darkLightTheme') ?? false;
   }
 
@@ -42,7 +49,7 @@ class PreferenciasUsuario {
     _prefs.setBool('darkLightTheme', value);
   }
 
-  get nombreUsuario {
+  String get nombreUsuario {
     return _prefs.getString('nombreUsuario') ?? '';
   }
 
@@ -50,15 +57,15 @@ class PreferenciasUsuario {
     _prefs.setString('nombreUsuario', value);
   }
 
-  get lnge {
-    return _prefs.getString('lnge');
+  String get lnge {
+    return _prefs.getString('lnge')!;
   }
 
   set lnge(String value) {
     _prefs.setString('lnge', value);
   }
 
-  get ultimaPagina {
+  String get ultimaPagina {
     return _prefs.getString('ultimaPagina') ?? 'home';
   }
 
@@ -66,7 +73,7 @@ class PreferenciasUsuario {
     _prefs.setString('ultimaPagina', value);
   }
 
-  get tempTotal {
+  String get tempTotal {
     return _prefs.getString('tempTotal') ?? '0.00';
   }
 
@@ -74,7 +81,7 @@ class PreferenciasUsuario {
     _prefs.setString('tempTotal', value);
   }
 
-  get tempBuget {
+  String get tempBuget {
     return _prefs.getString('tempBuget') ?? '0.00';
   }
 

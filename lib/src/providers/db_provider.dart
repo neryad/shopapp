@@ -8,7 +8,7 @@ export 'package:PocketList/src/models/product_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
-  static Database _database;
+  static late Database _database;
 
   static final DBProvider db = DBProvider._();
 
@@ -112,11 +112,13 @@ class DBProvider {
   }
 
   ///GET PRODUCST BY LIST ID
+  ///todo antes devlvia una lista
   Future<Lista> getListId(String id) async {
     final db = await database;
     final res = await db.query('Lista', where: 'id =?', whereArgs: [id]);
-    Lista art = res.isNotEmpty ? res.map((e) => Lista.fromJson(e)).first : [];
-    //return result.isNotEmpty ? Product.fromMap(result.first) : Null;
+    Lista art = res.isNotEmpty
+        ? (res.map((e) => Lista.fromJson(e)).first as Lista)
+        : Lista();
     return art;
   }
 

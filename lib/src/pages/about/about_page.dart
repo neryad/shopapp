@@ -4,11 +4,12 @@ import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
-  const AboutPage({Key key}) : super(key: key);
+  const AboutPage({Key? key}) : super(key: key);
 
   @override
   _AboutPageState createState() => _AboutPageState();
@@ -26,6 +27,7 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   void initState() {
+    super.initState();
     _initPackageInfo();
     //getBuildAndVersion();
     //prefs.ultimaPagina = 'about';
@@ -46,7 +48,7 @@ class _AboutPageState extends State<AboutPage> {
         //backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
-          title: Text(getTranlated(context, 'aboutTitle')),
+          title: Text(getTranlated(context, 'aboutTitle')!),
           elevation: 0.0,
         ),
         // drawer: MenuWidget(),
@@ -90,7 +92,7 @@ class _AboutPageState extends State<AboutPage> {
                   child: ListView(
                 children: [
                   ListTile(
-                    title: Text(getTranlated(context, 'versionTitle'),
+                    title: Text(getTranlated(context, 'versionTitle')!,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -105,7 +107,7 @@ class _AboutPageState extends State<AboutPage> {
                   ),
                   Divider(),
                   ListTile(
-                    title: Text(getTranlated(context, 'authorTitle'),
+                    title: Text(getTranlated(context, 'authorTitle')!,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -116,19 +118,19 @@ class _AboutPageState extends State<AboutPage> {
                   ),
                   Divider(),
                   ListTile(
-                    title: Text(getTranlated(context, 'aImgs'),
+                    title: Text(getTranlated(context, 'aImgs')!,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         )),
-                    subtitle: Text(getTranlated(context, 'aImgs2')),
+                    subtitle: Text(getTranlated(context, 'aImgs2')!),
                     onTap: () =>
                         {_launchURL('https://undraw.co/illustrations')},
                     trailing: Icon(Icons.arrow_forward_ios),
                   ),
                   Divider(),
                   ListTile(
-                    title: Text(getTranlated(context, 'lDesign'),
+                    title: Text(getTranlated(context, 'lDesign')!,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -137,19 +139,19 @@ class _AboutPageState extends State<AboutPage> {
                       _launchURL('https://www.instagram.com/plus.logodesign/')
                     },
                     trailing: Icon(Icons.arrow_forward_ios),
-                    subtitle: Text(getTranlated(context, 'studio')),
+                    subtitle: Text(getTranlated(context, 'studio')!),
                   ),
                   Divider(),
                   Platform.isIOS
                       ? Container()
                       : ListTile(
-                          title: Text(getTranlated(context, 'dantions'),
+                          title: Text(getTranlated(context, 'dantions')!,
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
                               )),
                           subtitle:
-                              Text(getTranlated(context, 'aboutDonation')),
+                              Text(getTranlated(context, 'aboutDonation')!),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onTap: () {
                             _launchURL('https://www.paypal.me/neryad');
@@ -162,6 +164,7 @@ class _AboutPageState extends State<AboutPage> {
         ));
   }
 
-  void _launchURL(String url) async =>
-      await canLaunch(url) ? await launch(url) : throw 'Could not launch';
+  void _launchURL(String url) async => await await canLaunchUrl(Uri.parse(url))
+      ? await launchUrl(Uri.parse(url))
+      : throw 'Could not launch';
 }

@@ -14,8 +14,8 @@ import 'package:another_flushbar/flushbar.dart';
 // import 'package:PocketList/src/data/data.dart';
 
 class DetailsPage extends StatefulWidget {
-  final Lista savelist;
-  DetailsPage({Key key, this.savelist}) : super(key: key);
+  final Lista? savelist;
+  DetailsPage({Key? key, this.savelist}) : super(key: key);
 
   @override
   _DetailsPageState createState() => _DetailsPageState();
@@ -34,9 +34,9 @@ class _DetailsPageState extends State<DetailsPage> {
 
   final prefs = new PreferenciasUsuario();
   FocusNode myFocusNode = FocusNode();
-  double buget;
-  double total;
-  double diference;
+  late double buget;
+  late double total;
+  late double diference;
   int totalItems = 0;
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
@@ -51,7 +51,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
   Widget build(BuildContext context) {
     // Lista listaModel = widget.savelist;
-    Lista listaModel = widget.savelist;
+    Lista? listaModel = widget.savelist;
     //buget = listaModel.total;
 
     return Scaffold(
@@ -60,7 +60,7 @@ class _DetailsPageState extends State<DetailsPage> {
       appBar: AppBar(
         backgroundColor: utils.cambiarColor(),
         title: Text(
-          listaModel.title,
+          listaModel!.title!,
         ),
         actions: [
           Padding(
@@ -81,9 +81,9 @@ class _DetailsPageState extends State<DetailsPage> {
       // drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
-          _header(listaModel.total, listaModel.buget, listaModel.diference,
+          _header(listaModel.total!, listaModel.buget!, listaModel.diference!,
               listaModel),
-          _bodyWidget(listaModel.id, listaModel)
+          _bodyWidget(listaModel.id!, listaModel)
         ],
       ),
       bottomNavigationBar: _bNavbar(context, listaModel),
@@ -123,14 +123,14 @@ class _DetailsPageState extends State<DetailsPage> {
                                             ? Colors.white
                                             : utils.cambiarColor()),
                                     SizedBox(width: 5),
-                                    Text(getTranlated(context, 'buget'),
+                                    Text(getTranlated(context, 'buget')!,
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold))
                                   ],
                                 ),
                               ),
-                              // FlatButton.icon(
+                              // TextButton.icon(
                               //     onPressed: () =>
                               //         _mostrarAlertaBuget(context, list),
                               //     icon: Icon(Icons.account_balance_wallet),
@@ -248,13 +248,13 @@ class _DetailsPageState extends State<DetailsPage> {
         // builder: null
         future: DBProvider.db.getProdId(id),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
-          if (snapshot.hasData && snapshot.data.length > 0) {
+          if (snapshot.hasData && snapshot.data!.length > 0) {
             final art = snapshot.data;
 
-            articulos = art;
+            articulos = art!;
           }
 
-          articulos.sort((a, b) => a.name.compareTo(b.name));
+          articulos.sort((a, b) => a.name!.compareTo(b.name!));
 
           return Expanded(
               child: ListView.builder(
@@ -288,7 +288,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             color: Colors.white,
                           ),
                           Text(
-                            getTranlated(context, 'delete'),
+                            getTranlated(context, 'delete')!,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -304,13 +304,13 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                   ),
                 ),
-                key: Key(articulos[index].name + articulos.length.toString()),
+                key: Key(articulos[index].name! + articulos.length.toString()),
                 onDismissed: (direction) {
                   var deletedItem = articulos[index];
-                  showDeleteSnack(context, getTranlated(context, 'offLis'),
+                  showDeleteSnack(context, getTranlated(context, 'offLis')!,
                       index, deletedItem, articulos);
                   //utils.showSnack(context, getTranlated(context, 'offLis'));
-                  DBProvider.db.deleteProd(articulos[index].id);
+                  DBProvider.db.deleteProd(articulos[index].id!);
                   articulos.removeAt(index);
 
                   getTotal(listaArt);
@@ -336,7 +336,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                 width: 15,
                               ),
                               Text(
-                                articulos[index].name,
+                                articulos[index].name!,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w900,
                                   decoration: isComplete
@@ -360,11 +360,11 @@ class _DetailsPageState extends State<DetailsPage> {
 
                                   (valor == true)
                                       ? utils.showSnack(context,
-                                          getTranlated(context, 'onCart'))
+                                          getTranlated(context, 'onCart')!)
                                       : utils.showSnack(context,
-                                          getTranlated(context, 'ofCart'));
+                                          getTranlated(context, 'ofCart')!);
                                   updatedCount(
-                                      valor); //   showSnack(context, 'Artículo agregado');
+                                      valor!); //   showSnack(context, 'Artículo agregado');
                                 },
                                 activeColor: isComplete
                                     ? Colors.black
@@ -409,10 +409,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                         children: <Widget>[
                                           Text(
                                               utils.numberFormat(
-                                                  articulos[index].price),
+                                                  articulos[index].price!),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
-                                          Text(getTranlated(context, 'price'))
+                                          Text(getTranlated(context, 'price')!)
                                         ],
                                       ),
                                     ),
@@ -429,8 +429,8 @@ class _DetailsPageState extends State<DetailsPage> {
                                                   .toString(),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
-                                          Text(
-                                              getTranlated(context, 'quantity'))
+                                          Text(getTranlated(
+                                              context, 'quantity')!)
                                         ],
                                       ),
                                     ),
@@ -443,8 +443,8 @@ class _DetailsPageState extends State<DetailsPage> {
                                         children: <Widget>[
                                           Text(
                                               utils.numberFormat(
-                                                  articulos[index].quantity *
-                                                      articulos[index].price),
+                                                  articulos[index].quantity! *
+                                                      articulos[index].price!),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
                                           Text('Total')
@@ -474,7 +474,7 @@ class _DetailsPageState extends State<DetailsPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'buget')),
+            title: Text(getTranlated(context, 'buget')!),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -482,22 +482,23 @@ class _DetailsPageState extends State<DetailsPage> {
               ],
             ),
             actions: <Widget>[
-              FlatButton(
+              //TODO Revisar este boton
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'baclTolist'),
+                    getTranlated(context, 'baclTolist')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     //getTotal();
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    getTranlated(context, 'save'),
+                    getTranlated(context, 'save')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -529,7 +530,7 @@ class _DetailsPageState extends State<DetailsPage> {
         prod.buget = double.parse(value);
         DBProvider.db.updateList(prod);
         //prefs.tempBuget = buget.toString();
-            },
+      },
     );
   }
 
@@ -537,18 +538,22 @@ class _DetailsPageState extends State<DetailsPage> {
     list.total = 0;
     for (int i = 0; i < articulos.length; i++) {
       setState(() {
-        list.total += (articulos[i].price * articulos[i].quantity);
+        //TODO:Revisar esta funcion
+        // if (articulos[i].price != null && articulos[i].quantity != null) {
+        //   list.total += (articulos[i].price! * articulos[i].quantity!);
+        // }
+        // list.total += (articulos[i].price ?? 0) * (articulos[i].quantity ?? 0);
 
         getDiference(list);
-        if (list.total > list.buget) {
-          bugetColor = Colors.red[900];
+        if (list.total! > list.buget!) {
+          bugetColor = Colors.red[900]!;
         } else {
           bugetColor = utils.cambiarColor();
         }
       });
     }
     //prefs.tempTotal = total.toString();
-    }
+  }
 
   void getDiference(Lista list) {
     if (list.total == 0) {
@@ -556,9 +561,9 @@ class _DetailsPageState extends State<DetailsPage> {
       //colorBuget = colorBuget = Colors.green[400];
       return;
     }
-    double calDiferecen = list.buget - list.total;
+    double calDiferecen = list.buget! - list.total!;
     if (calDiferecen < 0) {
-      colorBuget = Colors.red[900];
+      colorBuget = Colors.red[900]!;
     } else if (calDiferecen >= 0) {
       colorBuget = utils.cambiarColor();
     } else {
@@ -574,7 +579,7 @@ class _DetailsPageState extends State<DetailsPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'EupdArt')),
+            title: Text(getTranlated(context, 'EupdArt')!),
             content: Form(
               key: editFormKey,
               child: Column(
@@ -588,16 +593,16 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'baclTolist'),
+                    getTranlated(context, 'baclTolist')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     //_subimt();
                     _editDubimt(index);
@@ -606,7 +611,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    getTranlated(context, 'save'),
+                    getTranlated(context, 'save')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -618,7 +623,7 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   void _editDubimt(int index) {
-    editFormKey.currentState.save();
+    editFormKey.currentState?.save();
     DBProvider.db.updateProd(articulos[index]);
   }
 
@@ -664,11 +669,11 @@ class _DetailsPageState extends State<DetailsPage> {
         //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
-        articulos[index].price = double.parse((value == "") ? "0" : value);
+        articulos[index].price = double.parse((value! == "") ? "0" : value);
       },
       //onSaved: (value) => articulos[index].price = double.parse(value),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -702,11 +707,11 @@ class _DetailsPageState extends State<DetailsPage> {
         //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
-        articulos[index].quantity = int.parse((value == "") ? "0" : value);
+        articulos[index].quantity = int.parse((value! == "") ? "0" : value);
       },
       //onSaved: (value) => articulos[index].quantity = int.parse(value),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -725,7 +730,7 @@ class _DetailsPageState extends State<DetailsPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'newArt')),
+            title: Text(getTranlated(context, 'newArt')!),
             content: Form(
               key: formKey,
               child: SingleChildScrollView(
@@ -744,23 +749,23 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'baclTolist'),
+                    getTranlated(context, 'baclTolist')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     _subimt(list);
                     getTotal(list);
                     _updataLista(list);
                   },
                   child: Text(
-                    getTranlated(context, 'save'),
+                    getTranlated(context, 'save')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -778,7 +783,7 @@ class _DetailsPageState extends State<DetailsPage> {
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: Text(
-            user.name,
+            user.name!,
             style: TextStyle(fontSize: 16.0),
           ),
         ),
@@ -789,104 +794,6 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  // AutoCompleteTextField searchTextField;
-  // Widget wawawaw() {
-  //   return TypeAheadFormField(
-  //     textFieldConfiguration: TextFieldConfiguration(
-  //         controller: this._typeAheadController,
-  //         decoration: InputDecoration(labelText: 'Nombre artículo')),
-  //     suggestionsCallback: (pattern) {
-  //       return DBProvider.db.sugeGet(pattern);
-  //     },
-  //     itemBuilder: (context, Segurencia suggestion) {
-  //       return ListTile(
-  //         title: Text(suggestion.name),
-  //       );
-  //     },
-  //     transitionBuilder: (context, suggestionsBox, controller) {
-  //       return suggestionsBox;
-  //     },
-  //     onSuggestionSelected: (suggestion) {
-  //       return null;
-  //     },
-  //     onSaved: (value) => productModel.name = value,
-
-  //   );
-  // }
-
-  // Widget wawawaw2(int index) {
-
-  //   return TypeAheadFormField(
-  //     initialValue: articulos[index].name,
-  //     textFieldConfiguration: TextFieldConfiguration(
-  //         //controller: this._typeAheadController,
-  //         decoration: InputDecoration(labelText: 'Nombre artículo')),
-  //     suggestionsCallback: (pattern) {
-  //       return DBProvider.db.sugeGet(pattern);
-  //     },
-  //     itemBuilder: (context, Segurencia suggestion) {
-  //       return ListTile(
-  //         title: Text(suggestion.name),
-  //       );
-  //     },
-  //     transitionBuilder: (context, suggestionsBox, controller) {
-  //       return suggestionsBox;
-  //     },
-  //     onSuggestionSelected: (suggestion) {
-  //       return null;
-  //     },
-  //     onSaved: (value) => articulos[index].name = value,
-  //     // validator: (value) {
-  //     //   if (value.isEmpty) {
-  //     //     return 'Please select a city';
-  //     //   }
-  //     // },
-  //     // onSaved: (value) => this._selectedCity = value,
-  //   );
-
-  //   // Column(
-  //   //   mainAxisAlignment: MainAxisAlignment.start,
-  //   //   children: <Widget>[
-  //   //     searchTextField = AutoCompleteTextField<Segurencia>(
-
-  //   //       key:keyS,
-  //   //       clearOnSubmit: false,
-  //   //      suggestions: BackendService.players,
-  //   //       style: TextStyle(color: Colors.black, fontSize: 16.0),
-  //   //      decoration: InputDecoration(
-  //   //     counterText: '',
-  //   //     focusedBorder: UnderlineInputBorder(
-  //   //       borderSide: BorderSide(color: utils.cambiarColor()),
-  //   //     ),
-  //   //     hintText: 'Nombre artículo',
-  //   //     hintStyle: TextStyle(color: utils.cambiarColor()),
-  //   //   ),
-
-  //   //       itemFilter: (item, query) {
-  //   //         return item.name.toLowerCase().startsWith(query.toLowerCase());
-  //   //       },
-  //   //       itemSorter: (a, b) {
-  //   //         return a.name.compareTo(b.name);
-  //   //       },
-  //   //       itemSubmitted: (item) {
-  //   //         setState(() {
-  //   //           searchTextField.textField.controller.text =  articulos[index].name;
-  //   //           articulos[index].name = item.name;
-  //   //          // (value) => productModel.name = value
-  //   //         });
-  //   //       },
-  //   //       itemBuilder: (context, item) {
-  //   //          //initialValue: articulos[index].name;
-  //   //          //articulos[index].name = value,
-  //   //         // ui for the autocomplete row
-  //   //         return row(item);
-  //   //       },
-  //   //     ),
-  //   //   ],
-  //   // );
-  //   // );
-  // }
-
   Widget _crearNombreArticulo() {
     return TextFormField(
       //  initialValue: productModel.name,
@@ -895,7 +802,7 @@ class _DetailsPageState extends State<DetailsPage> {
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
       validator: (value) {
-        if (utils.isEmpty(value)) {
+        if (utils.isEmpty(value!)) {
           return null;
         } else {
           return getTranlated(context, 'noEmpty');
@@ -935,11 +842,11 @@ class _DetailsPageState extends State<DetailsPage> {
         //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
-        productModel.price = double.parse((value == "") ? "0" : value);
+        productModel.price = double.parse((value! == "") ? "0" : value);
       },
       //onSaved: (value) => productModel.price = double.parse(value),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -970,11 +877,11 @@ class _DetailsPageState extends State<DetailsPage> {
         //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
-        productModel.quantity = int.parse((value == "") ? "0" : value);
+        productModel.quantity = int.parse((value! == "") ? "0" : value);
       },
       //onSaved: (value) => productModel.quantity = int.parse(value),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -989,8 +896,8 @@ class _DetailsPageState extends State<DetailsPage> {
 
   void _subimt(Lista list) {
     var it = articulos.length;
-    if (!formKey.currentState.validate()) return;
-    formKey.currentState.save();
+    if (!formKey.currentState!.validate()) return;
+    formKey.currentState?.save();
     var prod = new ProductModel(
         name: productModel.name,
         quantity: productModel.quantity,
@@ -1000,7 +907,7 @@ class _DetailsPageState extends State<DetailsPage> {
     articulos.insert(it, prod);
     DBProvider.db.newProd(prod);
 
-    formKey.currentState.reset();
+    formKey.currentState?.reset();
     setState(() {});
     myFocusNode.requestFocus();
   }
@@ -1010,7 +917,7 @@ class _DetailsPageState extends State<DetailsPage> {
         child: new Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        FlatButton(
+        TextButton(
           onPressed: () => _mostrarAlertaProducto(context, list),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1051,7 +958,7 @@ class _DetailsPageState extends State<DetailsPage> {
         size: 28,
         color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       ),
-      mainButton: FlatButton(
+      mainButton: TextButton(
         onPressed: () {
           //print(item);
           //_undoProd(item, index);
@@ -1062,7 +969,7 @@ class _DetailsPageState extends State<DetailsPage> {
           setState(() {});
         },
         child: Text(
-          getTranlated(context, 'undo'),
+          getTranlated(context, 'undo')!,
           style: TextStyle(color: Colors.amber),
         ),
       ),
@@ -1081,7 +988,7 @@ class _DetailsPageState extends State<DetailsPage> {
         size: 28,
         color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       ),
-      // mainButton: FlatButton(
+      // mainButton: TextButton(
       //   onPressed: () {
       //     //_undoProd(item, index);
       //     DBProvider.db.tmpProd(item);
@@ -1135,21 +1042,21 @@ class _DetailsPageState extends State<DetailsPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'deleteCont')),
+            title: Text(getTranlated(context, 'deleteCont')!),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranlated(context, 'leave')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () => limpiarTodo(),
                   child: Text(
-                    getTranlated(context, 'accept'),
+                    getTranlated(context, 'accept')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -1167,24 +1074,24 @@ class _DetailsPageState extends State<DetailsPage> {
         builder: (context) {
           return AlertDialog(
             // title: Text(getTranlated(context, 'deleteCont')),
-            title: Text(getTranlated(context, 'listComplete')),
+            title: Text(getTranlated(context, 'listComplete')!),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   // onPressed: () => Navigator.of(context).pop(),
                   onPressed: () => {
                         Navigator.of(context).pop(),
                         _validateEliminarList(context),
                       },
                   child: Text(
-                    getTranlated(context, 'clearList'),
+                    getTranlated(context, 'clearList')!,
                     style: TextStyle(
                         color: (prefs.color == 5) ? Colors.white : Colors.red),
                   )),
 
-              FlatButton(
+              TextButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text(
-                  getTranlated(context, 'leave'),
+                  getTranlated(context, 'leave')!,
                   style: TextStyle(
                       color: (prefs.color == 5) ? Colors.white : Colors.black),
                 ),

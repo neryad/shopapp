@@ -5,14 +5,14 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 import '../../../../main.dart';
 
 class ColorPage extends StatefulWidget {
-  ColorPage({Key key}) : super(key: key);
+  ColorPage({Key? key}) : super(key: key);
 
   @override
   _ColorPageState createState() => _ColorPageState();
 }
 
 class _ColorPageState extends State<ColorPage> {
-  int _color;
+  late int _color;
   final prefs = new PreferenciasUsuario();
 
   @override
@@ -22,8 +22,8 @@ class _ColorPageState extends State<ColorPage> {
     super.initState();
   }
 
-  _selectedRadio(int valor) {
-    prefs.color = valor;
+  _selectedRadio(int? valor) {
+    prefs.color = valor!;
     _color = valor;
     MyApp.stateSet(context);
   }
@@ -34,7 +34,7 @@ class _ColorPageState extends State<ColorPage> {
         child: Scaffold(
       appBar: AppBar(
         title: Text(
-          getTranlated(context, 'themTitle'),
+          getTranlated(context, 'themTitle')!,
         ),
         backgroundColor: utils.cambiarColor(),
       ),
@@ -43,12 +43,14 @@ class _ColorPageState extends State<ColorPage> {
           children: [
             RadioListTile(
               title: Text(
-                getTranlated(context, 'nColor'),
+                getTranlated(context, 'nColor')!,
                 style: TextStyle(fontSize: 20),
               ),
               value: 1,
               groupValue: _color,
-              onChanged: _selectedRadio,
+              onChanged: (int? value) {
+                _selectedRadio(value);
+              },
               secondary: CircleAvatar(
                 backgroundColor: Color.fromRGBO(255, 111, 94, 1),
               ),
@@ -56,7 +58,7 @@ class _ColorPageState extends State<ColorPage> {
             Divider(),
             RadioListTile(
               title: Text(
-                getTranlated(context, 'bColor'),
+                getTranlated(context, 'bColor')!,
                 style: TextStyle(fontSize: 20),
               ),
               value: 2,
@@ -69,7 +71,7 @@ class _ColorPageState extends State<ColorPage> {
             Divider(),
             RadioListTile(
               title: Text(
-                getTranlated(context, 'geColor'),
+                getTranlated(context, 'geColor')!,
                 style: TextStyle(fontSize: 20),
               ),
               value: 3,
@@ -82,7 +84,7 @@ class _ColorPageState extends State<ColorPage> {
             Divider(),
             RadioListTile(
               title: Text(
-                getTranlated(context, 'pColor'),
+                getTranlated(context, 'pColor')!,
                 style: TextStyle(fontSize: 20),
               ),
               value: 4,
@@ -95,7 +97,7 @@ class _ColorPageState extends State<ColorPage> {
             Divider(),
             RadioListTile(
               title: Text(
-                getTranlated(context, 'gyColor'),
+                getTranlated(context, 'gyColor')!,
                 style: TextStyle(fontSize: 20),
               ),
               value: 5,
@@ -108,7 +110,7 @@ class _ColorPageState extends State<ColorPage> {
             Divider(),
             RadioListTile(
               title: Text(
-                getTranlated(context, 'dpColor'),
+                getTranlated(context, 'dpColor')!,
                 style: TextStyle(fontSize: 20),
               ),
               value: 6,
@@ -121,7 +123,7 @@ class _ColorPageState extends State<ColorPage> {
             Divider(),
             RadioListTile(
               title: Text(
-                getTranlated(context, 'rColor'),
+                getTranlated(context, 'rColor')!,
                 style: TextStyle(fontSize: 20),
               ),
               value: 7,

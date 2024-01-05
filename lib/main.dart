@@ -29,6 +29,7 @@ void main() async {
 class MyApp extends StatefulWidget {
   static void stateSet(BuildContext context) {
     _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    // ignore: invalid_use_of_protected_member
     state?.setState(() {});
   }
 

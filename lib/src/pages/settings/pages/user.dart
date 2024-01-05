@@ -8,7 +8,7 @@ import 'package:PocketList/src/utils/utils.dart' as utils;
 import '../../../../main.dart';
 
 class UserPage extends StatefulWidget {
-  UserPage({Key key}) : super(key: key);
+  UserPage({Key? key}) : super(key: key);
 
   @override
   _UserPageState createState() => _UserPageState();
@@ -16,7 +16,7 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   final prefs = new PreferenciasUsuario();
-  TextEditingController _textEditingController;
+  late TextEditingController _textEditingController;
   void initState() {
     //_color = prefs.color;
     // prefs.ultimaPagina = 'settings';
@@ -31,7 +31,7 @@ class _UserPageState extends State<UserPage> {
       child: Scaffold(
           appBar: AppBar(
             title: Text(
-              getTranlated(context, 'userTitle'),
+              getTranlated(context, 'userTitle')!,
             ),
             backgroundColor: utils.cambiarColor(),
           ),
@@ -40,7 +40,7 @@ class _UserPageState extends State<UserPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(getTranlated(context, 'userNameConf'),
+                child: Text(getTranlated(context, 'userNameConf')!,
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class _UserPageState extends State<UserPage> {
                               prefs.nombreUsuario = _textEditingController.text;
                               MyApp.stateSet(context);
                               showSnack(context,
-                                  getTranlated(context, 'changeComplete'));
+                                  getTranlated(context, 'changeComplete')!);
                             }),
                         labelText: getTranlated(context, 'userInpText'),
                         labelStyle: TextStyle(color: utils.cambiarColor())
