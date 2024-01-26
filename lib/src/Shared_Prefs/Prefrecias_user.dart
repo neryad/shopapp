@@ -30,7 +30,7 @@ class PreferenciasUsuario {
   // }
 
   set color(int value) {
-    _prefs.setInt('color', value!);
+    _prefs.setInt('color', value);
   }
 
   bool get colorSecundario {
@@ -58,7 +58,7 @@ class PreferenciasUsuario {
   }
 
   String get lnge {
-    return _prefs.getString('lnge')!;
+    return _prefs.getString('lnge') ?? 'en';
   }
 
   set lnge(String value) {

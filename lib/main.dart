@@ -43,11 +43,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late Locale _locale;
+  late Locale _locale = Locale('en', 'US');
 
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
+
       prefs.lnge = locale.languageCode;
     });
   }
@@ -89,6 +90,7 @@ class DarkLightTheme extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: prefs.darkLightTheme ? darktheme : lightTheme,
+
       locale: _locale,
       supportedLocales: [
         Locale('en', 'US'),
@@ -112,6 +114,7 @@ class DarkLightTheme extends StatelessWidget {
       },
       title: 'PocketList',
       initialRoute: 'home',
+
       home: HomePage(),
       // home: SplashScreen(),
       debugShowCheckedModeBanner: true,

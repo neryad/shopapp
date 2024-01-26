@@ -48,7 +48,7 @@ class _NewListState extends State<NewList> {
 
   List<ProductModel> items = [];
 
-  List<TextEditingController>? _controllers;
+  late List<TextEditingController> _controllers;
   ProductModel productModel = new ProductModel();
   Segurencia sugeModel = new Segurencia();
   Lista listaModel = new Lista();
@@ -745,7 +745,7 @@ class _NewListState extends State<NewList> {
               child: ListView.builder(
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
-              _controllers!.add(new TextEditingController());
+              _controllers.add(new TextEditingController());
               //var wawa = toBoolean(items[index].complete);
               bool isComplete = (items[index].complete == 1) ? true : false;
               return Dismissible(
@@ -1216,20 +1216,7 @@ class _NewListState extends State<NewList> {
         size: 28,
         color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       ),
-      // mainButton: TextButton(
-      //   onPressed: () {
-      //     //_undoProd(item, index);
-      //     DBProvider.db.tmpProd(item);
-      //     DBProvider.db.getArticlesTmp('tmp');
-      //     var it = items.length;
-      //     items.insert(it, item);
-      //     setState(() {});
-      //   },
-      //   child: Text(
-      //     getTranlated(context, 'undo'),
-      //     style: TextStyle(color: Colors.amber),
-      //   ),
-      // ),
+
       leftBarIndicatorColor:
           (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       duration: Duration(seconds: 3),
