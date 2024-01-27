@@ -163,6 +163,7 @@ class _HomePageState extends State<HomePage> {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
+      //print('Could not launch $url');
       print('Could not launch $url');
     }
   }
