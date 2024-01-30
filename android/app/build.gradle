@@ -49,8 +49,8 @@ aaptOptions {
         applicationId "com.neryad.PocketList"
         minSdkVersion 31
         targetSdkVersion 33
-        versionCode 7
-        versionName "3.0.2"
+        versionCode 8
+        versionName "3.0.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
