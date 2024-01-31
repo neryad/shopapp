@@ -164,7 +164,14 @@ class _AboutPageState extends State<AboutPage> {
         ));
   }
 
-  void _launchURL(String url) async => await await canLaunchUrl(Uri.parse(url))
-      ? await launchUrl(Uri.parse(url))
-      : throw 'Could not launch';
+  // void _launchURL(String url) async => await await canLaunchUrl(Uri.parse(url))
+  //     ? await launchUrl(Uri.parse(url))
+  //     : throw 'Could not launch';
+  void _launchURL(String url) async {
+    try {
+      await launchUrl(Uri.parse(url));
+    } catch (e) {
+      print(e);
+    }
+  }
 }
