@@ -5,7 +5,7 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:package_info/package_info.dart';
 
 class AboutPage extends StatefulWidget {
-  const AboutPage({Key key}) : super(key: key);
+  const AboutPage({Key? key}) : super(key: key);
 
   @override
   _AboutPageState createState() => _AboutPageState();
@@ -13,13 +13,15 @@ class AboutPage extends StatefulWidget {
 
 class _AboutPageState extends State<AboutPage> {
   final prefs = new PreferenciasUsuario();
-  String appName;
-  String packageName;
-  String version = '1.0.0';
-  String buildNumber;
+  late String appName;
+  late String packageName;
+  late String version = '1.0.0';
+  late String buildNumber;
 
   @override
   void initState() {
+    super.initState();
+
     //getBuildAndVersion();
     //prefs.ultimaPagina = 'about';
   }
@@ -31,7 +33,7 @@ class _AboutPageState extends State<AboutPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
-          title: Text(getTranlated(context, 'aboutTitle')),
+          title: Text(getTranlated(context, 'aboutTitle')!),
           //title: Text(getTranlated(context, 'aboutTitle')),
           elevation: 0.0,
         ),
@@ -84,7 +86,7 @@ class _AboutPageState extends State<AboutPage> {
                                       children: <Widget>[
                                         Text(
                                             getTranlated(
-                                                context, 'versionTitle'),
+                                                context, 'versionTitle')!,
                                             style: TextStyle(
                                                 color: utils.cambiarColor(),
                                                 fontSize: 22.0,
@@ -105,7 +107,7 @@ class _AboutPageState extends State<AboutPage> {
                                       children: <Widget>[
                                         Text(
                                             getTranlated(
-                                                context, 'authorTitle'),
+                                                context, 'authorTitle')!,
                                             style: TextStyle(
                                                 color: utils.cambiarColor(),
                                                 fontSize: 22.0,
@@ -138,7 +140,7 @@ class _AboutPageState extends State<AboutPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        getTranlated(context, 'descpTitle'),
+                        getTranlated(context, 'descpTitle')!,
                         style: TextStyle(
                             color: utils.cambiarColor(),
                             fontStyle: FontStyle.normal,
@@ -148,7 +150,7 @@ class _AboutPageState extends State<AboutPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          getTranlated(context, 'descpText'),
+                          getTranlated(context, 'descpText')!,
                           style: TextStyle(
                               fontSize: 20.0,
                               //fontStyle: FontStyle.italic,

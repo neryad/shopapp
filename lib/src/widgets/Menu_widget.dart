@@ -1,12 +1,11 @@
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:PocketList/src/pages/help_page.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:PocketList/src/localization/localization_constant.dart';
 
 class MenuWidget extends StatelessWidget {
   final prefs = new PreferenciasUsuario();
-  Locale _locale;
+  late Locale _locale;
 
   @override
   Widget build(
@@ -25,7 +24,7 @@ class MenuWidget extends StatelessWidget {
               Icons.home,
             ),
             title: Text(
-              getTranlated(context, 'mHomeTitle'),
+              getTranlated(context, 'mHomeTitle')!,
             ),
             onTap: () => {
               Navigator.pop(context),
@@ -36,7 +35,7 @@ class MenuWidget extends StatelessWidget {
 
           ListTile(
             leading: Icon(Icons.list),
-            title: Text(getTranlated(context, 'mMyLisTitle')),
+            title: Text(getTranlated(context, 'mMyLisTitle')!),
             onTap: () => {
               Navigator.pop(context),
               Navigator.pushNamed(context, 'newList')
@@ -50,7 +49,7 @@ class MenuWidget extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text(getTranlated(context, 'mSettingTitle')),
+            title: Text(getTranlated(context, 'mSettingTitle')!),
             onTap: () => {
               Navigator.pop(context),
               Navigator.pushNamed(context, 'settings')

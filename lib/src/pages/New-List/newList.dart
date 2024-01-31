@@ -1,22 +1,18 @@
 //import 'package:flushbar/flushbar.dart';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/List_model.dart';
-import 'package:PocketList/src/models/product_model.dart';
 import 'package:PocketList/src/models/suge.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 //import 'package:PocketList/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
 import 'package:another_flushbar/flushbar.dart';
-import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:another_flushbar/flushbar_route.dart';
 
 class NewList extends StatefulWidget {
-  NewList({Key key}) : super(key: key);
+  NewList({Key? key}) : super(key: key);
 
   @override
   _NewListState createState() => _NewListState();
@@ -52,8 +48,7 @@ class _NewListState extends State<NewList> {
 
   List<ProductModel> items = [];
 
-  //List<ProductModel> itemsTemp =  utils.prefs.read("TempPro");
-  List<TextEditingController> _controllers = new List();
+  late List<TextEditingController> _controllers;
   ProductModel productModel = new ProductModel();
   Segurencia sugeModel = new Segurencia();
   Lista listaModel = new Lista();
@@ -67,7 +62,7 @@ class _NewListState extends State<NewList> {
       // backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: utils.cambiarColor(),
-        title: Text(getTranlated(context, 'mMyLisTitle')),
+        title: Text(getTranlated(context, 'mMyLisTitle')!),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -92,22 +87,20 @@ class _NewListState extends State<NewList> {
   }
 
   void getTotal() {
-    if (items != null) {
-      total = 0;
-      for (int i = 0; i < items.length; i++) {
-        setState(() {
-          total += (items[i].price * items[i].quantity);
+    total = 0;
+    for (int i = 0; i < items.length; i++) {
+      setState(() {
+        total += (items[i].price! * items[i].quantity!);
 
-          getDiference();
-          if (total > buget) {
-            bugetColor = Colors.red[900];
-          } else {
-            bugetColor = utils.cambiarColor();
-          }
-        });
-      }
-      prefs.tempTotal = total.toString();
+        getDiference();
+        if (total > buget) {
+          bugetColor = Colors.red[900]!;
+        } else {
+          bugetColor = utils.cambiarColor();
+        }
+      });
     }
+    prefs.tempTotal = total.toString();
   }
 
   void getDiference() {
@@ -118,7 +111,7 @@ class _NewListState extends State<NewList> {
     }
     double calDiferecen = buget - total;
     if (calDiferecen < 0) {
-      colorBuget = Colors.red[900];
+      colorBuget = Colors.red[900]!;
     } else if (calDiferecen >= 0) {
       colorBuget = utils.cambiarColor();
     } else {
@@ -133,7 +126,7 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'buget')),
+            title: Text(getTranlated(context, 'buget')!),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -141,22 +134,22 @@ class _NewListState extends State<NewList> {
               ],
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'baclTolist'),
+                    getTranlated(context, 'baclTolist')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     saveBudget(bugetController.text);
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    getTranlated(context, 'addBuget'),
+                    getTranlated(context, 'addBuget')!!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -173,7 +166,7 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'newArt')),
+            title: Text(getTranlated(context, 'newArt')!),
             content: Form(
               key: formKey,
               child: SingleChildScrollView(
@@ -195,23 +188,23 @@ class _NewListState extends State<NewList> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'baclTolist'),
+                    getTranlated(context, 'baclTolist')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     _subimt();
                     getTotal();
                     //Navigator.of(context).pop();
                   },
                   child: Text(
-                    getTranlated(context, 'add'),
+                    getTranlated(context, 'add')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -230,7 +223,7 @@ class _NewListState extends State<NewList> {
       textAlign: TextAlign.center,
       onSaved: (value) => productModel.name = value,
       validator: (value) {
-        if (utils.isEmpty(value)) {
+        if (utils.isEmpty(value!)) {
           return null;
         } else {
           return getTranlated(context, 'noEmpty');
@@ -265,10 +258,10 @@ class _NewListState extends State<NewList> {
         ),
       ),
       onSaved: (value) {
-        productModel.price = double.parse((value == "") ? "0" : value);
+        productModel.price = double.parse((value! == "") ? "0" : value);
       },
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -299,10 +292,10 @@ class _NewListState extends State<NewList> {
         //  int complValue = (valor == true) ? 1 : 0; int.parse(value),
       ),
       onSaved: (value) {
-        productModel.quantity = int.parse((value == "") ? "0" : value);
+        productModel.quantity = int.parse((value! == "") ? "0" : value);
       },
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -317,9 +310,9 @@ class _NewListState extends State<NewList> {
 
   void _subimt() {
     var it = items.length;
-    if (!formKey.currentState.validate()) return;
+    if (!formKey.currentState!.validate()) return;
 
-    formKey.currentState.save();
+    formKey.currentState!.save();
     var prod = ProductModel(
         name: productModel.name,
         quantity: productModel.quantity,
@@ -329,7 +322,7 @@ class _NewListState extends State<NewList> {
     items.insert(it, prod);
     DBProvider.db.newProd(prod);
     //print(productModel.id);
-    formKey.currentState.reset();
+    formKey.currentState!.reset();
     setState(() {});
     myFocusNode.requestFocus();
   }
@@ -340,7 +333,7 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'EupdArt')),
+            title: Text(getTranlated(context, 'EupdArt')!),
             content: Form(
               key: editFormKey,
               child: Column(
@@ -353,16 +346,16 @@ class _NewListState extends State<NewList> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranlated(context, 'leave')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     //_subimt();
                     _editDubimt(index);
@@ -370,7 +363,7 @@ class _NewListState extends State<NewList> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    getTranlated(context, 'save'),
+                    getTranlated(context, 'save')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -382,7 +375,7 @@ class _NewListState extends State<NewList> {
   }
 
   void _editDubimt(int index) {
-    editFormKey.currentState.save();
+    editFormKey.currentState!.save();
     DBProvider.db.updateProd(items[index]);
   }
 
@@ -423,10 +416,10 @@ class _NewListState extends State<NewList> {
         ),
       ),
       onSaved: (value) {
-        items[index].price = double.parse((value == "") ? "0" : value);
+        items[index].price = double.parse((value! == "") ? "0" : value);
       },
       validator: (value) {
-        if (utils.isNumeric(value)) {
+        if (utils.isNumeric(value!)) {
           return null;
         } else {
           return getTranlated(context, 'onlyNumbers');
@@ -453,10 +446,10 @@ class _NewListState extends State<NewList> {
         ),
       ),
       onSaved: (value) {
-        items[index].quantity = int.parse((value == "") ? "0" : value);
+        items[index].quantity = int.parse((value! == "") ? "0" : value);
       },
       validator: (value) {
-        if (utils.isNumeric(value)) {
+        if (utils.isNumeric(value!)) {
           return null;
         } else {
           return getTranlated(context, 'onlyNumbers');
@@ -572,7 +565,7 @@ class _NewListState extends State<NewList> {
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    Text(getTranlated(context, 'buget'),
+                                    Text(getTranlated(context, 'buget')!,
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold
@@ -656,7 +649,7 @@ class _NewListState extends State<NewList> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text(getTranlated(context, 'difference'),
+                            Text(getTranlated(context, 'difference')!,
                                 style: TextStyle(
                                   fontSize: 16,
                                   //color: bugetColor,
@@ -689,10 +682,10 @@ class _NewListState extends State<NewList> {
         // builder: null
         future: DBProvider.db.getArticlesTmp('tmp'),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
-          if (snapshot.hasData && snapshot.data.length > 0) {
+          if (snapshot.hasData && snapshot.data!.length > 0) {
             final tmpArt = snapshot.data;
 
-            items = tmpArt;
+            items = tmpArt!;
           }
           //TODO:hacer seed para futura sugerencias
           if (items.length == 0) {
@@ -711,7 +704,7 @@ class _NewListState extends State<NewList> {
                     Column(
                       children: <Widget>[
                         Text(
-                          getTranlated(context, 'noItems'),
+                          getTranlated(context, 'noItems')!,
                           style: TextStyle(
                             color: utils.cambiarColor(),
                             fontSize: 18,
@@ -747,7 +740,7 @@ class _NewListState extends State<NewList> {
           }
 
           items.sort(
-              (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+              (a, b) => a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
           return Expanded(
               child: ListView.builder(
             itemCount: items.length,
@@ -770,7 +763,7 @@ class _NewListState extends State<NewList> {
                             color: Colors.white,
                           ),
                           Text(
-                            getTranlated(context, 'delete'),
+                            getTranlated(context, 'delete')!,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -786,15 +779,15 @@ class _NewListState extends State<NewList> {
                     ),
                   ),
                 ),
-                key: Key(items[index].name + items.length.toString()),
+                key: Key(items[index].name! + items.length.toString()),
                 onDismissed: (direction) {
                   //wey
                   var deletedItem = items[index];
                   //wawa(context, getTranlated(context, 'offLis'), index, deletedItem, items);
-                  showDeleteSnack(context, getTranlated(context, 'offLis'),
+                  showDeleteSnack(context, getTranlated(context, 'offLis')!,
                       index, deletedItem, items);
                   // utils.showSnack(context,  getTranlated(context, 'offLis'));
-                  DBProvider.db.deleteProd(items[index].id);
+                  DBProvider.db.deleteProd(items[index].id!);
                   items.removeAt(index);
 
                   getTotal();
@@ -822,7 +815,7 @@ class _NewListState extends State<NewList> {
                                 width: 15,
                               ),
                               Text(
-                                items[index].name,
+                                items[index].name!,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w900,
                                   decoration: isComplete
@@ -854,12 +847,12 @@ class _NewListState extends State<NewList> {
                                   setState(() {});
                                   (valor == true)
                                       ? utils.showSnack(context,
-                                          getTranlated(context, 'onCart'))
+                                          getTranlated(context, 'onCart')!)
                                       : utils.showSnack(context,
-                                          getTranlated(context, 'ofCart'));
+                                          getTranlated(context, 'ofCart')!);
 
                                   updatedCount(
-                                      valor); //   showSnack(context, 'Artículo agregado');
+                                      valor!); //   showSnack(context, 'Artículo agregado');
                                 },
                                 activeColor: isComplete
                                     ? Colors.black
@@ -902,10 +895,10 @@ class _NewListState extends State<NewList> {
                                         children: <Widget>[
                                           Text(
                                               utils.numberFormat(
-                                                  items[index].price),
+                                                  items[index].price!),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
-                                          Text(getTranlated(context, 'price'))
+                                          Text(getTranlated(context, 'price')!)
                                         ],
                                       ),
                                     ),
@@ -919,8 +912,8 @@ class _NewListState extends State<NewList> {
                                           Text(items[index].quantity.toString(),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
-                                          Text(
-                                              getTranlated(context, 'quantity'))
+                                          Text(getTranlated(
+                                              context, 'quantity')!)
                                         ],
                                       ),
                                     ),
@@ -933,8 +926,8 @@ class _NewListState extends State<NewList> {
                                         children: <Widget>[
                                           Text(
                                               utils.numberFormat(
-                                                  items[index].quantity *
-                                                      items[index].price),
+                                                  items[index].quantity! *
+                                                      items[index].price!),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
                                           Text('Total')
@@ -963,29 +956,29 @@ class _NewListState extends State<NewList> {
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        FlatButton(
+        TextButton(
           //(valor == true) ? 1 : 0;
           onPressed: () => (items.length <= 0) ? null : _guardarLista(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Icon(Icons.save),
-              Text(getTranlated(context, 'saveList'))
+              Text(getTranlated(context, 'saveList')!)
             ],
           ),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () =>
               (items.length <= 0) ? null : _validateEliminarList(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Icon(Icons.remove_circle_outline, color: Colors.red[400]),
-              Text(getTranlated(context, 'clearList'))
+              Text(getTranlated(context, 'clearList')!)
             ],
           ),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () => _mostrarAlertaProducto(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1007,21 +1000,21 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'deleteCont')),
+            title: Text(getTranlated(context, 'deleteCont')!),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranlated(context, 'leave')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () => limpiarTodo(),
                   child: Text(
-                    getTranlated(context, 'accept'),
+                    getTranlated(context, 'accept')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -1039,34 +1032,34 @@ class _NewListState extends State<NewList> {
         builder: (context) {
           return AlertDialog(
             // title: Text(getTranlated(context, 'deleteCont')),
-            title: Text(getTranlated(context, 'listComplete')),
+            title: Text(getTranlated(context, 'listComplete')!),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   // onPressed: () => Navigator.of(context).pop(),
                   onPressed: () => {
                         Navigator.of(context).pop(),
                         _validateEliminarList(context),
                       },
                   child: Text(
-                    getTranlated(context, 'clearList'),
+                    getTranlated(context, 'clearList')!,
                     style: TextStyle(
                         color: (prefs.color == 5) ? Colors.white : Colors.red),
                   )),
-              FlatButton(
+              TextButton(
                 onPressed: () =>
                     {Navigator.of(context).pop(), _guardarLista(context)},
                 child: Text(
-                  getTranlated(context, 'save'),
+                  getTranlated(context, 'save')!,
                   style: TextStyle(
                       color: (prefs.color == 5)
                           ? Colors.white
                           : utils.cambiarColor()),
                 ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text(
-                  getTranlated(context, 'leave'),
+                  getTranlated(context, 'leave')!,
                   style: TextStyle(
                       color: (prefs.color == 5) ? Colors.white : Colors.black),
                 ),
@@ -1103,7 +1096,7 @@ class _NewListState extends State<NewList> {
   saveList() async {
     String lisId = uuid.v4();
     //DBProvider.db.deleteAllTempProd();
-    lisForm.currentState.save();
+    lisForm.currentState!.save();
     DateTime now = new DateTime.now();
     var fecha = '${now.day}/${now.month}/${now.year}';
     final nuevaLista = Lista(
@@ -1124,7 +1117,7 @@ class _NewListState extends State<NewList> {
     }
 
     items = [];
-    lisForm.currentState.reset();
+    lisForm.currentState!.reset();
   }
 
   void _guardarLista(BuildContext context) {
@@ -1133,7 +1126,7 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'saveList')),
+            title: Text(getTranlated(context, 'saveList')!),
             content: Form(
               key: lisForm,
               child: Column(
@@ -1142,16 +1135,16 @@ class _NewListState extends State<NewList> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranlated(context, 'leave')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     saveList();
                     Navigator.pushNamed(context, 'home');
@@ -1159,7 +1152,7 @@ class _NewListState extends State<NewList> {
                     prefs.tempBuget = '0.00';
                   },
                   child: Text(
-                    getTranlated(context, 'save'),
+                    getTranlated(context, 'save')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -1193,7 +1186,7 @@ class _NewListState extends State<NewList> {
         size: 28,
         color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       ),
-      mainButton: FlatButton(
+      mainButton: TextButton(
         onPressed: () {
           //_undoProd(item, index);
           DBProvider.db.tmpProd(item);
@@ -1203,7 +1196,7 @@ class _NewListState extends State<NewList> {
           setState(() {});
         },
         child: Text(
-          getTranlated(context, 'undo'),
+          getTranlated(context, 'undo')!,
           style: TextStyle(
               color: (prefs.color == 5) ? Colors.white : Colors.amber),
         ),
@@ -1223,20 +1216,7 @@ class _NewListState extends State<NewList> {
         size: 28,
         color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       ),
-      // mainButton: FlatButton(
-      //   onPressed: () {
-      //     //_undoProd(item, index);
-      //     DBProvider.db.tmpProd(item);
-      //     DBProvider.db.getArticlesTmp('tmp');
-      //     var it = items.length;
-      //     items.insert(it, item);
-      //     setState(() {});
-      //   },
-      //   child: Text(
-      //     getTranlated(context, 'undo'),
-      //     style: TextStyle(color: Colors.amber),
-      //   ),
-      // ),
+
       leftBarIndicatorColor:
           (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       duration: Duration(seconds: 3),

@@ -7,12 +7,10 @@ import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:url_launcher/url_launcher.dart';
 
-import 'help_page.dart';
-
 // final pdf = pw.Document();
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -51,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 Icons.home,
               ),
               title: Text(
-                getTranlated(context, 'mHomeTitle'),
+                getTranlated(context, 'mHomeTitle')!,
               ),
               onTap: () => {
                 // Navigator.pop(context),
@@ -61,7 +59,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: Icon(Icons.list),
-              title: Text(getTranlated(context, 'mMyLisTitle')),
+              title: Text(getTranlated(context, 'mMyLisTitle')!),
               onTap: () => {
                 // Navigator.pop(context),
                 Navigator.pushNamed(context, 'newList')
@@ -79,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: Icon(Icons.settings),
-              title: Text(getTranlated(context, 'mSettingTitle')),
+              title: Text(getTranlated(context, 'mSettingTitle')!),
               onTap: () => {
                 //Navigator.pop(context),
                 Navigator.pushNamed(context, 'settings')
@@ -88,7 +86,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: Icon(Icons.new_releases_sharp),
-              title: Text(getTranlated(context, 'mNewsTitle')),
+              title: Text(getTranlated(context, 'mNewsTitle')!),
               onTap: () => {
                 //Navigator.pop(context),
                 Navigator.pushNamed(context, 'newsPage')
@@ -97,12 +95,12 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: Icon(Icons.mail),
-              title: Text(getTranlated(context, 'mContact')),
+              title: Text(getTranlated(context, 'mContact')!),
               onTap: () => {_launchURL()},
             ),
             ListTile(
               leading: Icon(Icons.info),
-              title: Text(getTranlated(context, 'mAboutTitle')),
+              title: Text(getTranlated(context, 'mAboutTitle')!),
               onTap: () => {
                 // Navigator.pop(context),
                 Navigator.pushNamed(context, 'about')
@@ -152,19 +150,23 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pop();
   }
 
-  void _launchURL1(String url) async =>
-      await canLaunch(url) ? await launch(url) : throw 'Could not launch';
   void _launchURL() async {
     final Uri params = Uri(
         scheme: 'mailto',
         path: 'neryadg@gmail.com',
         query: 'subject=Contact from Pocketlist');
     String url = params.toString();
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      //print('Could not launch $url');
-      print('Could not launch $url');
+
+    try {
+      await launchUrl(Uri.parse(url));
+    } catch (e) {
+      print(e);
+
     }
+    // if (await canLaunchUrl(Uri.parse(url))) {
+    //   await launchUrl(Uri.parse(url));
+    // } else {
+    //   print('Could not launch $url');
+    // }
   }
 }

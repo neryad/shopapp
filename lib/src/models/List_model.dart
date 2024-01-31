@@ -7,22 +7,24 @@ Lista listaFromJson(String str) => Lista.fromJson(json.decode(str));
 String listaToJson(Lista data) => json.encode(data.toJson());
 
 class Lista {
-  Lista(
-      {this.id,
-      this.title,
-      this.superMaret,
-      this.fecha,
-      this.total,
-      this.diference,
-      this.buget});
+  Lista({
+    this.id,
+    this.title,
+    this.superMaret,
+    this.fecha,
+    this.total,
+    this.diference,
+    this.buget,
+    ProductModel? productModel,
+  }) : productModel = productModel ?? ProductModel();
 
-  String id;
-  String title;
-  String superMaret;
-  String fecha;
-  double total;
-  double diference;
-  double buget;
+  String? id;
+  String? title;
+  String? superMaret;
+  String? fecha;
+  double? total;
+  double? diference;
+  double? buget;
   ProductModel productModel;
 
   factory Lista.fromJson(Map<String, dynamic> json) => Lista(

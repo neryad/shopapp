@@ -16,12 +16,12 @@ class ProductModel {
     // this.autocompleteterm,
   });
 
-  int id;
-  String name;
-  int quantity;
-  double price = 0.00;
-  String listId;
-  int complete;
+  int? id;
+  String? name;
+  int? quantity;
+  double? price = 0.00;
+  String? listId;
+  int? complete;
   // String autocompleteterm;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(

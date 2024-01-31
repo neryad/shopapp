@@ -15,7 +15,6 @@ import 'package:PocketList/src/pages/about/about_page.dart';
 import 'package:PocketList/src/pages/home_page.dart';
 import 'package:PocketList/src/pages/New-List/newList.dart';
 import 'package:PocketList/src/pages/settings/setting_page.dart';
-import 'package:PocketList/src/pages/help_page.dart';
 
 final prefs = new PreferenciasUsuario();
 void main() async {
@@ -29,13 +28,14 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   static void stateSet(BuildContext context) {
-    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
-    state.setState(() {});
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    // ignore: invalid_use_of_protected_member
+    state?.setState(() {});
   }
 
   static void setLocale(BuildContext context, Locale locale) {
-    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
-    state.setLocale(locale);
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(locale);
   }
 
   @override
@@ -43,11 +43,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale;
+  late Locale _locale = Locale('en', 'US');
 
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
+
       prefs.lnge = locale.languageCode;
     });
   }
@@ -66,15 +67,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final prefs = new PreferenciasUsuario();
-    if (_locale == null) {
-      return Container(
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    } else {
-      return DarkLightTheme(locale: _locale, prefs: prefs);
-    }
+    return DarkLightTheme(locale: _locale, prefs: prefs);
   }
 }
 
@@ -84,9 +77,9 @@ ThemeData lightTheme = ThemeData(brightness: Brightness.light);
 
 class DarkLightTheme extends StatelessWidget {
   const DarkLightTheme({
-    Key key,
-    @required Locale locale,
-    @required this.prefs,
+    Key? key,
+    required Locale locale,
+    required this.prefs,
   })  : _locale = locale,
         super(key: key);
 
@@ -97,6 +90,7 @@ class DarkLightTheme extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: prefs.darkLightTheme ? darktheme : lightTheme,
+
       locale: _locale,
       supportedLocales: [
         Locale('en', 'US'),
@@ -110,8 +104,8 @@ class DarkLightTheme extends StatelessWidget {
       ],
       localeResolutionCallback: (deviceLocale, supportedLocales) {
         for (var locale in supportedLocales) {
-          if (locale.languageCode == deviceLocale.languageCode &&
-              locale.countryCode == deviceLocale.countryCode) {
+          if (locale.languageCode == deviceLocale?.languageCode &&
+              locale.countryCode == deviceLocale?.countryCode) {
             return deviceLocale;
           }
         }
@@ -120,6 +114,7 @@ class DarkLightTheme extends StatelessWidget {
       },
       title: 'PocketList',
       initialRoute: 'home',
+
       home: HomePage(),
       // home: SplashScreen(),
       debugShowCheckedModeBanner: true,

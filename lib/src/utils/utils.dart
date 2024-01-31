@@ -5,12 +5,10 @@ import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/product_model.dart';
 import 'package:another_flushbar/flushbar.dart';
-import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:another_flushbar/flushbar_route.dart';
 
 final prefs = new PreferenciasUsuario();
 DateTime now = DateTime.now();
-List<ProductModel> deleteItems;
+List<ProductModel> deleteItems = [];
 var timeNow = int.parse(DateFormat('kk').format(now));
 
 bool isNumeric(String s) {
@@ -132,9 +130,9 @@ Image cambiarNewImage() {
 }
 
 saludos(BuildContext context) {
-  String greattin1 = getTranlated(context, 'greattin1');
-  String greattin2 = getTranlated(context, 'greattin2');
-  String greattin3 = getTranlated(context, 'greattin3');
+  String greattin1 = getTranlated(context, 'greattin1')!;
+  String greattin2 = getTranlated(context, 'greattin2')!;
+  String greattin3 = getTranlated(context, 'greattin3')!;
   var msg = '';
   if (timeNow <= 11) {
     msg = '$greattin1 ${prefs.nombreUsuario}';

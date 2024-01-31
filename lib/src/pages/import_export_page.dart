@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
@@ -11,9 +10,7 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:PocketList/src/pages/list_page.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -22,7 +19,7 @@ import 'details_page.dart';
 final prefs = new PreferenciasUsuario();
 
 class ImportExportPage extends StatefulWidget {
-  ImportExportPage({Key key}) : super(key: key);
+  ImportExportPage({Key? key}) : super(key: key);
 
   @override
   _ImportExportPageState createState() => _ImportExportPageState();
@@ -31,7 +28,7 @@ class ImportExportPage extends StatefulWidget {
 class _ImportExportPageState extends State<ImportExportPage> {
   Lista listaModel = new Lista();
   List articulos = [];
-  String filePlaceHolder,
+  late String filePlaceHolder,
       titleCsv,
       dateCsv,
       storeCsv,
@@ -134,7 +131,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
           final lista = snapshot.data;
 
-          if (lista.length == 0) {
+          if (lista!.length == 0) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -143,7 +140,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      getTranlated(context, 'msgImporExporlist'),
+                      getTranlated(context, 'msgImporExporlist')!,
                       style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -157,7 +154,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
             );
           }
 
-          lista.sort((a, b) => b.title.compareTo(a.title));
+          lista.sort((a, b) => b.title!.compareTo(a.title!));
           return ListView.builder(
               itemCount: lista.length,
               itemBuilder: (context, index) {
@@ -185,7 +182,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
             ),
             Column(
               children: [
-                Text(list.title),
+                Text(list.title!),
               ],
             ),
             Expanded(child: Container()),
@@ -194,7 +191,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 Row(children: [
                   TextButton(
                       onPressed: () {
-                        _generateCsv(context, list.id);
+                        _generateCsv(context, list.id!);
                         //_openFileExplorer();
                       },
                       child: Icon(Icons.arrow_circle_up_sharp,
@@ -217,9 +214,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
       List<List<String>> csvData = [
         <String>[titleCsv, dateCsv, storeCsv, bugetCsv, totalCsv, difrenceCsv],
         ...lista.map((e) => [
-              e.title,
-              e.fecha,
-              e.superMaret,
+              e.title!,
+              e.fecha!,
+              e.superMaret!,
               e.buget.toString(),
               e.total.toString(),
               e.diference.toString()
@@ -228,7 +225,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
         <String>[nameProdCsv, priceProdCsv, quantityProdCsv, statusProdCsv],
         // data
         ...productModel.map((item) => [
-              item.name,
+              item.name!,
               item.price.toString(),
               item.quantity.toString(),
               item.complete == 1 ? bought : notBought
@@ -241,10 +238,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
       var fileName = csvData[1][0];
       // Directory dir = await getExternalStorageDirectory();
-      Directory dir = Platform.isAndroid
+      Directory? dir = Platform.isAndroid
           ? await getExternalStorageDirectory()
           : await getApplicationSupportDirectory();
-      String appDocPath = dir.path;
+      String appDocPath = dir!.path;
 
       final File file =
           File(appDocPath + Platform.pathSeparator + fileName + '.csv');
@@ -259,23 +256,21 @@ class _ImportExportPageState extends State<ImportExportPage> {
   }
 
   pickFile() async {
-    FilePickerResult result = await FilePicker.platform.pickFiles(
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['csv'],
     );
 
-    if (result != null) {
-      File file = File(result.files.single.path);
-      final input = new File(file.path).openRead();
+    File file = File(result!.files.single.path!);
+    final input = new File(file.path).openRead();
 
-      final fields = await input
-          .transform(utf8.decoder)
-          .transform(new CsvToListConverter())
-          .toList();
+    final fields = await input
+        .transform(utf8.decoder)
+        .transform(new CsvToListConverter())
+        .toList();
 
-      await saveList(context, fields);
-      setState(() {});
-    }
+    await saveList(context, fields);
+    setState(() {});
   }
 
   saveList(BuildContext context, List<dynamic> importedList) async {

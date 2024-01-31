@@ -9,7 +9,7 @@ import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:share_plus/share_plus.dart';
 
 class ListPage extends StatefulWidget {
-  ListPage({Key key}) : super(key: key);
+  ListPage({Key? key}) : super(key: key);
 
   @override
   _ListPageState createState() => _ListPageState();
@@ -66,13 +66,13 @@ class _ListPageState extends State<ListPage> {
 
           final lista = snapshot.data;
 
-          if (lista.length == 0) {
+          if (lista!.length == 0) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: <Widget>[
                   Text(
-                    getTranlated(context, 'noList'),
+                    getTranlated(context, 'noList')!,
                     style: TextStyle(
                       color: (prefs.color == 5)
                           ? Colors.white
@@ -108,7 +108,7 @@ class _ListPageState extends State<ListPage> {
               ),
             );
           }
-          lista.sort((a, b) => b.fecha.compareTo(a.fecha));
+          lista.sort((a, b) => b.fecha!.compareTo(a.fecha!));
           return ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -129,7 +129,7 @@ class _ListPageState extends State<ListPage> {
                               color: Colors.white,
                             ),
                             Text(
-                              getTranlated(context, 'delete'),
+                              getTranlated(context, 'delete')!,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
@@ -145,12 +145,12 @@ class _ListPageState extends State<ListPage> {
                       ),
                     ),
                   ),
-                  key: Key(lista[i].title + lista.length.toString()),
+                  key: Key(lista[i].title! + lista.length.toString()),
                   onDismissed: (direction) {
                     utils.showSnack(
-                        context, getTranlated(context, 'deletedList'));
+                        context, getTranlated(context, 'deletedList')!);
 
-                    DBProvider.db.deleteLista(lista[i].id);
+                    DBProvider.db.deleteLista(lista[i].id!);
                     lista.removeAt(i);
                     setState(() {});
                   },
@@ -191,7 +191,7 @@ class _ListPageState extends State<ListPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    lista.fecha,
+                    lista.fecha!,
                     style: TextStyle(
                       //color: Colors.black45,
                       fontSize: 16.0,
@@ -220,7 +220,7 @@ class _ListPageState extends State<ListPage> {
                     children: [
                       Row(children: [
                         Text(
-                          lista.title,
+                          lista.title!,
                           style: TextStyle(
                             //color: Colors.black,
 
@@ -231,7 +231,7 @@ class _ListPageState extends State<ListPage> {
                       ]),
                       Row(children: [
                         Text(
-                          lista.superMaret,
+                          lista.superMaret!,
                           style: TextStyle(
                             //color: Colors.black45,
                             fontSize: 16.0,
@@ -246,7 +246,7 @@ class _ListPageState extends State<ListPage> {
                     children: [
                       Row(children: [
                         Text(
-                          '\$  ${utils.numberFormat(lista.total)}',
+                          '\$  ${utils.numberFormat(lista.total!)}',
                           style: TextStyle(
                             color: (prefs.color == 5)
                                 ? Colors.white
@@ -268,7 +268,7 @@ class _ListPageState extends State<ListPage> {
                 children: [
                   TextButton(
                       onPressed: () async {
-                        final pdf = await ApiPdf.generateTAble(lista.id);
+                        final pdf = await ApiPdf.generateTAble(lista.id!);
                         await Share.shareFiles([pdf.path]);
                         // ApiPdf.openFile(pdf);
                       },
@@ -294,7 +294,7 @@ class _ListPageState extends State<ListPage> {
                           color: Colors.deepPurpleAccent)),
                   TextButton(
                       onPressed: () {
-                        _validateEliminar(context, lista.id);
+                        _validateEliminar(context, lista.id!);
                       },
                       child: Icon(
                         Icons.delete_forever_outlined,
@@ -313,13 +313,13 @@ class _ListPageState extends State<ListPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'delete')),
-            content: new Text(getTranlated(context, 'deleteListDia')),
+            title: Text(getTranlated(context, 'delete')!),
+            content: new Text(getTranlated(context, 'deleteListDia')!),
             actions: <Widget>[
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranlated(context, 'leave')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -330,11 +330,11 @@ class _ListPageState extends State<ListPage> {
                     DBProvider.db.deleteLista(id);
                     Navigator.of(context).pop();
                     utils.showSnack(
-                        context, getTranlated(context, 'deletedList'));
+                        context, getTranlated(context, 'deletedList')!);
                     setState(() {});
                   },
                   child: Text(
-                    getTranlated(context, 'accept'),
+                    getTranlated(context, 'accept')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -395,7 +395,7 @@ class _ListPageState extends State<ListPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'saveList')),
+            title: Text(getTranlated(context, 'saveList')!),
             content: Form(
               key: lisForm,
               child: Column(
@@ -404,22 +404,22 @@ class _ListPageState extends State<ListPage> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranlated(context, 'leave')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     saveList(lista);
                     Navigator.pushNamed(context, 'home');
                   },
                   child: Text(
-                    getTranlated(context, 'save'),
+                    getTranlated(context, 'save')!,
                     style: TextStyle(
                         color: (prefs.color == 5)
                             ? Colors.white
@@ -431,7 +431,7 @@ class _ListPageState extends State<ListPage> {
   }
 
   saveList(Lista lista) async {
-    lisForm.currentState.save();
+    lisForm.currentState?.save();
     try {
       await DBProvider.db.updateList(lista);
     } catch (e) {

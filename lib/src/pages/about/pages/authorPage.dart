@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
@@ -7,7 +5,7 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuthorPage extends StatefulWidget {
-  const AuthorPage({Key key}) : super(key: key);
+  const AuthorPage({Key? key}) : super(key: key);
 
   @override
   _AuthorPageState createState() => _AuthorPageState();
@@ -15,13 +13,15 @@ class AuthorPage extends StatefulWidget {
 
 class _AuthorPageState extends State<AuthorPage> {
   final prefs = new PreferenciasUsuario();
-  String appName;
-  String packageName;
-  String version = '1.0.0';
-  String buildNumber;
+  late String appName;
+  late String packageName;
+  late String version = '1.0.0';
+  late String buildNumber;
 
   @override
   void initState() {
+    super.initState();
+
     //getBuildAndVersion();
     //prefs.ultimaPagina = 'about';
   }
@@ -110,20 +110,20 @@ class _AuthorPageState extends State<AuthorPage> {
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         )),
-                    subtitle: Text('neryad_dev'),
+                    subtitle: Text('neryadg'),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                      _launchURL('https://www.instagram.com/neryad_dev/');
+                      _launchURL('https://www.instagram.com/neryadg/');
                     },
                   ),
                   Divider(),
                   ListTile(
-                    title: Text(getTranlated(context, 'webPageTitle'),
+                    title: Text(getTranlated(context, 'webPageTitle')!,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         )),
-                    subtitle: Text(getTranlated(context, 'webPageSubTitle')),
+                    subtitle: Text(getTranlated(context, 'webPageSubTitle')!),
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       _launchURL('https://neryad.dev/');
@@ -152,6 +152,14 @@ class _AuthorPageState extends State<AuthorPage> {
         ));
   }
 
-  void _launchURL(String url) async =>
-      await canLaunch(url) ? await launch(url) : throw 'Could not launch';
+  // void _launchURL(String url) async => await await canLaunchUrl(Uri.parse(url))
+  //     ? await launchUrl(Uri.parse(url))
+  //     : throw 'Could not launch';
+  void _launchURL(String url) async {
+    try {
+      await launchUrl(Uri.parse(url));
+    } catch (e) {
+      print(e);
+    }
+  }
 }
