@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:PocketList/src/models/List_model.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
@@ -75,7 +75,7 @@ class ApiPdf {
   static Future openFile(File file) async {
     final url = file.path;
 
-    await OpenFile.open(url);
+    await OpenFilex.open(url);
   }
 
   static Widget buildTitle(Lista list) {

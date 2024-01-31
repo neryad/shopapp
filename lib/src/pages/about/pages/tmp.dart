@@ -2,7 +2,7 @@ import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:package_info/package_info.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
