@@ -75,6 +75,7 @@ class ApiPdf {
   static Future openFile(File file) async {
     final url = file.path;
 
+
     await OpenFilex.open(url);
   }
 

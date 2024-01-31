@@ -156,10 +156,12 @@ class _HomePageState extends State<HomePage> {
         path: 'neryadg@gmail.com',
         query: 'subject=Contact from Pocketlist');
     String url = params.toString();
+
     try {
       await launchUrl(Uri.parse(url));
     } catch (e) {
       print(e);
+
     }
     // if (await canLaunchUrl(Uri.parse(url))) {
     //   await launchUrl(Uri.parse(url));
