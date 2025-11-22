@@ -6,7 +6,7 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 
 class MenuWidget extends StatelessWidget {
   final prefs = new PreferenciasUsuario();
-  Locale _locale;
+  late Locale _locale;
 
   @override
   Widget build(

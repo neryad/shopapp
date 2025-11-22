@@ -84,9 +84,9 @@ ThemeData lightTheme = ThemeData(brightness: Brightness.light);
 
 class DarkLightTheme extends StatelessWidget {
   const DarkLightTheme({
-    Key key,
-    @required Locale locale,
-    @required this.prefs,
+    required Key key,
+    required Locale locale,
+    required this.prefs,
   })  : _locale = locale,
         super(key: key);
 
@@ -110,8 +110,8 @@ class DarkLightTheme extends StatelessWidget {
       ],
       localeResolutionCallback: (deviceLocale, supportedLocales) {
         for (var locale in supportedLocales) {
-          if (locale.languageCode == deviceLocale.languageCode &&
-              locale.countryCode == deviceLocale.countryCode) {
+          if (locale.languageCode == deviceLocale?.languageCode &&
+              locale.countryCode == deviceLocale?.countryCode) {
             return deviceLocale;
           }
         }

@@ -22,7 +22,7 @@ import 'details_page.dart';
 final prefs = new PreferenciasUsuario();
 
 class ImportExportPage extends StatefulWidget {
-  ImportExportPage({Key key}) : super(key: key);
+  ImportExportPage({required Key key}) : super(key: key);
 
   @override
   _ImportExportPageState createState() => _ImportExportPageState();
@@ -31,7 +31,7 @@ class ImportExportPage extends StatefulWidget {
 class _ImportExportPageState extends State<ImportExportPage> {
   Lista listaModel = new Lista();
   List articulos = [];
-  String filePlaceHolder,
+  late String filePlaceHolder,
       titleCsv,
       dateCsv,
       storeCsv,
@@ -134,7 +134,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
           final lista = snapshot.data;
 
-          if (lista.length == 0) {
+          if (lista?.length == 0) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -157,18 +157,18 @@ class _ImportExportPageState extends State<ImportExportPage> {
             );
           }
 
-          lista.sort((a, b) => b.title.compareTo(a.title));
+          lista?.sort((a, b) => b.title.compareTo(a.title));
           return ListView.builder(
-              itemCount: lista.length,
+              itemCount: lista?.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                     onTap: () {
                       var route = new MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              DetailsPage(savelist: lista[index]));
+                              DetailsPage(savelist: lista![index]));
                       Navigator.of(context).push(route);
                     },
-                    child: card(lista[index]));
+                    child: card(lista![index]));
               });
         },
       ),
@@ -241,10 +241,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
       var fileName = csvData[1][0];
       // Directory dir = await getExternalStorageDirectory();
-      Directory dir = Platform.isAndroid
+      Directory? dir = Platform.isAndroid
           ? await getExternalStorageDirectory()
           : await getApplicationSupportDirectory();
-      String appDocPath = dir.path;
+      String appDocPath = dir!.path;
 
       final File file =
           File(appDocPath + Platform.pathSeparator + fileName + '.csv');
@@ -259,13 +259,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
   }
 
   pickFile() async {
-    FilePickerResult result = await FilePicker.platform.pickFiles(
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['csv'],
     );
 
     if (result != null) {
-      File file = File(result.files.single.path);
+      File file = File(result.files.single.path!);
       final input = new File(file.path).openRead();
 
       final fields = await input
