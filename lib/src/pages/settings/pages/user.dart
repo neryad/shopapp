@@ -10,7 +10,7 @@ import 'package:PocketList/src/utils/utils.dart' as utils;
 import '../../../../main.dart';
 
 class UserPage extends StatefulWidget {
-  UserPage({Key key}) : super(key: key);
+  UserPage({Key? key}) : super(key: key);
 
   @override
   _UserPageState createState() => _UserPageState();
@@ -18,7 +18,7 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   final prefs = new PreferenciasUsuario();
-  TextEditingController _textEditingController;
+  late TextEditingController _textEditingController;
   void initState() {
     //_color = prefs.color;
     // prefs.ultimaPagina = 'settings';

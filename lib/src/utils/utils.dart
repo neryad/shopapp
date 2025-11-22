@@ -10,7 +10,7 @@ import 'package:another_flushbar/flushbar_route.dart';
 
 final prefs = new PreferenciasUsuario();
 DateTime now = DateTime.now();
-List<ProductModel> deleteItems;
+List<ProductModel> deleteItems = [];
 var timeNow = int.parse(DateFormat('kk').format(now));
 
 bool isNumeric(String s) {

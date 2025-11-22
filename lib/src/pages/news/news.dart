@@ -7,7 +7,7 @@ import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsPage extends StatefulWidget {
-  const NewsPage({Key key}) : super(key: key);
+  const NewsPage({Key? key}) : super(key: key);
 
   @override
   _NewsPageState createState() => _NewsPageState();
@@ -174,8 +174,8 @@ class _NewsPageState extends State<NewsPage> {
                           fontWeight: FontWeight.bold,
                         )),
                     trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green[300]),
                       onPressed: () {},
                       child: (Text(getTranlated(context, 'new0'))),
                     ),
@@ -188,8 +188,8 @@ class _NewsPageState extends State<NewsPage> {
                           fontWeight: FontWeight.bold,
                         )),
                     trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green[300]),
                       onPressed: () {},
                       child: (Text(getTranlated(context, 'new0'))),
                     ),
@@ -202,8 +202,8 @@ class _NewsPageState extends State<NewsPage> {
                           fontWeight: FontWeight.bold,
                         )),
                     trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green[300]),
                       onPressed: () {},
                       child: (Text(getTranlated(context, 'new0'))),
                     ),
@@ -216,8 +216,8 @@ class _NewsPageState extends State<NewsPage> {
                           fontWeight: FontWeight.bold,
                         )),
                     trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green[300]),
                       onPressed: () {},
                       child: (Text(getTranlated(context, 'new0'))),
                     ),
@@ -230,8 +230,8 @@ class _NewsPageState extends State<NewsPage> {
                           fontWeight: FontWeight.bold,
                         )),
                     trailing: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.green[300]),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green[300]),
                       onPressed: () {},
                       child: (Text(getTranlated(context, 'new0'))),
                     ),
@@ -245,7 +245,7 @@ class _NewsPageState extends State<NewsPage> {
                         )),
                     trailing: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.amberAccent[400]),
+                          backgroundColor: Colors.amberAccent[400]),
                       onPressed: () {},
                       child: (Text(getTranlated(context, 'fix0'))),
                     ),
@@ -260,7 +260,7 @@ class _NewsPageState extends State<NewsPage> {
                         )),
                     trailing: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.amberAccent[400]),
+                          backgroundColor: Colors.amberAccent[400]),
                       onPressed: () {},
                       child: (Text(getTranlated(context, 'fix0'))),
                     ),
@@ -275,7 +275,7 @@ class _NewsPageState extends State<NewsPage> {
                         )),
                     trailing: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.amberAccent[400]),
+                          backgroundColor: Colors.amberAccent[400]),
                       onPressed: () {},
                       child: (Text(getTranlated(context, 'fix0'))),
                     ),

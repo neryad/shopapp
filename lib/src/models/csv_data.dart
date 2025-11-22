@@ -12,18 +12,18 @@ String csvDataToJson(CsvData data) => json.encode(data.toJson());
 
 class CsvData {
   CsvData(
-      {this.name,
-      this.quantity,
-      this.price,
-      this.listId,
-      this.complete,
-      this.title,
-      this.superMaret,
-      this.fecha,
-      this.total,
-      this.diference,
-      this.buget,
-      ProductModel productModel});
+      {this.name = '',
+      this.quantity = 0,
+      this.price = 0,
+      this.listId = '',
+      this.complete = 0,
+      this.title = '',
+      this.superMaret = '',
+      this.fecha = '',
+      this.total = 0,
+      this.diference = 0,
+      this.buget = 0,
+      ProductModel? productModel});
 
   String name;
   int quantity;

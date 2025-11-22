@@ -7,9 +7,10 @@ import 'package:PocketList/src/pages/details_page.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ListPage extends StatefulWidget {
-  ListPage({Key key}) : super(key: key);
+  ListPage({Key? key}) : super(key: key);
 
   @override
   _ListPageState createState() => _ListPageState();
@@ -66,7 +67,7 @@ class _ListPageState extends State<ListPage> {
 
           final lista = snapshot.data;
 
-          if (lista.length == 0) {
+          if (lista!.length == 0) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -269,7 +270,9 @@ class _ListPageState extends State<ListPage> {
                   TextButton(
                       onPressed: () async {
                         final pdf = await ApiPdf.generateTAble(lista.id);
-                        await Share.shareFiles([pdf.path]);
+                        if (!kIsWeb && pdf != null) {
+                          await Share.shareFiles([pdf.path]);
+                        }
                         // ApiPdf.openFile(pdf);
                       },
                       child: Icon(Icons.share)),
@@ -352,7 +355,7 @@ class _ListPageState extends State<ListPage> {
       maxLength: 25,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
-      onSaved: (value) => listaModel.title = value,
+      onSaved: (value) => listaModel.title = value ?? '',
       decoration: InputDecoration(
         labelText: getTranlated(context, 'listName'),
         labelStyle: TextStyle(
@@ -371,7 +374,7 @@ class _ListPageState extends State<ListPage> {
       maxLength: 20,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
-      onSaved: (value) => listaModel.superMaret = value,
+      onSaved: (value) => listaModel.superMaret = value ?? '',
       decoration: InputDecoration(
         // counterText: '',
         labelText: getTranlated(context, 'shopName'),
@@ -404,7 +407,7 @@ class _ListPageState extends State<ListPage> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
@@ -413,7 +416,7 @@ class _ListPageState extends State<ListPage> {
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     saveList(lista);
                     Navigator.pushNamed(context, 'home');
@@ -431,7 +434,7 @@ class _ListPageState extends State<ListPage> {
   }
 
   saveList(Lista lista) async {
-    lisForm.currentState.save();
+    lisForm.currentState!.save();
     try {
       await DBProvider.db.updateList(lista);
     } catch (e) {

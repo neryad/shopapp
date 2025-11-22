@@ -6,7 +6,7 @@ import 'package:PocketList/src/utils/utils.dart' as utils;
 import '../../../../main.dart';
 
 class DataPage extends StatefulWidget {
-  DataPage({Key key}) : super(key: key);
+  DataPage({Key? key}) : super(key: key);
 
   @override
   _DataPageState createState() => _DataPageState();
@@ -31,9 +31,11 @@ class _DataPageState extends State<DataPage> {
             children: [
               Text(getTranlated(context, 'deletePar'),
                   style: TextStyle(fontSize: 18)),
-              RaisedButton(
-                color: Colors.red,
-                textColor: Colors.white,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                ),
                 onPressed: () {
                   _validateEliminar(context);
                 },
@@ -66,13 +68,13 @@ class _DataPageState extends State<DataPage> {
             title: Text(getTranlated(context, 'deleteAllList')),
             content: new Text(getTranlated(context, 'deleteDialo')),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
                     style: TextStyle(color: utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     limpiarTodo();
                     utils.showSnack(

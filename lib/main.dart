@@ -1,23 +1,13 @@
-import 'package:PocketList/src/pages/about/pages/authorPage.dart';
-import 'package:PocketList/src/pages/details_page.dart';
-import 'package:PocketList/src/pages/import_export_page.dart';
-import 'package:PocketList/src/pages/news/news.dart';
-import 'package:PocketList/src/pages/settings/pages/color_page.dart';
-import 'package:PocketList/src/pages/settings/pages/data.dart';
-import 'package:PocketList/src/pages/settings/pages/user.dart';
+import 'package:PocketList/src/localization/localization.dart';
+import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:PocketList/src/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:PocketList/src/localization/localization.dart';
-import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:PocketList/src/pages/about/about_page.dart';
-import 'package:PocketList/src/pages/home_page.dart';
-import 'package:PocketList/src/pages/New-List/newList.dart';
-import 'package:PocketList/src/pages/settings/setting_page.dart';
-import 'package:PocketList/src/pages/help_page.dart';
 
 final prefs = new PreferenciasUsuario();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // final prefs = new PreferenciasUsuario();
@@ -29,13 +19,13 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   static void stateSet(BuildContext context) {
-    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
-    state.setState(() {});
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setState(() {});
   }
 
   static void setLocale(BuildContext context, Locale locale) {
-    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
-    state.setLocale(locale);
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(locale);
   }
 
   @override
@@ -43,7 +33,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale;
+  Locale? _locale;
 
   void setLocale(Locale locale) {
     setState(() {
@@ -73,7 +63,7 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     } else {
-      return DarkLightTheme(locale: _locale, prefs: prefs);
+      return DarkLightTheme(locale: _locale!, prefs: prefs);
     }
   }
 }
@@ -84,7 +74,7 @@ ThemeData lightTheme = ThemeData(brightness: Brightness.light);
 
 class DarkLightTheme extends StatelessWidget {
   const DarkLightTheme({
-    required Key key,
+    Key? key,
     required Locale locale,
     required this.prefs,
   })  : _locale = locale,
@@ -125,17 +115,6 @@ class DarkLightTheme extends StatelessWidget {
       debugShowCheckedModeBanner: true,
       routes: {
         'home': (BuildContext context) => HomePage(),
-        'newList': (BuildContext context) => NewList(),
-        'settings': (BuildContext context) => SettingPage(),
-        'about': (BuildContext context) => AboutPage(),
-        // 'help': (BuildContext context) => HelpPage(),
-        'detailsPage': (BuildContext context) => DetailsPage(),
-        'colorPage': (BuildContext context) => ColorPage(),
-        'userPage': (BuildContext context) => UserPage(),
-        'dataPage': (BuildContext context) => DataPage(),
-        'authorPage': (BuildContext context) => AuthorPage(),
-        'newsPage': (BuildContext context) => NewsPage(),
-        'exportImport': (BuildContext context) => ImportExportPage()
       },
     );
   }

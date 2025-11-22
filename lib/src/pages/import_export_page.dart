@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:typed_data';
+// import 'dart:developer';
 import 'dart:io';
 
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
@@ -11,10 +12,13 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:PocketList/src/pages/list_page.dart';
+// import 'package:PocketList/src/pages/list_page.dart';
 import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:PocketList/src/utils/file_save_helper.dart';
+
 import 'package:uuid/uuid.dart';
 
 import 'details_page.dart';
@@ -52,10 +56,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
       strExport,
       strImported;
   var uuid = Uuid();
-  var _paths;
+  // var _paths;
   var employeeData;
-  String _extension = "csv";
-  FileType _pickingType = FileType.custom;
+  // String _extension = "csv";
+  // FileType _pickingType = FileType.custom;
   @override
   Widget build(BuildContext context) {
     if (prefs.lnge == 'en') {
@@ -237,7 +241,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
       String csv = const ListToCsvConverter().convert(csvData);
 
-      DateTime now = new DateTime.now();
+      if (kIsWeb) {
+        // Web: Download CSV
+        final bytes = utf8.encode(csv);
+        await saveFile('${csvData[1][0]}.csv', Uint8List.fromList(bytes));
+        showMsg(context, successMsgExport, strExport);
+        return;
+      }
 
       var fileName = csvData[1][0];
       // Directory dir = await getExternalStorageDirectory();
@@ -262,19 +272,30 @@ class _ImportExportPageState extends State<ImportExportPage> {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['csv'],
+      withData: true, // Important for Web
     );
 
     if (result != null) {
-      File file = File(result.files.single.path!);
-      final input = new File(file.path).openRead();
+      if (kIsWeb) {
+        final bytes = result.files.single.bytes;
+        if (bytes != null) {
+          final csvString = utf8.decode(bytes);
+          final fields = const CsvToListConverter().convert(csvString);
+          await saveList(context, fields);
+          setState(() {});
+        }
+      } else {
+        File file = File(result.files.single.path!);
+        final input = new File(file.path).openRead();
 
-      final fields = await input
-          .transform(utf8.decoder)
-          .transform(new CsvToListConverter())
-          .toList();
+        final fields = await input
+            .transform(utf8.decoder)
+            .transform(new CsvToListConverter())
+            .toList();
 
-      await saveList(context, fields);
-      setState(() {});
+        await saveList(context, fields);
+        setState(() {});
+      }
     }
   }
 
@@ -291,7 +312,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           buget: importedList[1][3]);
 
       await DBProvider.db.nuevoLista(listaImportada);
-      ProductModel productModel = new ProductModel();
+      // ProductModel productModel = new ProductModel();
 
       var importedItems =
           importedList.getRange(2, importedList.length).toList();

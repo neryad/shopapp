@@ -9,10 +9,10 @@ class Localization {
   Localization(this.locale);
 
   static Localization of(BuildContext context) {
-    return Localizations.of<Localization>(context, Localization);
+    return Localizations.of<Localization>(context, Localization)!;
   }
 
-  Map<String, String> _localizedValues;
+  late Map<String, String> _localizedValues;
 
   Future load() async {
     String jsonStringValues =
@@ -25,27 +25,27 @@ class Localization {
   }
 
   String getTranslatedValue(String key) {
-    return _localizedValues[key];
+    return _localizedValues[key] ?? key;
   }
 
-  static const LocalizationsDelegate<Localization> delegate = _LocalizationDelegate();
+  static const LocalizationsDelegate<Localization> delegate =
+      _LocalizationDelegate();
 }
 
-class _LocalizationDelegate extends LocalizationsDelegate<Localization>{
+class _LocalizationDelegate extends LocalizationsDelegate<Localization> {
   const _LocalizationDelegate();
   @override
   bool isSupported(Locale locale) {
-      return ['en', 'es'].contains(locale.languageCode);
-    }
-  
-    @override
-    Future<Localization> load(Locale locale) async  {
-      Localization localization = new Localization(locale);
-      await localization.load();
-      return localization;
-    }
-  
-    @override
-    bool shouldReload(LocalizationsDelegate old) => false;
+    return ['en', 'es'].contains(locale.languageCode);
+  }
 
+  @override
+  Future<Localization> load(Locale locale) async {
+    Localization localization = new Localization(locale);
+    await localization.load();
+    return localization;
+  }
+
+  @override
+  bool shouldReload(LocalizationsDelegate old) => false;
 }

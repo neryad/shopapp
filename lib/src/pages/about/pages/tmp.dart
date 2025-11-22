@@ -5,7 +5,7 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:package_info/package_info.dart';
 
 class AboutPage extends StatefulWidget {
-  const AboutPage({Key key}) : super(key: key);
+  const AboutPage({Key? key}) : super(key: key);
 
   @override
   _AboutPageState createState() => _AboutPageState();
@@ -13,13 +13,14 @@ class AboutPage extends StatefulWidget {
 
 class _AboutPageState extends State<AboutPage> {
   final prefs = new PreferenciasUsuario();
-  String appName;
-  String packageName;
+  String appName = '';
+  String packageName = '';
   String version = '1.0.0';
-  String buildNumber;
+  String buildNumber = '';
 
   @override
   void initState() {
+    super.initState();
     //getBuildAndVersion();
     //prefs.ultimaPagina = 'about';
   }

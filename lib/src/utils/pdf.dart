@@ -1,28 +1,30 @@
-import 'dart:io';
+// import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:PocketList/src/utils/file_save_helper.dart';
 
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:PocketList/src/localization/localization_constant.dart';
+// import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:PocketList/src/models/List_model.dart';
 import 'package:PocketList/src/providers/db_provider.dart';
 import 'package:open_filex/open_filex.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:PocketList/src/utils/utils.dart' as utils;
 
 final prefs = new PreferenciasUsuario();
-String datePdf,
-    bugetPdf,
-    quatiyPdf,
-    namePdf,
-    pricePdf,
-    toalQaPdf,
-    statusPdf,
-    bought,
-    notBought;
+String datePdf = '';
+String bugetPdf = '';
+String quatiyPdf = '';
+String namePdf = '';
+String pricePdf = '';
+String toalQaPdf = '';
+String statusPdf = '';
+String bought = '';
+String notBought = '';
 
 class ApiPdf {
-  static Future<File> generateTAble(String id) async {
+  static Future<dynamic> generateTAble(String id) async {
 //or your textFieldController.text
     if ((prefs.lnge) == 'en') {
       datePdf = 'Date:';
@@ -57,23 +59,20 @@ class ApiPdf {
               buildSubTitle(listData),
               Divider(),
               buildTable(data, context),
-              //buildTotal(listData),
               Divider()
             ]));
 
     return saveDocument(name: 'Pocketlist', pdf: pdf);
   }
 
-  static Future<File> saveDocument({String name, Document pdf}) async {
+  static Future<dynamic> saveDocument(
+      {required String name, required Document pdf}) async {
     final bytes = await pdf.save();
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/$name.pdf');
-    await file.writeAsBytes(bytes);
-
-    return file;
+    return await saveFile('$name.pdf', bytes);
   }
 
-  static Future openFile(File file) async {
+  static Future openFile(dynamic file) async {
+    if (kIsWeb) return; // Browser handles download/open
     final url = file.path;
 
     // await OpenFile.open(url);

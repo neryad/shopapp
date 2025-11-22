@@ -5,14 +5,14 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 import '../../../../main.dart';
 
 class ColorPage extends StatefulWidget {
-  ColorPage({Key key}) : super(key: key);
+  ColorPage({Key? key}) : super(key: key);
 
   @override
   _ColorPageState createState() => _ColorPageState();
 }
 
 class _ColorPageState extends State<ColorPage> {
-  int _color;
+  int _color = 1;
   final prefs = new PreferenciasUsuario();
 
   @override
@@ -22,7 +22,8 @@ class _ColorPageState extends State<ColorPage> {
     super.initState();
   }
 
-  _selectedRadio(int valor) {
+  _selectedRadio(int? valor) {
+    if (valor == null) return;
     prefs.color = valor;
     _color = valor;
     MyApp.stateSet(context);

@@ -1,6 +1,10 @@
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:PocketList/src/db/database_helper_web.dart'
+    if (dart.library.io) 'package:PocketList/src/db/database_helper_web.dart'; // Dummy import for mobile to avoid errors, logic handled in initDB
+
 import 'package:PocketList/src/models/List_model.dart';
 import 'package:PocketList/src/models/product_model.dart';
 export 'package:PocketList/src/models/product_model.dart';
@@ -8,21 +12,22 @@ export 'package:PocketList/src/models/product_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
-  static Database _database;
-
+  static Database? _database;
   static final DBProvider db = DBProvider._();
 
   DBProvider._();
 
   Future<Database> get database async {
-    if (_database != null) return _database;
+    if (_database != null) return _database!;
 
     _database = await initDB();
-
-    return _database;
+    return _database!;
   }
 
-  initDB() async {
+  Future<Database> initDB() async {
+    if (kIsWeb) {
+      return await initDBWeb();
+    }
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
 
     final path = join(documentsDirectory.path, 'List.db');
@@ -115,7 +120,8 @@ class DBProvider {
   Future<Lista> getListId(String id) async {
     final db = await database;
     final res = await db.query('Lista', where: 'id =?', whereArgs: [id]);
-    Lista art = res.isNotEmpty ? res.map((e) => Lista.fromJson(e)).first : [];
+    Lista art =
+        res.isNotEmpty ? res.map((e) => Lista.fromJson(e)).first : Lista();
     //return result.isNotEmpty ? Product.fromMap(result.first) : Null;
     return art;
   }

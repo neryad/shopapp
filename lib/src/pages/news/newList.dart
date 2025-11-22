@@ -1,5 +1,4 @@
 //import 'package:flushbar/flushbar.dart';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
@@ -12,11 +11,9 @@ import 'package:PocketList/src/utils/utils.dart' as utils;
 //import 'package:PocketList/src/widgets/Menu_widget.dart';
 import 'package:uuid/uuid.dart';
 import 'package:another_flushbar/flushbar.dart';
-import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:another_flushbar/flushbar_route.dart';
 
 class NewList extends StatefulWidget {
-  NewList({Key key}) : super(key: key);
+  NewList({Key? key}) : super(key: key);
 
   @override
   _NewListState createState() => _NewListState();
@@ -53,7 +50,7 @@ class _NewListState extends State<NewList> {
   List<ProductModel> items = [];
 
   //List<ProductModel> itemsTemp =  utils.prefs.read("TempPro");
-  List<TextEditingController> _controllers = new List();
+  List<TextEditingController> _controllers = [];
   ProductModel productModel = new ProductModel();
   Segurencia sugeModel = new Segurencia();
   Lista listaModel = new Lista();
@@ -92,7 +89,7 @@ class _NewListState extends State<NewList> {
   }
 
   void getTotal() {
-    if (items != null) {
+    if (items.isNotEmpty) {
       total = 0;
       for (int i = 0; i < items.length; i++) {
         setState(() {
@@ -100,7 +97,7 @@ class _NewListState extends State<NewList> {
 
           getDiference();
           if (total > buget) {
-            bugetColor = Colors.red[900];
+            bugetColor = Colors.red[900]!;
           } else {
             bugetColor = utils.cambiarColor();
           }
@@ -118,7 +115,7 @@ class _NewListState extends State<NewList> {
     }
     double calDiferecen = buget - total;
     if (calDiferecen < 0) {
-      colorBuget = Colors.red[900];
+      colorBuget = Colors.red[900]!;
     } else if (calDiferecen >= 0) {
       colorBuget = utils.cambiarColor();
     } else {
@@ -141,7 +138,7 @@ class _NewListState extends State<NewList> {
               ],
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'baclTolist'),
@@ -150,7 +147,7 @@ class _NewListState extends State<NewList> {
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     saveBudget(bugetController.text);
                     Navigator.of(context).pop();
@@ -195,7 +192,7 @@ class _NewListState extends State<NewList> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'baclTolist'),
@@ -204,7 +201,7 @@ class _NewListState extends State<NewList> {
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     _subimt();
                     getTotal();
@@ -228,9 +225,9 @@ class _NewListState extends State<NewList> {
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
-      onSaved: (value) => productModel.name = value,
+      onSaved: (value) => productModel.name = value ?? '',
       validator: (value) {
-        if (utils.isEmpty(value)) {
+        if (utils.isEmpty(value!)) {
           return null;
         } else {
           return getTranlated(context, 'noEmpty');
@@ -265,10 +262,11 @@ class _NewListState extends State<NewList> {
         ),
       ),
       onSaved: (value) {
-        productModel.price = double.parse((value == "") ? "0" : value);
+        productModel.price =
+            double.parse((value == null || value.isEmpty) ? "0" : value);
       },
       validator: (value) {
-        if (value.isEmpty) {
+        if (value == null || value.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -299,10 +297,11 @@ class _NewListState extends State<NewList> {
         //  int complValue = (valor == true) ? 1 : 0; int.parse(value),
       ),
       onSaved: (value) {
-        productModel.quantity = int.parse((value == "") ? "0" : value);
+        productModel.quantity =
+            int.parse((value == null || value.isEmpty) ? "0" : value);
       },
       validator: (value) {
-        if (value.isEmpty) {
+        if (value == null || value.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -317,9 +316,9 @@ class _NewListState extends State<NewList> {
 
   void _subimt() {
     var it = items.length;
-    if (!formKey.currentState.validate()) return;
+    if (!formKey.currentState!.validate()) return;
 
-    formKey.currentState.save();
+    formKey.currentState!.save();
     var prod = ProductModel(
         name: productModel.name,
         quantity: productModel.quantity,
@@ -329,7 +328,7 @@ class _NewListState extends State<NewList> {
     items.insert(it, prod);
     DBProvider.db.newProd(prod);
     //0xffc3c3c3(productModel.id);
-    formKey.currentState.reset();
+    formKey.currentState!.reset();
     setState(() {});
     myFocusNode.requestFocus();
   }
@@ -353,7 +352,7 @@ class _NewListState extends State<NewList> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
@@ -362,7 +361,7 @@ class _NewListState extends State<NewList> {
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     //_subimt();
                     _editDubimt(index);
@@ -382,7 +381,7 @@ class _NewListState extends State<NewList> {
   }
 
   void _editDubimt(int index) {
-    editFormKey.currentState.save();
+    editFormKey.currentState!.save();
     DBProvider.db.updateProd(items[index]);
   }
 
@@ -392,7 +391,7 @@ class _NewListState extends State<NewList> {
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
-      onSaved: (value) => items[index].name = value,
+      onSaved: (value) => items[index].name = value ?? '',
       decoration: InputDecoration(
         labelText: getTranlated(context, 'nameArt'),
         counterText: '',
@@ -423,10 +422,11 @@ class _NewListState extends State<NewList> {
         ),
       ),
       onSaved: (value) {
-        items[index].price = double.parse((value == "") ? "0" : value);
+        items[index].price =
+            double.parse((value == null || value.isEmpty) ? "0" : value);
       },
       validator: (value) {
-        if (utils.isNumeric(value)) {
+        if (utils.isNumeric(value ?? "0")) {
           return null;
         } else {
           return getTranlated(context, 'onlyNumbers');
@@ -453,10 +453,11 @@ class _NewListState extends State<NewList> {
         ),
       ),
       onSaved: (value) {
-        items[index].quantity = int.parse((value == "") ? "0" : value);
+        items[index].quantity =
+            int.parse((value == null || value.isEmpty) ? "0" : value);
       },
       validator: (value) {
-        if (utils.isNumeric(value)) {
+        if (utils.isNumeric(value ?? "0")) {
           return null;
         } else {
           return getTranlated(context, 'onlyNumbers');
@@ -473,7 +474,7 @@ class _NewListState extends State<NewList> {
       maxLength: 25,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
-      onSaved: (value) => listaModel.title = value,
+      onSaved: (value) => listaModel.title = value ?? '',
       decoration: InputDecoration(
         labelText: getTranlated(context, 'listName'),
         labelStyle: TextStyle(
@@ -492,7 +493,7 @@ class _NewListState extends State<NewList> {
       maxLength: 20,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
-      onSaved: (value) => listaModel.superMaret = value,
+      onSaved: (value) => listaModel.superMaret = value ?? '',
       decoration: InputDecoration(
         // counterText: '',
         labelText: getTranlated(context, 'shopName'),
@@ -689,10 +690,10 @@ class _NewListState extends State<NewList> {
         // builder: null
         future: DBProvider.db.getArticlesTmp('tmp'),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
-          if (snapshot.hasData && snapshot.data.length > 0) {
+          if (snapshot.hasData && snapshot.data!.length > 0) {
             final tmpArt = snapshot.data;
 
-            items = tmpArt;
+            items = tmpArt!;
           }
           //TODO:hacer seed para futura sugerencias
           if (items.length == 0) {
@@ -963,7 +964,7 @@ class _NewListState extends State<NewList> {
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        FlatButton(
+        TextButton(
           //(valor == true) ? 1 : 0;
           onPressed: () => (items.length <= 0) ? null : _guardarLista(context),
           child: Row(
@@ -974,7 +975,7 @@ class _NewListState extends State<NewList> {
             ],
           ),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () =>
               (items.length <= 0) ? null : _validateEliminarList(context),
           child: Row(
@@ -985,7 +986,7 @@ class _NewListState extends State<NewList> {
             ],
           ),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () => _mostrarAlertaProducto(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1009,7 +1010,7 @@ class _NewListState extends State<NewList> {
           return AlertDialog(
             title: Text(getTranlated(context, 'deleteCont')),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
@@ -1018,7 +1019,7 @@ class _NewListState extends State<NewList> {
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () => limpiarTodo(),
                   child: Text(
                     getTranlated(context, 'accept'),
@@ -1057,7 +1058,7 @@ class _NewListState extends State<NewList> {
   saveList() async {
     String lisId = uuid.v4();
     //DBProvider.db.deleteAllTempProd();
-    lisForm.currentState.save();
+    lisForm.currentState!.save();
     DateTime now = new DateTime.now();
     var fecha = '${now.day}/${now.month}/${now.year}';
     final nuevaLista = Lista(
@@ -1078,7 +1079,7 @@ class _NewListState extends State<NewList> {
     }
 
     items = [];
-    lisForm.currentState.reset();
+    lisForm.currentState!.reset();
   }
 
   void _guardarLista(BuildContext context) {
@@ -1096,7 +1097,7 @@ class _NewListState extends State<NewList> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
@@ -1105,7 +1106,7 @@ class _NewListState extends State<NewList> {
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     saveList();
                     Navigator.pushNamed(context, 'home');
@@ -1124,7 +1125,7 @@ class _NewListState extends State<NewList> {
         });
   }
 
-  updatedCount(bool value) {
+  updatedCount(bool? value) {
     if (value == true) {
       totalItems += 1;
     } else {
@@ -1146,7 +1147,7 @@ class _NewListState extends State<NewList> {
         size: 28,
         color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       ),
-      mainButton: FlatButton(
+      mainButton: TextButton(
         onPressed: () {
           //_undoProd(item, index);
           DBProvider.db.tmpProd(item);

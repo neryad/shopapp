@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends StatefulWidget {
-  const SettingPage({Key key}) : super(key: key);
+  const SettingPage({Key? key}) : super(key: key);
 
   @override
   _SettingPageState createState() => _SettingPageState();
@@ -22,7 +22,7 @@ class _SettingPageState extends State<SettingPage> {
 
   // ThemeData lightTheme = ThemeData(brightness: Brightness.light);
 
-  TextEditingController _textEditingController;
+  late TextEditingController _textEditingController;
 
   final prefs = new PreferenciasUsuario();
   var light = false;
@@ -192,8 +192,10 @@ class _SettingPageState extends State<SettingPage> {
                           ],
                         )))
                     .toList(),
-                onChanged: (Language language) {
-                  _changeLanguea(language);
+                onChanged: (Language? language) {
+                  if (language != null) {
+                    _changeLanguea(language);
+                  }
                 }),
           ),
         ),

@@ -7,12 +7,12 @@ String productModelToJson(ProductModel data) => json.encode(data.toJson());
 
 class ProductModel {
   ProductModel({
-    this.id,
-    this.name,
-    this.quantity,
-    this.price,
-    this.listId,
-    this.complete,
+    this.id = 0,
+    this.name = '',
+    this.quantity = 0,
+    this.price = 0.0,
+    this.listId = '',
+    this.complete = 0,
     // this.autocompleteterm,
   });
 

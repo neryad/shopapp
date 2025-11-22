@@ -1,0 +1,95 @@
+Package file_picker:linux references file_picker:linux as the default plugin, but it does not provide an inline implementation.
+Ask the maintainers of file_picker to either avoid referencing a default implementation via `platforms: linux: default_package: file_picker` or add an inline implementation to file_picker via `platforms: linux:` `pluginClass` or `dartPluginClass`.
+
+Package file_picker:macos references file_picker:macos as the default plugin, but it does not provide an inline implementation.
+Ask the maintainers of file_picker to either avoid referencing a default implementation via `platforms: macos: default_package: file_picker` or add an inline implementation to file_picker via `platforms: macos:` `pluginClass` or `dartPluginClass`.
+
+Package file_picker:windows references file_picker:windows as the default plugin, but it does not provide an inline implementation.
+Ask the maintainers of file_picker to either avoid referencing a default implementation via `platforms: windows: default_package: file_picker` or add an inline implementation to file_picker via `platforms: windows:` `pluginClass` or `dartPluginClass`.
+
+Package file_picker:linux references file_picker:linux as the default plugin, but it does not provide an inline implementation.
+Ask the maintainers of file_picker to either avoid referencing a default implementation via `platforms: linux: default_package: file_picker` or add an inline implementation to file_picker via `platforms: linux:` `pluginClass` or `dartPluginClass`.
+
+Package file_picker:macos references file_picker:macos as the default plugin, but it does not provide an inline implementation.
+Ask the maintainers of file_picker to either avoid referencing a default implementation via `platforms: macos: default_package: file_picker` or add an inline implementation to file_picker via `platforms: macos:` `pluginClass` or `dartPluginClass`.
+
+Package file_picker:windows references file_picker:windows as the default plugin, but it does not provide an inline implementation.
+Ask the maintainers of file_picker to either avoid referencing a default implementation via `platforms: windows: default_package: file_picker` or add an inline implementation to file_picker via `platforms: windows:` `pluginClass` or `dartPluginClass`.
+
+Analyzing shopapp...                                            
+
+warning - The member 'setState' can only be used within instance members of subclasses of 'package:flutter/src/widgets/framework.dart' - lib\main.dart:23:12 - invalid_use_of_protected_member
+   info - The import of 'package:PocketList/src/models/product_model.dart' is unnecessary because all of the used elements are also provided by the import of 'package:PocketList/src/providers/db_provider.dart' - lib\src\pages\New-List\newList.dart:7:8 - unnecessary_import
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:427:43 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:430:29 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:457:43 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:460:29 - argument_type_not_assignable
+warning - This method overrides a method annotated as '@mustCallSuper' in 'State', but doesn't invoke the overridden method - lib\src\pages\about\about_page.dart:28:8 - must_call_super
+   info - 'canLaunch' is deprecated and shouldn't be used. Use canLaunchUrl instead - lib\src\pages\about\about_page.dart:166:13 - deprecated_member_use
+   info - 'launch' is deprecated and shouldn't be used. Use launchUrl instead - lib\src\pages\about\about_page.dart:166:36 - deprecated_member_use
+warning - Unused import: 'dart:io' - lib\src\pages\about\pages\authorPage.dart:1:8 - unused_import
+warning - Unused import: 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart' - lib\src\pages\about\pages\authorPage.dart:3:8 - unused_import
+   info - 'canLaunch' is deprecated and shouldn't be used. Use canLaunchUrl instead - lib\src\pages\about\pages\authorPage.dart:144:13 - deprecated_member_use
+   info - 'launch' is deprecated and shouldn't be used. Use launchUrl instead - lib\src\pages\about\pages\authorPage.dart:144:36 - deprecated_member_use
+  error - The parameter 'key' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\pages\about\pages\tmp.dart:8:24 - missing_default_value_for_parameter
+  error - Non-nullable instance field 'appName' must be initialized - lib\src\pages\about\pages\tmp.dart:16:10 - not_initialized_non_nullable_instance_field
+  error - Non-nullable instance field 'packageName' must be initialized - lib\src\pages\about\pages\tmp.dart:17:10 - not_initialized_non_nullable_instance_field
+  error - Non-nullable instance field 'buildNumber' must be initialized - lib\src\pages\about\pages\tmp.dart:19:10 - not_initialized_non_nullable_instance_field
+warning - This method overrides a method annotated as '@mustCallSuper' in 'State', but doesn't invoke the overridden method - lib\src\pages\about\pages\tmp.dart:22:8 - must_call_super
+   info - The import of 'package:PocketList/src/models/product_model.dart' is unnecessary because all of the used elements are also provided by the import of 'package:PocketList/src/providers/db_provider.dart' - lib\src\pages\details_page.dart:8:8 - unnecessary_import
+warning - Unused import: 'package:another_flushbar/flushbar_helper.dart' - lib\src\pages\details_page.dart:13:8 - unused_import
+warning - Unused import: 'package:another_flushbar/flushbar_route.dart' - lib\src\pages\details_page.dart:14:8 - unused_import
+warning - The operand can't be 'null', so the condition is always 'false' - lib\src\pages\details_page.dart:532:19 - unnecessary_null_comparison
+warning - The operand can't be 'null', so the condition is always 'true' - lib\src\pages\details_page.dart:544:19 - unnecessary_null_comparison
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\details_page.dart:810:27 - argument_type_not_assignable
+  error - A value of type 'String?' can't be assigned to a variable of type 'String' - lib\src\pages\details_page.dart:816:47 - invalid_assignment
+warning - Unused import: 'help_page.dart' - lib\src\pages\home_page.dart:10:8 - unused_import
+warning - The declaration '_launchURL1' isn't referenced - lib\src\pages\home_page.dart:155:8 - unused_element
+   info - 'canLaunch' is deprecated and shouldn't be used. Use canLaunchUrl instead - lib\src\pages\home_page.dart:156:13 - deprecated_member_use
+   info - 'launch' is deprecated and shouldn't be used. Use launchUrl instead - lib\src\pages\home_page.dart:156:36 - deprecated_member_use
+   info - 'canLaunch' is deprecated and shouldn't be used. Use canLaunchUrl instead - lib\src\pages\home_page.dart:163:15 - deprecated_member_use
+   info - 'launch' is deprecated and shouldn't be used. Use launchUrl instead - lib\src\pages\home_page.dart:164:13 - deprecated_member_use
+   info - 'shareFiles' is deprecated and shouldn't be used. Use shareXFiles instead - lib\src\pages\import_export_page.dart:264:19 - deprecated_member_use
+  error - The name 'preferencesUsuario' isn't a class - lib\src\pages\list_page.dart:20:21 - creation_with_non_type
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\list_page.dart:70:21 - unchecked_use_of_nullable_value
+  error - The method 'sort' can't be unconditionally invoked because the receiver can be 'null' - lib\src\pages\list_page.dart:112:17 - unchecked_use_of_nullable_value
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\list_page.dart:116:32 - unchecked_use_of_nullable_value
+  error - The method '[]' can't be unconditionally invoked because the receiver can be 'null' - lib\src\pages\list_page.dart:149:33 - unchecked_use_of_nullable_value
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\list_page.dart:149:51 - unchecked_use_of_nullable_value
+  error - The method '[]' can't be unconditionally invoked because the receiver can be 'null' - lib\src\pages\list_page.dart:154:52 - unchecked_use_of_nullable_value
+  error - The method 'removeAt' can't be unconditionally invoked because the receiver can be 'null' - lib\src\pages\list_page.dart:155:27 - unchecked_use_of_nullable_value
+  error - The method '[]' can't be unconditionally invoked because the receiver can be 'null' - lib\src\pages\list_page.dart:158:36 - unchecked_use_of_nullable_value
+   info - 'shareFiles' is deprecated and shouldn't be used. Use shareXFiles instead - lib\src\pages\list_page.dart:274:39 - deprecated_member_use
+   info - The import of 'package:PocketList/src/models/product_model.dart' is unnecessary because all of the used elements are also provided by the import of 'package:PocketList/src/providers/db_provider.dart' - lib\src\pages\news\newList.dart:7:8 - unnecessary_import
+  error - A value of type 'Color?' can't be assigned to a variable of type 'Color' - lib\src\pages\news\newList.dart:100:26 - invalid_assignment
+  error - A value of type 'Color?' can't be assigned to a variable of type 'Color' - lib\src\pages\news\newList.dart:118:20 - invalid_assignment
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:230:27 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:429:29 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:460:29 - argument_type_not_assignable
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\news\newList.dart:693:49 - unchecked_use_of_nullable_value
+  error - A value of type 'List<ProductModel>?' can't be assigned to a variable of type 'List<ProductModel>' - lib\src\pages\news\newList.dart:696:21 - invalid_assignment
+warning - Unused import: 'package:PocketList/src/widgets/Menu_widget.dart' - lib\src\pages\news\news.dart:3:8 - unused_import
+warning - This method overrides a method annotated as '@mustCallSuper' in 'State', but doesn't invoke the overridden method - lib\src\pages\news\news.dart:27:8 - must_call_super
+warning - The declaration '_launchURL' isn't referenced - lib\src\pages\news\news.dart:319:8 - unused_element
+   info - 'canLaunch' is deprecated and shouldn't be used. Use canLaunchUrl instead - lib\src\pages\news\news.dart:320:13 - deprecated_member_use
+   info - 'launch' is deprecated and shouldn't be used. Use launchUrl instead - lib\src\pages\news\news.dart:320:36 - deprecated_member_use
+warning - Unused import: '../../../../main.dart' - lib\src\pages\settings\pages\data.dart:6:8 - unused_import
+warning - Unused import: 'package:another_flushbar/flushbar_helper.dart' - lib\src\pages\settings\pages\user.dart:5:8 - unused_import
+warning - Unused import: 'package:another_flushbar/flushbar_route.dart' - lib\src\pages\settings\pages\user.dart:6:8 - unused_import
+warning - Unused import: 'package:PocketList/src/providers/db_provider.dart' - lib\src\pages\settings\setting_page.dart:6:8 - unused_import
+warning - Unused import: 'package:PocketList/src/widgets/Menu_widget.dart' - lib\src\pages\settings\setting_page.dart:8:8 - unused_import
+warning - Unused import: 'package:shared_preferences/shared_preferences.dart' - lib\src\pages\settings\setting_page.dart:9:8 - unused_import
+warning - The value of the field '_textEditingController' isn't used - lib\src\pages\settings\setting_page.dart:25:30 - unused_field
+  error - The argument type 'void Function(Language)' can't be assigned to the parameter type 'ValueChanged<Language?>?'.  - lib\src\pages\settings\setting_page.dart:195:28 - argument_type_not_assignable
+   info - 'canLaunch' is deprecated and shouldn't be used. Use canLaunchUrl instead - lib\src\pages\settings\setting_page.dart:284:13 - deprecated_member_use
+   info - 'launch' is deprecated and shouldn't be used. Use launchUrl instead - lib\src\pages\settings\setting_page.dart:284:36 - deprecated_member_use
+  error - A value of type 'Object' can't be assigned to a variable of type 'Lista' - lib\src\providers\db_provider.dart:123:17 - invalid_assignment
+   info - 'dart:html' is deprecated and shouldn't be used. Use package:web and dart:js_interop instead - lib\src\utils\file_save_web.dart:1:1 - deprecated_member_use
+   info - 'Table.fromTextArray' is deprecated and shouldn't be used. Use TableHelper.fromTextArray() instead - lib\src\utils\pdf.dart:105:12 - deprecated_member_use
+warning - Unused import: 'package:another_flushbar/flushbar_helper.dart' - lib\src\utils\utils.dart:8:8 - unused_import
+warning - Unused import: 'package:another_flushbar/flushbar_route.dart' - lib\src\utils\utils.dart:9:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/help_page.dart' - lib\src\widgets\Menu_widget.dart:2:8 - unused_import
+warning - This class (or a class that this class inherits from) is marked as '@immutable', but one or more of its instance fields aren't final: MenuWidget._locale - lib\src\widgets\Menu_widget.dart:7:7 - must_be_immutable
+warning - The value of the field '_locale' isn't used - lib\src\widgets\Menu_widget.dart:9:15 - unused_field
+
+73 issues found. (ran in 3.5s)

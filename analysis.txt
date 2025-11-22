@@ -1,0 +1,153 @@
+Analyzing shopapp...                                            
+
+warning - Unused import: 'package:PocketList/src/pages/about/pages/authorPage.dart' - lib\main.dart:1:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/details_page.dart' - lib\main.dart:2:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/import_export_page.dart' - lib\main.dart:3:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/news/news.dart' - lib\main.dart:4:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/settings/pages/color_page.dart' - lib\main.dart:5:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/settings/pages/data.dart' - lib\main.dart:6:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/settings/pages/user.dart' - lib\main.dart:7:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/about/about_page.dart' - lib\main.dart:14:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/New-List/newList.dart' - lib\main.dart:16:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/settings/setting_page.dart' - lib\main.dart:17:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/help_page.dart' - lib\main.dart:18:8 - unused_import
+  error - A value of type '_MyAppState?' can't be assigned to a variable of type '_MyAppState' - lib\main.dart:32:25 - invalid_assignment
+warning - The member 'setState' can only be used within instance members of subclasses of 'package:flutter/src/widgets/framework.dart' - lib\main.dart:33:11 - invalid_use_of_protected_member
+  error - A value of type '_MyAppState?' can't be assigned to a variable of type '_MyAppState' - lib\main.dart:37:25 - invalid_assignment
+  error - Non-nullable instance field '_locale' must be initialized - lib\main.dart:46:10 - not_initialized_non_nullable_instance_field
+warning - The operand can't be 'null', so the condition is always 'false' - lib\main.dart:69:17 - unnecessary_null_comparison
+  error - The named parameter 'key' is required, but there's no corresponding argument - lib\main.dart:76:14 - missing_required_argument
+  error - Expected to find ';' - lib\main.dart:127:53 - expected_token
+  error - Expected to find ')' - lib\main.dart:128:1 - expected_token
+  error - Expected to find '}' - lib\main.dart:128:1 - expected_token
+  error - A value of type 'String?' can't be returned from the method 'getTranslatedValue' because it has a return type of 'String' - lib\src\localization\localization.dart:28:12 - return_of_invalid_type
+  error - The parameter 'name' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:15:13 - missing_default_value_for_parameter
+  error - The parameter 'quantity' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:16:12 - missing_default_value_for_parameter
+  error - The parameter 'price' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:17:12 - missing_default_value_for_parameter
+  error - The parameter 'listId' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:18:12 - missing_default_value_for_parameter
+  error - The parameter 'complete' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:19:12 - missing_default_value_for_parameter
+  error - The parameter 'title' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:20:12 - missing_default_value_for_parameter
+  error - The parameter 'superMaret' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:21:12 - missing_default_value_for_parameter
+  error - The parameter 'fecha' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:22:12 - missing_default_value_for_parameter
+  error - The parameter 'total' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:23:12 - missing_default_value_for_parameter
+  error - The parameter 'diference' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:24:12 - missing_default_value_for_parameter
+  error - The parameter 'buget' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:25:12 - missing_default_value_for_parameter
+  error - The parameter 'productModel' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\models\csv_data.dart:26:20 - missing_default_value_for_parameter
+warning - Unused import: 'dart:developer' - lib\src\pages\New-List\newList.dart:2:8 - unused_import
+   info - The import of 'package:PocketList/src/models/product_model.dart' is unnecessary because all of the used elements are also provided by the import of 'package:PocketList/src/providers/db_provider.dart' - lib\src\pages\New-List\newList.dart:8:8 - unnecessary_import
+warning - Unused import: 'package:another_flushbar/flushbar_helper.dart' - lib\src\pages\New-List\newList.dart:15:8 - unused_import
+warning - Unused import: 'package:another_flushbar/flushbar_route.dart' - lib\src\pages\New-List\newList.dart:16:8 - unused_import
+warning - The operand can't be 'null', so the condition is always 'true' - lib\src\pages\New-List\newList.dart:95:15 - unnecessary_null_comparison
+  error - A value of type 'Color?' can't be assigned to a variable of type 'Color' - lib\src\pages\New-List\newList.dart:103:26 - invalid_assignment
+  error - A value of type 'Color?' can't be assigned to a variable of type 'Color' - lib\src\pages\New-List\newList.dart:121:20 - invalid_assignment
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:233:27 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:268:43 - argument_type_not_assignable
+  error - The property 'isEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\New-List\newList.dart:271:19 - unchecked_use_of_nullable_value
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:274:29 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:302:43 - argument_type_not_assignable
+  error - The property 'isEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\New-List\newList.dart:305:19 - unchecked_use_of_nullable_value
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:308:29 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:426:43 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:429:29 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:456:43 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\New-List\newList.dart:459:29 - argument_type_not_assignable
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\New-List\newList.dart:692:49 - unchecked_use_of_nullable_value
+  error - A value of type 'List<ProductModel>?' can't be assigned to a variable of type 'List<ProductModel>' - lib\src\pages\New-List\newList.dart:695:21 - invalid_assignment
+  error - The argument type 'bool?' can't be assigned to the parameter type 'bool'.  - lib\src\pages\New-List\newList.dart:862:39 - argument_type_not_assignable
+warning - This method overrides a method annotated as '@mustCallSuper' in 'State', but doesn't invoke the overridden method - lib\src\pages\about\about_page.dart:28:8 - must_call_super
+warning - Unused import: 'dart:io' - lib\src\pages\about\pages\authorPage.dart:1:8 - unused_import
+warning - Unused import: 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart' - lib\src\pages\about\pages\authorPage.dart:3:8 - unused_import
+  error - The parameter 'key' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\pages\about\pages\tmp.dart:8:24 - missing_default_value_for_parameter
+  error - Non-nullable instance field 'appName' must be initialized - lib\src\pages\about\pages\tmp.dart:16:10 - not_initialized_non_nullable_instance_field
+  error - Non-nullable instance field 'packageName' must be initialized - lib\src\pages\about\pages\tmp.dart:17:10 - not_initialized_non_nullable_instance_field
+  error - Non-nullable instance field 'buildNumber' must be initialized - lib\src\pages\about\pages\tmp.dart:19:10 - not_initialized_non_nullable_instance_field
+warning - This method overrides a method annotated as '@mustCallSuper' in 'State', but doesn't invoke the overridden method - lib\src\pages\about\pages\tmp.dart:22:8 - must_call_super
+   info - The import of 'package:PocketList/src/models/product_model.dart' is unnecessary because all of the used elements are also provided by the import of 'package:PocketList/src/providers/db_provider.dart' - lib\src\pages\details_page.dart:8:8 - unnecessary_import
+warning - Unused import: 'package:another_flushbar/flushbar_helper.dart' - lib\src\pages\details_page.dart:13:8 - unused_import
+warning - Unused import: 'package:another_flushbar/flushbar_route.dart' - lib\src\pages\details_page.dart:14:8 - unused_import
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\details_page.dart:254:49 - unchecked_use_of_nullable_value
+  error - A value of type 'List<ProductModel>?' can't be assigned to a variable of type 'List<ProductModel>' - lib\src\pages\details_page.dart:257:25 - invalid_assignment
+  error - The argument type 'bool?' can't be assigned to the parameter type 'bool'.  - lib\src\pages\details_page.dart:370:39 - argument_type_not_assignable
+warning - The operand can't be 'null', so the condition is always 'false' - lib\src\pages\details_page.dart:532:19 - unnecessary_null_comparison
+warning - The operand can't be 'null', so the condition is always 'true' - lib\src\pages\details_page.dart:544:19 - unnecessary_null_comparison
+  error - A value of type 'Color?' can't be assigned to a variable of type 'Color' - lib\src\pages\details_page.dart:552:26 - invalid_assignment
+  error - A value of type 'Color?' can't be assigned to a variable of type 'Color' - lib\src\pages\details_page.dart:570:20 - invalid_assignment
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\details_page.dart:676:47 - argument_type_not_assignable
+  error - The property 'isEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\details_page.dart:680:19 - unchecked_use_of_nullable_value
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\details_page.dart:683:29 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\details_page.dart:714:47 - argument_type_not_assignable
+  error - The property 'isEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\details_page.dart:718:19 - unchecked_use_of_nullable_value
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\details_page.dart:721:29 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\details_page.dart:907:27 - argument_type_not_assignable
+  error - A value of type 'String?' can't be assigned to a variable of type 'String' - lib\src\pages\details_page.dart:913:47 - invalid_assignment
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\details_page.dart:947:43 - argument_type_not_assignable
+  error - The property 'isEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\details_page.dart:951:19 - unchecked_use_of_nullable_value
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\details_page.dart:954:29 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\details_page.dart:982:43 - argument_type_not_assignable
+  error - The property 'isEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\details_page.dart:986:19 - unchecked_use_of_nullable_value
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\details_page.dart:989:29 - argument_type_not_assignable
+warning - Unused import: 'help_page.dart' - lib\src\pages\home_page.dart:10:8 - unused_import
+warning - The declaration '_launchURL1' isn't referenced - lib\src\pages\home_page.dart:155:8 - unused_element
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\list_page.dart:70:21 - unchecked_use_of_nullable_value
+  error - The method 'sort' can't be unconditionally invoked because the receiver can be 'null' - lib\src\pages\list_page.dart:112:17 - unchecked_use_of_nullable_value
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\list_page.dart:116:32 - unchecked_use_of_nullable_value
+  error - The method '[]' can't be unconditionally invoked because the receiver can be 'null' - lib\src\pages\list_page.dart:149:33 - unchecked_use_of_nullable_value
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\list_page.dart:149:51 - unchecked_use_of_nullable_value
+  error - The method '[]' can't be unconditionally invoked because the receiver can be 'null' - lib\src\pages\list_page.dart:154:52 - unchecked_use_of_nullable_value
+  error - The method 'removeAt' can't be unconditionally invoked because the receiver can be 'null' - lib\src\pages\list_page.dart:155:27 - unchecked_use_of_nullable_value
+  error - The method '[]' can't be unconditionally invoked because the receiver can be 'null' - lib\src\pages\list_page.dart:158:36 - unchecked_use_of_nullable_value
+warning - Unused import: 'dart:developer' - lib\src\pages\news\newList.dart:2:8 - unused_import
+   info - The import of 'package:PocketList/src/models/product_model.dart' is unnecessary because all of the used elements are also provided by the import of 'package:PocketList/src/providers/db_provider.dart' - lib\src\pages\news\newList.dart:8:8 - unnecessary_import
+warning - Unused import: 'package:another_flushbar/flushbar_helper.dart' - lib\src\pages\news\newList.dart:15:8 - unused_import
+warning - Unused import: 'package:another_flushbar/flushbar_route.dart' - lib\src\pages\news\newList.dart:16:8 - unused_import
+  error - The parameter 'key' can't have a value of 'null' because of its type, but the implicit default value is 'null' - lib\src\pages\news\newList.dart:19:16 - missing_default_value_for_parameter
+  error - A value of type 'List<dynamic>' can't be assigned to a variable of type 'List<TextEditingController>' - lib\src\pages\news\newList.dart:56:46 - invalid_assignment
+  error - The class 'List' doesn't have an unnamed constructor - lib\src\pages\news\newList.dart:56:50 - new_with_undefined_constructor_default
+warning - The operand can't be 'null', so the condition is always 'true' - lib\src\pages\news\newList.dart:95:15 - unnecessary_null_comparison
+  error - A value of type 'Color?' can't be assigned to a variable of type 'Color' - lib\src\pages\news\newList.dart:103:26 - invalid_assignment
+  error - A value of type 'Color?' can't be assigned to a variable of type 'Color' - lib\src\pages\news\newList.dart:121:20 - invalid_assignment
+  error - A value of type 'String?' can't be assigned to a variable of type 'String' - lib\src\pages\news\newList.dart:231:47 - invalid_assignment
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:233:27 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:268:43 - argument_type_not_assignable
+  error - The property 'isEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\news\newList.dart:271:19 - unchecked_use_of_nullable_value
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:274:29 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:302:43 - argument_type_not_assignable
+  error - The property 'isEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\news\newList.dart:305:19 - unchecked_use_of_nullable_value
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:308:29 - argument_type_not_assignable
+  error - A value of type 'String?' can't be assigned to a variable of type 'String' - lib\src\pages\news\newList.dart:395:47 - invalid_assignment
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:426:43 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:429:29 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:456:43 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\src\pages\news\newList.dart:459:29 - argument_type_not_assignable
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\src\pages\news\newList.dart:692:49 - unchecked_use_of_nullable_value
+  error - A value of type 'List<ProductModel>?' can't be assigned to a variable of type 'List<ProductModel>' - lib\src\pages\news\newList.dart:695:21 - invalid_assignment
+  error - The argument type 'bool?' can't be assigned to the parameter type 'bool'.  - lib\src\pages\news\newList.dart:862:39 - argument_type_not_assignable
+  error - The method 'FlatButton' isn't defined for the type '_NewListState' - lib\src\pages\news\newList.dart:966:9 - undefined_method
+  error - The method 'FlatButton' isn't defined for the type '_NewListState' - lib\src\pages\news\newList.dart:977:9 - undefined_method
+  error - The method 'FlatButton' isn't defined for the type '_NewListState' - lib\src\pages\news\newList.dart:988:9 - undefined_method
+warning - Unused import: 'package:PocketList/src/widgets/Menu_widget.dart' - lib\src\pages\news\news.dart:3:8 - unused_import
+warning - This method overrides a method annotated as '@mustCallSuper' in 'State', but doesn't invoke the overridden method - lib\src\pages\news\news.dart:27:8 - must_call_super
+warning - The declaration '_launchURL' isn't referenced - lib\src\pages\news\news.dart:319:8 - unused_element
+  error - The argument type 'dynamic Function(int)' can't be assigned to the parameter type 'ValueChanged<int?>?'.  - lib\src\pages\settings\pages\color_page.dart:51:26 - argument_type_not_assignable
+  error - The argument type 'dynamic Function(int)' can't be assigned to the parameter type 'ValueChanged<int?>?'.  - lib\src\pages\settings\pages\color_page.dart:64:26 - argument_type_not_assignable
+  error - The argument type 'dynamic Function(int)' can't be assigned to the parameter type 'ValueChanged<int?>?'.  - lib\src\pages\settings\pages\color_page.dart:77:26 - argument_type_not_assignable
+  error - The argument type 'dynamic Function(int)' can't be assigned to the parameter type 'ValueChanged<int?>?'.  - lib\src\pages\settings\pages\color_page.dart:90:26 - argument_type_not_assignable
+  error - The argument type 'dynamic Function(int)' can't be assigned to the parameter type 'ValueChanged<int?>?'.  - lib\src\pages\settings\pages\color_page.dart:103:26 - argument_type_not_assignable
+  error - The argument type 'dynamic Function(int)' can't be assigned to the parameter type 'ValueChanged<int?>?'.  - lib\src\pages\settings\pages\color_page.dart:116:26 - argument_type_not_assignable
+  error - The argument type 'dynamic Function(int)' can't be assigned to the parameter type 'ValueChanged<int?>?'.  - lib\src\pages\settings\pages\color_page.dart:129:26 - argument_type_not_assignable
+warning - Unused import: '../../../../main.dart' - lib\src\pages\settings\pages\data.dart:6:8 - unused_import
+warning - Unused import: 'package:another_flushbar/flushbar_helper.dart' - lib\src\pages\settings\pages\user.dart:5:8 - unused_import
+warning - Unused import: 'package:another_flushbar/flushbar_route.dart' - lib\src\pages\settings\pages\user.dart:6:8 - unused_import
+warning - Unused import: 'package:PocketList/src/providers/db_provider.dart' - lib\src\pages\settings\setting_page.dart:6:8 - unused_import
+warning - Unused import: 'package:PocketList/src/widgets/Menu_widget.dart' - lib\src\pages\settings\setting_page.dart:8:8 - unused_import
+warning - Unused import: 'package:shared_preferences/shared_preferences.dart' - lib\src\pages\settings\setting_page.dart:9:8 - unused_import
+warning - The value of the field '_textEditingController' isn't used - lib\src\pages\settings\setting_page.dart:25:30 - unused_field
+  error - The argument type 'void Function(Language)' can't be assigned to the parameter type 'ValueChanged<Language?>?'.  - lib\src\pages\settings\setting_page.dart:195:28 - argument_type_not_assignable
+  error - A value of type 'Object' can't be assigned to a variable of type 'Lista' - lib\src\providers\db_provider.dart:123:17 - invalid_assignment
+   info - 'dart:html' is deprecated and shouldn't be used. Use package:web and dart:js_interop instead - lib\src\utils\file_save_web.dart:1:1 - deprecated_member_use
+warning - Unused import: 'package:another_flushbar/flushbar_helper.dart' - lib\src\utils\utils.dart:8:8 - unused_import
+warning - Unused import: 'package:another_flushbar/flushbar_route.dart' - lib\src\utils\utils.dart:9:8 - unused_import
+warning - Unused import: 'package:PocketList/src/pages/help_page.dart' - lib\src\widgets\Menu_widget.dart:2:8 - unused_import
+warning - This class (or a class that this class inherits from) is marked as '@immutable', but one or more of its instance fields aren't final: MenuWidget._locale - lib\src\widgets\Menu_widget.dart:7:7 - must_be_immutable
+warning - The value of the field '_locale' isn't used - lib\src\widgets\Menu_widget.dart:9:15 - unused_field
+

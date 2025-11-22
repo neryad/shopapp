@@ -18,7 +18,7 @@ import 'package:another_flushbar/flushbar_route.dart';
 
 class DetailsPage extends StatefulWidget {
   final Lista savelist;
-  DetailsPage({Key key, this.savelist}) : super(key: key);
+  DetailsPage({Key? key, required this.savelist}) : super(key: key);
 
   @override
   _DetailsPageState createState() => _DetailsPageState();
@@ -37,9 +37,9 @@ class _DetailsPageState extends State<DetailsPage> {
 
   final prefs = new PreferenciasUsuario();
   FocusNode myFocusNode = FocusNode();
-  double buget;
-  double total;
-  double diference;
+  double buget = 0.0;
+  double total = 0.0;
+  double diference = 0.0;
   int totalItems = 0;
   Color colorBuget = utils.cambiarColor();
   Color bugetColor = utils.cambiarColor();
@@ -251,10 +251,10 @@ class _DetailsPageState extends State<DetailsPage> {
         // builder: null
         future: DBProvider.db.getProdId(id),
         builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
-          if (snapshot.hasData && snapshot.data.length > 0) {
+          if (snapshot.hasData && snapshot.data!.length > 0) {
             final art = snapshot.data;
 
-            articulos = art;
+            articulos = art!;
           }
 
           articulos.sort((a, b) => a.name.compareTo(b.name));
@@ -367,7 +367,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       : utils.showSnack(context,
                                           getTranlated(context, 'ofCart'));
                                   updatedCount(
-                                      valor); //   showSnack(context, 'Artículo agregado');
+                                      valor!); //   showSnack(context, 'Artículo agregado');
                                 },
                                 activeColor: isComplete
                                     ? Colors.black
@@ -485,7 +485,7 @@ class _DetailsPageState extends State<DetailsPage> {
               ],
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'baclTolist'),
@@ -494,7 +494,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     //getTotal();
                     Navigator.of(context).pop();
@@ -532,7 +532,7 @@ class _DetailsPageState extends State<DetailsPage> {
         if (value == null) {
           return;
         } else {
-          prod.buget = double.parse(value);
+          prod.buget = double.parse(value.isEmpty ? '0' : value);
           DBProvider.db.updateList(prod);
           //prefs.tempBuget = buget.toString();
         }
@@ -549,7 +549,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
           getDiference(list);
           if (list.total > list.buget) {
-            bugetColor = Colors.red[900];
+            bugetColor = Colors.red[900]!;
           } else {
             bugetColor = utils.cambiarColor();
           }
@@ -567,7 +567,7 @@ class _DetailsPageState extends State<DetailsPage> {
     }
     double calDiferecen = list.buget - list.total;
     if (calDiferecen < 0) {
-      colorBuget = Colors.red[900];
+      colorBuget = Colors.red[900]!;
     } else if (calDiferecen >= 0) {
       colorBuget = utils.cambiarColor();
     } else {
@@ -597,7 +597,7 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'baclTolist'),
@@ -606,7 +606,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     //_subimt();
                     _editDubimt(index);
@@ -627,105 +627,8 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   void _editDubimt(int index) {
-    editFormKey.currentState.save();
+    editFormKey.currentState!.save();
     DBProvider.db.updateProd(articulos[index]);
-  }
-
-  Widget _editarNombreArticulo(int index) {
-    return TextFormField(
-      initialValue: articulos[index].name,
-      maxLength: 33,
-      textCapitalization: TextCapitalization.sentences,
-      textAlign: TextAlign.center,
-      onSaved: (value) => articulos[index].name = value,
-      decoration: InputDecoration(
-        counterText: '',
-        labelText: getTranlated(context, 'nameArt'),
-        labelStyle: TextStyle(
-            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
-        ),
-        hintStyle: TextStyle(
-            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
-      ),
-    );
-  }
-
-  Widget _editarPrecioArticulo(int index) {
-    return TextFormField(
-      initialValue: (articulos[index].price == 0)
-          ? ""
-          : articulos[index].price.toString(),
-      maxLength: 6,
-      //controller: _controllers[index],
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        labelText: getTranlated(context, 'price'),
-        labelStyle: TextStyle(
-            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
-        ),
-        counterText: '',
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
-      ),
-      onSaved: (value) {
-        articulos[index].price = double.parse((value == "") ? "0" : value);
-      },
-      //onSaved: (value) => articulos[index].price = double.parse(value),
-      validator: (value) {
-        if (value.isEmpty) {
-          value = "0";
-        }
-        if (utils.isNumeric(value)) {
-          return null;
-        } else {
-          return getTranlated(context, 'onlyNumbers');
-        }
-      },
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
-    );
-  }
-
-  Widget _editarcantidadArticulo(int index) {
-    return TextFormField(
-      //int.parse((value == "") ? "0" : value);
-      initialValue: (articulos[index].quantity == 0)
-          ? ""
-          : articulos[index].quantity.toString(),
-      maxLength: 6,
-      //controller: _controllers[index],
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        labelText: getTranlated(context, 'quantity'),
-        labelStyle: TextStyle(
-            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
-        ),
-        counterText: '',
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
-      ),
-      onSaved: (value) {
-        articulos[index].quantity = int.parse((value == "") ? "0" : value);
-      },
-      //onSaved: (value) => articulos[index].quantity = int.parse(value),
-      validator: (value) {
-        if (value.isEmpty) {
-          value = "0";
-        }
-        if (utils.isNumeric(value)) {
-          return null;
-        } else {
-          return getTranlated(context, 'onlyNumbers');
-        }
-      },
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
-    );
   }
 
   void _mostrarAlertaProducto(BuildContext context, Lista list) {
@@ -753,7 +656,7 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'baclTolist'),
@@ -762,7 +665,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     _subimt(list);
                     getTotal(list);
@@ -898,39 +801,37 @@ class _DetailsPageState extends State<DetailsPage> {
 
   Widget _crearNombreArticulo() {
     return TextFormField(
-      //  initialValue: productModel.name,
+      initialValue: productModel.name,
       focusNode: myFocusNode,
       maxLength: 33,
       textCapitalization: TextCapitalization.sentences,
       textAlign: TextAlign.center,
       validator: (value) {
-        if (utils.isEmpty(value)) {
+        if (utils.isEmpty(value!)) {
           return null;
         } else {
           return getTranlated(context, 'noEmpty');
         }
       },
-      onSaved: (value) => productModel.name = value,
+      onSaved: (value) => productModel.name = value ?? '',
       decoration: InputDecoration(
         counterText: '',
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
               color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
-        // hintText: 'Nombre artículo',
+        labelText: getTranlated(context, 'nameArt'),
         labelStyle: TextStyle(
             color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
-        labelText: getTranlated(context, 'nameArt'),
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
 
   Widget _crearPrecioArticulo() {
     return TextFormField(
-      //  initialValue: productModel.price.toString(),
+      initialValue:
+          (productModel.price == 0) ? "" : productModel.price.toString(),
       maxLength: 6,
-      //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'price'),
@@ -941,14 +842,13 @@ class _DetailsPageState extends State<DetailsPage> {
           borderSide: BorderSide(
               color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
-        productModel.price = double.parse((value == "") ? "0" : value);
+        productModel.price =
+            double.parse((value == null || value.isEmpty) ? "0" : value);
       },
-      //onSaved: (value) => productModel.price = double.parse(value),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value == null || value.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -963,9 +863,9 @@ class _DetailsPageState extends State<DetailsPage> {
 
   Widget _crearcantidadArticulo() {
     return TextFormField(
-      // initialValue: productModel.quantity.toString(),
+      initialValue:
+          (productModel.quantity == 0) ? "" : productModel.quantity.toString(),
       maxLength: 6,
-      //controller: _controllers[index],
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         labelText: getTranlated(context, 'quantity'),
@@ -976,14 +876,103 @@ class _DetailsPageState extends State<DetailsPage> {
           borderSide: BorderSide(
               color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
         ),
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
       onSaved: (value) {
-        productModel.quantity = int.parse((value == "") ? "0" : value);
+        productModel.quantity =
+            int.parse((value == null || value.isEmpty) ? "0" : value);
       },
-      //onSaved: (value) => productModel.quantity = int.parse(value),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value == null || value.isEmpty) {
+          value = "0";
+        }
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return getTranlated(context, 'onlyNumbers');
+        }
+      },
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+    );
+  }
+
+  Widget _editarNombreArticulo(int index) {
+    return TextFormField(
+      initialValue: articulos[index].name,
+      maxLength: 33,
+      textCapitalization: TextCapitalization.sentences,
+      textAlign: TextAlign.center,
+      onSaved: (value) => articulos[index].name = value ?? '',
+      decoration: InputDecoration(
+        labelText: getTranlated(context, 'nameArt'),
+        counterText: '',
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        ),
+      ),
+    );
+  }
+
+  Widget _editarPrecioArticulo(int index) {
+    return TextFormField(
+      initialValue: (articulos[index].price == 0)
+          ? ""
+          : articulos[index].price.toString(),
+      maxLength: 6,
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        labelText: getTranlated(context, 'price'),
+        counterText: '',
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        ),
+      ),
+      onSaved: (value) {
+        articulos[index].price =
+            double.parse((value == null || value.isEmpty) ? "0" : value);
+      },
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          value = "0";
+        }
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return getTranlated(context, 'onlyNumbers');
+        }
+      },
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+    );
+  }
+
+  Widget _editarcantidadArticulo(int index) {
+    return TextFormField(
+      initialValue: (articulos[index].quantity == 0)
+          ? ""
+          : articulos[index].quantity.toString(),
+      maxLength: 6,
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        labelText: getTranlated(context, 'quantity'),
+        counterText: '',
+        labelStyle: TextStyle(
+            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        ),
+      ),
+      onSaved: (value) {
+        articulos[index].quantity =
+            int.parse((value == null || value.isEmpty) ? "0" : value);
+      },
+      validator: (value) {
+        if (value == null || value.isEmpty) {
           value = "0";
         }
         if (utils.isNumeric(value)) {
@@ -998,8 +987,8 @@ class _DetailsPageState extends State<DetailsPage> {
 
   void _subimt(Lista list) {
     var it = articulos.length;
-    if (!formKey.currentState.validate()) return;
-    formKey.currentState.save();
+    if (!formKey.currentState!.validate()) return;
+    formKey.currentState!.save();
     var prod = new ProductModel(
         name: productModel.name,
         quantity: productModel.quantity,
@@ -1009,7 +998,7 @@ class _DetailsPageState extends State<DetailsPage> {
     articulos.insert(it, prod);
     DBProvider.db.newProd(prod);
 
-    formKey.currentState.reset();
+    formKey.currentState!.reset();
     setState(() {});
     myFocusNode.requestFocus();
   }
@@ -1019,7 +1008,7 @@ class _DetailsPageState extends State<DetailsPage> {
         child: new Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        FlatButton(
+        TextButton(
           onPressed: () => _mostrarAlertaProducto(context, list),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1060,7 +1049,7 @@ class _DetailsPageState extends State<DetailsPage> {
         size: 28,
         color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
       ),
-      mainButton: FlatButton(
+      mainButton: TextButton(
         onPressed: () {
           //print(item);
           //_undoProd(item, index);
@@ -1146,7 +1135,7 @@ class _DetailsPageState extends State<DetailsPage> {
           return AlertDialog(
             title: Text(getTranlated(context, 'deleteCont')),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
@@ -1155,7 +1144,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             ? Colors.white
                             : utils.cambiarColor()),
                   )),
-              FlatButton(
+              TextButton(
                   onPressed: () => limpiarTodo(),
                   child: Text(
                     getTranlated(context, 'accept'),
@@ -1178,7 +1167,7 @@ class _DetailsPageState extends State<DetailsPage> {
             // title: Text(getTranlated(context, 'deleteCont')),
             title: Text(getTranlated(context, 'listComplete')),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   // onPressed: () => Navigator.of(context).pop(),
                   onPressed: () => {
                         Navigator.of(context).pop(),
@@ -1190,7 +1179,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         color: (prefs.color == 5) ? Colors.white : Colors.red),
                   )),
 
-              FlatButton(
+              TextButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text(
                   getTranlated(context, 'leave'),

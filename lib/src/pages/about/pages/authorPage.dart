@@ -7,25 +7,13 @@ import 'package:PocketList/src/localization/localization_constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuthorPage extends StatefulWidget {
-  const AuthorPage({Key key}) : super(key: key);
+  const AuthorPage({Key? key}) : super(key: key);
 
   @override
   _AuthorPageState createState() => _AuthorPageState();
 }
 
 class _AuthorPageState extends State<AuthorPage> {
-  final prefs = new PreferenciasUsuario();
-  String appName;
-  String packageName;
-  String version = '1.0.0';
-  String buildNumber;
-
-  @override
-  void initState() {
-    //getBuildAndVersion();
-    //prefs.ultimaPagina = 'about';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

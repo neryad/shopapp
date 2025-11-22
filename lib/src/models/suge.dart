@@ -8,8 +8,8 @@ String listaToJson(Segurencia data) => json.encode(data.toJson());
 
 class Segurencia {
   Segurencia({
-    this.id,
-    this.name,
+    this.id = '',
+    this.name = '',
   });
 
   String id;
