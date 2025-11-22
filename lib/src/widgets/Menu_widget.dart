@@ -1,8 +1,7 @@
-import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:PocketList/src/pages/help_page.dart';
+import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
-import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:PocketList/src/localization/localization_constant.dart';
+import 'package:pocketlist/src/utils/utils.dart' as utils;
+import 'package:pocketlist/src/localization/localization_constant.dart';
 
 class MenuWidget extends StatelessWidget {
   final prefs = new PreferenciasUsuario();
@@ -46,7 +45,11 @@ class MenuWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.sync),
             title: Text('Import/exportar'),
-            onTap: () => {},
+            onTap: () => {
+              Navigator.pop(context),
+              Navigator.pushNamed(context, 'importExport')
+              // Navigator.pushReplacementNamed(context, 'importExport')
+            },
           ),
           ListTile(
             leading: Icon(Icons.settings),

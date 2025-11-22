@@ -1,7 +1,7 @@
 //import 'dart:math';
 
-//import 'package:PocketList/src/models/suge.dart';
-//import 'package:PocketList/src/providers/db_provider.dart';
+//import 'package:pocketlist/src/models/suge.dart';
+//import 'package:pocketlist/src/providers/db_provider.dart';
 
 // class BackendService {
 //    static List<Segurencia> players;

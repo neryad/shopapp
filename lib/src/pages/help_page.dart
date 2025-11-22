@@ -1,9 +1,9 @@
-// import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-// import 'package:PocketList/src/localization/localization_constant.dart';
-// import 'package:PocketList/src/widgets/Menu_widget.dart';
+// import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+// import 'package:pocketlist/src/localization/localization_constant.dart';
+// import 'package:pocketlist/src/widgets/Menu_widget.dart';
 // import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 // import 'package:flutter/material.dart';
-// import 'package:PocketList/src/utils/utils.dart' as utils;
+// import 'package:pocketlist/src/utils/utils.dart' as utils;
 
 // class HelpPage extends StatefulWidget {
 //   HelpPage({Key key}) : super(key: key);

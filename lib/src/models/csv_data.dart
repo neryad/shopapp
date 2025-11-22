@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:PocketList/src/models/product_model.dart';
+import 'package:pocketlist/src/models/product_model.dart';
 
 CsvData csvDataFromJson(String str) => CsvData.fromJson(json.decode(str));
 

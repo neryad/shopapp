@@ -1,10 +1,10 @@
-import 'package:PocketList/src/pages/New-List/newList.dart';
+import 'package:pocketlist/src/pages/New-List/newList.dart';
 import 'package:flutter/material.dart';
-import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:PocketList/src/pages/list_page.dart';
-import 'package:PocketList/src/providers/db_provider.dart';
-import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/localization/localization_constant.dart';
+import 'package:pocketlist/src/pages/list_page.dart';
+import 'package:pocketlist/src/providers/db_provider.dart';
+import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:url_launcher/url_launcher.dart';
 
 import 'help_page.dart';
@@ -86,15 +86,15 @@ class _HomePageState extends State<HomePage> {
                 //Navigator.pushReplacementNamed(context, 'settings')
               },
             ),
-            ListTile(
-              leading: Icon(Icons.new_releases_sharp),
-              title: Text(getTranlated(context, 'mNewsTitle')),
-              onTap: () => {
-                //Navigator.pop(context),
-                Navigator.pushNamed(context, 'newsPage')
-                //Navigator.pushReplacementNamed(context, 'settings')
-              },
-            ),
+            // ListTile(
+            //   leading: Icon(Icons.new_releases_sharp),
+            //   title: Text(getTranlated(context, 'mNewsTitle')),
+            //   onTap: () => {
+            //     //Navigator.pop(context),
+            //     Navigator.pushNamed(context, 'newsPage')
+            //     //Navigator.pushReplacementNamed(context, 'settings')
+            //   },
+            // ),
             ListTile(
               leading: Icon(Icons.mail),
               title: Text(getTranlated(context, 'mContact')),

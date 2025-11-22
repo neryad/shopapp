@@ -1,20 +1,20 @@
 //import 'package:autocomplete_textfield/autocomplete_textfield.dart';
-import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 //import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:PocketList/src/localization/localization_constant.dart';
-//import 'package:PocketList/src/data/data.dart';
-import 'package:PocketList/src/models/List_model.dart';
-import 'package:PocketList/src/models/product_model.dart';
-import 'package:PocketList/src/models/suge.dart';
-import 'package:PocketList/src/providers/db_provider.dart';
-import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:pocketlist/src/localization/localization_constant.dart';
+//import 'package:pocketlist/src/data/data.dart';
+import 'package:pocketlist/src/models/List_model.dart';
+import 'package:pocketlist/src/models/product_model.dart';
+import 'package:pocketlist/src/models/suge.dart';
+import 'package:pocketlist/src/providers/db_provider.dart';
+import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:another_flushbar/flushbar_route.dart';
 
 //import 'package:flutter_typeahead/flutter_typeahead.dart';
-// import 'package:PocketList/src/data/data.dart';
+// import 'package:pocketlist/src/data/data.dart';
 
 class DetailsPage extends StatefulWidget {
   final Lista savelist;

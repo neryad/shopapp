@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:PocketList/src/localization/localization.dart';
+import 'package:pocketlist/src/localization/localization.dart';
 
 String getTranlated(BuildContext context, String key) {
   return Localization.of(context).getTranslatedValue(key);
@@ -15,7 +16,8 @@ final prefsU = new PreferenciasUsuario();
 const String ENGLISH = 'en';
 
 const String SPANISH = 'es';
-final String defaultLocale = Platform.localeName.substring(0, 2);
+final String defaultLocale =
+    kIsWeb ? 'en' : Platform.localeName.substring(0, 2);
 
 const String LANGUAGE_CODE = 'languageCode';
 

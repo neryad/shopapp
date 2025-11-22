@@ -1,10 +1,18 @@
-import 'package:PocketList/src/localization/localization.dart';
-import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:PocketList/src/pages/home_page.dart';
+import 'package:pocketlist/src/localization/localization.dart';
+import 'package:pocketlist/src/localization/localization_constant.dart';
+import 'package:pocketlist/src/pages/New-List/newList.dart';
+import 'package:pocketlist/src/pages/about/about_page.dart';
+import 'package:pocketlist/src/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/pages/import_export_page.dart';
+import 'package:pocketlist/src/pages/news/news.dart';
+import 'package:pocketlist/src/pages/settings/pages/color_page.dart';
+import 'package:pocketlist/src/pages/settings/pages/data.dart';
+import 'package:pocketlist/src/pages/settings/pages/user.dart';
+import 'package:pocketlist/src/pages/settings/setting_page.dart';
 
 final prefs = new PreferenciasUsuario();
 
@@ -115,6 +123,14 @@ class DarkLightTheme extends StatelessWidget {
       debugShowCheckedModeBanner: true,
       routes: {
         'home': (BuildContext context) => HomePage(),
+        'newList': (BuildContext context) => NewList(),
+        'settings': (BuildContext context) => SettingPage(),
+        'colorPage': (BuildContext context) => ColorPage(),
+        'about': (BuildContext context) => AboutPage(),
+        'exportImport': (BuildContext context) => ImportExportPage(),
+        'userPage': (BuildContext context) => UserPage(),
+        'dataPage': (BuildContext context) => DataPage(),
+        'newsPage': (BuildContext context) => NewsPage(),
       },
     );
   }

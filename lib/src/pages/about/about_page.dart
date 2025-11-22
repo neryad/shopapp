@@ -1,11 +1,10 @@
-import 'dart:io';
-
-import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
-import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:package_info/package_info.dart';
+import 'package:pocketlist/src/utils/utils.dart' as utils;
+import 'package:pocketlist/src/localization/localization_constant.dart';
+import 'package:package_info_plus/package_info_plus.dart'; // Cambiado
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/foundation.dart'; // Agregado para kIsWeb
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -26,9 +25,8 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   void initState() {
+    super.initState(); // Mueve esto al inicio
     _initPackageInfo();
-    //getBuildAndVersion();
-    //prefs.ultimaPagina = 'about';
   }
 
   Future<void> _initPackageInfo() async {
@@ -43,13 +41,11 @@ class _AboutPageState extends State<AboutPage> {
     print(_packageInfo.version);
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        //backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: utils.cambiarColor(),
           title: Text(getTranlated(context, 'aboutTitle')),
           elevation: 0.0,
         ),
-        // drawer: MenuWidget(),
         body: Container(
           child: Column(
             children: [
@@ -97,11 +93,9 @@ class _AboutPageState extends State<AboutPage> {
                         )),
                     trailing: Text(
                       _packageInfo.version,
-                      //version.toString(),
                       style:
                           TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                     ),
-                    //subtitle: Text('Build: ${_packageInfo.buildNumber}'),
                   ),
                   Divider(),
                   ListTile(
@@ -140,21 +134,20 @@ class _AboutPageState extends State<AboutPage> {
                     subtitle: Text(getTranlated(context, 'studio')),
                   ),
                   Divider(),
-                  Platform.isIOS
-                      ? Container()
-                      : ListTile(
-                          title: Text(getTranlated(context, 'dantions'),
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          subtitle:
-                              Text(getTranlated(context, 'aboutDonation')),
-                          trailing: Icon(Icons.arrow_forward_ios),
-                          onTap: () {
-                            _launchURL('https://www.paypal.me/neryad');
-                          },
-                        ),
+                  // Usa kIsWeb en lugar de Platform.isIOS
+                  if (!kIsWeb) // Solo muestra en móvil, no en web
+                    ListTile(
+                      title: Text(getTranlated(context, 'dantions'),
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      subtitle: Text(getTranlated(context, 'aboutDonation')),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        _launchURL('https://www.paypal.me/neryad');
+                      },
+                    ),
                 ],
               ))
             ],
@@ -162,6 +155,12 @@ class _AboutPageState extends State<AboutPage> {
         ));
   }
 
-  void _launchURL(String url) async =>
-      await canLaunch(url) ? await launch(url) : throw 'Could not launch';
+  void _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }

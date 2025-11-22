@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:PocketList/main.dart';
-import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:PocketList/src/data/class/language.dart';
-import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:PocketList/src/providers/db_provider.dart';
-import 'package:PocketList/src/utils/utils.dart' as utils;
-import 'package:PocketList/src/widgets/Menu_widget.dart';
+import 'package:pocketlist/main.dart';
+import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/data/class/language.dart';
+import 'package:pocketlist/src/localization/localization_constant.dart';
+import 'package:pocketlist/src/providers/db_provider.dart';
+import 'package:pocketlist/src/utils/utils.dart' as utils;
+import 'package:pocketlist/src/widgets/Menu_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 

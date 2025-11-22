@@ -1,11 +1,11 @@
-import 'package:PocketList/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:PocketList/src/utils/pdf.dart';
+import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/utils/pdf.dart';
 import 'package:flutter/material.dart';
-import 'package:PocketList/src/localization/localization_constant.dart';
-import 'package:PocketList/src/models/List_model.dart';
-import 'package:PocketList/src/pages/details_page.dart';
-import 'package:PocketList/src/providers/db_provider.dart';
-import 'package:PocketList/src/utils/utils.dart' as utils;
+import 'package:pocketlist/src/localization/localization_constant.dart';
+import 'package:pocketlist/src/models/List_model.dart';
+import 'package:pocketlist/src/pages/details_page.dart';
+import 'package:pocketlist/src/providers/db_provider.dart';
+import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
