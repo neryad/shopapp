@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pocketlist/src/widgets/Menu_widget.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:pocketlist/src/localization/localization_constant.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsPage extends StatefulWidget {
