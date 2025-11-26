@@ -271,7 +271,7 @@ class _ListPageState extends State<ListPage> {
                       onPressed: () async {
                         final pdf = await ApiPdf.generateTAble(lista.id);
                         if (!kIsWeb && pdf != null) {
-                          await Share.shareFiles([pdf.path]);
+                          await Share.shareXFiles([pdf.path]);
                         }
                         // ApiPdf.openFile(pdf);
                       },

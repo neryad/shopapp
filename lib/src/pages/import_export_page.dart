@@ -261,7 +261,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
       await file.writeAsString(csv);
 
-      await Share.shareFiles([file.path], text: filePlaceHolder);
+      await Share.shareXFiles([XFile(file.path)], text: filePlaceHolder);
       showMsg(context, successMsgExport, strExport);
     } catch (e) {
       showMsg(context, '$errorMsgExport', strExport);

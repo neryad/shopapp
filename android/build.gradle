@@ -1,22 +1,3 @@
-buildscript {
-    // 1. Define la versión de Kotlin que necesitan tus paquetes. 1.9.23 es estable y compatible.
-    ext.kotlin_version = '1.9.23'
-
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        // 2. Usa una versión moderna del Android Gradle Plugin.
-        // La 8.3.0 es la que tus logs indicaban que estabas usando, así que la mantenemos.
-        classpath 'com.android.tools.build:gradle:8.3.0'
-
-        // 3. Enlaza el plugin de Kotlin a la versión que definimos arriba.
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 allprojects {
     repositories {
         google()

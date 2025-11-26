@@ -1,9 +1,12 @@
+// INICIO DEL ARCHIVO: android/app/build.gradle
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+// Esta sección para leer el archivo local.properties está bien.
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -12,50 +15,43 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+// Esta sección para encontrar el SDK de Flutter está bien.
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-
+// Esta sección para leer las propiedades del keystore está bien.
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+// =======================================================================
+// AÑADE ESTE BLOQUE 'android' COMPLETO. ¡ESTA ES LA PARTE QUE FALTA!
+// =======================================================================
 android {
-    namespace "com.neryad.PocketList"
-    // Note: You may need to update compileSdkVersion to 34 to match targetSdkVersion
-    compileSdkVersion 34
+    namespace "com.neryad.PocketList" // Asegúrate que este es tu namespace correcto.
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
+    // Basado en nuestra depuración, esta es la versión correcta para tu proyecto.
+    compileSdkVersion 35
 
+    // Configuración para el linting de Kotlin y Java.
     lintOptions {
         disable 'InvalidPackage'
     }
 
-    aaptOptions {
-        cruncherEnabled = false
-    }
-
+    // Configuración por defecto de la aplicación.
     defaultConfig {
-        applicationId "com.neryad.PocketList"
+        applicationId "com.neryad.PocketList" // Asegúrate que este es tu ID de aplicación.
         minSdkVersion 31
-        targetSdkVersion 34
-        versionCode 10
-        versionName "3.0.10"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        targetSdkVersion 35
+        versionCode 10       // Usando tus valores fijos.
+        versionName "3.0.10" // Usando tus valores fijos.
     }
 
+    // Configuración para firmar tus builds de release.
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
@@ -65,26 +61,30 @@ android {
         }
     }
 
+    // Define qué configuración de firma usar para cada tipo de build.
     buildTypes {
         release {
             signingConfig signingConfigs.release
         }
     }
 }
-
-flutter {
-    source '../..'
-}
+// =======================================================================
+// FIN DEL BLOQUE AÑADIDO
+// =======================================================================
 
 dependencies {
+    // Tus dependencias de test están bien.
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
 
+// Esta sección que ya tenías está bien.
 configurations.all {
     resolutionStrategy {
         force 'androidx.core:core:1.13.1'
         force 'androidx.core:core-ktx:1.13.1'
     }
 }
+
+// FIN DEL ARCHIVO

@@ -14,14 +14,14 @@ description: A new Flutter project.
 version: 3.0.0+10
 
 environment:
-  sdk: ">=2.12.0 <4.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   another_flushbar: ^1.12.30
-  archive: ^3.4.10
-  csv: ^5.0.2
+  archive: ^4.0.7
+  csv: ^6.0.0
   # Usamos una versión más moderna que es compatible con la API v2 y no exige el SDK 35 explícitamente.
-  file_picker: ^6.2.1
+  file_picker: ^10.3.7
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -31,16 +31,16 @@ dependencies:
   intl: 0.20.2
   open_filex: ^4.3.2
   # Subimos a una versión que no entre en conflicto con file_picker.
-  package_info_plus: ^8.0.0
+  package_info_plus: ^9.0.0
   path_provider: ^2.1.1
   pdf: ^3.10.4
   # Mantenemos la versión actualizada para evitar errores de embedding.
-  permission_handler: ^11.3.1
+  permission_handler: ^12.0.1
   platform: ^3.1.5
-  share_plus: ^7.1.0
+  share_plus: ^12.0.1
   shared_preferences: ^2.2.2
   sqflite: ^2.3.0
-  sqflite_common_ffi_web: ^0.4.0
+  sqflite_common_ffi_web: ^1.0.1+1
   url_launcher: ^6.1.14
   uuid: ^4.3.3
 
