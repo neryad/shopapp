@@ -18,7 +18,7 @@ if (localPropertiesFile.exists()) {
 // Esta sección para encontrar el SDK de Flutter está bien.
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 // Esta sección para leer las propiedades del keystore está bien.
@@ -35,7 +35,7 @@ android {
     namespace "com.neryad.PocketList" // Asegúrate que este es tu namespace correcto.
 
     // Basado en nuestra depuración, esta es la versión correcta para tu proyecto.
-    compileSdkVersion 35
+    compileSdkVersion 36
 
     // Configuración para el linting de Kotlin y Java.
     lintOptions {
@@ -46,7 +46,7 @@ android {
     defaultConfig {
         applicationId "com.neryad.PocketList" // Asegúrate que este es tu ID de aplicación.
         minSdkVersion 31
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode 10       // Usando tus valores fijos.
         versionName "3.0.10" // Usando tus valores fijos.
     }
@@ -66,6 +66,16 @@ android {
         release {
             signingConfig signingConfigs.release
         }
+    }
+
+    // Configuración de compatibilidad de Java y Kotlin
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
+    kotlinOptions {
+        jvmTarget = '21'
     }
 }
 // =======================================================================
