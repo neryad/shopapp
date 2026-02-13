@@ -34,14 +34,21 @@ class ProductModel {
         // autocompleteterm: json['autocompleteTerm'] as String,
       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "quantity": quantity,
-        "price": price,
-        "listId": listId,
-        "complete": complete,
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{
+      "name": name,
+      "quantity": quantity,
+      "price": price,
+      "listId": listId,
+      "complete": complete,
+      // "autocompleteterm" : autocompleteterm,
+    };
 
-        // "autocompleteterm" : autocompleteterm,
-      };
+    // Only include id if it's not 0 (i.e., for updates, not inserts)
+    if (id != 0) {
+      json["id"] = id;
+    }
+
+    return json;
+  }
 }
