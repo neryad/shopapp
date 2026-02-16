@@ -1,49 +1,70 @@
-import 'package:pocketlist/src/localization/localization.dart';
-import 'package:pocketlist/src/localization/localization_constant.dart';
-import 'package:pocketlist/src/pages/New-List/newList.dart';
-import 'package:pocketlist/src/pages/about/about_page.dart';
-import 'package:pocketlist/src/pages/about/pages/authorPage.dart';
-import 'package:pocketlist/src/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:pocketlist/src/localization/localization.dart';
+import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:pocketlist/src/pages/import_export_page.dart';
-// import 'package:pocketlist/src/pages/news/news.dart';
+
+import 'package:pocketlist/src/pages/home_page.dart';
+import 'package:pocketlist/src/pages/New-List/newList.dart';
+import 'package:pocketlist/src/pages/settings/setting_page.dart';
 import 'package:pocketlist/src/pages/settings/pages/color_page.dart';
 import 'package:pocketlist/src/pages/settings/pages/data.dart';
 import 'package:pocketlist/src/pages/settings/pages/user.dart';
-import 'package:pocketlist/src/pages/settings/setting_page.dart';
+import 'package:pocketlist/src/pages/about/about_page.dart';
+import 'package:pocketlist/src/pages/about/pages/authorPage.dart';
+import 'package:pocketlist/src/pages/import_export_page.dart';
+
 import 'package:pocketlist/src/theme/app_theme.dart';
 
-final prefs = new PreferenciasUsuario();
+final PreferenciasUsuario prefs = PreferenciasUsuario();
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // final prefs = new PreferenciasUsuario();
+
   await prefs.initPrefes();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((value) => runApp(MyApp()));
-  //runApp(new MyApp());
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  /// 🔄 Fuerza rebuild global (compatibilidad con tu código actual)
   static void stateSet(BuildContext context) {
-    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
-    state?.setState(() {});
+    context.findAncestorStateOfType<_MyAppState>()?.rebuild();
   }
 
+  /// 🌍 Cambia idioma globalmente
   static void setLocale(BuildContext context, Locale locale) {
-    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
-    state?.setLocale(locale);
+    context.findAncestorStateOfType<_MyAppState>()?.setLocale(locale);
   }
 
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLocale();
+  }
+
+  Future<void> _loadLocale() async {
+    final locale = await getLocale();
+    setState(() {
+      _locale = locale;
+      prefs.lnge = locale.languageCode;
+    });
+  }
 
   void setLocale(Locale locale) {
     setState(() {
@@ -52,84 +73,72 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  @override
-  void didChangeDependencies() {
-    getLocale().then((locale) {
-      setState(() {
-        this._locale = locale;
-        prefs.lnge = locale.languageCode;
-      });
-    });
-    super.didChangeDependencies();
+  void rebuild() {
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    final prefs = new PreferenciasUsuario();
     if (_locale == null) {
-      return Container(
-        child: Center(
-          child: CircularProgressIndicator(),
+      return const MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
       );
-    } else {
-      return DarkLightTheme(locale: _locale!, prefs: prefs);
     }
+
+    return DarkLightTheme(locale: _locale!);
   }
 }
 
 class DarkLightTheme extends StatelessWidget {
+  final Locale locale;
+
   const DarkLightTheme({
     Key? key,
-    required Locale locale,
-    required this.prefs,
-  })  : _locale = locale,
-        super(key: key);
-
-  final Locale _locale;
-  final PreferenciasUsuario prefs;
+    required this.locale,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: AppTheme.getTheme(prefs.color, prefs.darkLightTheme),
-      locale: _locale,
-      supportedLocales: [
-        Locale('en', 'US'),
-        Locale('es', 'US'),
+      title: 'PocketList',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.getTheme(
+        prefs.color,
+        prefs.darkLightTheme,
+      ),
+      locale: locale,
+      supportedLocales: const [
+        Locale('en'),
+        Locale('es'),
       ],
-      localizationsDelegates: [
+      localizationsDelegates: const [
         Localization.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        //GlobalCupertinoLocalizations.delegate
       ],
       localeResolutionCallback: (deviceLocale, supportedLocales) {
-        for (var locale in supportedLocales) {
-          if (locale.languageCode == deviceLocale?.languageCode &&
-              locale.countryCode == deviceLocale?.countryCode) {
-            return deviceLocale;
+        for (final supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == deviceLocale?.languageCode) {
+            return supportedLocale;
           }
         }
-
         return supportedLocales.first;
       },
-      title: 'PocketList',
       initialRoute: 'home',
-      home: HomePage(),
-      // home: SplashScreen(),
-      debugShowCheckedModeBanner: true,
       routes: {
-        'home': (BuildContext context) => HomePage(),
-        'newList': (BuildContext context) => ShoppingListPage(),
-        'settings': (BuildContext context) => SettingPage(),
-        'colorPage': (BuildContext context) => ColorPage(),
-        'about': (BuildContext context) => AboutPage(),
-        'exportImport': (BuildContext context) => ImportExportPage(),
-        'userPage': (BuildContext context) => UserPage(),
-        'dataPage': (BuildContext context) => DataPage(),
-        'authorPage': (BuildContext context) => AuthorPage(),
-        // 'newsPage': (BuildContext context) => NewsPage(),
+        'home': (_) => const HomePage(),
+        'newList': (_) => ShoppingListPage(),
+        'settings': (_) => const SettingPage(),
+        'colorPage': (_) => ColorPage(),
+        'about': (_) => const AboutPage(),
+        'exportImport': (_) => ImportExportPage(),
+        'userPage': (_) => UserPage(),
+        'dataPage': (_) => DataPage(),
+        'authorPage': (_) => const AuthorPage(),
       },
     );
   }

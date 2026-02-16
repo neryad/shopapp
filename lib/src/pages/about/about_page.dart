@@ -129,7 +129,7 @@ class _AboutPageState extends State<AboutPage> {
                   _buildInfoCard(
                     icon: Icons.info_outline,
                     iconColor: Colors.blue,
-                    title: getTranlated(context, 'versionTitle') ?? 'Versión',
+                    title: getTranlated(context, 'versionTitle'),
                     subtitle:
                         'v${_packageInfo.version} (${_packageInfo.buildNumber})',
                   ),
