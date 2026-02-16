@@ -100,5 +100,7 @@
   "webPageSubTitle": "Come visit my website",
   "mContact": "Contact",
   "listComplete": "List completed. Do you want to keep it?",
-  "msgImporExporlist": "You don’t have any lists yet"
+  "msgImporExporlist": "You don’t have any lists yet",
+  "exportOptions": "Export Options",
+  "chooseExportFormat": "Choose export format:"
 }

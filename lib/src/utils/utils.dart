@@ -145,18 +145,12 @@ saludos(BuildContext context) {
   } else {
     msg = '$greattin3 ${prefs.nombreUsuario}';
   }
-  // return msg;
 
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[
-      Text(msg,
-          style: TextStyle(
-            fontSize: 20,
+  return Text(msg,
+      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.bold,
-          )),
-    ],
-  );
+            color: Theme.of(context).colorScheme.primary,
+          ));
 }
 
 void showSnack(BuildContext context, String msg) {

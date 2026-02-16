@@ -8,6 +8,7 @@ import 'package:pocketlist/src/providers/db_provider.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:pocketlist/src/utils/export_helper.dart';
 
 class ListPage extends StatefulWidget {
   ListPage({Key? key}) : super(key: key);
@@ -22,291 +23,203 @@ class _ListPageState extends State<ListPage> {
   Lista listaModel = new Lista();
   @override
   void initState() {
-    prefs.ultimaPagina = 'home';
     super.initState();
+    prefs.ultimaPagina = 'home';
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      //backgroundColor: Colors.white,
-      body: Container(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              // utils.saludos(context),
-              Container(
-                color: Colors.white,
-                child: Column(children: [
-                  _imagen(),
-                ]),
-              ),
-
-              //utils.saludos(context),
-              // _imagen(),
-              _listContainer(context)
-            ],
-          ),
-        ),
-      ),
-    );
+    return _listContainer(context);
   }
 
-  _listContainer(BuildContext context) {
-    return Container(
-      key: UniqueKey(),
-      height: MediaQuery.of(context).size.height * .6,
-      child: FutureBuilder<List<Lista>>(
-        future: DBProvider.db.getToadasLista(),
-        builder: (context, AsyncSnapshot<List<Lista>> snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          }
+  Widget _listContainer(BuildContext context) {
+    return FutureBuilder<List<Lista>>(
+      future: DBProvider.db.getToadasLista(),
+      builder: (context, AsyncSnapshot<List<Lista>> snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-          final lista = snapshot.data;
+        final lista = snapshot.data;
 
-          if (lista!.length == 0) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
+        if (lista == null || lista.isEmpty) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Icon(
+                    Icons.shopping_cart_outlined,
+                    size: 64,
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                  ),
+                  const SizedBox(height: 16),
                   Text(
                     getTranlated(context, 'noList'),
-                    style: TextStyle(
-                      color: (prefs.color == 5)
-                          ? Colors.white
-                          : utils.cambiarColor(),
-                      fontSize: 18,
-                    ),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: " ",
+                  const SizedBox(height: 8),
+                  Text(
+                    getTranlated(context, 'noList2'),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
-                        WidgetSpan(
-                          child: Icon(Icons.add_shopping_cart),
-                        ),
-                        TextSpan(
-                          text: " ",
-                        ),
-                        TextSpan(
-                          text: getTranlated(context, 'noList2'),
-                          style: TextStyle(
-                            color: (prefs.color == 5)
-                                ? Colors.white
-                                : utils.cambiarColor(),
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                  ),
                 ],
               ),
-            );
-          }
-          lista.sort((a, b) => b.fecha.compareTo(a.fecha));
-          return ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: lista.length,
-              itemBuilder: (context, i) {
-                return Dismissible(
-                  direction: DismissDirection.endToStart,
-                  background: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      color: Colors.red,
-                      child: Align(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Icon(
-                              Icons.delete,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              getTranlated(context, 'delete'),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              textAlign: TextAlign.right,
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                        alignment: Alignment.centerRight,
-                      ),
-                    ),
+            ),
+          );
+        }
+        lista.sort((a, b) => b.fecha.compareTo(a.fecha));
+        return ListView.builder(
+            padding: const EdgeInsets.only(top: 8, bottom: 84),
+            itemCount: lista.length,
+            itemBuilder: (context, i) {
+              return Dismissible(
+                direction: DismissDirection.endToStart,
+                background: Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.errorContainer,
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  key: Key(lista[i].title + lista.length.toString()),
-                  onDismissed: (direction) {
-                    utils.showSnack(
-                        context, getTranlated(context, 'deletedList'));
-
-                    DBProvider.db.deleteLista(lista[i].id);
-                    lista.removeAt(i);
-                    setState(() {});
-                  },
-                  child: card(lista[i]),
-                );
-              });
-        },
-      ),
-    );
-  }
-
-  Widget _imagen() {
-    return Container(
-      padding: EdgeInsets.all(15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          utils.cambiarHomeImage(),
-        ],
-      ),
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Icon(
+                    Icons.delete_outline,
+                    color: Theme.of(context).colorScheme.onErrorContainer,
+                  ),
+                ),
+                key: Key(lista[i].id),
+                onDismissed: (direction) {
+                  utils.showSnack(
+                      context, getTranlated(context, 'deletedList'));
+                  DBProvider.db.deleteLista(lista[i].id);
+                  lista.removeAt(i);
+                  setState(() {});
+                },
+                child: card(lista[i]),
+              );
+            });
+      },
     );
   }
 
   Widget card(Lista lista) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Card(
-      elevation: 8,
-      child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 8.0),
-          padding: EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4.0),
-          ),
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () {
+          var route = MaterialPageRoute(
+              builder: (BuildContext context) => DetailsPage(savelist: lista));
+          Navigator.of(context).push(route);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    lista.fecha,
-                    style: TextStyle(
-                      //color: Colors.black45,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w300,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          lista.title,
+                          style: textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.onSurface,
+                          ),
+                        ),
+                        if (lista.superMaret.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: Row(
+                              children: [
+                                Icon(Icons.storefront_outlined,
+                                    size: 16, color: colorScheme.secondary),
+                                const SizedBox(width: 4),
+                                Text(
+                                  lista.superMaret,
+                                  style: textTheme.bodyMedium?.copyWith(
+                                    color: colorScheme.secondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      '\$${utils.numberFormat(lista.total)}',
+                      style: textTheme.labelLarge?.copyWith(
+                        color: colorScheme.onPrimaryContainer,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
               ),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  Text(
+                    lista.fecha,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  Row(
                     children: [
-                      CircleAvatar(
-                          backgroundColor: Colors.black12,
-                          child: Icon(
-                            Icons.shopping_bag_sharp,
-                            color: (prefs.color == 5)
-                                ? Colors.white
-                                : utils.cambiarColor(),
-                          ))
+                      IconButton(
+                        icon: Icon(Icons.share_outlined,
+                            color: colorScheme.primary),
+                        onPressed: () => _showExportOptions(context, lista),
+                        tooltip: 'Share',
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.edit_outlined,
+                            color: colorScheme.secondary),
+                        onPressed: () {
+                          listaModel = lista;
+                          _editarLista(context, lista);
+                        },
+                        tooltip: 'Edit',
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete_outline,
+                            color: colorScheme.error),
+                        onPressed: () => _validateEliminar(context, lista.id),
+                        tooltip: 'Delete',
+                      ),
                     ],
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(children: [
-                        Text(
-                          lista.title,
-                          style: TextStyle(
-                            //color: Colors.black,
-
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ]),
-                      Row(children: [
-                        Text(
-                          lista.superMaret,
-                          style: TextStyle(
-                            //color: Colors.black45,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ])
-                    ],
-                  ),
-
-                  Column(
-                    children: [
-                      Row(children: [
-                        Text(
-                          '\$  ${utils.numberFormat(lista.total)}',
-                          style: TextStyle(
-                            color: (prefs.color == 5)
-                                ? Colors.white
-                                : utils.cambiarColor(),
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ])
-                    ],
-                  ),
-
-                  // Column(),
                 ],
               ),
-              // Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  TextButton(
-                      onPressed: () async {
-                        final pdf = await ApiPdf.generateTAble(lista.id);
-                        if (!kIsWeb && pdf != null) {
-                          await Share.shareXFiles([pdf.path]);
-                        }
-                        // ApiPdf.openFile(pdf);
-                      },
-                      child: Icon(Icons.share)),
-                  TextButton(
-                      onPressed: () async {
-                        // saveList(lista.id);
-                        listaModel = lista;
-                        _editarLista(context, lista);
-                      },
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.yellow[600],
-                      )),
-                  TextButton(
-                      onPressed: () {
-                        var route = new MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                DetailsPage(savelist: lista));
-                        Navigator.of(context).push(route);
-                      },
-                      child: Icon(Icons.remove_red_eye,
-                          color: Colors.deepPurpleAccent)),
-                  TextButton(
-                      onPressed: () {
-                        _validateEliminar(context, lista.id);
-                      },
-                      child: Icon(
-                        Icons.delete_forever_outlined,
-                        color: Colors.red[500],
-                      ))
-                ],
-              )
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 
@@ -440,5 +353,42 @@ class _ListPageState extends State<ListPage> {
     } catch (e) {
       print(e);
     }
+  }
+
+  void _showExportOptions(BuildContext context, Lista lista) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(getTranlated(context, 'exportOptions')),
+          content: Text(getTranlated(context, 'chooseExportFormat')),
+          actions: <Widget>[
+            TextButton(
+              child: Text("PDF"),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                final pdf = await ApiPdf.generateTAble(lista.id);
+                if (!kIsWeb && pdf != null) {
+                  await Share.shareXFiles([XFile(pdf.path)]);
+                }
+              },
+            ),
+            TextButton(
+              child: Text("CSV"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                ExportHelper.generateCsv(context, lista.id);
+              },
+            ),
+            TextButton(
+              child: Text(getTranlated(context, 'cancel')),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

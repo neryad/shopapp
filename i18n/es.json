@@ -100,5 +100,7 @@
   "pdfStatus": "Comprado",
   "mContact": "Contáctame",
   "listComplete": "Lista completada. ¿Deseas conservarla?",
-  "msgImporExporlist": "Aún no tienes listas registradas"
+  "msgImporExporlist": "Aún no tienes listas registradas",
+  "exportOptions": "Opciones de exportación",
+  "chooseExportFormat": "Selecciona el formato de exportación:"
 }

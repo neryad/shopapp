@@ -13,6 +13,7 @@ import 'package:pocketlist/src/pages/settings/pages/color_page.dart';
 import 'package:pocketlist/src/pages/settings/pages/data.dart';
 import 'package:pocketlist/src/pages/settings/pages/user.dart';
 import 'package:pocketlist/src/pages/settings/setting_page.dart';
+import 'package:pocketlist/src/theme/app_theme.dart';
 
 final prefs = new PreferenciasUsuario();
 
@@ -76,10 +77,6 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-ThemeData darktheme = ThemeData(brightness: Brightness.dark);
-
-ThemeData lightTheme = ThemeData(brightness: Brightness.light);
-
 class DarkLightTheme extends StatelessWidget {
   const DarkLightTheme({
     Key? key,
@@ -94,7 +91,7 @@ class DarkLightTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: prefs.darkLightTheme ? darktheme : lightTheme,
+      theme: AppTheme.getTheme(prefs.color, prefs.darkLightTheme),
       locale: _locale,
       supportedLocales: [
         Locale('en', 'US'),
