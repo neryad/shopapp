@@ -185,6 +185,9 @@ class _NewListState extends State<NewList> {
   }
 
   void _mostrarAlertaProducto(BuildContext context) {
+    // Resetear el modelo al abrir el diálogo
+    productModel = ProductModel();
+
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -197,13 +200,8 @@ class _NewListState extends State<NewList> {
               key: formKey,
               child: SingleChildScrollView(
                 child: Container(
-                  //  height: MediaQuery.of(context).size.height / 4,
-                  //width: MediaQuery.of(context).size.width / 1,
-                  //color: Colors.red,
-
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       _crearNombreArticulo(),
                       _crearcantidadArticulo(),
@@ -215,7 +213,10 @@ class _NewListState extends State<NewList> {
             ),
             actions: <Widget>[
               TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () {
+                    productModel = ProductModel(); // Resetear al cancelar
+                    Navigator.of(context).pop();
+                  },
                   child: Text(
                     getTranlated(context, 'baclTolist'),
                     style: TextStyle(
@@ -351,11 +352,33 @@ class _NewListState extends State<NewList> {
         complete: 0);
     items.insert(it, prod);
     DBProvider.db.newProd(prod);
-    //print(productModel.id);
+
+    // Resetear el modelo para el próximo item
+    productModel = ProductModel();
+
     formKey.currentState!.reset();
     setState(() {});
     myFocusNode.requestFocus();
   }
+
+  // void _subimt() {
+  //   var it = items.length;
+  //   if (!formKey.currentState!.validate()) return;
+
+  //   formKey.currentState!.save();
+  //   var prod = ProductModel(
+  //       name: productModel.name,
+  //       quantity: productModel.quantity,
+  //       listId: 'tmp',
+  //       price: productModel.price,
+  //       complete: 0);
+  //   items.insert(it, prod);
+  //   DBProvider.db.newProd(prod);
+  //   //print(productModel.id);
+  //   formKey.currentState!.reset();
+  //   setState(() {});
+  //   myFocusNode.requestFocus();
+  // }
 
   void _mostrarAlertaEditarProducto(BuildContext context, int index) {
     showDialog(
