@@ -1,9 +1,10 @@
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/pages/New-List/newList.dart';
 import 'package:pocketlist/src/utils/pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/models/List_model.dart';
-import 'package:pocketlist/src/pages/details_page.dart';
+
 import 'package:pocketlist/src/providers/db_provider.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:share_plus/share_plus.dart';
@@ -120,7 +121,8 @@ class _ListPageState extends State<ListPage> {
       child: InkWell(
         onTap: () {
           var route = MaterialPageRoute(
-              builder: (BuildContext context) => DetailsPage(savelist: lista));
+              builder: (BuildContext context) =>
+                  ShoppingListPage(existingList: lista));
           Navigator.of(context).push(route);
         },
         child: Padding(

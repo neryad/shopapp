@@ -2,6 +2,7 @@ import 'package:pocketlist/src/localization/localization.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/pages/New-List/newList.dart';
 import 'package:pocketlist/src/pages/about/about_page.dart';
+import 'package:pocketlist/src/pages/about/pages/authorPage.dart';
 import 'package:pocketlist/src/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -120,13 +121,14 @@ class DarkLightTheme extends StatelessWidget {
       debugShowCheckedModeBanner: true,
       routes: {
         'home': (BuildContext context) => HomePage(),
-        'newList': (BuildContext context) => NewList(),
+        'newList': (BuildContext context) => ShoppingListPage(),
         'settings': (BuildContext context) => SettingPage(),
         'colorPage': (BuildContext context) => ColorPage(),
         'about': (BuildContext context) => AboutPage(),
         'exportImport': (BuildContext context) => ImportExportPage(),
         'userPage': (BuildContext context) => UserPage(),
         'dataPage': (BuildContext context) => DataPage(),
+        'authorPage': (BuildContext context) => AuthorPage(),
         // 'newsPage': (BuildContext context) => NewsPage(),
       },
     );

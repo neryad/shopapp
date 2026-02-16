@@ -34,6 +34,15 @@ class PreferenciasUsuario {
     _prefs.setBool('colorSecundario', value);
   }
 
+  // Agrega esto a tu clase PreferenciasUsuario
+  int get customColorValue {
+    return _prefs.getInt('customColorValue') ?? 0xFFFF6F5E;
+  }
+
+  set customColorValue(int value) {
+    _prefs.setInt('customColorValue', value);
+  }
+
   bool get darkLightTheme {
     return _prefs.getBool('darkLightTheme') ?? false;
   }

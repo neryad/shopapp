@@ -1,12 +1,296 @@
+// import 'package:flutter/material.dart';
+// import 'package:pocketlist/main.dart';
+// import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+// import 'package:pocketlist/src/data/class/language.dart';
+// import 'package:pocketlist/src/localization/localization_constant.dart';
+// import 'package:pocketlist/src/providers/db_provider.dart';
+// import 'package:pocketlist/src/utils/utils.dart' as utils;
+// import 'package:pocketlist/src/widgets/Menu_widget.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:url_launcher/url_launcher.dart';
+
+// class SettingPage extends StatefulWidget {
+//   const SettingPage({Key? key}) : super(key: key);
+
+//   @override
+//   _SettingPageState createState() => _SettingPageState();
+// }
+
+// class _SettingPageState extends State<SettingPage> {
+//   //int _color;
+//   // ThemeData darktheme = ThemeData(brightness: Brightness.dark);
+
+//   // ThemeData lightTheme = ThemeData(brightness: Brightness.light);
+
+//   late TextEditingController _textEditingController;
+
+//   final prefs = new PreferenciasUsuario();
+//   var light = false;
+//   @override
+//   void initState() {
+//     //_color = prefs.color;
+//     // prefs.ultimaPagina = 'settings';
+//     super.initState();
+//     _textEditingController =
+//         new TextEditingController(text: prefs.nombreUsuario);
+//   }
+
+//   void _changeLanguea(Language language) async {
+//     Locale _temp = await setLocal(language.languageCode);
+//     prefs.lnge = language.languageCode;
+//     MyApp.setLocale(context, _temp);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       //resizeToAvoidBottomPadding: false,
+//       resizeToAvoidBottomInset: true,
+//       appBar: AppBar(
+//         // actions: [
+//         //   Padding(
+//         //     padding: const EdgeInsets.all(15.0),
+//         //     child: DropdownButton(
+//         //         underline: SizedBox(),
+//         //         icon: Icon(
+//         //           Icons.language,
+//         //           color: Colors.white,
+//         //         ),
+//         //         //hint: new Text(getTranlated(context, 'lnHelp')),
+//         //         items: Language.languageList()
+//         //             .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
+//         //                 value: lang,
+//         //                 child: Row(
+//         //                   children: [
+//         //                     Text(lang.name),
+//         //                     SizedBox(
+//         //                       width: 5.0,
+//         //                     ),
+//         //                     SizedBox(
+//         //                       width: 5.0,
+//         //                     ),
+//         //                     Text(lang.languageCode),
+//         //                     SizedBox(
+//         //                       width: 5.0,
+//         //                     ),
+//         //                   ],
+//         //                 )))
+//         //             .toList(),
+//         //         onChanged: (Language language) {
+//         //           _changeLanguea(language);
+//         //         }),
+//         //   ),
+//         // ],
+//         title: Text(getTranlated(context, 'settTitle')),
+//         backgroundColor: utils.cambiarColor(),
+//       ),
+//       //  drawer: MenuWidget(),
+//       body: ListView(children: <Widget>[
+//         ListTile(
+//           leading: Icon(Icons.color_lens),
+//           title: Text(getTranlated(context, 'themTitle'),
+//               style: TextStyle(
+//                 fontSize: 20.0,
+//                 fontWeight: FontWeight.bold,
+//                 //color: utils.cambiarColor()
+//               )),
+//           onTap: () => {
+//             // Navigator.pop(context),
+//             Navigator.pushNamed(context, 'colorPage')
+//           },
+//           trailing: Icon(Icons.arrow_forward_ios_rounded),
+//         ),
+//         Divider(),
+//         ListTile(
+//           leading: Icon(Icons.person_sharp),
+//           title: Text(getTranlated(context, 'userTitle'),
+//               style: TextStyle(
+//                 fontSize: 20.0,
+//                 fontWeight: FontWeight.bold,
+//                 //color: utils.cambiarColor()
+//               )),
+//           onTap: () => {
+//             // Navigator.pop(context),
+//             Navigator.pushNamed(context, 'userPage')
+//           },
+//           trailing: Icon(Icons.arrow_forward_ios_rounded),
+//         ),
+//         Divider(),
+//         ListTile(
+//           leading: Icon(Icons.data_usage),
+//           title: Text(getTranlated(context, 'dataTitle'),
+//               style: TextStyle(
+//                 fontSize: 20.0,
+//                 fontWeight: FontWeight.bold,
+//                 //color: utils.cambiarColor()
+//               )),
+//           onTap: () => {
+//             // Navigator.pop(context),
+//             Navigator.pushNamed(context, 'dataPage')
+//           },
+//           trailing: Icon(Icons.arrow_forward_ios_rounded),
+//         ),
+//         Divider(),
+//         SwitchListTile(
+//           title: Text(getTranlated(context, 'darkMode'),
+//               style: TextStyle(
+//                 fontSize: 20.0,
+//                 fontWeight: FontWeight.bold,
+//                 //color: utils.cambiarColor()
+//               )),
+//           value: prefs.darkLightTheme,
+//           onChanged: (state) {
+//             setState(() {
+//               light = state;
+//               _selectedRadio(light);
+//               //print(light);
+//             });
+//           },
+//           secondary: const Icon(Icons.lightbulb_outline),
+//         ),
+//         Divider(),
+//         ListTile(
+//           leading: Icon(Icons.language),
+//           title: Text(getTranlated(context, 'lngTitle'),
+//               style: TextStyle(
+//                 fontSize: 20.0,
+//                 fontWeight: FontWeight.bold,
+//                 //color: utils.cambiarColor()
+//               )),
+//           onTap: () => {
+//             // Navigator.pop(context),
+//             //Navigator.pushNamed(context, 'dataPage')
+//           },
+//           trailing: SizedBox(
+//             child: DropdownButton(
+//                 underline: SizedBox(),
+//                 icon: Icon(
+//                   Icons.keyboard_arrow_down,
+//                   //color: Colors.white,
+//                 ),
+//                 //hint: new Text(getTranlated(context, 'lnHelp')),
+//                 items: Language.languageList()
+//                     .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
+//                         value: lang,
+//                         child: Row(
+//                           children: [
+//                             // Text(lang.name),
+//                             // SizedBox(
+//                             //   width: 5.0,
+//                             // ),
+//                             SizedBox(
+//                               width: 5.0,
+//                             ),
+//                             Text(lang.flag),
+//                             SizedBox(
+//                               width: 5.0,
+//                             ),
+//                             Text(lang.languageCode),
+//                             SizedBox(
+//                               width: 5.0,
+//                             ),
+//                           ],
+//                         )))
+//                     .toList(),
+//                 onChanged: (Language? language) {
+//                   if (language != null) {
+//                     _changeLanguea(language);
+//                   }
+//                 }),
+//           ),
+//         ),
+//         Divider(),
+
+//         // DropdownButton(
+//         //     underline: SizedBox(),
+//         //     icon: Icon(
+//         //       Icons.arrow_drop_down,
+//         //       //color: Colors.white,
+//         //     ),
+//         //     //hint: new Text(getTranlated(context, 'lnHelp')),
+//         //     items: Language.languageList()
+//         //         .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
+//         //             value: lang,
+//         //             child: Row(
+//         //               children: [
+//         //                 Text(lang.name),
+//         //                 SizedBox(
+//         //                   width: 5.0,
+//         //                 ),
+//         //                 SizedBox(
+//         //                   width: 5.0,
+//         //                 ),
+//         //                 Text(lang.languageCode),
+//         //                 SizedBox(
+//         //                   width: 5.0,
+//         //                 ),
+//         //               ],
+//         //             )))
+//         //         .toList(),
+//         //     onChanged: (Language language) {
+//         //       _changeLanguea(language);
+//         //     }),
+//         // ListTile(
+//         //   leading: Icon(Icons.language),
+//         //   title: Text(getTranlated(context, 'lngTitle'),
+//         //       style: TextStyle(
+//         //         fontSize: 20.0,
+//         //         fontWeight: FontWeight.bold,
+//         //         //color: utils.cambiarColor()
+//         //       )),
+//         //   onTap: () => {
+//         //     // Navigator.pop(context),
+//         //     Navigator.pushNamed(context, 'lngPage')
+//         //   },
+//         //   trailing: Icon(Icons.arrow_forward_ios_rounded),
+//         // ),
+
+//         ListTile(
+//           title: Text(getTranlated(context, 'Terms'),
+//               style: TextStyle(
+//                 fontSize: 20.0,
+//                 fontWeight: FontWeight.bold,
+//               )),
+//           //subtitle: Text(getTranlated(context, 'aboutDonation')),
+//           trailing: Icon(Icons.arrow_forward_ios),
+//           onTap: () {
+//             _launchURL('https://neryad.github.io/pocketPage/docs/Terms.pdf');
+//           },
+//         ),
+//         Divider(),
+//         ListTile(
+//           title: Text(getTranlated(context, 'privacyPol'),
+//               style: TextStyle(
+//                 fontSize: 20.0,
+//                 fontWeight: FontWeight.bold,
+//               )),
+//           //subtitle: Text(getTranlated(context, 'aboutDonation')),
+//           trailing: Icon(Icons.arrow_forward_ios),
+//           onTap: () {
+//             _launchURL(
+//                 'https://neryad.github.io/pocketPage/docs/PrivacyPolicy.pdf');
+//           },
+//         ),
+//       ]),
+//     );
+//   }
+
+//   _selectedRadio(bool valor) {
+//     prefs.darkLightTheme = valor;
+
+//     light = valor;
+//     MyApp.stateSet(context);
+//   }
+
+//   void _launchURL(String url) async =>
+//       await canLaunch(url) ? await launch(url) : throw 'Could not launch';
+// }
 import 'package:flutter/material.dart';
 import 'package:pocketlist/main.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/data/class/language.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
-import 'package:pocketlist/src/providers/db_provider.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
-import 'package:pocketlist/src/widgets/Menu_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends StatefulWidget {
@@ -17,25 +301,9 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  //int _color;
-  // ThemeData darktheme = ThemeData(brightness: Brightness.dark);
+  final prefs = PreferenciasUsuario();
 
-  // ThemeData lightTheme = ThemeData(brightness: Brightness.light);
-
-  late TextEditingController _textEditingController;
-
-  final prefs = new PreferenciasUsuario();
-  var light = false;
-  @override
-  void initState() {
-    //_color = prefs.color;
-    // prefs.ultimaPagina = 'settings';
-    super.initState();
-    _textEditingController =
-        new TextEditingController(text: prefs.nombreUsuario);
-  }
-
-  void _changeLanguea(Language language) async {
+  void _changeLanguage(Language language) async {
     Locale _temp = await setLocal(language.languageCode);
     prefs.lnge = language.languageCode;
     MyApp.setLocale(context, _temp);
@@ -44,244 +312,435 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomPadding: false,
-      resizeToAvoidBottomInset: true,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.all(15.0),
-        //     child: DropdownButton(
-        //         underline: SizedBox(),
-        //         icon: Icon(
-        //           Icons.language,
-        //           color: Colors.white,
-        //         ),
-        //         //hint: new Text(getTranlated(context, 'lnHelp')),
-        //         items: Language.languageList()
-        //             .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
-        //                 value: lang,
-        //                 child: Row(
-        //                   children: [
-        //                     Text(lang.name),
-        //                     SizedBox(
-        //                       width: 5.0,
-        //                     ),
-        //                     SizedBox(
-        //                       width: 5.0,
-        //                     ),
-        //                     Text(lang.languageCode),
-        //                     SizedBox(
-        //                       width: 5.0,
-        //                     ),
-        //                   ],
-        //                 )))
-        //             .toList(),
-        //         onChanged: (Language language) {
-        //           _changeLanguea(language);
-        //         }),
-        //   ),
-        // ],
         title: Text(getTranlated(context, 'settTitle')),
         backgroundColor: utils.cambiarColor(),
+        elevation: 0,
       ),
-      //  drawer: MenuWidget(),
-      body: ListView(children: <Widget>[
-        ListTile(
-          leading: Icon(Icons.color_lens),
-          title: Text(getTranlated(context, 'themTitle'),
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                //color: utils.cambiarColor()
-              )),
-          onTap: () => {
-            // Navigator.pop(context),
-            Navigator.pushNamed(context, 'colorPage')
-          },
-          trailing: Icon(Icons.arrow_forward_ios_rounded),
-        ),
-        Divider(),
-        ListTile(
-          leading: Icon(Icons.person_sharp),
-          title: Text(getTranlated(context, 'userTitle'),
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                //color: utils.cambiarColor()
-              )),
-          onTap: () => {
-            // Navigator.pop(context),
-            Navigator.pushNamed(context, 'userPage')
-          },
-          trailing: Icon(Icons.arrow_forward_ios_rounded),
-        ),
-        Divider(),
-        ListTile(
-          leading: Icon(Icons.data_usage),
-          title: Text(getTranlated(context, 'dataTitle'),
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                //color: utils.cambiarColor()
-              )),
-          onTap: () => {
-            // Navigator.pop(context),
-            Navigator.pushNamed(context, 'dataPage')
-          },
-          trailing: Icon(Icons.arrow_forward_ios_rounded),
-        ),
-        Divider(),
-        SwitchListTile(
-          title: Text(getTranlated(context, 'darkMode'),
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                //color: utils.cambiarColor()
-              )),
-          value: prefs.darkLightTheme,
-          onChanged: (state) {
-            setState(() {
-              light = state;
-              _selectedRadio(light);
-              //print(light);
-            });
-          },
-          secondary: const Icon(Icons.lightbulb_outline),
-        ),
-        Divider(),
-        ListTile(
-          leading: Icon(Icons.language),
-          title: Text(getTranlated(context, 'lngTitle'),
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                //color: utils.cambiarColor()
-              )),
-          onTap: () => {
-            // Navigator.pop(context),
-            //Navigator.pushNamed(context, 'dataPage')
-          },
-          trailing: SizedBox(
-            child: DropdownButton(
-                underline: SizedBox(),
-                icon: Icon(
-                  Icons.keyboard_arrow_down,
-                  //color: Colors.white,
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          // Header decorativo
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.fromLTRB(24, 16, 24, 32),
+            decoration: BoxDecoration(
+              color: utils.cambiarColor(),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        Icons.settings,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                    ),
+                    SizedBox(width: 16),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          getTranlated(context, 'settTitle'),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Personaliza tu experiencia',
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.9),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                //hint: new Text(getTranlated(context, 'lnHelp')),
-                items: Language.languageList()
-                    .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
-                        value: lang,
-                        child: Row(
-                          children: [
-                            // Text(lang.name),
-                            // SizedBox(
-                            //   width: 5.0,
-                            // ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(lang.flag),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(lang.languageCode),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                          ],
-                        )))
-                    .toList(),
-                onChanged: (Language? language) {
-                  if (language != null) {
-                    _changeLanguea(language);
-                  }
-                }),
+              ],
+            ),
           ),
-        ),
-        Divider(),
 
-        // DropdownButton(
-        //     underline: SizedBox(),
-        //     icon: Icon(
-        //       Icons.arrow_drop_down,
-        //       //color: Colors.white,
-        //     ),
-        //     //hint: new Text(getTranlated(context, 'lnHelp')),
-        //     items: Language.languageList()
-        //         .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
-        //             value: lang,
-        //             child: Row(
-        //               children: [
-        //                 Text(lang.name),
-        //                 SizedBox(
-        //                   width: 5.0,
-        //                 ),
-        //                 SizedBox(
-        //                   width: 5.0,
-        //                 ),
-        //                 Text(lang.languageCode),
-        //                 SizedBox(
-        //                   width: 5.0,
-        //                 ),
-        //               ],
-        //             )))
-        //         .toList(),
-        //     onChanged: (Language language) {
-        //       _changeLanguea(language);
-        //     }),
-        // ListTile(
-        //   leading: Icon(Icons.language),
-        //   title: Text(getTranlated(context, 'lngTitle'),
-        //       style: TextStyle(
-        //         fontSize: 20.0,
-        //         fontWeight: FontWeight.bold,
-        //         //color: utils.cambiarColor()
-        //       )),
-        //   onTap: () => {
-        //     // Navigator.pop(context),
-        //     Navigator.pushNamed(context, 'lngPage')
-        //   },
-        //   trailing: Icon(Icons.arrow_forward_ios_rounded),
-        // ),
+          SizedBox(height: 16),
 
-        ListTile(
-          title: Text(getTranlated(context, 'Terms'),
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              )),
-          //subtitle: Text(getTranlated(context, 'aboutDonation')),
-          trailing: Icon(Icons.arrow_forward_ios),
-          onTap: () {
-            _launchURL('https://neryad.github.io/pocketPage/docs/Terms.pdf');
-          },
-        ),
-        Divider(),
-        ListTile(
-          title: Text(getTranlated(context, 'privacyPol'),
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              )),
-          //subtitle: Text(getTranlated(context, 'aboutDonation')),
-          trailing: Icon(Icons.arrow_forward_ios),
-          onTap: () {
-            _launchURL(
-                'https://neryad.github.io/pocketPage/docs/PrivacyPolicy.pdf');
-          },
-        ),
-      ]),
+          // Sección: Apariencia
+          _buildSectionHeader('Apariencia'),
+          _buildSettingCard(
+            icon: Icons.color_lens_rounded,
+            title: getTranlated(context, 'themTitle'),
+            subtitle: 'Personaliza los colores',
+            onTap: () => Navigator.pushNamed(context, 'colorPage'),
+            trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+          ),
+
+          _buildSettingCard(
+            icon: Icons.dark_mode_rounded,
+            title: getTranlated(context, 'darkMode'),
+            subtitle: prefs.darkLightTheme
+                ? 'Modo oscuro activado'
+                : 'Modo claro activado',
+            trailing: Transform.scale(
+              scale: 0.8,
+              child: Switch(
+                value: prefs.darkLightTheme,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedRadio(value);
+                  });
+                },
+                activeThumbColor: utils.cambiarColor(),
+              ),
+            ),
+          ),
+
+          SizedBox(height: 16),
+
+          // Sección: Cuenta
+          _buildSectionHeader('Cuenta y Perfil'),
+          _buildSettingCard(
+            icon: Icons.person_rounded,
+            title: getTranlated(context, 'userTitle'),
+            subtitle: prefs.nombreUsuario.isEmpty
+                ? 'Configura tu perfil'
+                : prefs.nombreUsuario,
+            onTap: () => Navigator.pushNamed(context, 'userPage'),
+            trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+          ),
+
+          SizedBox(height: 16),
+
+          // Sección: Datos
+          _buildSectionHeader('Datos'),
+          _buildSettingCard(
+            icon: Icons.storage_rounded,
+            title: getTranlated(context, 'dataTitle'),
+            subtitle: 'Gestiona tus datos',
+            onTap: () => Navigator.pushNamed(context, 'dataPage'),
+            trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+          ),
+
+          SizedBox(height: 16),
+
+          // Sección: Idioma
+          _buildSectionHeader('Idioma y Región'),
+          _buildSettingCard(
+            icon: Icons.language_rounded,
+            title: getTranlated(context, 'lngTitle'),
+            subtitle: _getCurrentLanguageName(),
+            trailing: _buildLanguageSelector(),
+          ),
+
+          SizedBox(height: 16),
+
+          // Sección: Legal
+          _buildSectionHeader('Legal'),
+          _buildSettingCard(
+            icon: Icons.description_rounded,
+            title: getTranlated(context, 'Terms'),
+            subtitle: 'Términos y condiciones',
+            onTap: () => _launchURL(
+                'https://neryad.github.io/pocketPage/docs/Terms.pdf'),
+            trailing: Icon(Icons.open_in_new, size: 16),
+          ),
+
+          _buildSettingCard(
+            icon: Icons.privacy_tip_rounded,
+            title: getTranlated(context, 'privacyPol'),
+            subtitle: 'Política de privacidad',
+            onTap: () => _launchURL(
+                'https://neryad.github.io/pocketPage/docs/PrivacyPolicy.pdf'),
+            trailing: Icon(Icons.open_in_new, size: 16),
+          ),
+
+          SizedBox(height: 32),
+
+          // Footer con versión
+          Center(
+            child: Column(
+              children: [
+                Text(
+                  'PocketList',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Versión 1.0.0',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 32),
+        ],
+      ),
     );
   }
 
-  _selectedRadio(bool valor) {
-    prefs.darkLightTheme = valor;
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+      child: Text(
+        title.toUpperCase(),
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: utils.cambiarColor(),
+          letterSpacing: 1.2,
+        ),
+      ),
+    );
+  }
 
-    light = valor;
+  Widget _buildSettingCard({
+    required IconData icon,
+    required String title,
+    String? subtitle,
+    VoidCallback? onTap,
+    Widget? trailing,
+  }) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: utils.cambiarColor().withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: utils.cambiarColor(),
+                    size: 24,
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      if (subtitle != null) ...[
+                        SizedBox(height: 4),
+                        Text(
+                          subtitle,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                if (trailing != null) ...[
+                  SizedBox(width: 8),
+                  trailing,
+                ],
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLanguageSelector() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: utils.cambiarColor().withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: DropdownButton<String>(
+        // ← Cambiar a String
+        value: prefs.lnge, // ← Usar directamente el código guardado
+        underline: SizedBox(),
+        icon: Icon(
+          Icons.keyboard_arrow_down_rounded,
+          color: utils.cambiarColor(),
+          size: 20,
+        ),
+        isDense: true,
+        items: Language.languageList()
+            .map<DropdownMenuItem<String>>(
+              // ← Cambiar a String
+              (lang) => DropdownMenuItem(
+                value: lang.languageCode, // ← Usar código como valor
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      lang.flag,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      lang.languageCode.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: utils.cambiarColor(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+            .toList(),
+        onChanged: (String? languageCode) {
+          // ← Cambiar a String
+          if (languageCode != null) {
+            // Buscar el objeto Language correspondiente
+            final language = Language.languageList().firstWhere(
+              (lang) => lang.languageCode == languageCode,
+            );
+            setState(() {
+              _changeLanguage(language);
+            });
+          }
+        },
+      ),
+    );
+  }
+
+  // Widget _buildLanguageSelector() {
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+  //     decoration: BoxDecoration(
+  //       color: utils.cambiarColor().withOpacity(0.1),
+  //       borderRadius: BorderRadius.circular(8),
+  //     ),
+  //     child: DropdownButton<Language>(
+  //       value: Language.languageList().firstWhere(
+  //         (lang) => lang.languageCode == prefs.lnge,
+  //         orElse: () => Language.languageList().first,
+  //       ),
+  //       underline: SizedBox(),
+  //       icon: Icon(
+  //         Icons.keyboard_arrow_down_rounded,
+  //         color: utils.cambiarColor(),
+  //         size: 20,
+  //       ),
+  //       isDense: true,
+  //       items: Language.languageList()
+  //           .map<DropdownMenuItem<Language>>(
+  //             (lang) => DropdownMenuItem(
+  //               value: lang,
+  //               child: Row(
+  //                 mainAxisSize: MainAxisSize.min,
+  //                 children: [
+  //                   Text(
+  //                     lang.flag,
+  //                     style: TextStyle(fontSize: 18),
+  //                   ),
+  //                   SizedBox(width: 8),
+  //                   Text(
+  //                     lang.languageCode.toUpperCase(),
+  //                     style: TextStyle(
+  //                       fontSize: 13,
+  //                       fontWeight: FontWeight.w600,
+  //                       color: utils.cambiarColor(),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           )
+  //           .toList(),
+  //       onChanged: (Language? language) {
+  //         if (language != null) {
+  //           setState(() {
+  //             _changeLanguage(language);
+  //           });
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // String _getCurrentLanguageName() {
+  //   final currentLang = Language.languageList().firstWhere(
+  //     (lang) => lang.languageCode == prefs.lnge,
+  //     orElse: () => Language.languageList().first,
+  //   );
+  //   return '${currentLang.flag} ${currentLang.name}';
+  // }
+
+  String _getCurrentLanguageName() {
+    try {
+      final currentLang = Language.languageList().firstWhere(
+        (lang) => lang.languageCode == prefs.lnge,
+      );
+      return '${currentLang.flag} ${currentLang.name}';
+    } catch (e) {
+      // Si no encuentra el idioma, devolver un valor por defecto
+      return '🌐 Idioma';
+    }
+  }
+
+  void _selectedRadio(bool valor) {
+    prefs.darkLightTheme = valor;
     MyApp.stateSet(context);
   }
 
-  void _launchURL(String url) async =>
-      await canLaunch(url) ? await launch(url) : throw 'Could not launch';
+  void _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('No se pudo abrir el enlace'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 }
