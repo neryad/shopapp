@@ -104,5 +104,10 @@
   "exportOptions": "Export Options",
   "chooseExportFormat": "Choose export format:",
   "guestUser": "Guest User",
-  "setProfile": "Tap to set up profile"
+  "setProfile": "Tap to set up profile",
+  "resetList": "Reset list",
+"resetListConfirm": "Do you want to uncheck all completed items?",
+"itemsReset": "List reset successfully"
+
+  
 }

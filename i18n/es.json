@@ -104,5 +104,9 @@
   "exportOptions": "Opciones de exportación",
   "chooseExportFormat": "Selecciona el formato de exportación:",
   "guestUser": "Usuario Invitado",
-  "setProfile": "Toca para configurar perfil"
+  "setProfile": "Toca para configurar perfil",
+  "resetList": "Reiniciar lista",
+"resetListConfirm": "¿Deseas desmarcar todos los artículos completados?",
+"itemsReset": "Lista reiniciada correctamente"
+
 }
