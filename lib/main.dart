@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/pages/import_export_page.dart';
-import 'package:pocketlist/src/pages/news/news.dart';
+// import 'package:pocketlist/src/pages/news/news.dart';
 import 'package:pocketlist/src/pages/settings/pages/color_page.dart';
 import 'package:pocketlist/src/pages/settings/pages/data.dart';
 import 'package:pocketlist/src/pages/settings/pages/user.dart';
@@ -130,7 +130,7 @@ class DarkLightTheme extends StatelessWidget {
         'exportImport': (BuildContext context) => ImportExportPage(),
         'userPage': (BuildContext context) => UserPage(),
         'dataPage': (BuildContext context) => DataPage(),
-        'newsPage': (BuildContext context) => NewsPage(),
+        // 'newsPage': (BuildContext context) => NewsPage(),
       },
     );
   }
