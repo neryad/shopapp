@@ -19,7 +19,7 @@ environment:
 dependencies:
   another_flushbar: ^1.12.30
   archive: ^4.0.7
-  csv: ^6.0.0
+  csv: ^7.1.0
   # Usamos una versión más moderna que es compatible con la API v2 y no exige el SDK 35 explícitamente.
   file_picker: ^10.3.7
   flutter:

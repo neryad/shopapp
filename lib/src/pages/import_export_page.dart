@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'dart:typed_data';
 // import 'dart:developer';
 import 'dart:io';
@@ -8,7 +9,7 @@ import 'package:pocketlist/src/models/List_model.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
-import 'package:csv/csv.dart';
+import 'package:csv/csv.dart' as csv_pkg;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
@@ -169,7 +170,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     onTap: () {
                       var route = new MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              DetailsPage(savelist: lista![index]));
+                              DetailsPage(savelist: lista[index]));
                       Navigator.of(context).push(route);
                     },
                     child: card(lista![index]));
@@ -239,11 +240,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
             ]),
       ];
 
-      String csv = const ListToCsvConverter().convert(csvData);
+      String csvString = csv_pkg.CsvCodec().encode(csvData);
 
       if (kIsWeb) {
         // Web: Download CSV
-        final bytes = utf8.encode(csv);
+        final bytes = utf8.encode(csvString);
         await saveFile('${csvData[1][0]}.csv', Uint8List.fromList(bytes));
         showMsg(context, successMsgExport, strExport);
         return;
@@ -259,7 +260,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       final File file =
           File(appDocPath + Platform.pathSeparator + fileName + '.csv');
 
-      await file.writeAsString(csv);
+      await file.writeAsString(csvString);
 
       await Share.shareXFiles([XFile(file.path)], text: filePlaceHolder);
       showMsg(context, successMsgExport, strExport);
@@ -280,18 +281,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
         final bytes = result.files.single.bytes;
         if (bytes != null) {
           final csvString = utf8.decode(bytes);
-          final fields = const CsvToListConverter().convert(csvString);
+          final fields = csv_pkg.CsvCodec().decode(csvString);
           await saveList(context, fields);
           setState(() {});
         }
       } else {
         File file = File(result.files.single.path!);
-        final input = new File(file.path).openRead();
-
-        final fields = await input
-            .transform(utf8.decoder)
-            .transform(new CsvToListConverter())
-            .toList();
+        final csvString = await file.readAsString();
+        final fields = csv_pkg.CsvCodec().decode(csvString);
 
         await saveList(context, fields);
         setState(() {});
