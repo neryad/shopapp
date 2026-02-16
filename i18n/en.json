@@ -102,5 +102,7 @@
   "listComplete": "List completed. Do you want to keep it?",
   "msgImporExporlist": "You don’t have any lists yet",
   "exportOptions": "Export Options",
-  "chooseExportFormat": "Choose export format:"
+  "chooseExportFormat": "Choose export format:",
+  "guestUser": "Guest User",
+  "setProfile": "Tap to set up profile"
 }

@@ -796,8 +796,15 @@ class _NewListState extends State<NewList> {
             ));
           }
 
-          items.sort(
-              (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+          // items.sort(
+          //     (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+          items.sort((a, b) {
+            if (a.complete != b.complete) {
+              return a.complete.compareTo(b.complete);
+            }
+            return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          });
+
           return Expanded(
               child: ListView.builder(
             itemCount: items.length,
@@ -891,7 +898,8 @@ class _NewListState extends State<NewList> {
                         ),
                       ),
                     ),
-                    key: Key(items[index].name + items.length.toString()),
+                    // key: Key(items[index].name + items.length.toString()),
+                    key: Key(items[index].id.toString()),
                     onDismissed: (direction) {
                       //wey
                       var deletedItem = items[index];
@@ -1060,26 +1068,41 @@ class _NewListState extends State<NewList> {
   }
 
   // Nueva función para marcar items como completados
+  // void _marcarComoCompletado(int index, bool valor) {
+  //   int complValue = (valor == true) ? 1 : 0;
+  //   items[index].complete = complValue;
+  //   DBProvider.db.updateProd(items[index]);
+
+  //   setState(() {
+  //     if (valor == true) {
+  //       // Mover al final
+  //       final ProductModel item = items.removeAt(index);
+  //       items.add(item);
+  //       utils.showSnack(context, getTranlated(context, 'onCart'));
+  //     } else {
+  //       // Si desmarca, reordenar alfabéticamente
+  //       items.sort(
+  //           (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+  //       utils.showSnack(context, getTranlated(context, 'ofCart'));
+  //     }
+  //   });
+
+  //   updatedCount(valor);
+  // }
+
   void _marcarComoCompletado(int index, bool valor) {
-    int complValue = (valor == true) ? 1 : 0;
+    int complValue = valor ? 1 : 0;
     items[index].complete = complValue;
     DBProvider.db.updateProd(items[index]);
 
-    setState(() {
-      if (valor == true) {
-        // Mover al final
-        final ProductModel item = items.removeAt(index);
-        items.add(item);
-        utils.showSnack(context, getTranlated(context, 'onCart'));
-      } else {
-        // Si desmarca, reordenar alfabéticamente
-        items.sort(
-            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
-        utils.showSnack(context, getTranlated(context, 'ofCart'));
-      }
-    });
+    setState(() {});
 
     updatedCount(valor);
+
+    utils.showSnack(
+      context,
+      valor ? getTranlated(context, 'onCart') : getTranlated(context, 'ofCart'),
+    );
   }
 
   Widget _bNavbar(BuildContext context) {

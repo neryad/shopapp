@@ -102,5 +102,7 @@
   "listComplete": "Lista completada. ¿Deseas conservarla?",
   "msgImporExporlist": "Aún no tienes listas registradas",
   "exportOptions": "Opciones de exportación",
-  "chooseExportFormat": "Selecciona el formato de exportación:"
+  "chooseExportFormat": "Selecciona el formato de exportación:",
+  "guestUser": "Usuario Invitado",
+  "setProfile": "Toca para configurar perfil"
 }
