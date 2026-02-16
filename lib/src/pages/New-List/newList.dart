@@ -1,6 +1,5 @@
-//import 'package:flushbar/flushbar.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/models/List_model.dart';
@@ -25,6 +24,7 @@ class _NewListState extends State<NewList> {
   double diference = 0.00;
   int totalItems = 0;
   bool checkValue = false;
+  bool _dialogoCompletadoMostrado = false;
   FocusNode myFocusNode = FocusNode();
 
   final prefs = new PreferenciasUsuario();
@@ -55,6 +55,10 @@ class _NewListState extends State<NewList> {
   Segurencia sugeModel = new Segurencia();
   Lista listaModel = new Lista();
 
+  // Getters para items completados y pendientes
+  int get itemsCompletados => items.where((item) => item.complete == 1).length;
+  int get itemsPendientes => items.where((item) => item.complete == 0).length;
+
   @override
   Widget build(BuildContext context) {
     //loadSharedPrefs();
@@ -70,7 +74,21 @@ class _NewListState extends State<NewList> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                // Text('Items: $totalItems/${items.length}'),
+                if (items.isNotEmpty)
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      '$itemsCompletados/${items.length}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
               ],
             ),
           )
@@ -130,6 +148,8 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             title: Text(getTranlated(context, 'buget')),
             content: Column(
               mainAxisSize: MainAxisSize.min,
@@ -170,6 +190,8 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             title: Text(getTranlated(context, 'newArt')),
             content: Form(
               key: formKey,
@@ -341,6 +363,8 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             title: Text(getTranlated(context, 'EupdArt')),
             content: Form(
               key: editFormKey,
@@ -758,207 +782,281 @@ class _NewListState extends State<NewList> {
               _controllers.add(new TextEditingController());
               //var wawa = toBoolean(items[index].complete);
               bool isComplete = (items[index].complete == 1) ? true : false;
-              return Dismissible(
-                direction: DismissDirection.endToStart,
-                background: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    color: Colors.red,
-                    child: Align(
+
+              // Verificar si este es el primer item completado
+              bool esElPrimeroCompletado =
+                  index > 0 && items[index - 1].complete == 0 && isComplete;
+
+              return Column(
+                children: [
+                  // Separador visual entre items pendientes y completados
+                  if (esElPrimeroCompletado)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Icon(
-                            Icons.delete,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            getTranlated(context, 'delete'),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              thickness: 1,
+                              color: Colors.grey[400],
                             ),
-                            textAlign: TextAlign.right,
                           ),
-                          SizedBox(
-                            width: 20,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.check_circle,
+                                  size: 16,
+                                  color: Colors.grey[600],
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  getTranlated(context, 'completed') ??
+                                      'Completados',
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              thickness: 1,
+                              color: Colors.grey[400],
+                            ),
                           ),
                         ],
                       ),
-                      alignment: Alignment.centerRight,
                     ),
-                  ),
-                ),
-                key: Key(items[index].name + items.length.toString()),
-                onDismissed: (direction) {
-                  //wey
-                  var deletedItem = items[index];
-                  //wawa(context, getTranlated(context, 'offLis'), index, deletedItem, items);
-                  showDeleteSnack(context, getTranlated(context, 'offLis'),
-                      index, deletedItem, items);
-                  // utils.showSnack(context,  getTranlated(context, 'offLis'));
-                  DBProvider.db.deleteProd(items[index].id);
-                  items.removeAt(index);
-
-                  getTotal();
-                  getDiference();
-                  setState(() {});
-                },
-                // Color(0xff424242)
-                //#595959
-
-                child: Container(
-                  child: Card(
-                      color: isComplete
-                          ? Color(0xffc3c3c3)
-                          : prefs.color == 5
-                              ? utils.cambiarColor()
-                              : prefs.darkLightTheme
-                                  ? ThemeData.dark().cardColor
-                                  : ThemeData().cardColor,
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // Item de la lista
+                  Dismissible(
+                    direction: DismissDirection.endToStart,
+                    background: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Align(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
-                              SizedBox(
-                                width: 15,
+                              Icon(
+                                Icons.delete,
+                                color: Colors.white,
                               ),
                               Text(
-                                items[index].name,
+                                getTranlated(context, 'delete'),
                                 style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  decoration: isComplete
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none,
-                                  decorationColor: utils.cambiarColor(),
-                                  decorationStyle: TextDecorationStyle.solid,
-                                  decorationThickness: 3,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.start,
-                              ),
-                              Spacer(),
-                              SizedBox(),
-                              Checkbox(
-                                value: isComplete,
-                                onChanged: (valor) {
-                                  //print(ThemeData.dark().cardColor);
-                                  int complValue = (valor == true) ? 1 : 0;
-                                  items[index].complete = complValue;
-                                  DBProvider.db.updateProd(items[index]);
-                                  setState(() {});
-
-                                  // print(items[index]);
-                                  final ProductModel first =
-                                      items.removeAt(index);
-                                  // print(first);
-                                  items.add(first);
-                                  setState(() {});
-                                  (valor == true)
-                                      ? utils.showSnack(context,
-                                          getTranlated(context, 'onCart'))
-                                      : utils.showSnack(context,
-                                          getTranlated(context, 'ofCart'));
-
-                                  updatedCount(
-                                      valor!); //   showSnack(context, 'Artículo agregado');
-                                },
-                                activeColor: isComplete
-                                    ? Colors.black
-                                    : (prefs.color == 5)
-                                        ? Colors.white
-                                        : utils.cambiarColor(),
+                                textAlign: TextAlign.right,
                               ),
                               SizedBox(
-                                width: 15,
+                                width: 20,
                               ),
                             ],
                           ),
-                          GestureDetector(
-                            onTap: () =>
-                                _mostrarAlertaEditarProducto(context, index),
-                            child: Container(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 0, bottom: 5),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.edit,
-                                      color: isComplete
-                                          ? Colors.black
-                                          : (prefs.color == 5)
-                                              ? Colors.white
-                                              : utils.cambiarColor(),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                              utils.numberFormat(
-                                                  items[index].price),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text(getTranlated(context, 'price'))
-                                        ],
+                          alignment: Alignment.centerRight,
+                        ),
+                      ),
+                    ),
+                    key: Key(items[index].name + items.length.toString()),
+                    onDismissed: (direction) {
+                      //wey
+                      var deletedItem = items[index];
+                      //wawa(context, getTranlated(context, 'offLis'), index, deletedItem, items);
+                      showDeleteSnack(context, getTranlated(context, 'offLis'),
+                          index, deletedItem, items);
+                      // utils.showSnack(context,  getTranlated(context, 'offLis'));
+                      DBProvider.db.deleteProd(items[index].id);
+                      items.removeAt(index);
+
+                      getTotal();
+                      getDiference();
+                      setState(() {});
+                    },
+                    // Color(0xff424242)
+                    //#595959
+
+                    child: Container(
+                      child: Card(
+                          elevation: isComplete ? 1 : 2,
+                          color: isComplete
+                              ? Color(0xffc3c3c3)
+                              : prefs.color == 5
+                                  ? utils.cambiarColor()
+                                  : prefs.darkLightTheme
+                                      ? ThemeData.dark().cardColor
+                                      : ThemeData().cardColor,
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      items[index].name,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        decoration: isComplete
+                                            ? TextDecoration.lineThrough
+                                            : TextDecoration.none,
+                                        decorationColor: utils.cambiarColor(),
+                                        decorationStyle:
+                                            TextDecorationStyle.solid,
+                                        decorationThickness: 3,
                                       ),
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.start,
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Text(items[index].quantity.toString(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text(
-                                              getTranlated(context, 'quantity'))
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Text(
-                                              utils.numberFormat(
-                                                  items[index].quantity *
+                                  ),
+                                  SizedBox(width: 8),
+                                  Checkbox(
+                                    value: isComplete,
+                                    onChanged: (valor) {
+                                      HapticFeedback.mediumImpact();
+                                      _marcarComoCompletado(
+                                          index, valor ?? false);
+                                    },
+                                    activeColor: isComplete
+                                        ? Colors.black
+                                        : (prefs.color == 5)
+                                            ? Colors.white
+                                            : utils.cambiarColor(),
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () => _mostrarAlertaEditarProducto(
+                                    context, index),
+                                child: Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 0, bottom: 5),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.edit,
+                                          color: isComplete
+                                              ? Colors.black
+                                              : (prefs.color == 5)
+                                                  ? Colors.white
+                                                  : utils.cambiarColor(),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                  utils.numberFormat(
                                                       items[index].price),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text('Total')
-                                        ],
-                                      ),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text(getTranlated(
+                                                  context, 'price'))
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Text(
+                                                  items[index]
+                                                      .quantity
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text(getTranlated(
+                                                  context, 'quantity'))
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Text(
+                                                  utils.numberFormat(
+                                                      items[index].quantity *
+                                                          items[index].price),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text('Total')
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ],
-                      )),
-                ),
+                            ],
+                          )),
+                    ),
+                  ),
+                ],
               );
             },
           ));
         });
+  }
+
+  // Nueva función para marcar items como completados
+  void _marcarComoCompletado(int index, bool valor) {
+    int complValue = (valor == true) ? 1 : 0;
+    items[index].complete = complValue;
+    DBProvider.db.updateProd(items[index]);
+
+    setState(() {
+      if (valor == true) {
+        // Mover al final
+        final ProductModel item = items.removeAt(index);
+        items.add(item);
+        utils.showSnack(context, getTranlated(context, 'onCart'));
+      } else {
+        // Si desmarca, reordenar alfabéticamente
+        items.sort(
+            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        utils.showSnack(context, getTranlated(context, 'ofCart'));
+      }
+    });
+
+    updatedCount(valor);
   }
 
   Widget _bNavbar(BuildContext context) {
@@ -1010,6 +1108,8 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             title: Text(getTranlated(context, 'deleteCont')),
             actions: <Widget>[
               TextButton(
@@ -1041,52 +1141,162 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            // title: Text(getTranlated(context, 'deleteCont')),
-            title: Text(getTranlated(context, 'listComplete')),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            title: Column(
+              children: [
+                Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 48,
+                ),
+                SizedBox(height: 12),
+                Text(
+                  getTranlated(context, 'listComplete') ?? '¡Lista completada!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+            // content: Text(
+            //   '¿Qué deseas hacer con esta lista?',
+            //   textAlign: TextAlign.center,
+            //   style: TextStyle(fontSize: 16),
+            // ),
+            actionsAlignment: MainAxisAlignment.spaceEvenly,
             actions: <Widget>[
-              TextButton(
-                  // onPressed: () => Navigator.of(context).pop(),
-                  onPressed: () => {
-                        Navigator.of(context).pop(),
-                        _validateEliminarList(context),
-                      },
-                  child: Text(
-                    getTranlated(context, 'clearList'),
-                    style: TextStyle(
-                        color: (prefs.color == 5) ? Colors.white : Colors.red),
-                  )),
-              TextButton(
-                onPressed: () =>
-                    {Navigator.of(context).pop(), _guardarLista(context)},
-                child: Text(
-                  getTranlated(context, 'save'),
-                  style: TextStyle(
-                      color: (prefs.color == 5)
-                          ? Colors.white
-                          : utils.cambiarColor()),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () =>
+                        {Navigator.of(context).pop(), _guardarLista(context)},
+                    icon: Icon(Icons.save, color: Colors.white),
+                    label: Text(
+                      getTranlated(context, 'save'),
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: (prefs.color == 5)
+                          ? Colors.white.withOpacity(0.9)
+                          : utils.cambiarColor(),
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  OutlinedButton.icon(
+                    onPressed: () => {
+                      Navigator.of(context).pop(),
+                      _validateEliminarList(context),
+                    },
+                    icon: Icon(Icons.delete_outline, color: Colors.red),
+                    label: Text(
+                      getTranlated(context, 'clearList'),
+                      style: TextStyle(color: Colors.red, fontSize: 16),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.red),
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(
+                      getTranlated(context, 'leave'),
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                  getTranlated(context, 'leave'),
-                  style: TextStyle(
-                      color: (prefs.color == 5) ? Colors.white : Colors.black),
-                ),
-              )
-
-              // onPressed: () => Navigator.of(context).pop(),
             ],
           );
         });
   }
 
+  // _validateGuardaroEliminarList(BuildContext context) {
+  //   return showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           shape:
+  //               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+  //           title: Row(
+  //             children: [
+  //               Icon(
+  //                 Icons.check_circle,
+  //                 color: Colors.green,
+  //                 size: 28,
+  //               ),
+  //               SizedBox(width: 10),
+  //               Expanded(
+  //                 child: Text(getTranlated(context, 'listComplete') ??
+  //                     '¡Lista completada!'),
+  //               ),
+  //             ],
+  //           ),
+  //           content: Text(
+  //             getTranlated(context, 'listCompleteMessage') ??
+  //                 '¿Qué deseas hacer con esta lista?',
+  //           ),
+  //           actions: <Widget>[
+  //             TextButton.icon(
+  //               onPressed: () => {
+  //                 Navigator.of(context).pop(),
+  //                 _validateEliminarList(context),
+  //               },
+  //               icon: Icon(Icons.delete_outline, color: Colors.red),
+  //               label: Text(
+  //                 getTranlated(context, 'clearList'),
+  //                 style: TextStyle(color: Colors.red),
+  //               ),
+  //             ),
+  //             TextButton.icon(
+  //               onPressed: () => Navigator.of(context).pop(),
+  //               icon: Icon(Icons.close),
+  //               label: Text(
+  //                 getTranlated(context, 'leave'),
+  //                 style: TextStyle(
+  //                   color: (prefs.color == 5) ? Colors.white : Colors.grey[700],
+  //                 ),
+  //               ),
+  //             ),
+  //             ElevatedButton.icon(
+  //               onPressed: () =>
+  //                   {Navigator.of(context).pop(), _guardarLista(context)},
+  //               icon: Icon(Icons.save),
+  //               label: Text(getTranlated(context, 'save')),
+  //               style: ElevatedButton.styleFrom(
+  //                 backgroundColor:
+  //                     (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
+  //               ),
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
+
   limpiarTodo() {
     setState(() {
       DBProvider.db.deleteAllTempProd('tmp');
       items.clear();
-      getTotal();
-      getDiference();
+      total = 0.00;
+      buget = 0.00;
+      diference = 0.00;
+      totalItems = 0;
+      _dialogoCompletadoMostrado = false;
+
+      // También resetear las preferencias temporales
+      prefs.tempTotal = '0.00';
+      prefs.tempBuget = '0.00';
+
+      // Actualizar colores
+      bugetColor = utils.cambiarColor();
+      colorBuget = utils.cambiarColor();
     });
     Navigator.of(context).pop();
   }
@@ -1128,6 +1338,7 @@ class _NewListState extends State<NewList> {
 
     items = [];
     lisForm.currentState!.reset();
+    _dialogoCompletadoMostrado = false; // Resetear flag
   }
 
   void _guardarLista(BuildContext context) {
@@ -1136,6 +1347,8 @@ class _NewListState extends State<NewList> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             title: Text(getTranlated(context, 'saveList')),
             content: Form(
               key: lisForm,
@@ -1173,16 +1386,29 @@ class _NewListState extends State<NewList> {
         });
   }
 
-  updatedCount(bool value) {
-    if (value == true) {
-      totalItems += 1;
-    } else {
-      totalItems -= 1;
-    }
+  void updatedCount(bool value) {
+    // Calculamos directamente los items completados en lugar de usar un contador
+    int completados = items.where((item) => item.complete == 1).length;
 
-    if (totalItems == items.length) {
-      showcompletedSnack(context, 'Lista de compra completa');
-      _validateGuardaroEliminarList(context);
+    // Verificar si todos están completados
+    if (completados == items.length &&
+        items.isNotEmpty &&
+        !_dialogoCompletadoMostrado) {
+      _dialogoCompletadoMostrado = true;
+
+      // Pequeño delay para mejor UX
+      Future.delayed(Duration(milliseconds: 500), () {
+        if (mounted) {
+          showcompletedSnack(
+              context,
+              getTranlated(context, 'listComplete') ??
+                  'Lista de compra completa');
+          _validateGuardaroEliminarList(context);
+        }
+      });
+    } else if (completados < items.length) {
+      // Si desmarca alguno, resetear el flag
+      _dialogoCompletadoMostrado = false;
     }
   }
 
@@ -1222,27 +1448,12 @@ class _NewListState extends State<NewList> {
       //title: 'This action is prohibited',
       message: msg,
       icon: Icon(
-        Icons.info_outline,
+        Icons.check_circle,
         size: 28,
-        color: (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
+        color: Colors.green,
       ),
-      // mainButton: FlatButton(
-      //   onPressed: () {
-      //     //_undoProd(item, index);
-      //     DBProvider.db.tmpProd(item);
-      //     DBProvider.db.getArticlesTmp('tmp');
-      //     var it = items.length;
-      //     items.insert(it, item);
-      //     setState(() {});
-      //   },
-      //   child: Text(
-      //     getTranlated(context, 'undo'),
-      //     style: TextStyle(color: Colors.amber),
-      //   ),
-      // ),
-      leftBarIndicatorColor:
-          (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
-      duration: Duration(seconds: 3),
+      leftBarIndicatorColor: Colors.green,
+      duration: Duration(seconds: 2),
     )..show(context);
   }
 }
