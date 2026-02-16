@@ -185,62 +185,146 @@ class _NewListState extends State<NewList> {
   }
 
   void _mostrarAlertaProducto(BuildContext context) {
-    // Resetear el modelo al abrir el diálogo
     productModel = ProductModel();
 
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text(getTranlated(context, 'newArt')),
-            content: Form(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(24),
+            child: Form(
               key: formKey,
-              child: SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      _crearNombreArticulo(),
-                      _crearcantidadArticulo(),
-                      _crearPrecioArticulo(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.add_shopping_cart,
+                          color: utils.cambiarColor(), size: 28),
+                      SizedBox(width: 12),
+                      Text(
+                        getTranlated(context, 'newArt'),
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
-                ),
+                  SizedBox(height: 24),
+                  _crearNombreArticulo(),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(child: _crearcantidadArticulo()),
+                      SizedBox(width: 16),
+                      Expanded(child: _crearPrecioArticulo()),
+                    ],
+                  ),
+                  SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          productModel = ProductModel();
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(getTranlated(context, 'baclTolist')),
+                      ),
+                      SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: () {
+                          _subimt();
+                          getTotal();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: utils.cambiarColor(),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: Text(
+                          getTranlated(context, 'add'),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    productModel = ProductModel(); // Resetear al cancelar
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    getTranlated(context, 'baclTolist'),
-                    style: TextStyle(
-                        color: (prefs.color == 5)
-                            ? Colors.white
-                            : utils.cambiarColor()),
-                  )),
-              TextButton(
-                  onPressed: () {
-                    _subimt();
-                    getTotal();
-                    //Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    getTranlated(context, 'add'),
-                    style: TextStyle(
-                        color: (prefs.color == 5)
-                            ? Colors.white
-                            : utils.cambiarColor()),
-                  )),
-            ],
-          );
-        });
+          ),
+        );
+      },
+    );
   }
+
+  // void _mostrarAlertaProducto(BuildContext context) {
+  //   // Resetear el modelo al abrir el diálogo
+  //   productModel = ProductModel();
+
+  //   showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           shape:
+  //               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+  //           title: Text(getTranlated(context, 'newArt')),
+  //           content: Form(
+  //             key: formKey,
+  //             child: SingleChildScrollView(
+  //               child: Container(
+  //                 child: Column(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   children: <Widget>[
+  //                     _crearNombreArticulo(),
+  //                     _crearcantidadArticulo(),
+  //                     _crearPrecioArticulo(),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //           actions: <Widget>[
+  //             TextButton(
+  //                 onPressed: () {
+  //                   productModel = ProductModel(); // Resetear al cancelar
+  //                   Navigator.of(context).pop();
+  //                 },
+  //                 child: Text(
+  //                   getTranlated(context, 'baclTolist'),
+  //                   style: TextStyle(
+  //                       color: (prefs.color == 5)
+  //                           ? Colors.white
+  //                           : utils.cambiarColor()),
+  //                 )),
+  //             TextButton(
+  //                 onPressed: () {
+  //                   _subimt();
+  //                   getTotal();
+  //                   //Navigator.of(context).pop();
+  //                 },
+  //                 child: Text(
+  //                   getTranlated(context, 'add'),
+  //                   style: TextStyle(
+  //                       color: (prefs.color == 5)
+  //                           ? Colors.white
+  //                           : utils.cambiarColor()),
+  //                 )),
+  //           ],
+  //         );
+  //       });
+  // }
 
   Widget _crearNombreArticulo() {
     return TextFormField(
@@ -588,148 +672,78 @@ class _NewListState extends State<NewList> {
 
   Widget _header() {
     return Container(
-      padding: EdgeInsets.only(left: 5.0, right: 10.0),
+      margin: EdgeInsets.all(12),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-      ),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Container(
-              //color: Theme.of(context).primaryColor,
-              child: Column(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () => _mostrarAlertaBuget(context),
-                    child: Container(
-                      // color: Theme.of(context).primaryColor,
-                      child: Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.account_balance_wallet,
-                                        color: (prefs.color == 5)
-                                            ? Colors.white
-                                            : utils.cambiarColor()),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(getTranlated(context, 'buget'),
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold
-                                            //color: bugetColor,
-                                            )),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          Column(
-                            children: <Widget>[
-                              Text(
-                                utils.numberFormat(buget),
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: (prefs.color == 5)
-                                        ? Colors.white
-                                        : bugetColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.shopping_cart),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text('Total',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        //color: bugetColor,
-                                      )),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        Spacer(),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              utils.numberFormat(total),
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: (prefs.color == 5)
-                                      ? Colors.white
-                                      : utils.cambiarColor(),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.shuffle),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(getTranlated(context, 'difference'),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  //color: bugetColor,
-                                )),
-                          ],
-                        ),
-                      ),
-                      Spacer(),
-                      Text(
-                        utils.numberFormat(diference),
-                        style: TextStyle(
-                            fontSize: 18,
-                            color:
-                                (prefs.color == 5) ? Colors.white : bugetColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 4),
           ),
         ],
+      ),
+      child: Column(
+        children: [
+          _buildStatRow(
+            icon: Icons.account_balance_wallet,
+            label: getTranlated(context, 'buget'),
+            value: utils.numberFormat(buget),
+            color: bugetColor,
+            onTap: () => _mostrarAlertaBuget(context),
+          ),
+          Divider(height: 16, thickness: 1),
+          _buildStatRow(
+            icon: Icons.shopping_cart,
+            label: 'Total',
+            value: utils.numberFormat(total),
+            color: utils.cambiarColor(),
+          ),
+          Divider(height: 16, thickness: 1),
+          _buildStatRow(
+            icon: Icons.shuffle,
+            label: getTranlated(context, 'difference'),
+            value: utils.numberFormat(diference),
+            color: colorBuget,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatRow({
+    required IconData icon,
+    required String label,
+    required String value,
+    required Color color,
+    VoidCallback? onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            Icon(icon, color: color, size: 20),
+            SizedBox(width: 12),
+            Text(
+              label,
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+            ),
+            Spacer(),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -746,54 +760,109 @@ class _NewListState extends State<NewList> {
           }
           //TODO:hacer seed para futura sugerencias
           if (items.length == 0) {
-            return Card(
-                child: Container(
-              color: Colors.white,
-              child: Column(
-                  // padding: EdgeInsets.all(15.0),
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        utils.cambiarNewImage(),
-                      ],
+            return // Reemplaza el Card cuando items.length == 0:
+                Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(32),
+                      decoration: BoxDecoration(
+                        color: utils.cambiarColor().withOpacity(0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.shopping_cart_outlined,
+                        size: 80,
+                        color: utils.cambiarColor().withOpacity(0.5),
+                      ),
                     ),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          getTranlated(context, 'noItems'),
-                          style: TextStyle(
-                            color: utils.cambiarColor(),
-                            fontSize: 18,
-                          ),
+                    SizedBox(height: 24),
+                    Text(
+                      getTranlated(context, 'noItems'),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      getTranlated(context, 'noItems2'),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                    SizedBox(height: 32),
+                    ElevatedButton.icon(
+                      onPressed: () => _mostrarAlertaProducto(context),
+                      icon: Icon(Icons.add),
+                      label: Text('Agregar primer artículo'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: utils.cambiarColor(),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "",
-                              ),
-                              WidgetSpan(
-                                child: Icon(Icons.add_shopping_cart,
-                                    color: utils.cambiarColor()),
-                              ),
-                              TextSpan(
-                                text: " ",
-                              ),
-                              TextSpan(
-                                text: getTranlated(context, 'noItems2'),
-                                style: TextStyle(
-                                  color: utils.cambiarColor(),
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                      ),
                     ),
-                  ]),
-            ));
+                  ],
+                ),
+              ),
+            );
+
+            //  Card(
+            //     child: Container(
+            //   color: Colors.white,
+            //   child: Column(
+            //       // padding: EdgeInsets.all(15.0),
+            //       children: <Widget>[
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: <Widget>[
+            //             utils.cambiarNewImage(),
+            //           ],
+            //         ),
+            //         Column(
+            //           children: <Widget>[
+            //             Text(
+            //               getTranlated(context, 'noItems'),
+            //               style: TextStyle(
+            //                 color: utils.cambiarColor(),
+            //                 fontSize: 18,
+            //               ),
+            //             ),
+            //             RichText(
+            //               text: TextSpan(
+            //                 children: [
+            //                   TextSpan(
+            //                     text: "",
+            //                   ),
+            //                   WidgetSpan(
+            //                     child: Icon(Icons.add_shopping_cart,
+            //                         color: utils.cambiarColor()),
+            //                   ),
+            //                   TextSpan(
+            //                     text: " ",
+            //                   ),
+            //                   TextSpan(
+            //                     text: getTranlated(context, 'noItems2'),
+            //                     style: TextStyle(
+            //                       color: utils.cambiarColor(),
+            //                       fontSize: 18,
+            //                     ),
+            //                   ),
+            //                 ],
+            //               ),
+            //             )
+            //           ],
+            //         ),
+            //       ]),
+            // )
+            // );
           }
 
           // items.sort(
@@ -918,146 +987,116 @@ class _NewListState extends State<NewList> {
                     //#595959
 
                     child: Container(
-                      child: Card(
-                          elevation: isComplete ? 1 : 2,
-                          color: isComplete
-                              ? Color(0xffc3c3c3)
-                              : prefs.color == 5
-                                  ? utils.cambiarColor()
-                                  : prefs.darkLightTheme
-                                      ? ThemeData.dark().cardColor
-                                      : ThemeData().cardColor,
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 15,
-                                  ),
+                      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: isComplete
+                            ? Color(0xFFE8E8E8)
+                            : Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: isComplete
+                            ? []
+                            : [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.08),
+                                  blurRadius: 8,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Column(
+                          children: [
+                            // Header del item
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 12),
+                              child: Row(
+                                children: [
                                   Expanded(
                                     child: Text(
                                       items[index].name,
                                       style: TextStyle(
-                                        fontWeight: FontWeight.w900,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
                                         decoration: isComplete
                                             ? TextDecoration.lineThrough
                                             : TextDecoration.none,
                                         decorationColor: utils.cambiarColor(),
-                                        decorationStyle:
-                                            TextDecorationStyle.solid,
-                                        decorationThickness: 3,
+                                        decorationThickness: 2,
                                       ),
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.start,
                                     ),
                                   ),
-                                  SizedBox(width: 8),
-                                  Checkbox(
-                                    value: isComplete,
-                                    onChanged: (valor) {
-                                      HapticFeedback.mediumImpact();
-                                      _marcarComoCompletado(
-                                          index, valor ?? false);
-                                    },
-                                    activeColor: isComplete
-                                        ? Colors.black
-                                        : (prefs.color == 5)
-                                            ? Colors.white
-                                            : utils.cambiarColor(),
-                                  ),
-                                  SizedBox(
-                                    width: 15,
+                                  Transform.scale(
+                                    scale: 1.2,
+                                    child: Checkbox(
+                                      value: isComplete,
+                                      onChanged: (valor) {
+                                        HapticFeedback.mediumImpact();
+                                        _marcarComoCompletado(
+                                            index, valor ?? false);
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      activeColor: utils.cambiarColor(),
+                                    ),
                                   ),
                                 ],
                               ),
-                              GestureDetector(
-                                onTap: () => _mostrarAlertaEditarProducto(
-                                    context, index),
-                                child: Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 0, bottom: 5),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.edit,
-                                          color: isComplete
-                                              ? Colors.black
-                                              : (prefs.color == 5)
-                                                  ? Colors.white
-                                                  : utils.cambiarColor(),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text(
-                                                  utils.numberFormat(
-                                                      items[index].price),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              Text(getTranlated(
-                                                  context, 'price'))
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text(
-                                                  items[index]
-                                                      .quantity
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              Text(getTranlated(
-                                                  context, 'quantity'))
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text(
-                                                  utils.numberFormat(
-                                                      items[index].quantity *
-                                                          items[index].price),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              Text('Total')
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                      ],
+                            ),
+
+                            // Detalles del item
+                            InkWell(
+                              onTap: () =>
+                                  _mostrarAlertaEditarProducto(context, index),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                decoration: BoxDecoration(
+                                  color: isComplete
+                                      ? Colors.grey.withOpacity(0.1)
+                                      : utils.cambiarColor().withOpacity(0.05),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    _buildItemDetail(
+                                      icon: Icons.attach_money,
+                                      label: getTranlated(context, 'price'),
+                                      value: utils
+                                          .numberFormat(items[index].price),
                                     ),
-                                  ),
+                                    Container(
+                                        width: 1,
+                                        height: 30,
+                                        color: Colors.grey[300]),
+                                    _buildItemDetail(
+                                      icon: Icons.shopping_basket,
+                                      label: getTranlated(context, 'quantity'),
+                                      value: items[index].quantity.toString(),
+                                    ),
+                                    Container(
+                                        width: 1,
+                                        height: 30,
+                                        color: Colors.grey[300]),
+                                    _buildItemDetail(
+                                      icon: Icons.calculate,
+                                      label: 'Total',
+                                      value: utils.numberFormat(
+                                        items[index].quantity *
+                                            items[index].price,
+                                      ),
+                                      highlight: true,
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          )),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -1090,6 +1129,40 @@ class _NewListState extends State<NewList> {
   //   updatedCount(valor);
   // }
 
+  Widget _buildItemDetail({
+    required IconData icon,
+    required String label,
+    required String value,
+    bool highlight = false,
+  }) {
+    return Column(
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 14, color: Colors.grey[600]),
+            SizedBox(width: 4),
+            Text(
+              value,
+              style: TextStyle(
+                fontWeight: highlight ? FontWeight.bold : FontWeight.w600,
+                fontSize: highlight ? 16 : 15,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 2),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 11,
+            color: Colors.grey[600],
+          ),
+        ),
+      ],
+    );
+  }
+
   void _marcarComoCompletado(int index, bool valor) {
     int complValue = valor ? 1 : 0;
     items[index].complete = complValue;
@@ -1107,45 +1180,56 @@ class _NewListState extends State<NewList> {
 
   Widget _bNavbar(BuildContext context) {
     return BottomAppBar(
+      elevation: 8,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        TextButton(
-          //(valor == true) ? 1 : 0;
-          onPressed: () => (items.length <= 0) ? null : _guardarLista(context),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Icon(Icons.save),
-              Text(getTranlated(context, 'saveList'))
-            ],
-          ),
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildNavButton(
+              icon: Icons.save_outlined,
+              label: getTranlated(context, 'saveList'),
+              onPressed: items.isEmpty ? null : () => _guardarLista(context),
+              color: Colors.green,
+            ),
+            _buildNavButton(
+              icon: Icons.delete_outline,
+              label: getTranlated(context, 'clearList'),
+              onPressed:
+                  items.isEmpty ? null : () => _validateEliminarList(context),
+              color: Colors.red,
+            ),
+            FloatingActionButton(
+              onPressed: () => _mostrarAlertaProducto(context),
+              backgroundColor: utils.cambiarColor(),
+              child: Icon(Icons.add_shopping_cart, color: Colors.white),
+            ),
+          ],
         ),
-        TextButton(
-          onPressed: () =>
-              (items.length <= 0) ? null : _validateEliminarList(context),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Icon(Icons.remove_circle_outline, color: Colors.red[400]),
-              Text(getTranlated(context, 'clearList'))
-            ],
-          ),
+      ),
+    );
+  }
+
+  Widget _buildNavButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback? onPressed,
+    required Color color,
+  }) {
+    return TextButton.icon(
+      onPressed: onPressed,
+      icon: Icon(icon, color: onPressed == null ? Colors.grey : color),
+      label: Text(
+        label,
+        style: TextStyle(
+          color: onPressed == null ? Colors.grey : color,
+          fontWeight: FontWeight.w500,
         ),
-        TextButton(
-          onPressed: () => _mostrarAlertaProducto(context),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Icon(Icons.add_shopping_cart,
-                  color:
-                      (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
-              //Text(getTranlated(context, 'clearList'))
-            ],
-          ),
-        ),
-      ],
-    ));
+      ),
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      ),
+    );
   }
 
   _validateEliminarList(BuildContext context) {
