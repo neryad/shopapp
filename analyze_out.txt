@@ -1,0 +1,30 @@
+﻿Analyzing newlist.dart...                                       
+
+   info - The import of 'package:pocketlist/src/models/product_model.dart' is unnecessary because all of the used elements are also provided by the import of 'package:pocketlist/src/providers/db_provider.dart' - lib\src\pages\new-list\newlist.dart:7:8 - unnecessary_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:125:43 - deprecated_member_use
+warning - The left operand can't be null, so the right operand is never executed - lib\src\pages\new-list\newlist.dart:141:63 - dead_null_aware_expression
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:153:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:796:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:885:53 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:891:53 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:987:62 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:1012:50 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:1031:64 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:1207:63 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:1294:61 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:1297:52 - deprecated_member_use
+warning - The left operand can't be null, so the right operand is never executed - lib\src\pages\new-list\newlist.dart:1501:51 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\src\pages\new-list\newlist.dart:1505:17 - dead_null_aware_expression
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\src\pages\new-list\newlist.dart:1570:44 - deprecated_member_use
+warning - The left operand can't be null, so the right operand is never executed - lib\src\pages\new-list\newlist.dart:1595:61 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\src\pages\new-list\newlist.dart:1634:46 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\src\pages\new-list\newlist.dart:1782:19 - dead_null_aware_expression
+
+flutter : 19 issues found. (ran in 0.9s)
+At line:1 char:1
++ flutter analyze "lib/src/pages/New-List/newList.dart" --no-pub 2>&1 | ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo              : NotS    pecified: (19 i    ssues found. (r    an in 0.9s):Str    ing) [], Remote    Exception
+    + FullyQualifie    dErrorId : Nati    veCommandError
+ 
+

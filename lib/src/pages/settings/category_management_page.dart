@@ -1,0 +1,344 @@
+import 'package:flutter/material.dart';
+import 'package:pocketlist/src/localization/localization_constant.dart';
+import 'package:pocketlist/src/models/category_model.dart';
+import 'package:pocketlist/src/providers/db_provider.dart';
+import 'package:pocketlist/src/utils/utils.dart' as utils;
+
+class CategoryManagementPage extends StatefulWidget {
+  const CategoryManagementPage({Key? key}) : super(key: key);
+
+  @override
+  _CategoryManagementPageState createState() => _CategoryManagementPageState();
+}
+
+class _CategoryManagementPageState extends State<CategoryManagementPage> {
+  late Future<List<CategoryModel>> _categoriesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCategories();
+  }
+
+  void _loadCategories() {
+    _categoriesFuture = DBProvider.db.getCategories();
+  }
+
+  void _refresh() {
+    setState(() {
+      _loadCategories();
+    });
+  }
+
+  // ─── Add / Edit dialog ───────────────────────────────────
+  void _showCategoryDialog({CategoryModel? existing}) {
+    final nameController = TextEditingController(text: existing?.name ?? '');
+    String selectedIcon = existing?.icon ?? '🛒';
+
+    final icons = [
+      '🛒',
+      '🍎',
+      '🥛',
+      '🥩',
+      '🥖',
+      '🧹',
+      '💊',
+      '🐾',
+      '👶',
+      '🏠',
+      '🎁',
+      '🍕',
+      '🧴',
+      '🌿',
+      '❓',
+    ];
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) {
+        return StatefulBuilder(builder: (ctx, setDialogState) {
+          return Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.label_outline,
+                          color: utils.cambiarColor(), size: 28),
+                      const SizedBox(width: 12),
+                      Text(
+                        existing == null
+                            ? getTranlated(context, 'addCategory')
+                            : getTranlated(context, 'editCategory'),
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Icon picker
+                  Text(
+                    'Icono',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, color: Colors.grey[700]),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: icons.map((emoji) {
+                      final selected = emoji == selectedIcon;
+                      return GestureDetector(
+                        onTap: () => setDialogState(() => selectedIcon = emoji),
+                        child: Container(
+                          width: 44,
+                          height: 44,
+                          decoration: BoxDecoration(
+                            color: selected
+                                ? utils.cambiarColor().withOpacity(0.2)
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: selected
+                                  ? utils.cambiarColor()
+                                  : Colors.grey.shade300,
+                              width: selected ? 2 : 1,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(emoji,
+                                style: const TextStyle(fontSize: 22)),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Name field
+                  TextField(
+                    controller: nameController,
+                    autofocus: true,
+                    maxLength: 30,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration(
+                      labelText: getTranlated(context, 'editCategory'),
+                      counterText: '',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide:
+                            BorderSide(color: utils.cambiarColor(), width: 2),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(),
+                        child: Text(getTranlated(context, 'cancel')),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: utils.cambiarColor(),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                        onPressed: () async {
+                          final name = nameController.text.trim();
+                          if (name.isEmpty) return;
+
+                          if (existing == null) {
+                            await DBProvider.db.insertCategory(
+                              CategoryModel(name: name, icon: selectedIcon),
+                            );
+                          } else {
+                            existing.name = name;
+                            existing.icon = selectedIcon;
+                            await DBProvider.db.updateCategory(existing);
+                          }
+
+                          Navigator.of(ctx).pop();
+                          _refresh();
+                        },
+                        child: Text(
+                          getTranlated(context, 'save'),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+      },
+    );
+  }
+
+  // ─── Delete confirmation ──────────────────────────────────
+  void _confirmDelete(CategoryModel category) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(getTranlated(context, 'deleteCategory')),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(category.name,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            Text(
+              getTranlated(context, 'deleteCategoryWarn'),
+              style: TextStyle(color: Colors.grey[600], fontSize: 13),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(getTranlated(context, 'cancel')),
+          ),
+          TextButton(
+            onPressed: () async {
+              await DBProvider.db.deleteCategory(category.id!);
+              Navigator.of(ctx).pop();
+              _refresh();
+            },
+            child: Text(
+              getTranlated(context, 'delete'),
+              style: const TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: utils.cambiarColor(),
+        title: Text(getTranlated(context, 'categoryManagement')),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showCategoryDialog(),
+        backgroundColor: utils.cambiarColor(),
+        icon: const Icon(Icons.add, color: Colors.white),
+        label: Text(
+          getTranlated(context, 'addCategory'),
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
+      body: FutureBuilder<List<CategoryModel>>(
+        future: _categoriesFuture,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final categories = snapshot.data!;
+
+          if (categories.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.label_outline,
+                      size: 64, color: utils.cambiarColor().withOpacity(0.4)),
+                  const SizedBox(height: 16),
+                  Text(
+                    getTranlated(context, 'categories'),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    getTranlated(context, 'addCategory'),
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          return ListView.builder(
+            padding: const EdgeInsets.only(top: 8, bottom: 100),
+            itemCount: categories.length,
+            itemBuilder: (context, index) {
+              final cat = categories[index];
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  leading: Container(
+                    width: 46,
+                    height: 46,
+                    decoration: BoxDecoration(
+                      color: utils.cambiarColor().withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child:
+                          Text(cat.icon, style: const TextStyle(fontSize: 24)),
+                    ),
+                  ),
+                  title: Text(
+                    cat.name,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.edit_outlined,
+                            color: utils.cambiarColor()),
+                        onPressed: () => _showCategoryDialog(existing: cat),
+                        tooltip: getTranlated(context, 'editCategory'),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete_outline,
+                            color: Theme.of(context).colorScheme.error),
+                        onPressed: () => _confirmDelete(cat),
+                        tooltip: getTranlated(context, 'deleteCategory'),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}

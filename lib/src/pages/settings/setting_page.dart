@@ -3,6 +3,7 @@ import 'package:pocketlist/main.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/data/class/language.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
+import 'package:pocketlist/src/pages/settings/category_management_page.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -132,6 +133,23 @@ class _SettingPageState extends State<SettingPage> {
                 ? 'Configura tu perfil'
                 : prefs.nombreUsuario,
             onTap: () => Navigator.pushNamed(context, 'userPage'),
+            trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+          ),
+
+          SizedBox(height: 16),
+
+          // Sección: Categorías
+          _buildSectionHeader(getTranlated(context, 'categories')),
+          _buildSettingCard(
+            icon: Icons.label_outline,
+            title: getTranlated(context, 'categoryManagement'),
+            subtitle: getTranlated(context, 'filterByCategory'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const CategoryManagementPage(),
+              ),
+            ),
             trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
           ),
 

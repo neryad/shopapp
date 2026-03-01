@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:pocketlist/src/models/List_model.dart';
+import 'package:pocketlist/src/models/category_model.dart';
 import 'package:pocketlist/src/models/product_model.dart';
 export 'package:pocketlist/src/models/product_model.dart';
 
@@ -36,9 +37,12 @@ class DBProvider {
     return await factory.openDatabase(
       'List.db',
       options: OpenDatabaseOptions(
-        version: 1,
+        version: 2,
         onCreate: (Database db, int version) async {
           await _createTables(db);
+        },
+        onUpgrade: (Database db, int oldVersion, int newVersion) async {
+          await _migrateDB(db, oldVersion, newVersion);
         },
       ),
     );
@@ -51,15 +55,18 @@ class DBProvider {
 
     return await openDatabase(
       dbPath,
-      version: 1,
+      version: 2,
       onOpen: (db) {},
       onCreate: (Database db, int version) async {
         await _createTables(db);
       },
+      onUpgrade: (Database db, int oldVersion, int newVersion) async {
+        await _migrateDB(db, oldVersion, newVersion);
+      },
     );
   }
 
-  // Método común para crear tablas
+  // Método común para crear tablas (instalaciones nuevas)
   Future<void> _createTables(Database db) async {
     await db.execute('CREATE TABLE Lista ('
         'id TEXT PRIMARY KEY,'
@@ -71,6 +78,12 @@ class DBProvider {
         'diference REAL'
         ')');
 
+    await db.execute('CREATE TABLE categories ('
+        'id INTEGER PRIMARY KEY AUTOINCREMENT,'
+        'name TEXT NOT NULL,'
+        'icon TEXT'
+        ')');
+
     await db.execute('CREATE TABLE product ('
         'id INTEGER PRIMARY KEY AUTOINCREMENT,'
         'name TEXT,'
@@ -78,9 +91,39 @@ class DBProvider {
         'price REAL,'
         'listId TEXT,'
         'complete INTEGER,'
-        'FOREIGN KEY(listId) REFERENCES Lista(id)'
+        'categoryId INTEGER,'
+        'FOREIGN KEY(listId) REFERENCES Lista(id),'
+        'FOREIGN KEY(categoryId) REFERENCES categories(id)'
         ')');
   }
+
+  // Migraciones incrementales
+  Future<void> _migrateDB(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      // v1 → v2: añadir tabla categories y columna categoryId en product
+      await db.execute('CREATE TABLE IF NOT EXISTS categories ('
+          'id INTEGER PRIMARY KEY AUTOINCREMENT,'
+          'name TEXT NOT NULL,'
+          'icon TEXT'
+          ')');
+
+      // Verificar si la columna ya existe antes de intentar añadirla
+      final columnExists = await _columnExists(db, 'product', 'categoryId');
+      if (!columnExists) {
+        await db.execute('ALTER TABLE product ADD COLUMN categoryId INTEGER');
+      }
+    }
+  }
+
+  Future<bool> _columnExists(Database db, String table, String column) async {
+    final List<Map<String, dynamic>> columns =
+        await db.rawQuery('PRAGMA table_info($table)');
+    return columns.any((element) => element['name'] == column);
+  }
+
+  // ─────────────────────────────────────────────
+  // LISTA CRUD
+  // ─────────────────────────────────────────────
 
   //Crear Registro
   nuevoLista(Lista nuevalista) async {
@@ -88,6 +131,68 @@ class DBProvider {
     final res = await db!.insert('Lista', nuevalista.toJson());
     return res;
   }
+
+  ///GET ALL LIST
+  Future<List<Lista>> getToadasLista() async {
+    final db = await database;
+    final res = await db!.query('Lista');
+
+    List<Lista> list =
+        res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
+    return list;
+  }
+
+  ///GET PRODUCT BY LIST ID
+  Future<Lista> getListId(String id) async {
+    final db = await database;
+    final res = await db!.query('Lista', where: 'id =?', whereArgs: [id]);
+    Lista art =
+        res.isNotEmpty ? res.map((e) => Lista.fromJson(e)).first : Lista();
+    return art;
+  }
+
+  Future<List<Lista>> getListIds(String id) async {
+    final db = await database;
+    final res = await db!.query('Lista', where: 'id =?', whereArgs: [id]);
+    List<Lista> list =
+        res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
+    return list;
+  }
+
+  ///DELETE LIST BY ID
+  Future<int> deleteList(String id) async {
+    final db = await database;
+    // Primero eliminar productos de esa lista
+    await db!.delete('product', where: 'listId = ?', whereArgs: [id]);
+    // Luego eliminar la lista
+    final res = await db.delete('Lista', where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
+
+  ///DELETE LIST BY ID - ALIAS para compatibilidad
+  Future<String> deleteLista(String id) async {
+    final res = await deleteList(id);
+    return res.toString();
+  }
+
+  ///DELETE ALL LISTS
+  Future<int> deleteAllList() async {
+    final db = await database;
+    final res = await db!.rawDelete('DELETE FROM Lista');
+    return res;
+  }
+
+  ///EDIT LIST
+  updateList(Lista prod) async {
+    final db = await database;
+    final res = await db!
+        .update('Lista', prod.toJson(), where: 'id = ?', whereArgs: [prod.id]);
+    return res;
+  }
+
+  // ─────────────────────────────────────────────
+  // PRODUCT CRUD
+  // ─────────────────────────────────────────────
 
   newProd(ProductModel productModel) async {
     final db = await database;
@@ -125,33 +230,6 @@ class DBProvider {
     return await getArticles();
   }
 
-  ///GET ALL LIST
-  Future<List<Lista>> getToadasLista() async {
-    final db = await database;
-    final res = await db!.query('Lista');
-
-    List<Lista> list =
-        res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
-    return list;
-  }
-
-  ///GET PRODUCT BY LIST ID
-  Future<Lista> getListId(String id) async {
-    final db = await database;
-    final res = await db!.query('Lista', where: 'id =?', whereArgs: [id]);
-    Lista art =
-        res.isNotEmpty ? res.map((e) => Lista.fromJson(e)).first : Lista();
-    return art;
-  }
-
-  Future<List<Lista>> getListIds(String id) async {
-    final db = await database;
-    final res = await db!.query('Lista', where: 'id =?', whereArgs: [id]);
-    List<Lista> list =
-        res.isNotEmpty ? res.map((l) => Lista.fromJson(l)).toList() : [];
-    return list;
-  }
-
   ///GET PRODUCTS BY LIST ID
   Future<List<ProductModel>> getProdId(String id) async {
     final db = await database;
@@ -159,22 +237,6 @@ class DBProvider {
     List<ProductModel> art =
         res.isNotEmpty ? res.map((e) => ProductModel.fromJson(e)).toList() : [];
     return art;
-  }
-
-  ///DELETE LIST BY ID
-  Future<int> deleteList(String id) async {
-    final db = await database;
-    // Primero eliminar productos de esa lista
-    await db!.delete('product', where: 'listId = ?', whereArgs: [id]);
-    // Luego eliminar la lista
-    final res = await db.delete('Lista', where: 'id = ?', whereArgs: [id]);
-    return res;
-  }
-
-  ///DELETE LIST BY ID - ALIAS para compatibilidad
-  Future<String> deleteLista(String id) async {
-    final res = await deleteList(id);
-    return res.toString();
   }
 
   ///DELETE PRODUCT BY ID
@@ -206,13 +268,6 @@ class DBProvider {
     return res;
   }
 
-  ///DELETE ALL LISTS
-  Future<int> deleteAllList() async {
-    final db = await database;
-    final res = await db!.rawDelete('DELETE FROM Lista');
-    return res;
-  }
-
   ///EDIT PRODUCTS
   updateProd(ProductModel prod) async {
     final db = await database;
@@ -221,11 +276,56 @@ class DBProvider {
     return res;
   }
 
-  ///EDIT LIST
-  updateList(Lista prod) async {
+  // ─────────────────────────────────────────────
+  // CATEGORY CRUD
+  // ─────────────────────────────────────────────
+
+  /// Obtener todas las categorías
+  Future<List<CategoryModel>> getCategories() async {
     final db = await database;
-    final res = await db!
-        .update('Lista', prod.toJson(), where: 'id = ?', whereArgs: [prod.id]);
-    return res;
+    final res = await db!.query('categories', orderBy: 'name ASC');
+    return res.isNotEmpty
+        ? res.map((e) => CategoryModel.fromJson(e)).toList()
+        : [];
+  }
+
+  /// Insertar una categoría, devuelve el id generado
+  Future<int> insertCategory(CategoryModel category) async {
+    final db = await database;
+    return await db!.insert('categories', category.toJson());
+  }
+
+  /// Actualizar el nombre/icono de una categoría existente
+  Future<int> updateCategory(CategoryModel category) async {
+    final db = await database;
+    return await db!.update('categories', category.toJson(),
+        where: 'id = ?', whereArgs: [category.id]);
+  }
+
+  /// Eliminar una categoría; los productos asociados quedan con categoryId = NULL
+  Future<int> deleteCategory(int id) async {
+    final db = await database;
+    // Desasociar productos antes de eliminar
+    await db!.update(
+      'product',
+      {'categoryId': null},
+      where: 'categoryId = ?',
+      whereArgs: [id],
+    );
+    return await db.delete('categories', where: 'id = ?', whereArgs: [id]);
+  }
+
+  /// Seed de categorías por defecto (solo para instalaciones nuevas)
+  Future<void> seedDefaultCategories(List<Map<String, String>> defaults) async {
+    final db = await database;
+    final existing = await db!.query('categories');
+    if (existing.isNotEmpty) return; // Solo seedear si está vacío
+
+    for (final cat in defaults) {
+      await db.insert('categories', {
+        'name': cat['name']!,
+        'icon': cat['icon']!,
+      });
+    }
   }
 }

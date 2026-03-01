@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/models/List_model.dart';
+import 'package:pocketlist/src/models/category_model.dart';
 import 'package:pocketlist/src/models/product_model.dart';
 import 'package:pocketlist/src/models/suge.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
@@ -31,6 +32,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   bool _dialogoCompletadoMostrado = false;
   FocusNode myFocusNode = FocusNode();
 
+  // Categories state
+  List<CategoryModel> _categories = [];
+  int? _filterCategoryId; // null = show all, -1 = show "no category"
+  bool _sortByCategory = false;
+  int? _newItemCategoryId; // selected category when adding a new item
+  int? _editItemCategoryId; // selected category when editing
+
   final prefs = PreferenciasUsuario();
 
   @override
@@ -52,6 +60,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       diference = widget.existingList!.diference;
       listaModel = widget.existingList!;
     }
+
+    _loadCategories();
+  }
+
+  Future<void> _loadCategories() async {
+    final cats = await DBProvider.db.getCategories();
+    if (mounted) setState(() => _categories = cats);
   }
 
   final formKey = GlobalKey<FormState>();
@@ -311,84 +326,126 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   void _mostrarAlertaProducto(BuildContext context) {
     productModel = ProductModel();
+    _newItemCategoryId = null;
 
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Container(
-            padding: EdgeInsets.all(24),
-            child: Form(
-              key: formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.add_shopping_cart,
-                          color: utils.cambiarColor(), size: 28),
-                      SizedBox(width: 12),
-                      Text(
-                        getTranlated(context, 'newArt'),
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 24),
-                  _crearNombreArticulo(),
-                  SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(child: _crearcantidadArticulo()),
-                      SizedBox(width: 16),
-                      Expanded(child: _crearPrecioArticulo()),
-                    ],
-                  ),
-                  SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          productModel = ProductModel();
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(getTranlated(context, 'baclTolist')),
-                      ),
-                      SizedBox(width: 8),
-                      ElevatedButton(
-                        onPressed: () {
-                          _subimt();
-                          getTotal();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: utils.cambiarColor(),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+        return StatefulBuilder(builder: (context, setDialogState) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Container(
+              padding: EdgeInsets.all(24),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.add_shopping_cart,
+                            color: utils.cambiarColor(), size: 28),
+                        SizedBox(width: 12),
+                        Text(
+                          getTranlated(context, 'newArt'),
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        child: Text(
-                          getTranlated(context, 'add'),
-                          style: TextStyle(color: Colors.white),
+                      ],
+                    ),
+                    SizedBox(height: 24),
+                    _crearNombreArticulo(),
+                    SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(child: _crearcantidadArticulo()),
+                        SizedBox(width: 16),
+                        Expanded(child: _crearPrecioArticulo()),
+                      ],
+                    ),
+                    if (_categories.isNotEmpty) ...[
+                      SizedBox(height: 16),
+                      DropdownButtonFormField<int?>(
+                        initialValue: _newItemCategoryId,
+                        decoration: InputDecoration(
+                          labelText: getTranlated(context, 'categories'),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                                color: utils.cambiarColor(), width: 2),
+                          ),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                         ),
+                        items: [
+                          DropdownMenuItem<int?>(
+                            value: null,
+                            child: Text(getTranlated(context, 'noCategory'),
+                                style: TextStyle(color: Colors.grey[600])),
+                          ),
+                          ..._categories.map((cat) => DropdownMenuItem<int?>(
+                                value: cat.id,
+                                child: Row(
+                                  children: [
+                                    Text(cat.icon,
+                                        style: TextStyle(fontSize: 16)),
+                                    SizedBox(width: 8),
+                                    Text(cat.name),
+                                  ],
+                                ),
+                              )),
+                        ],
+                        onChanged: (val) =>
+                            setDialogState(() => _newItemCategoryId = val),
                       ),
                     ],
-                  ),
-                ],
+                    SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            productModel = ProductModel();
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(getTranlated(context, 'baclTolist')),
+                        ),
+                        SizedBox(width: 8),
+                        ElevatedButton(
+                          onPressed: () {
+                            _subimt();
+                            getTotal();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: utils.cambiarColor(),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            getTranlated(context, 'add'),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
+          );
+        });
       },
     );
   }
@@ -498,13 +555,15 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     var prod = ProductModel(
         name: productModel.name,
         quantity: productModel.quantity,
-        listId: listId, // Usa el listId correcto (tmp o id real)
+        listId: listId,
         price: productModel.price,
-        complete: 0);
+        complete: 0,
+        categoryId: _newItemCategoryId);
     items.insert(it, prod);
     DBProvider.db.newProd(prod);
 
     productModel = ProductModel();
+    _newItemCategoryId = null;
 
     formKey.currentState!.reset();
     setState(() {});
@@ -512,55 +571,94 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   }
 
   void _mostrarAlertaEditarProducto(BuildContext context, int index) {
+    _editItemCategoryId = items[index].categoryId;
+
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text(getTranlated(context, 'EupdArt')),
-            content: Form(
-              key: editFormKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  _editarNombreArticulo(index),
-                  _editarcantidadArticulo(index),
-                  _editarPrecioArticulo(index),
-                ],
+          return StatefulBuilder(builder: (context, setDialogState) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              title: Text(getTranlated(context, 'EupdArt')),
+              content: Form(
+                key: editFormKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    _editarNombreArticulo(index),
+                    _editarcantidadArticulo(index),
+                    _editarPrecioArticulo(index),
+                    if (_categories.isNotEmpty) ...[
+                      SizedBox(height: 12),
+                      DropdownButtonFormField<int?>(
+                        initialValue: _editItemCategoryId,
+                        decoration: InputDecoration(
+                          labelText: getTranlated(context, 'categories'),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        ),
+                        items: [
+                          DropdownMenuItem<int?>(
+                            value: null,
+                            child: Text(getTranlated(context, 'noCategory'),
+                                style: TextStyle(color: Colors.grey[600])),
+                          ),
+                          ..._categories.map((cat) => DropdownMenuItem<int?>(
+                                value: cat.id,
+                                child: Row(
+                                  children: [
+                                    Text(cat.icon,
+                                        style: TextStyle(fontSize: 16)),
+                                    SizedBox(width: 8),
+                                    Text(cat.name),
+                                  ],
+                                ),
+                              )),
+                        ],
+                        onChanged: (val) =>
+                            setDialogState(() => _editItemCategoryId = val),
+                      ),
+                    ],
+                  ],
+                ),
               ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(
-                    getTranlated(context, 'leave'),
-                    style: TextStyle(
-                        color: (prefs.color == 5)
-                            ? Colors.white
-                            : utils.cambiarColor()),
-                  )),
-              TextButton(
-                  onPressed: () {
-                    _editDubimt(index);
-                    getTotal();
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    getTranlated(context, 'save'),
-                    style: TextStyle(
-                        color: (prefs.color == 5)
-                            ? Colors.white
-                            : utils.cambiarColor()),
-                  )),
-            ],
-          );
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(
+                      getTranlated(context, 'leave'),
+                      style: TextStyle(
+                          color: (prefs.color == 5)
+                              ? Colors.white
+                              : utils.cambiarColor()),
+                    )),
+                TextButton(
+                    onPressed: () {
+                      _editDubimt(index);
+                      getTotal();
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      getTranlated(context, 'save'),
+                      style: TextStyle(
+                          color: (prefs.color == 5)
+                              ? Colors.white
+                              : utils.cambiarColor()),
+                    )),
+              ],
+            );
+          });
         });
   }
 
   void _editDubimt(int index) {
     editFormKey.currentState!.save();
+    items[index].categoryId = _editItemCategoryId;
     DBProvider.db.updateProd(items[index]);
 
     if (!isNewList) {
@@ -830,228 +928,423 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             );
           }
 
-          items.sort((a, b) {
+          // ── Apply filter ──────────────────────────────────────
+          final displayItems = items.where((item) {
+            if (_filterCategoryId == null) return true;
+            if (_filterCategoryId == -1) return item.categoryId == null;
+            return item.categoryId == _filterCategoryId;
+          }).toList();
+
+          // ── Apply sort ────────────────────────────────────────
+          displayItems.sort((a, b) {
             if (a.complete != b.complete) {
               return a.complete.compareTo(b.complete);
+            }
+            if (_sortByCategory) {
+              final aCatName = _categories
+                  .firstWhere((c) => c.id == a.categoryId,
+                      orElse: () => CategoryModel(name: ''))
+                  .name;
+              final bCatName = _categories
+                  .firstWhere((c) => c.id == b.categoryId,
+                      orElse: () => CategoryModel(name: ''))
+                  .name;
+              final catCmp = aCatName.compareTo(bCatName);
+              if (catCmp != 0) return catCmp;
             }
             return a.name.toLowerCase().compareTo(b.name.toLowerCase());
           });
 
+          // ── Category chip filter bar ──────────────────────────
+          final hasCategories =
+              _categories.isNotEmpty && items.any((i) => i.categoryId != null);
+
           return Expanded(
-              child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (BuildContext context, int index) {
-              _controllers.add(new TextEditingController());
-              bool isComplete = (items[index].complete == 1) ? true : false;
-
-              bool esElPrimeroCompletado =
-                  index > 0 && items[index - 1].complete == 0 && isComplete;
-
-              return Column(
-                children: [
-                  if (esElPrimeroCompletado)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              children: [
+                if (hasCategories || _sortByCategory)
+                  Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: Column(
+                      children: [
+                        // Filter chips
+                        if (hasCategories)
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
                             child: Row(
                               children: [
-                                Icon(
-                                  Icons.check_circle,
-                                  size: 16,
-                                  color: Colors.grey[600],
-                                ),
-                                SizedBox(width: 6),
-                                Text(
-                                  getTranlated(context, 'completed') ??
-                                      'Completados',
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
+                                // "All" chip
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 6),
+                                  child: FilterChip(
+                                    label: Text(getTranlated(
+                                        context, 'filterByCategory')),
+                                    selected: _filterCategoryId == null,
+                                    onSelected: (_) => setState(
+                                        () => _filterCategoryId = null),
+                                    selectedColor:
+                                        utils.cambiarColor().withOpacity(0.2),
+                                    checkmarkColor: utils.cambiarColor(),
                                   ),
                                 ),
+                                // Per-category chips
+                                ..._categories
+                                    .where((cat) => items
+                                        .any((i) => i.categoryId == cat.id))
+                                    .map((cat) => Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 6),
+                                          child: FilterChip(
+                                            avatar: Text(cat.icon,
+                                                style: const TextStyle(
+                                                    fontSize: 14)),
+                                            label: Text(cat.name),
+                                            selected:
+                                                _filterCategoryId == cat.id,
+                                            onSelected: (_) => setState(() =>
+                                                _filterCategoryId =
+                                                    _filterCategoryId == cat.id
+                                                        ? null
+                                                        : cat.id),
+                                            selectedColor: utils
+                                                .cambiarColor()
+                                                .withOpacity(0.2),
+                                            checkmarkColor:
+                                                utils.cambiarColor(),
+                                          ),
+                                        )),
+                                // "No category" chip
+                                if (items.any((i) => i.categoryId == null))
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 6),
+                                    child: FilterChip(
+                                      label: Text(
+                                          getTranlated(context, 'noCategory')),
+                                      selected: _filterCategoryId == -1,
+                                      onSelected: (_) => setState(() =>
+                                          _filterCategoryId =
+                                              _filterCategoryId == -1
+                                                  ? null
+                                                  : -1),
+                                      selectedColor:
+                                          utils.cambiarColor().withOpacity(0.2),
+                                      checkmarkColor: utils.cambiarColor(),
+                                    ),
+                                  ),
                               ],
                             ),
                           ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  Dismissible(
-                    direction: DismissDirection.endToStart,
-                    background: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Align(
+                        // Sort toggle row
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                              Text(
-                                getTranlated(context, 'delete'),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                            children: [
+                              Icon(Icons.sort,
+                                  size: 16, color: Colors.grey[600]),
+                              const SizedBox(width: 6),
+                              GestureDetector(
+                                onTap: () =>
+                                    setState(() => _sortByCategory = false),
+                                child: Text(
+                                  getTranlated(context, 'sortAlpha'),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: !_sortByCategory
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                    color: !_sortByCategory
+                                        ? utils.cambiarColor()
+                                        : Colors.grey[500],
+                                  ),
                                 ),
-                                textAlign: TextAlign.right,
                               ),
-                              SizedBox(
-                                width: 20,
+                              Text('  ·  ',
+                                  style: TextStyle(color: Colors.grey[400])),
+                              GestureDetector(
+                                onTap: () =>
+                                    setState(() => _sortByCategory = true),
+                                child: Text(
+                                  getTranlated(context, 'sortByCategory'),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: _sortByCategory
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                    color: _sortByCategory
+                                        ? utils.cambiarColor()
+                                        : Colors.grey[500],
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                          alignment: Alignment.centerRight,
                         ),
-                      ),
+                      ],
                     ),
-                    key: Key(items[index].id.toString()),
-                    onDismissed: (direction) {
-                      var deletedItem = items[index];
-                      showDeleteSnack(context, getTranlated(context, 'offLis'),
-                          index, deletedItem, items);
-                      DBProvider.db.deleteProd(items[index].id);
-                      items.removeAt(index);
+                  ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: displayItems.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      _controllers.add(TextEditingController());
+                      // Map displayItems index back to items index
+                      final itemIndex = items.indexOf(displayItems[index]);
+                      final item = displayItems[index];
+                      bool isComplete = item.complete == 1;
 
-                      getTotal();
-                      getDiference();
-                      setState(() {});
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: isComplete
-                            ? Color(0xFFE8E8E8)
-                            : Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: isComplete
-                            ? []
-                            : [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
-                                  blurRadius: 8,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
+                      bool esElPrimeroCompletado = index > 0 &&
+                          displayItems[index - 1].complete == 0 &&
+                          isComplete;
+
+                      // Category label for this item
+                      final itemCat = item.categoryId != null
+                          ? _categories.firstWhere(
+                              (c) => c.id == item.categoryId,
+                              orElse: () => CategoryModel(name: '', icon: ''))
+                          : null;
+
+                      return Column(
+                        children: [
+                          if (esElPrimeroCompletado)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: Text(
-                                      items[index].name,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                        decoration: isComplete
-                                            ? TextDecoration.lineThrough
-                                            : TextDecoration.none,
-                                        decorationColor: utils.cambiarColor(),
-                                        decorationThickness: 2,
-                                      ),
+                                    child: Divider(
+                                      thickness: 1,
+                                      color: Colors.grey[400],
                                     ),
                                   ),
-                                  Transform.scale(
-                                    scale: 1.2,
-                                    child: Checkbox(
-                                      value: isComplete,
-                                      onChanged: (valor) {
-                                        HapticFeedback.mediumImpact();
-                                        _marcarComoCompletado(
-                                            index, valor ?? false);
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      activeColor: utils.cambiarColor(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.check_circle,
+                                          size: 16,
+                                          color: Colors.grey[600],
+                                        ),
+                                        SizedBox(width: 6),
+                                        Text(
+                                          'Completados',
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Divider(
+                                      thickness: 1,
+                                      color: Colors.grey[400],
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            InkWell(
-                              onTap: () =>
-                                  _mostrarAlertaEditarProducto(context, index),
+                          Dismissible(
+                            direction: DismissDirection.endToStart,
+                            background: Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 12),
                                 decoration: BoxDecoration(
-                                  color: isComplete
-                                      ? Colors.grey.withOpacity(0.1)
-                                      : utils.cambiarColor().withOpacity(0.05),
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    _buildItemDetail(
-                                      icon: Icons.attach_money,
-                                      label: getTranlated(context, 'price'),
-                                      value: utils
-                                          .numberFormat(items[index].price),
-                                    ),
-                                    Container(
-                                        width: 1,
-                                        height: 30,
-                                        color: Colors.grey[300]),
-                                    _buildItemDetail(
-                                      icon: Icons.shopping_basket,
-                                      label: getTranlated(context, 'quantity'),
-                                      value: items[index].quantity.toString(),
-                                    ),
-                                    Container(
-                                        width: 1,
-                                        height: 30,
-                                        color: Colors.grey[300]),
-                                    _buildItemDetail(
-                                      icon: Icons.calculate,
-                                      label: 'Total',
-                                      value: utils.numberFormat(
-                                        items[index].quantity *
-                                            items[index].price,
+                                child: Align(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Icon(Icons.delete, color: Colors.white),
+                                      Text(
+                                        getTranlated(context, 'delete'),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                        textAlign: TextAlign.right,
                                       ),
-                                      highlight: true,
+                                      SizedBox(width: 20),
+                                    ],
+                                  ),
+                                  alignment: Alignment.centerRight,
+                                ),
+                              ),
+                            ),
+                            key: Key(item.id.toString()),
+                            onDismissed: (direction) {
+                              showDeleteSnack(
+                                  context,
+                                  getTranlated(context, 'offLis'),
+                                  itemIndex,
+                                  item,
+                                  items);
+                              DBProvider.db.deleteProd(item.id);
+                              items.removeAt(itemIndex);
+                              getTotal();
+                              getDiference();
+                              setState(() {});
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: isComplete
+                                    ? Color(0xFFE8E8E8)
+                                    : Theme.of(context).cardColor,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: isComplete
+                                    ? []
+                                    : [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.08),
+                                          blurRadius: 8,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 12),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  item.name,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16,
+                                                    decoration: isComplete
+                                                        ? TextDecoration
+                                                            .lineThrough
+                                                        : TextDecoration.none,
+                                                    decorationColor:
+                                                        utils.cambiarColor(),
+                                                    decorationThickness: 2,
+                                                  ),
+                                                ),
+                                                if (itemCat != null &&
+                                                    itemCat.name.isNotEmpty)
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 2),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(itemCat.icon,
+                                                            style: TextStyle(
+                                                                fontSize: 11)),
+                                                        SizedBox(width: 3),
+                                                        Text(
+                                                          itemCat.name,
+                                                          style: TextStyle(
+                                                            fontSize: 11,
+                                                            color: Colors
+                                                                .grey[600],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
+                                          Transform.scale(
+                                            scale: 1.2,
+                                            child: Checkbox(
+                                              value: isComplete,
+                                              onChanged: (valor) {
+                                                HapticFeedback.mediumImpact();
+                                                _marcarComoCompletado(
+                                                    itemIndex, valor ?? false);
+                                              },
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                              ),
+                                              activeColor: utils.cambiarColor(),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () => _mostrarAlertaEditarProducto(
+                                          context, itemIndex),
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 12),
+                                        decoration: BoxDecoration(
+                                          color: isComplete
+                                              ? Colors.grey.withOpacity(0.1)
+                                              : utils
+                                                  .cambiarColor()
+                                                  .withOpacity(0.05),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            _buildItemDetail(
+                                              icon: Icons.attach_money,
+                                              label: getTranlated(
+                                                  context, 'price'),
+                                              value: utils
+                                                  .numberFormat(item.price),
+                                            ),
+                                            Container(
+                                                width: 1,
+                                                height: 30,
+                                                color: Colors.grey[300]),
+                                            _buildItemDetail(
+                                              icon: Icons.shopping_basket,
+                                              label: getTranlated(
+                                                  context, 'quantity'),
+                                              value: item.quantity.toString(),
+                                            ),
+                                            Container(
+                                                width: 1,
+                                                height: 30,
+                                                color: Colors.grey[300]),
+                                            _buildItemDetail(
+                                              icon: Icons.calculate,
+                                              label: 'Total',
+                                              value: utils.numberFormat(
+                                                  item.quantity * item.price),
+                                              highlight: true,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
-                ],
-              );
-            },
-          ));
+                ),
+              ],
+            ),
+          );
         });
   }
 
