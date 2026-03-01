@@ -137,8 +137,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 if (itemsCompletados > 0)
                   IconButton(
                     icon: Icon(Icons.refresh),
-                    tooltip:
-                        getTranlated(context, 'resetList') ?? 'Reiniciar lista',
+                    tooltip: getTranlated(context, 'resetList'),
                     onPressed: _confirmResetCompleted,
                   ),
 
@@ -897,7 +896,11 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
-                        color: Colors.grey[700],
+                        color: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.color
+                            ?.withOpacity(0.8),
                       ),
                     ),
                     SizedBox(height: 8),
@@ -905,7 +908,11 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       getTranlated(context, 'noItems2'),
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.grey[500],
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.color
+                            ?.withOpacity(0.6),
                       ),
                     ),
                     SizedBox(height: 32),
@@ -1041,7 +1048,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                           child: Row(
                             children: [
                               Icon(Icons.sort,
-                                  size: 16, color: Colors.grey[600]),
+                                  size: 16, color: Theme.of(context).hintColor),
                               const SizedBox(width: 6),
                               GestureDetector(
                                 onTap: () =>
@@ -1055,12 +1062,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                         : FontWeight.normal,
                                     color: !_sortByCategory
                                         ? utils.cambiarColor()
-                                        : Colors.grey[500],
+                                        : Theme.of(context).disabledColor,
                                   ),
                                 ),
                               ),
                               Text('  ·  ',
-                                  style: TextStyle(color: Colors.grey[400])),
+                                  style: TextStyle(
+                                      color: Theme.of(context).dividerColor)),
                               GestureDetector(
                                 onTap: () =>
                                     setState(() => _sortByCategory = true),
@@ -1115,7 +1123,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                   Expanded(
                                     child: Divider(
                                       thickness: 1,
-                                      color: Colors.grey[400],
+                                      color: Theme.of(context).dividerColor,
                                     ),
                                   ),
                                   Padding(
@@ -1126,13 +1134,15 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                         Icon(
                                           Icons.check_circle,
                                           size: 16,
-                                          color: Colors.grey[600],
+                                          color:
+                                              Theme.of(context).disabledColor,
                                         ),
                                         SizedBox(width: 6),
                                         Text(
-                                          'Completados',
+                                          getTranlated(context, 'completed'),
                                           style: TextStyle(
-                                            color: Colors.grey[600],
+                                            color:
+                                                Theme.of(context).disabledColor,
                                             fontSize: 12,
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -1143,7 +1153,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                   Expanded(
                                     child: Divider(
                                       thickness: 1,
-                                      color: Colors.grey[400],
+                                      color: Theme.of(context).dividerColor,
                                     ),
                                   ),
                                 ],
@@ -1197,7 +1207,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                   horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
                                 color: isComplete
-                                    ? Color(0xFFE8E8E8)
+                                    ? Theme.of(context)
+                                        .disabledColor
+                                        .withOpacity(0.12)
                                     : Theme.of(context).cardColor,
                                 borderRadius: BorderRadius.circular(12),
                                 boxShadow: isComplete
@@ -1254,8 +1266,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                                           itemCat.name,
                                                           style: TextStyle(
                                                             fontSize: 11,
-                                                            color: Colors
-                                                                .grey[600],
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodySmall
+                                                                ?.color
+                                                                ?.withOpacity(
+                                                                    0.6),
                                                           ),
                                                         ),
                                                       ],
@@ -1291,7 +1308,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                             horizontal: 16, vertical: 12),
                                         decoration: BoxDecoration(
                                           color: isComplete
-                                              ? Colors.grey.withOpacity(0.1)
+                                              ? Theme.of(context)
+                                                  .disabledColor
+                                                  .withOpacity(0.1)
                                               : utils
                                                   .cambiarColor()
                                                   .withOpacity(0.05),
@@ -1310,7 +1329,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                             Container(
                                                 width: 1,
                                                 height: 30,
-                                                color: Colors.grey[300]),
+                                                color: Theme.of(context)
+                                                    .dividerColor
+                                                    .withOpacity(0.2)),
                                             _buildItemDetail(
                                               icon: Icons.shopping_basket,
                                               label: getTranlated(
@@ -1320,7 +1341,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                             Container(
                                                 width: 1,
                                                 height: 30,
-                                                color: Colors.grey[300]),
+                                                color: Theme.of(context)
+                                                    .dividerColor
+                                                    .withOpacity(0.2)),
                                             _buildItemDetail(
                                               icon: Icons.calculate,
                                               label: 'Total',

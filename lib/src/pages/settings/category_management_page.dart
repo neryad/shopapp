@@ -87,7 +87,8 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                   Text(
                     'Icono',
                     style: TextStyle(
-                        fontWeight: FontWeight.w600, color: Colors.grey[700]),
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).hintColor),
                   ),
                   const SizedBox(height: 8),
                   Wrap(
@@ -108,7 +109,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                             border: Border.all(
                               color: selected
                                   ? utils.cambiarColor()
-                                  : Colors.grey.shade300,
+                                  : Theme.of(context).dividerColor,
                               width: selected ? 2 : 1,
                             ),
                           ),
@@ -206,7 +207,8 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
             const SizedBox(height: 8),
             Text(
               getTranlated(context, 'deleteCategoryWarn'),
-              style: TextStyle(color: Colors.grey[600], fontSize: 13),
+              style: TextStyle(
+                  color: Theme.of(context).disabledColor, fontSize: 13),
             ),
           ],
         ),
@@ -272,7 +274,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                   const SizedBox(height: 8),
                   Text(
                     getTranlated(context, 'addCategory'),
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: TextStyle(color: Theme.of(context).disabledColor),
                   ),
                 ],
               ),
