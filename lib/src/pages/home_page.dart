@@ -44,7 +44,7 @@
 //           Icons.add,
 //           color: Colors.white,
 //         ),
-//         // backgroundColor: utils.cambiarColor(),
+//         // backgroundColor: Theme.of(context).colorScheme.primary,
 //       ),
 //     );
 //   }
@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
           'Nueva Lista',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: utils.cambiarColor(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

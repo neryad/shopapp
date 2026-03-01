@@ -238,7 +238,8 @@ class _ListPageState extends State<ListPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
               TextButton(
                   onPressed: () {
@@ -250,7 +251,8 @@ class _ListPageState extends State<ListPage> {
                   },
                   child: Text(
                     getTranlated(context, 'accept'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
             ],
           );
@@ -267,9 +269,9 @@ class _ListPageState extends State<ListPage> {
       onSaved: (value) => listaModel.title = value ?? '',
       decoration: InputDecoration(
         labelText: getTranlated(context, 'listName'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -284,9 +286,9 @@ class _ListPageState extends State<ListPage> {
       onSaved: (value) => listaModel.superMaret = value ?? '',
       decoration: InputDecoration(
         labelText: getTranlated(context, 'shopName'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -313,7 +315,8 @@ class _ListPageState extends State<ListPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
               TextButton(
                   onPressed: () {
@@ -322,7 +325,8 @@ class _ListPageState extends State<ListPage> {
                   },
                   child: Text(
                     getTranlated(context, 'save'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
             ],
           );

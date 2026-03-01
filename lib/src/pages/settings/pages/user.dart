@@ -2,7 +2,6 @@ import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:pocketlist/src/utils/utils.dart' as utils;
 import '../../../../main.dart';
 
 class UserPage extends StatefulWidget {
@@ -114,7 +113,7 @@ class _UserPageState extends State<UserPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(getTranlated(context, 'userTitle')),
-        backgroundColor: utils.cambiarColor(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         actions: [
           if (_hasChanges)
@@ -136,7 +135,7 @@ class _UserPageState extends State<UserPage> {
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(24, 16, 24, 32),
                 decoration: BoxDecoration(
-                  color: utils.cambiarColor(),
+                  color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
@@ -223,10 +222,11 @@ class _UserPageState extends State<UserPage> {
                         decoration: InputDecoration(
                           labelText: getTranlated(context, 'userInpText') ??
                               'Nombre completo',
-                          labelStyle: TextStyle(color: utils.cambiarColor()),
+                          labelStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
                           prefixIcon: Icon(
                             Icons.person_outline,
-                            color: utils.cambiarColor(),
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
@@ -272,7 +272,8 @@ class _UserPageState extends State<UserPage> {
                             ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: utils.cambiarColor(),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -343,14 +344,17 @@ class _UserPageState extends State<UserPage> {
                     Container(
                       padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: utils.cambiarColor().withOpacity(0.1),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
                         children: [
                           Icon(
                             Icons.info_outline,
-                            color: utils.cambiarColor(),
+                            color: Theme.of(context).colorScheme.primary,
                             size: 24,
                           ),
                           SizedBox(width: 12),
@@ -363,7 +367,8 @@ class _UserPageState extends State<UserPage> {
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    color: utils.cambiarColor(),
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                                 SizedBox(height: 4),
@@ -415,9 +420,9 @@ class _UserPageState extends State<UserPage> {
       icon: Icon(
         Icons.info_outline,
         size: 28,
-        color: utils.cambiarColor(),
+        color: Theme.of(context).colorScheme.primary,
       ),
-      leftBarIndicatorColor: utils.cambiarColor(),
+      leftBarIndicatorColor: Theme.of(context).colorScheme.primary,
       duration: Duration(seconds: 2),
       borderRadius: BorderRadius.circular(8),
       margin: EdgeInsets.all(8),

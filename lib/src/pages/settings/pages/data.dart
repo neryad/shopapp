@@ -38,7 +38,7 @@ class _DataPageState extends State<DataPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(getTranlated(context, 'dataTitle')),
-        backgroundColor: utils.cambiarColor(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -51,7 +51,7 @@ class _DataPageState extends State<DataPage> {
               width: double.infinity,
               padding: EdgeInsets.fromLTRB(24, 16, 24, 32),
               decoration: BoxDecoration(
-                color: utils.cambiarColor(),
+                color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
@@ -213,14 +213,17 @@ class _DataPageState extends State<DataPage> {
                   Container(
                     padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: utils.cambiarColor().withOpacity(0.1),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
                       children: [
                         Icon(
                           Icons.info_outline,
-                          color: utils.cambiarColor(),
+                          color: Theme.of(context).colorScheme.primary,
                           size: 24,
                         ),
                         SizedBox(width: 12),
@@ -233,7 +236,7 @@ class _DataPageState extends State<DataPage> {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                  color: utils.cambiarColor(),
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                               SizedBox(height: 4),
@@ -608,8 +611,9 @@ class _DataPageState extends State<DataPage> {
   void _showInfoSnack(String msg) {
     Flushbar(
       message: msg,
-      icon: Icon(Icons.info_outline, size: 28, color: utils.cambiarColor()),
-      leftBarIndicatorColor: utils.cambiarColor(),
+      icon: Icon(Icons.info_outline,
+          size: 28, color: Theme.of(context).colorScheme.primary),
+      leftBarIndicatorColor: Theme.of(context).colorScheme.primary,
       duration: Duration(seconds: 2),
       borderRadius: BorderRadius.circular(8),
       margin: EdgeInsets.all(8),

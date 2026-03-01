@@ -70,7 +70,8 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                   Row(
                     children: [
                       Icon(Icons.label_outline,
-                          color: utils.cambiarColor(), size: 28),
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 28),
                       const SizedBox(width: 12),
                       Text(
                         existing == null
@@ -103,12 +104,15 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                           height: 44,
                           decoration: BoxDecoration(
                             color: selected
-                                ? utils.cambiarColor().withOpacity(0.2)
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.2)
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                               color: selected
-                                  ? utils.cambiarColor()
+                                  ? Theme.of(context).colorScheme.primary
                                   : Theme.of(context).dividerColor,
                               width: selected ? 2 : 1,
                             ),
@@ -137,8 +141,9 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                           borderRadius: BorderRadius.circular(12)),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide(color: utils.cambiarColor(), width: 2),
+                        borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.primary,
+                            width: 2),
                       ),
                     ),
                   ),
@@ -154,7 +159,8 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                       const SizedBox(width: 8),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: utils.cambiarColor(),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                         ),
@@ -262,7 +268,11 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.label_outline,
-                      size: 64, color: utils.cambiarColor().withOpacity(0.4)),
+                      size: 64,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.4)),
                   const SizedBox(height: 16),
                   Text(
                     getTranlated(context, 'categories'),
@@ -304,7 +314,10 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                     width: 46,
                     height: 46,
                     decoration: BoxDecoration(
-                      color: utils.cambiarColor().withOpacity(0.1),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
@@ -321,7 +334,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                     children: [
                       IconButton(
                         icon: Icon(Icons.edit_outlined,
-                            color: utils.cambiarColor()),
+                            color: Theme.of(context).colorScheme.primary),
                         onPressed: () => _showCategoryDialog(existing: cat),
                         tooltip: getTranlated(context, 'editCategory'),
                       ),

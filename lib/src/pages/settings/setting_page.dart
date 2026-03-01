@@ -4,7 +4,6 @@ import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/data/class/language.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/pages/settings/category_management_page.dart';
-import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends StatefulWidget {
@@ -39,7 +38,7 @@ class _SettingPageState extends State<SettingPage> {
             width: double.infinity,
             padding: EdgeInsets.fromLTRB(24, 16, 24, 32),
             decoration: BoxDecoration(
-              color: utils.cambiarColor(),
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
@@ -116,7 +115,7 @@ class _SettingPageState extends State<SettingPage> {
                     _selectedRadio(value);
                   });
                 },
-                activeThumbColor: utils.cambiarColor(),
+                activeThumbColor: Theme.of(context).colorScheme.primary,
               ),
             ),
           ),
@@ -236,7 +235,7 @@ class _SettingPageState extends State<SettingPage> {
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
-          color: utils.cambiarColor(),
+          color: Theme.of(context).colorScheme.primary,
           letterSpacing: 1.2,
         ),
       ),
@@ -275,12 +274,13 @@ class _SettingPageState extends State<SettingPage> {
                 Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: utils.cambiarColor().withOpacity(0.1),
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     icon,
-                    color: utils.cambiarColor(),
+                    color: Theme.of(context).colorScheme.primary,
                     size: 24,
                   ),
                 ),
@@ -325,7 +325,7 @@ class _SettingPageState extends State<SettingPage> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: utils.cambiarColor().withOpacity(0.1),
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: DropdownButton<String>(
@@ -334,7 +334,7 @@ class _SettingPageState extends State<SettingPage> {
         underline: SizedBox(),
         icon: Icon(
           Icons.keyboard_arrow_down_rounded,
-          color: utils.cambiarColor(),
+          color: Theme.of(context).colorScheme.primary,
           size: 20,
         ),
         isDense: true,
@@ -356,7 +356,7 @@ class _SettingPageState extends State<SettingPage> {
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
-                        color: utils.cambiarColor(),
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ],
@@ -384,7 +384,7 @@ class _SettingPageState extends State<SettingPage> {
   //   return Container(
   //     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
   //     decoration: BoxDecoration(
-  //       color: utils.cambiarColor().withOpacity(0.1),
+  //       color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
   //       borderRadius: BorderRadius.circular(8),
   //     ),
   //     child: DropdownButton<Language>(
@@ -395,7 +395,7 @@ class _SettingPageState extends State<SettingPage> {
   //       underline: SizedBox(),
   //       icon: Icon(
   //         Icons.keyboard_arrow_down_rounded,
-  //         color: utils.cambiarColor(),
+  //         color: Theme.of(context).colorScheme.primary,
   //         size: 20,
   //       ),
   //       isDense: true,
@@ -416,7 +416,7 @@ class _SettingPageState extends State<SettingPage> {
   //                     style: TextStyle(
   //                       fontSize: 13,
   //                       fontWeight: FontWeight.w600,
-  //                       color: utils.cambiarColor(),
+  //                       color: Theme.of(context).colorScheme.primary,
   //                     ),
   //                   ),
   //                 ],

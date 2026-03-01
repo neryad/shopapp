@@ -39,8 +39,9 @@ class AppTheme {
       colorScheme: ColorScheme.fromSeed(
         seedColor: seedColor,
         brightness: brightness,
-        // Ensure contrast matches typical M3 usage
-        // surface: isDark ? const Color(0xFF121212) : const Color(0xFFF5F5F5),
+      ).copyWith(
+        primary: seedColor,
+        onPrimary: Colors.white, // Standard for our app's style
       ),
       scaffoldBackgroundColor:
           isDark ? const Color(0xFF121212) : const Color(0xFFF5F5F5),

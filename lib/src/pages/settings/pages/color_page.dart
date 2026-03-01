@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
-import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/main.dart';
 
@@ -63,7 +62,7 @@ class _ColorPageState extends State<ColorPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(getTranlated(context, 'themTitle')),
-        backgroundColor: utils.cambiarColor(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -76,7 +75,7 @@ class _ColorPageState extends State<ColorPage> {
               width: double.infinity,
               padding: EdgeInsets.fromLTRB(24, 16, 24, 32),
               decoration: BoxDecoration(
-                color: utils.cambiarColor(),
+                color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),

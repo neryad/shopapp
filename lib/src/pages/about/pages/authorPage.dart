@@ -23,7 +23,7 @@ class _AuthorPageState extends State<AuthorPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: utils.cambiarColor(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
           'Desarrollador',
           style: TextStyle(
@@ -47,12 +47,13 @@ class _AuthorPageState extends State<AuthorPage> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: utils.cambiarColor(),
+                  color: Theme.of(context).colorScheme.primary,
                   width: 4,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: utils.cambiarColor().withOpacity(0.3),
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
                     blurRadius: 20,
                     offset: Offset(0, 8),
                   ),
@@ -92,7 +93,7 @@ class _AuthorPageState extends State<AuthorPage> {
               '☕ Coffee, Code 💻 & Repeat',
               style: TextStyle(
                 fontSize: 14,
-                color: utils.cambiarColor(),
+                color: Theme.of(context).colorScheme.primary,
                 fontStyle: FontStyle.italic,
               ),
             ),
@@ -223,9 +224,9 @@ class _AuthorPageState extends State<AuthorPage> {
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: utils.cambiarColor().withOpacity(0.1),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                 border: Border.all(
-                  color: utils.cambiarColor().withOpacity(0.2),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
                   width: 1,
                 ),
               ),
@@ -236,7 +237,7 @@ class _AuthorPageState extends State<AuthorPage> {
                     children: [
                       Icon(
                         Icons.info_outline,
-                        color: utils.cambiarColor(),
+                        color: Theme.of(context).colorScheme.primary,
                         size: 20,
                       ),
                       SizedBox(width: 8),
@@ -245,7 +246,7 @@ class _AuthorPageState extends State<AuthorPage> {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: utils.cambiarColor(),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ],
@@ -329,7 +330,7 @@ class _AuthorPageState extends State<AuthorPage> {
             children: [
               Icon(
                 icon,
-                color: utils.cambiarColor(),
+                color: Theme.of(context).colorScheme.primary,
                 size: 32,
               ),
               SizedBox(height: 8),
@@ -365,7 +366,7 @@ class _AuthorPageState extends State<AuthorPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: utils.cambiarColor().withOpacity(0.3),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
               width: 1.5,
             ),
           ),
@@ -373,7 +374,7 @@ class _AuthorPageState extends State<AuthorPage> {
             children: [
               Icon(
                 icon,
-                color: utils.cambiarColor(),
+                color: Theme.of(context).colorScheme.primary,
                 size: 28,
               ),
               SizedBox(width: 16),
@@ -401,7 +402,7 @@ class _AuthorPageState extends State<AuthorPage> {
               Icon(
                 Icons.arrow_forward_ios,
                 size: 18,
-                color: utils.cambiarColor(),
+                color: Theme.of(context).colorScheme.primary,
               ),
             ],
           ),

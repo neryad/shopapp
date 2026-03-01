@@ -110,7 +110,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Import / Export'),
-        backgroundColor: utils.cambiarColor(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         actions: [
           // Botón de importar con tooltip
@@ -174,7 +174,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               width: double.infinity,
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: utils.cambiarColor().withOpacity(0.1),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                 border: Border(
                   bottom: BorderSide(
                     color: Colors.grey.withOpacity(0.2),
@@ -186,7 +186,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 children: [
                   Icon(
                     Icons.info_outline,
-                    color: utils.cambiarColor(),
+                    color: Theme.of(context).colorScheme.primary,
                     size: 20,
                   ),
                   SizedBox(width: 12),
@@ -268,13 +268,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
           Container(
             padding: EdgeInsets.all(32),
             decoration: BoxDecoration(
-              color: utils.cambiarColor().withOpacity(0.1),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.inventory_2_outlined,
               size: 80,
-              color: utils.cambiarColor().withOpacity(0.5),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
             ),
           ),
           SizedBox(height: 24),
@@ -303,7 +303,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 icon: Icon(Icons.add),
                 label: Text('Crear lista'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: utils.cambiarColor(),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -316,8 +316,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 icon: Icon(Icons.file_upload),
                 label: Text('Importar lista'),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: utils.cambiarColor(),
-                  side: BorderSide(color: utils.cambiarColor()),
+                  foregroundColor: Theme.of(context).colorScheme.primary,
+                  side:
+                      BorderSide(color: Theme.of(context).colorScheme.primary),
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -356,12 +357,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: utils.cambiarColor().withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
                   Icons.shopping_cart,
-                  color: utils.cambiarColor(),
+                  color: Theme.of(context).colorScheme.primary,
                   size: 24,
                 ),
               ),
@@ -617,7 +618,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Row(
           children: [
-            Icon(Icons.help_outline, color: utils.cambiarColor()),
+            Icon(Icons.help_outline,
+                color: Theme.of(context).colorScheme.primary),
             SizedBox(width: 12),
             Text('Cómo usar  ?'),
           ],
@@ -677,10 +679,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
         Container(
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: utils.cambiarColor().withOpacity(0.1),
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, color: utils.cambiarColor(), size: 20),
+          child: Icon(icon,
+              color: Theme.of(context).colorScheme.primary, size: 20),
         ),
         SizedBox(width: 12),
         Expanded(

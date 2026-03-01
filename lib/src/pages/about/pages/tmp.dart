@@ -31,7 +31,7 @@ class _AboutPageState extends State<AboutPage> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: utils.cambiarColor(),
+          backgroundColor: Theme.of(context).colorScheme.primary,
           title: Text(getTranlated(context, 'aboutTitle')),
           //title: Text(getTranlated(context, 'aboutTitle')),
           elevation: 0.0,
@@ -41,7 +41,8 @@ class _AboutPageState extends State<AboutPage> {
           child: Column(
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(color: utils.cambiarColor()),
+                decoration:
+                    BoxDecoration(color: Theme.of(context).colorScheme.primary),
                 child: Container(
                     width: double.infinity,
                     height: 300,
@@ -87,7 +88,9 @@ class _AboutPageState extends State<AboutPage> {
                                             getTranlated(
                                                 context, 'versionTitle'),
                                             style: TextStyle(
-                                                color: utils.cambiarColor(),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                                 fontSize: 22.0,
                                                 fontWeight: FontWeight.bold)),
                                         SizedBox(
@@ -95,7 +98,9 @@ class _AboutPageState extends State<AboutPage> {
                                         ),
                                         Text(version,
                                             style: TextStyle(
-                                                color: utils.cambiarColor(),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                                 fontSize: 22.0,
                                                 fontWeight: FontWeight.w200)),
                                       ],
@@ -108,7 +113,9 @@ class _AboutPageState extends State<AboutPage> {
                                             getTranlated(
                                                 context, 'authorTitle'),
                                             style: TextStyle(
-                                                color: utils.cambiarColor(),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                                 fontSize: 22.0,
                                                 fontWeight: FontWeight.bold)),
                                         SizedBox(
@@ -116,7 +123,9 @@ class _AboutPageState extends State<AboutPage> {
                                         ),
                                         Text('Neryad',
                                             style: TextStyle(
-                                                color: utils.cambiarColor(),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                                 fontSize: 22.0,
                                                 fontWeight: FontWeight.w200)),
                                       ],
@@ -141,7 +150,7 @@ class _AboutPageState extends State<AboutPage> {
                       Text(
                         getTranlated(context, 'descpTitle'),
                         style: TextStyle(
-                            color: utils.cambiarColor(),
+                            color: Theme.of(context).colorScheme.primary,
                             fontStyle: FontStyle.normal,
                             fontSize: 28.0),
                       ),

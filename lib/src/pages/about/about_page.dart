@@ -43,7 +43,7 @@ class _AboutPageState extends State<AboutPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: utils.cambiarColor(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(getTranlated(context, 'aboutTitle')),
         elevation: 0,
       ),
@@ -54,7 +54,7 @@ class _AboutPageState extends State<AboutPage> {
             width: double.infinity,
             padding: EdgeInsets.fromLTRB(24, 32, 24, 40),
             decoration: BoxDecoration(
-              color: utils.cambiarColor(),
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
@@ -260,7 +260,7 @@ class _AboutPageState extends State<AboutPage> {
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
-          color: utils.cambiarColor(),
+          color: Theme.of(context).colorScheme.primary,
           letterSpacing: 1.2,
         ),
       ),

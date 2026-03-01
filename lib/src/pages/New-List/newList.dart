@@ -73,8 +73,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   final editFormKey = GlobalKey<FormState>();
   final lisForm = GlobalKey<FormState>();
 
-  Color colorBuget = utils.cambiarColor();
-  Color bugetColor = utils.cambiarColor();
+  late Color colorBuget;
+  late Color bugetColor;
   final bugetController = TextEditingController();
 
   var uuid = Uuid();
@@ -191,7 +191,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           if (total > buget) {
             bugetColor = Colors.red[900]!;
           } else {
-            bugetColor = utils.cambiarColor();
+            bugetColor = Theme.of(context).colorScheme.primary;
           }
         });
       }
@@ -214,9 +214,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     if (calDiferecen < 0) {
       colorBuget = Colors.red[900]!;
     } else if (calDiferecen >= 0) {
-      colorBuget = utils.cambiarColor();
+      colorBuget = Theme.of(context).colorScheme.primary;
     } else {
-      colorBuget = utils.cambiarColor();
+      colorBuget = Theme.of(context).colorScheme.primary;
     }
     diference = calDiferecen;
 
@@ -248,7 +248,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   children: [
                     Icon(
                       Icons.account_balance_wallet,
-                      color: utils.cambiarColor(),
+                      color: Theme.of(context).colorScheme.primary,
                       size: 28,
                     ),
                     SizedBox(width: 12),
@@ -277,7 +277,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: utils.cambiarColor(),
+                        color: Theme.of(context).colorScheme.primary,
                         width: 2,
                       ),
                     ),
@@ -298,7 +298,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         Navigator.of(context).pop();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: utils.cambiarColor(),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         padding: EdgeInsets.symmetric(
                           horizontal: 24,
                           vertical: 12,
@@ -346,7 +346,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     Row(
                       children: [
                         Icon(Icons.add_shopping_cart,
-                            color: utils.cambiarColor(), size: 28),
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 28),
                         SizedBox(width: 12),
                         Text(
                           getTranlated(context, 'newArt'),
@@ -379,7 +380,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
-                                color: utils.cambiarColor(), width: 2),
+                                color: Theme.of(context).colorScheme.primary,
+                                width: 2),
                           ),
                           contentPadding:
                               EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -424,7 +426,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             getTotal();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: utils.cambiarColor(),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 24, vertical: 12),
                             shape: RoundedRectangleBorder(
@@ -465,9 +468,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       },
       decoration: InputDecoration(
         labelText: getTranlated(context, 'nameArt'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -482,9 +485,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       decoration: InputDecoration(
         labelText: getTranlated(context, 'price'),
         counterText: '',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
       onSaved: (value) {
@@ -515,9 +518,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       decoration: InputDecoration(
         labelText: getTranlated(context, 'quantity'),
         counterText: '',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
       onSaved: (value) {
@@ -627,7 +630,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       style: TextStyle(
                           color: (prefs.color == 5)
                               ? Colors.white
-                              : utils.cambiarColor()),
+                              : Theme.of(context).colorScheme.primary),
                     )),
                 TextButton(
                     onPressed: () {
@@ -640,7 +643,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       style: TextStyle(
                           color: (prefs.color == 5)
                               ? Colors.white
-                              : utils.cambiarColor()),
+                              : Theme.of(context).colorScheme.primary),
                     )),
               ],
             );
@@ -668,9 +671,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       decoration: InputDecoration(
         labelText: getTranlated(context, 'nameArt'),
         counterText: '',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -685,9 +688,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       decoration: InputDecoration(
         labelText: getTranlated(context, 'price'),
         counterText: '',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
       onSaved: (value) {
@@ -714,9 +717,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       decoration: InputDecoration(
         labelText: getTranlated(context, 'quantity'),
         counterText: '',
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
       onSaved: (value) {
@@ -742,9 +745,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       onSaved: (value) => listaModel.title = value ?? '',
       decoration: InputDecoration(
         labelText: getTranlated(context, 'listName'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -758,9 +761,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       onSaved: (value) => listaModel.superMaret = value ?? '',
       decoration: InputDecoration(
         labelText: getTranlated(context, 'shopName'),
-        labelStyle: TextStyle(color: utils.cambiarColor()),
+        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: utils.cambiarColor()),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -795,7 +798,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             icon: Icons.shopping_cart,
             label: 'Total',
             value: utils.numberFormat(total),
-            color: utils.cambiarColor(),
+            color: Theme.of(context).colorScheme.primary,
           ),
           Divider(height: 16, thickness: 1),
           _buildStatRow(
@@ -864,13 +867,19 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     Container(
                       padding: EdgeInsets.all(32),
                       decoration: BoxDecoration(
-                        color: utils.cambiarColor().withOpacity(0.1),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.1),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.shopping_cart_outlined,
                         size: 80,
-                        color: utils.cambiarColor().withOpacity(0.5),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.5),
                       ),
                     ),
                     SizedBox(height: 24),
@@ -904,7 +913,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       icon: Icon(Icons.add),
                       label: Text('Agregar primer artículo'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: utils.cambiarColor(),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         padding:
                             EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                         shape: RoundedRectangleBorder(
@@ -973,9 +982,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                     selected: _filterCategoryId == null,
                                     onSelected: (_) => setState(
                                         () => _filterCategoryId = null),
-                                    selectedColor:
-                                        utils.cambiarColor().withOpacity(0.2),
-                                    checkmarkColor: utils.cambiarColor(),
+                                    selectedColor: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(0.2),
+                                    checkmarkColor:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                                 // Per-category chips
@@ -1000,8 +1012,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                             selectedColor: utils
                                                 .cambiarColor()
                                                 .withOpacity(0.2),
-                                            checkmarkColor:
-                                                utils.cambiarColor(),
+                                            checkmarkColor: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                           ),
                                         )),
                                 // "No category" chip
@@ -1017,9 +1030,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                               _filterCategoryId == -1
                                                   ? null
                                                   : -1),
-                                      selectedColor:
-                                          utils.cambiarColor().withOpacity(0.2),
-                                      checkmarkColor: utils.cambiarColor(),
+                                      selectedColor: Theme.of(context)
+                                          .colorScheme
+                                          .primary
+                                          .withOpacity(0.2),
+                                      checkmarkColor:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                               ],
@@ -1044,7 +1060,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                         ? FontWeight.bold
                                         : FontWeight.normal,
                                     color: !_sortByCategory
-                                        ? utils.cambiarColor()
+                                        ? Theme.of(context).colorScheme.primary
                                         : Theme.of(context).disabledColor,
                                   ),
                                 ),
@@ -1063,7 +1079,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                         ? FontWeight.bold
                                         : FontWeight.normal,
                                     color: _sortByCategory
-                                        ? utils.cambiarColor()
+                                        ? Theme.of(context).colorScheme.primary
                                         : Colors.grey[500],
                                   ),
                                 ),
@@ -1229,7 +1245,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                                             .lineThrough
                                                         : TextDecoration.none,
                                                     decorationColor:
-                                                        utils.cambiarColor(),
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
                                                     decorationThickness: 2,
                                                   ),
                                                 ),
@@ -1277,7 +1295,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                                 borderRadius:
                                                     BorderRadius.circular(4),
                                               ),
-                                              activeColor: utils.cambiarColor(),
+                                              activeColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                             ),
                                           ),
                                         ],
@@ -1431,7 +1451,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
             FloatingActionButton(
               onPressed: () => _mostrarAlertaProducto(context),
-              backgroundColor: utils.cambiarColor(),
+              backgroundColor: Theme.of(context).colorScheme.primary,
               child: Icon(Icons.add_shopping_cart, color: Colors.white),
             ),
           ],
@@ -1476,13 +1496,15 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
               TextButton(
                   onPressed: () => limpiarTodo(),
                   child: Text(
                     getTranlated(context, 'accept'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
             ],
           );
@@ -1515,7 +1537,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 _resetCompletedItems();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: utils.cambiarColor(),
+                backgroundColor: Theme.of(context).colorScheme.primary,
               ),
               child: Text(
                 getTranlated(context, 'accept'),
@@ -1568,7 +1590,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: (prefs.color == 5)
                             ? Colors.white.withOpacity(0.9)
-                            : utils.cambiarColor(),
+                            : Theme.of(context).colorScheme.primary,
                         padding: EdgeInsets.symmetric(vertical: 12),
                       ),
                     ),
@@ -1617,6 +1639,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         });
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    colorBuget = Theme.of(context).colorScheme.primary;
+    bugetColor = Theme.of(context).colorScheme.primary;
+    getTotal();
+  }
+
   void _resetCompletedItems() async {
     for (var item in items) {
       if (item.complete == 1) {
@@ -1652,8 +1682,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       totalItems = 0;
       _dialogoCompletadoMostrado = false;
 
-      bugetColor = utils.cambiarColor();
-      colorBuget = utils.cambiarColor();
+      bugetColor = Theme.of(context).colorScheme.primary;
+      colorBuget = Theme.of(context).colorScheme.primary;
     });
     Navigator.of(context).pop();
   }
@@ -1742,7 +1772,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
               TextButton(
                   onPressed: () {
@@ -1753,7 +1784,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   },
                   child: Text(
                     getTranlated(context, 'save'),
-                    style: TextStyle(color: utils.cambiarColor()),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
             ],
           );
@@ -1789,7 +1821,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       icon: Icon(
         Icons.info_outline,
         size: 28,
-        color: utils.cambiarColor(),
+        color: Theme.of(context).colorScheme.primary,
       ),
       mainButton: TextButton(
         onPressed: () {
@@ -1809,8 +1841,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               color: (prefs.color == 5) ? Colors.white : Colors.amber),
         ),
       ),
-      leftBarIndicatorColor:
-          (prefs.color == 5) ? Colors.white : utils.cambiarColor(),
+      leftBarIndicatorColor: (prefs.color == 5)
+          ? Colors.white
+          : Theme.of(context).colorScheme.primary,
       duration: Duration(seconds: 3),
     )..show(context);
   }
