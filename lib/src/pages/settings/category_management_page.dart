@@ -237,12 +237,10 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: utils.cambiarColor(),
         title: Text(getTranlated(context, 'categoryManagement')),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showCategoryDialog(),
-        backgroundColor: utils.cambiarColor(),
         icon: const Icon(Icons.add, color: Colors.white),
         label: Text(
           getTranlated(context, 'addCategory'),

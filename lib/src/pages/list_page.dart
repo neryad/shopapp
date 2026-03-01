@@ -238,10 +238,7 @@ class _ListPageState extends State<ListPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
-                    style: TextStyle(
-                        color: (prefs.color == 5)
-                            ? Colors.white
-                            : utils.cambiarColor()),
+                    style: TextStyle(color: utils.cambiarColor()),
                   )),
               TextButton(
                   onPressed: () {
@@ -253,10 +250,7 @@ class _ListPageState extends State<ListPage> {
                   },
                   child: Text(
                     getTranlated(context, 'accept'),
-                    style: TextStyle(
-                        color: (prefs.color == 5)
-                            ? Colors.white
-                            : utils.cambiarColor()),
+                    style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
           );
@@ -273,11 +267,9 @@ class _ListPageState extends State<ListPage> {
       onSaved: (value) => listaModel.title = value ?? '',
       decoration: InputDecoration(
         labelText: getTranlated(context, 'listName'),
-        labelStyle: TextStyle(
-            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+          borderSide: BorderSide(color: utils.cambiarColor()),
         ),
       ),
     );
@@ -291,16 +283,11 @@ class _ListPageState extends State<ListPage> {
       textAlign: TextAlign.center,
       onSaved: (value) => listaModel.superMaret = value ?? '',
       decoration: InputDecoration(
-        // counterText: '',
         labelText: getTranlated(context, 'shopName'),
-        labelStyle: TextStyle(
-            color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+        labelStyle: TextStyle(color: utils.cambiarColor()),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-              color: (prefs.color == 5) ? Colors.white : utils.cambiarColor()),
+          borderSide: BorderSide(color: utils.cambiarColor()),
         ),
-        // hintText: 'Nombre localidad',
-        //hintStyle: TextStyle(color: utils.cambiarColor()),
       ),
     );
   }
@@ -326,10 +313,7 @@ class _ListPageState extends State<ListPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     getTranlated(context, 'leave'),
-                    style: TextStyle(
-                        color: (prefs.color == 5)
-                            ? Colors.white
-                            : utils.cambiarColor()),
+                    style: TextStyle(color: utils.cambiarColor()),
                   )),
               TextButton(
                   onPressed: () {
@@ -338,10 +322,7 @@ class _ListPageState extends State<ListPage> {
                   },
                   child: Text(
                     getTranlated(context, 'save'),
-                    style: TextStyle(
-                        color: (prefs.color == 5)
-                            ? Colors.white
-                            : utils.cambiarColor()),
+                    style: TextStyle(color: utils.cambiarColor()),
                   )),
             ],
           );

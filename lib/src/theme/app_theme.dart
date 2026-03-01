@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static Color getPrimaryColor(int colorIndex) {
+  static Color getPrimaryColor(int colorIndex, {int? customColor}) {
+    if (colorIndex == 0 && customColor != null) {
+      return Color(customColor);
+    }
+    // Fallback if index 0 but no custom color provided (from static contexts)
+    if (colorIndex == 0) {
+      return const Color.fromRGBO(255, 111, 94, 1);
+    }
+
     switch (colorIndex) {
       case 1:
-        return Color.fromRGBO(255, 111, 94, 1); // Orange/Salmon
+        return const Color.fromRGBO(255, 111, 94, 1); // Orange/Salmon
       case 2:
-        return Color(0xff0e5c68); // Teal (Corrected)
+        return const Color(0xff0e5c68); // Teal
       case 3:
-        return Color(0xff2b7600); // Green (Corrected)
+        return const Color(0xff2b7600); // Green
       case 4:
-        return const Color(0xFFFF1493); // Deep Pink (Corrected)
+        return const Color(0xFFFF1493); // Deep Pink
       case 5:
-        return const Color(0xFF424242); // Grey (Corrected)
+        return const Color(0xFF424242); // Grey
       case 6:
         return const Color(0xff7e57c2); // Deep Purple
       case 7:
@@ -22,8 +30,8 @@ class AppTheme {
     }
   }
 
-  static ThemeData getTheme(int colorIndex, bool isDark) {
-    final seedColor = getPrimaryColor(colorIndex);
+  static ThemeData getTheme(int colorIndex, bool isDark, {int? customColor}) {
+    final seedColor = getPrimaryColor(colorIndex, customColor: customColor);
     final brightness = isDark ? Brightness.dark : Brightness.light;
 
     return ThemeData(

@@ -29,7 +29,6 @@ class _SettingPageState extends State<SettingPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(getTranlated(context, 'settTitle')),
-        backgroundColor: utils.cambiarColor(),
         elevation: 0,
       ),
       body: ListView(

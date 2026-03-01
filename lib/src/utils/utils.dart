@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:pocketlist/src/theme/app_theme.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 //import 'package:flushbar/flushbar.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
@@ -31,23 +32,8 @@ String numberFormat(double t) {
 }
 
 Color cambiarColor() {
-  if (prefs.color == 1) {
-    return Color.fromRGBO(255, 111, 94, 1);
-  } else if (prefs.color == 2) {
-    return Color(0xffb0e5c68);
-  } else if (prefs.color == 3) {
-    return Color(0xffb02b7600);
-  } else if (prefs.color == 4) {
-    return Color(0xffb0FF1493);
-  } else if (prefs.color == 5) {
-    return Color(0xffb424242);
-  } else if (prefs.color == 6) {
-    return Color(0xff7e57c2);
-  } else if (prefs.color == 7) {
-    return Color(0xffe53935);
-  } else {
-    return Color.fromRGBO(255, 111, 94, 1);
-  }
+  return AppTheme.getPrimaryColor(prefs.color,
+      customColor: prefs.customColorValue);
 }
 
 BoxDecoration cambiarHeaderImage() {
@@ -149,7 +135,7 @@ saludos(BuildContext context) {
   return Text(msg,
       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.primary,
+            color: Colors.white,
           ));
 }
 

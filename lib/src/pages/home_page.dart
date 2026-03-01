@@ -78,7 +78,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: utils.cambiarColor(),
         title: utils.saludos(context),
         elevation: 0,
       ),
