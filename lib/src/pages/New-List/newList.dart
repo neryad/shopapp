@@ -62,11 +62,23 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     }
 
     _loadCategories();
+    _loadItems();
   }
 
   Future<void> _loadCategories() async {
     final cats = await DBProvider.db.getCategories();
     if (mounted) setState(() => _categories = cats);
+  }
+
+  Future<void> _loadItems() async {
+    final data = await (isNewList
+        ? DBProvider.db.getArticlesTmp('tmp')
+        : DBProvider.db.getProdId(listId));
+    if (mounted) {
+      setState(() {
+        items = data;
+      });
+    }
   }
 
   final formKey = GlobalKey<FormState>();
@@ -542,7 +554,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     );
   }
 
-  void _subimt() {
+  void _subimt() async {
     var it = items.length;
     if (!formKey.currentState!.validate()) return;
 
@@ -554,14 +566,20 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         price: productModel.price,
         complete: 0,
         categoryId: _newItemCategoryId);
-    items.insert(it, prod);
-    DBProvider.db.newProd(prod);
+
+    // Optimistic update
+    setState(() {
+      items.insert(it, prod);
+    });
+
+    await DBProvider.db.newProd(prod);
+    // Reload to get the real ID from DB if needed
+    _loadItems();
 
     productModel = ProductModel();
     _newItemCategoryId = null;
 
     formKey.currentState!.reset();
-    setState(() {});
     myFocusNode.requestFocus();
   }
 
@@ -651,14 +669,15 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         });
   }
 
-  void _editDubimt(int index) {
+  void _editDubimt(int index) async {
     editFormKey.currentState!.save();
     items[index].categoryId = _editItemCategoryId;
-    DBProvider.db.updateProd(items[index]);
+    await DBProvider.db.updateProd(items[index]);
 
     if (!isNewList) {
       _updateLista();
     }
+    setState(() {});
   }
 
   Widget _editarNombreArticulo(int index) {
@@ -848,530 +867,493 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   }
 
   _bodyWidget() {
-    return FutureBuilder<List<ProductModel>>(
-        future: isNewList
-            ? DBProvider.db.getArticlesTmp('tmp')
-            : DBProvider.db.getProdId(listId),
-        builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
-          if (snapshot.hasData && snapshot.data!.length > 0) {
-            final tmpArt = snapshot.data;
-            items = tmpArt!;
-          }
-
-          if (items.length == 0) {
-            return Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(32),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.shopping_cart_outlined,
-                        size: 80,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.5),
-                      ),
-                    ),
-                    SizedBox(height: 24),
-                    Text(
-                      getTranlated(context, 'noItems'),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.color
-                            ?.withOpacity(0.8),
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      getTranlated(context, 'noItems2'),
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.color
-                            ?.withOpacity(0.6),
-                      ),
-                    ),
-                    SizedBox(height: 32),
-                    ElevatedButton.icon(
-                      onPressed: () => _mostrarAlertaProducto(context),
-                      icon: Icon(Icons.add),
-                      label: Text('Agregar primer artículo'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                    ),
-                  ],
+    if (items.length == 0) {
+      return Expanded(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.all(32),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.shopping_cart_outlined,
+                  size: 80,
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
                 ),
               ),
-            );
-          }
+              SizedBox(height: 24),
+              Text(
+                getTranlated(context, 'noItems'),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.color
+                      ?.withOpacity(0.8),
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                getTranlated(context, 'noItems2'),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.color
+                      ?.withOpacity(0.6),
+                ),
+              ),
+              SizedBox(height: 32),
+              ElevatedButton.icon(
+                onPressed: () => _mostrarAlertaProducto(context),
+                icon: Icon(Icons.add),
+                label: Text('Agregar primer artículo'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
 
-          // ── Apply filter ──────────────────────────────────────
-          final displayItems = items.where((item) {
-            if (_filterCategoryId == null) return true;
-            if (_filterCategoryId == -1) return item.categoryId == null;
-            return item.categoryId == _filterCategoryId;
-          }).toList();
+    // ── Apply filter ──────────────────────────────────────
+    final displayItems = items.where((item) {
+      if (_filterCategoryId == null) return true;
+      if (_filterCategoryId == -1) return item.categoryId == null;
+      return item.categoryId == _filterCategoryId;
+    }).toList();
 
-          // ── Apply sort ────────────────────────────────────────
-          displayItems.sort((a, b) {
-            if (a.complete != b.complete) {
-              return a.complete.compareTo(b.complete);
-            }
-            if (_sortByCategory) {
-              final aCatName = _categories
-                  .firstWhere((c) => c.id == a.categoryId,
-                      orElse: () => CategoryModel(name: ''))
-                  .name;
-              final bCatName = _categories
-                  .firstWhere((c) => c.id == b.categoryId,
-                      orElse: () => CategoryModel(name: ''))
-                  .name;
-              final catCmp = aCatName.compareTo(bCatName);
-              if (catCmp != 0) return catCmp;
-            }
-            return a.name.toLowerCase().compareTo(b.name.toLowerCase());
-          });
+    // ── Apply sort ────────────────────────────────────────
+    displayItems.sort((a, b) {
+      if (a.complete != b.complete) {
+        return a.complete.compareTo(b.complete);
+      }
+      if (_sortByCategory) {
+        final aCatName = _categories
+            .firstWhere((c) => c.id == a.categoryId,
+                orElse: () => CategoryModel(name: ''))
+            .name;
+        final bCatName = _categories
+            .firstWhere((c) => c.id == b.categoryId,
+                orElse: () => CategoryModel(name: ''))
+            .name;
+        final catCmp = aCatName.compareTo(bCatName);
+        if (catCmp != 0) return catCmp;
+      }
+      return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+    });
 
-          // ── Category chip filter bar ──────────────────────────
-          final hasCategories =
-              _categories.isNotEmpty && items.any((i) => i.categoryId != null);
+    // ── Category chip filter bar ──────────────────────────
+    final hasCategories =
+        _categories.isNotEmpty && items.any((i) => i.categoryId != null);
 
-          return Expanded(
-            child: Column(
-              children: [
-                if (hasCategories || _sortByCategory)
-                  Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: Column(
-                      children: [
-                        // Filter chips
-                        if (hasCategories)
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
-                            child: Row(
-                              children: [
-                                // "All" chip
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 6),
-                                  child: FilterChip(
-                                    label: Text(getTranlated(
-                                        context, 'filterByCategory')),
-                                    selected: _filterCategoryId == null,
-                                    onSelected: (_) => setState(
-                                        () => _filterCategoryId = null),
-                                    selectedColor: Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withOpacity(0.2),
-                                    checkmarkColor:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                                ),
-                                // Per-category chips
-                                ..._categories
-                                    .where((cat) => items
-                                        .any((i) => i.categoryId == cat.id))
-                                    .map((cat) => Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 6),
-                                          child: FilterChip(
-                                            avatar: Text(cat.icon,
-                                                style: const TextStyle(
-                                                    fontSize: 14)),
-                                            label: Text(cat.name),
-                                            selected:
-                                                _filterCategoryId == cat.id,
-                                            onSelected: (_) => setState(() =>
-                                                _filterCategoryId =
-                                                    _filterCategoryId == cat.id
-                                                        ? null
-                                                        : cat.id),
-                                            selectedColor: utils
-                                                .cambiarColor()
-                                                .withOpacity(0.2),
-                                            checkmarkColor: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                        )),
-                                // "No category" chip
-                                if (items.any((i) => i.categoryId == null))
-                                  Padding(
+    return Expanded(
+      child: Column(
+        children: [
+          if (hasCategories || _sortByCategory)
+            Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Column(
+                children: [
+                  // Filter chips
+                  if (hasCategories)
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
+                      child: Row(
+                        children: [
+                          // "All" chip
+                          Padding(
+                            padding: const EdgeInsets.only(right: 6),
+                            child: FilterChip(
+                              label: Text(
+                                  getTranlated(context, 'filterByCategory')),
+                              selected: _filterCategoryId == null,
+                              onSelected: (_) =>
+                                  setState(() => _filterCategoryId = null),
+                              selectedColor: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.2),
+                              checkmarkColor:
+                                  Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          // Per-category chips
+                          ..._categories
+                              .where((cat) =>
+                                  items.any((i) => i.categoryId == cat.id))
+                              .map((cat) => Padding(
                                     padding: const EdgeInsets.only(right: 6),
                                     child: FilterChip(
-                                      label: Text(
-                                          getTranlated(context, 'noCategory')),
-                                      selected: _filterCategoryId == -1,
+                                      avatar: Text(cat.icon,
+                                          style: const TextStyle(fontSize: 14)),
+                                      label: Text(cat.name),
+                                      selected: _filterCategoryId == cat.id,
                                       onSelected: (_) => setState(() =>
                                           _filterCategoryId =
-                                              _filterCategoryId == -1
+                                              _filterCategoryId == cat.id
                                                   ? null
-                                                  : -1),
-                                      selectedColor: Theme.of(context)
-                                          .colorScheme
-                                          .primary
-                                          .withOpacity(0.2),
+                                                  : cat.id),
+                                      selectedColor:
+                                          utils.cambiarColor().withOpacity(0.2),
                                       checkmarkColor:
                                           Theme.of(context).colorScheme.primary,
                                     ),
-                                  ),
-                              ],
+                                  )),
+                          // "No category" chip
+                          if (items.any((i) => i.categoryId == null))
+                            Padding(
+                              padding: const EdgeInsets.only(right: 6),
+                              child: FilterChip(
+                                label:
+                                    Text(getTranlated(context, 'noCategory')),
+                                selected: _filterCategoryId == -1,
+                                onSelected: (_) => setState(() =>
+                                    _filterCategoryId =
+                                        _filterCategoryId == -1 ? null : -1),
+                                selectedColor: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.2),
+                                checkmarkColor:
+                                    Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  // Sort toggle row
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+                    child: Row(
+                      children: [
+                        Icon(Icons.sort,
+                            size: 16, color: Theme.of(context).hintColor),
+                        const SizedBox(width: 6),
+                        GestureDetector(
+                          onTap: () => setState(() => _sortByCategory = false),
+                          child: Text(
+                            getTranlated(context, 'sortAlpha'),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: !_sortByCategory
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                              color: !_sortByCategory
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).disabledColor,
                             ),
                           ),
-                        // Sort toggle row
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
-                          child: Row(
-                            children: [
-                              Icon(Icons.sort,
-                                  size: 16, color: Theme.of(context).hintColor),
-                              const SizedBox(width: 6),
-                              GestureDetector(
-                                onTap: () =>
-                                    setState(() => _sortByCategory = false),
-                                child: Text(
-                                  getTranlated(context, 'sortAlpha'),
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: !_sortByCategory
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: !_sortByCategory
-                                        ? Theme.of(context).colorScheme.primary
-                                        : Theme.of(context).disabledColor,
+                        ),
+                        Text('  ·  ',
+                            style: TextStyle(
+                                color: Theme.of(context).dividerColor)),
+                        GestureDetector(
+                          onTap: () => setState(() => _sortByCategory = true),
+                          child: Text(
+                            getTranlated(context, 'sortByCategory'),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: _sortByCategory
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                              color: _sortByCategory
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Colors.grey[500],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: displayItems.length,
+              itemBuilder: (BuildContext context, int index) {
+                _controllers.add(TextEditingController());
+                // Map displayItems index back to items index
+                final itemIndex = items.indexOf(displayItems[index]);
+                final item = displayItems[index];
+                bool isComplete = item.complete == 1;
+
+                bool esElPrimeroCompletado = index > 0 &&
+                    displayItems[index - 1].complete == 0 &&
+                    isComplete;
+
+                // Category label for this item
+                final itemCat = item.categoryId != null
+                    ? _categories.firstWhere((c) => c.id == item.categoryId,
+                        orElse: () => CategoryModel(name: '', icon: ''))
+                    : null;
+
+                return Column(
+                  children: [
+                    if (esElPrimeroCompletado)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 1,
+                                color: Theme.of(context).dividerColor,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle,
+                                    size: 16,
+                                    color: Theme.of(context).disabledColor,
                                   ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    getTranlated(context, 'completed'),
+                                    style: TextStyle(
+                                      color: Theme.of(context).disabledColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                thickness: 1,
+                                color: Theme.of(context).dividerColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    Dismissible(
+                      direction: DismissDirection.endToStart,
+                      background: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Align(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                Icon(Icons.delete, color: Colors.white),
+                                Text(
+                                  getTranlated(context, 'delete'),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  textAlign: TextAlign.right,
+                                ),
+                                SizedBox(width: 20),
+                              ],
+                            ),
+                            alignment: Alignment.centerRight,
+                          ),
+                        ),
+                      ),
+                      key: Key(item.id.toString()),
+                      onDismissed: (direction) {
+                        showDeleteSnack(
+                            context,
+                            getTranlated(context, 'offLis'),
+                            itemIndex,
+                            item,
+                            items);
+                        DBProvider.db.deleteProd(item.id);
+                        items.removeAt(itemIndex);
+                        getTotal();
+                        getDiference();
+                        setState(() {});
+                      },
+                      child: Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: isComplete
+                              ? Theme.of(context)
+                                  .disabledColor
+                                  .withOpacity(0.12)
+                              : Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: isComplete
+                              ? []
+                              : [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.08),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item.name,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16,
+                                              decoration: isComplete
+                                                  ? TextDecoration.lineThrough
+                                                  : TextDecoration.none,
+                                              decorationColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              decorationThickness: 2,
+                                            ),
+                                          ),
+                                          if (itemCat != null &&
+                                              itemCat.name.isNotEmpty)
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 2),
+                                              child: Row(
+                                                children: [
+                                                  Text(itemCat.icon,
+                                                      style: TextStyle(
+                                                          fontSize: 11)),
+                                                  SizedBox(width: 3),
+                                                  Text(
+                                                    itemCat.name,
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall
+                                                          ?.color
+                                                          ?.withOpacity(0.6),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                    Transform.scale(
+                                      scale: 1.2,
+                                      child: Checkbox(
+                                        value: isComplete,
+                                        onChanged: (valor) {
+                                          HapticFeedback.mediumImpact();
+                                          _marcarComoCompletado(
+                                              itemIndex, valor ?? false);
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Text('  ·  ',
-                                  style: TextStyle(
-                                      color: Theme.of(context).dividerColor)),
-                              GestureDetector(
-                                onTap: () =>
-                                    setState(() => _sortByCategory = true),
-                                child: Text(
-                                  getTranlated(context, 'sortByCategory'),
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: _sortByCategory
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: _sortByCategory
-                                        ? Theme.of(context).colorScheme.primary
-                                        : Colors.grey[500],
+                              InkWell(
+                                onTap: () => _mostrarAlertaEditarProducto(
+                                    context, itemIndex),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
+                                  decoration: BoxDecoration(
+                                    color: isComplete
+                                        ? Theme.of(context)
+                                            .disabledColor
+                                            .withOpacity(0.1)
+                                        : utils
+                                            .cambiarColor()
+                                            .withOpacity(0.05),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      _buildItemDetail(
+                                        icon: Icons.attach_money,
+                                        label: getTranlated(context, 'price'),
+                                        value: utils.numberFormat(item.price),
+                                      ),
+                                      Container(
+                                          width: 1,
+                                          height: 30,
+                                          color: Theme.of(context)
+                                              .dividerColor
+                                              .withOpacity(0.2)),
+                                      _buildItemDetail(
+                                        icon: Icons.shopping_basket,
+                                        label:
+                                            getTranlated(context, 'quantity'),
+                                        value: item.quantity.toString(),
+                                      ),
+                                      Container(
+                                          width: 1,
+                                          height: 30,
+                                          color: Theme.of(context)
+                                              .dividerColor
+                                              .withOpacity(0.2)),
+                                      _buildItemDetail(
+                                        icon: Icons.calculate,
+                                        label: 'Total',
+                                        value: utils.numberFormat(
+                                            item.quantity * item.price),
+                                        highlight: true,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: displayItems.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      _controllers.add(TextEditingController());
-                      // Map displayItems index back to items index
-                      final itemIndex = items.indexOf(displayItems[index]);
-                      final item = displayItems[index];
-                      bool isComplete = item.complete == 1;
-
-                      bool esElPrimeroCompletado = index > 0 &&
-                          displayItems[index - 1].complete == 0 &&
-                          isComplete;
-
-                      // Category label for this item
-                      final itemCat = item.categoryId != null
-                          ? _categories.firstWhere(
-                              (c) => c.id == item.categoryId,
-                              orElse: () => CategoryModel(name: '', icon: ''))
-                          : null;
-
-                      return Column(
-                        children: [
-                          if (esElPrimeroCompletado)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Divider(
-                                      thickness: 1,
-                                      color: Theme.of(context).dividerColor,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.check_circle,
-                                          size: 16,
-                                          color:
-                                              Theme.of(context).disabledColor,
-                                        ),
-                                        SizedBox(width: 6),
-                                        Text(
-                                          getTranlated(context, 'completed'),
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).disabledColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Divider(
-                                      thickness: 1,
-                                      color: Theme.of(context).dividerColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          Dismissible(
-                            direction: DismissDirection.endToStart,
-                            background: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Align(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      Icon(Icons.delete, color: Colors.white),
-                                      Text(
-                                        getTranlated(context, 'delete'),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                        textAlign: TextAlign.right,
-                                      ),
-                                      SizedBox(width: 20),
-                                    ],
-                                  ),
-                                  alignment: Alignment.centerRight,
-                                ),
-                              ),
-                            ),
-                            key: Key(item.id.toString()),
-                            onDismissed: (direction) {
-                              showDeleteSnack(
-                                  context,
-                                  getTranlated(context, 'offLis'),
-                                  itemIndex,
-                                  item,
-                                  items);
-                              DBProvider.db.deleteProd(item.id);
-                              items.removeAt(itemIndex);
-                              getTotal();
-                              getDiference();
-                              setState(() {});
-                            },
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 6),
-                              decoration: BoxDecoration(
-                                color: isComplete
-                                    ? Theme.of(context)
-                                        .disabledColor
-                                        .withOpacity(0.12)
-                                    : Theme.of(context).cardColor,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: isComplete
-                                    ? []
-                                    : [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.08),
-                                          blurRadius: 8,
-                                          offset: Offset(0, 2),
-                                        ),
-                                      ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16, vertical: 12),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  item.name,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    decoration: isComplete
-                                                        ? TextDecoration
-                                                            .lineThrough
-                                                        : TextDecoration.none,
-                                                    decorationColor:
-                                                        Theme.of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                    decorationThickness: 2,
-                                                  ),
-                                                ),
-                                                if (itemCat != null &&
-                                                    itemCat.name.isNotEmpty)
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 2),
-                                                    child: Row(
-                                                      children: [
-                                                        Text(itemCat.icon,
-                                                            style: TextStyle(
-                                                                fontSize: 11)),
-                                                        SizedBox(width: 3),
-                                                        Text(
-                                                          itemCat.name,
-                                                          style: TextStyle(
-                                                            fontSize: 11,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodySmall
-                                                                ?.color
-                                                                ?.withOpacity(
-                                                                    0.6),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                              ],
-                                            ),
-                                          ),
-                                          Transform.scale(
-                                            scale: 1.2,
-                                            child: Checkbox(
-                                              value: isComplete,
-                                              onChanged: (valor) {
-                                                HapticFeedback.mediumImpact();
-                                                _marcarComoCompletado(
-                                                    itemIndex, valor ?? false);
-                                              },
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                              ),
-                                              activeColor: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () => _mostrarAlertaEditarProducto(
-                                          context, itemIndex),
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 12),
-                                        decoration: BoxDecoration(
-                                          color: isComplete
-                                              ? Theme.of(context)
-                                                  .disabledColor
-                                                  .withOpacity(0.1)
-                                              : utils
-                                                  .cambiarColor()
-                                                  .withOpacity(0.05),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            _buildItemDetail(
-                                              icon: Icons.attach_money,
-                                              label: getTranlated(
-                                                  context, 'price'),
-                                              value: utils
-                                                  .numberFormat(item.price),
-                                            ),
-                                            Container(
-                                                width: 1,
-                                                height: 30,
-                                                color: Theme.of(context)
-                                                    .dividerColor
-                                                    .withOpacity(0.2)),
-                                            _buildItemDetail(
-                                              icon: Icons.shopping_basket,
-                                              label: getTranlated(
-                                                  context, 'quantity'),
-                                              value: item.quantity.toString(),
-                                            ),
-                                            Container(
-                                                width: 1,
-                                                height: 30,
-                                                color: Theme.of(context)
-                                                    .dividerColor
-                                                    .withOpacity(0.2)),
-                                            _buildItemDetail(
-                                              icon: Icons.calculate,
-                                              label: 'Total',
-                                              value: utils.numberFormat(
-                                                  item.quantity * item.price),
-                                              highlight: true,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             ),
-          );
-        });
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildItemDetail({
@@ -1408,10 +1390,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     );
   }
 
-  void _marcarComoCompletado(int index, bool valor) {
+  void _marcarComoCompletado(int index, bool valor) async {
     int complValue = valor ? 1 : 0;
     items[index].complete = complValue;
-    DBProvider.db.updateProd(items[index]);
+    await DBProvider.db.updateProd(items[index]);
 
     setState(() {});
 
