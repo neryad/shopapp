@@ -120,6 +120,7 @@ class DarkLightTheme extends StatelessWidget {
         Localization.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       localeResolutionCallback: (deviceLocale, supportedLocales) {
         for (final supportedLocale in supportedLocales) {
