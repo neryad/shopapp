@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/models/category_model.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
+import 'package:pocketlist/src/utils/category_icons.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 
 class CategoryManagementPage extends StatefulWidget {
@@ -33,25 +34,9 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
   // ─── Add / Edit dialog ───────────────────────────────────
   void _showCategoryDialog({CategoryModel? existing}) {
     final nameController = TextEditingController(text: existing?.name ?? '');
-    String selectedIcon = existing?.icon ?? '🛒';
+    String selectedIcon = existing?.icon ?? CategoryIcons.defaultIcon;
 
-    final icons = [
-      '🛒',
-      '🍎',
-      '🥛',
-      '🥩',
-      '🥖',
-      '🧹',
-      '💊',
-      '🐾',
-      '👶',
-      '🏠',
-      '🎁',
-      '🍕',
-      '🧴',
-      '🌿',
-      '❓',
-    ];
+    final icons = CategoryIcons.icons;
 
     showDialog(
       context: context,
