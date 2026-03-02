@@ -300,10 +300,15 @@ class _ImportExportPageState extends State<ImportExportPage> {
             children: [
               ElevatedButton.icon(
                 onPressed: () => Navigator.pushNamed(context, 'home'),
-                icon: Icon(Icons.add),
-                label: Text('Crear lista'),
+                icon: Icon(Icons.add, color: Colors.white),
+                label: Text(
+                  'Crear lista',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -313,7 +318,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               SizedBox(width: 12),
               OutlinedButton.icon(
                 onPressed: pickFile,
-                icon: Icon(Icons.file_upload),
+                icon: Icon(Icons.file_download),
                 label: Text('Importar lista'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Theme.of(context).colorScheme.primary,
