@@ -890,33 +890,40 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 getTranlated(context, 'noItems'),
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
                   color: Theme.of(context)
                       .textTheme
                       .titleLarge
                       ?.color
-                      ?.withOpacity(0.8),
+                      ?.withOpacity(0.9),
                 ),
+                textAlign: TextAlign.center,
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 12),
               Text(
                 getTranlated(context, 'noItems2'),
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   color: Theme.of(context)
                       .textTheme
                       .bodyMedium
                       ?.color
                       ?.withOpacity(0.6),
                 ),
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 32),
               ElevatedButton.icon(
                 onPressed: () => _mostrarAlertaProducto(context),
-                icon: Icon(Icons.add),
-                label: Text('Agregar primer artículo'),
+                icon: Icon(Icons.add, color: Colors.white),
+                label: Text(
+                  'Agregar primer artículo',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

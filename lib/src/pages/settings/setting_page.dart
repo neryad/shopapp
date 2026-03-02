@@ -5,6 +5,7 @@ import 'package:pocketlist/src/data/class/language.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/pages/settings/category_management_page.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -15,6 +16,28 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   final prefs = PreferenciasUsuario();
+
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    if (mounted) {
+      setState(() {
+        _packageInfo = info;
+      });
+    }
+  }
 
   void _changeLanguage(Language language) async {
     Locale _temp = await setLocal(language.languageCode);
@@ -212,7 +235,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 SizedBox(height: 4),
                 Text(
-                  'Versión 1.0.0',
+                  'Versión ${_packageInfo.version}',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[500],
