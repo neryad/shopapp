@@ -119,12 +119,21 @@ class _ListPageState extends State<ListPage> {
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () {
-          var route = MaterialPageRoute(
+        onTap: () async {
+          await Navigator.of(context).push(
+            MaterialPageRoute(
               builder: (BuildContext context) =>
-                  ShoppingListPage(existingList: lista));
-          Navigator.of(context).push(route);
+                  ShoppingListPage(existingList: lista),
+            ),
+          );
+          setState(() {}); // ← Fuerza reconstruir el FutureBuilder al volver
         },
+        // onTap: () {
+        //   var route = MaterialPageRoute(
+        //       builder: (BuildContext context) =>
+        //           ShoppingListPage(existingList: lista));
+        //   Navigator.of(context).push(route);
+        // },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -319,9 +328,11 @@ class _ListPageState extends State<ListPage> {
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
               TextButton(
-                  onPressed: () {
-                    saveList(lista);
-                    Navigator.pushNamed(context, 'home');
+                  onPressed: () async {
+                    await saveList(lista);
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(
+                        context, 'home'); // si navegas a home igual se refresca
                   },
                   child: Text(
                     getTranlated(context, 'save'),
