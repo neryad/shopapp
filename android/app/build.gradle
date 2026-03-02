@@ -47,8 +47,8 @@ android {
         applicationId "com.neryad.PocketList" // Asegúrate que este es tu ID de aplicación.
         minSdkVersion 31
         targetSdkVersion 36
-        versionCode 12       // Usando tus valores fijos.
-        versionName "3.1.1" // Usando tus valores fijos.
+        versionCode 13       // Usando tus valores fijos.
+        versionName "3.1.3" // Usando tus valores fijos.
     }
 
     // Configuración para firmar tus builds de release.
