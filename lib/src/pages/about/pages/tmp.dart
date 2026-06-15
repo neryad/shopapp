@@ -32,8 +32,8 @@ class _AboutPageState extends State<AboutPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
-          title: Text(getTranlated(context, 'aboutTitle')),
-          //title: Text(getTranlated(context, 'aboutTitle')),
+          title: Text(getTranslated(context, 'aboutTitle')),
+          //title: Text(getTranslated(context, 'aboutTitle')),
           elevation: 0.0,
         ),
         // drawer: MenuWidget(),
@@ -85,7 +85,7 @@ class _AboutPageState extends State<AboutPage> {
                                     child: Column(
                                       children: <Widget>[
                                         Text(
-                                            getTranlated(
+                                            getTranslated(
                                                 context, 'versionTitle'),
                                             style: TextStyle(
                                                 color: Theme.of(context)
@@ -110,7 +110,7 @@ class _AboutPageState extends State<AboutPage> {
                                     child: Column(
                                       children: <Widget>[
                                         Text(
-                                            getTranlated(
+                                            getTranslated(
                                                 context, 'authorTitle'),
                                             style: TextStyle(
                                                 color: Theme.of(context)
@@ -148,7 +148,7 @@ class _AboutPageState extends State<AboutPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        getTranlated(context, 'descpTitle'),
+                        getTranslated(context, 'descpTitle'),
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                             fontStyle: FontStyle.normal,
@@ -158,7 +158,7 @@ class _AboutPageState extends State<AboutPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          getTranlated(context, 'descpText'),
+                          getTranslated(context, 'descpText'),
                           style: TextStyle(
                               fontSize: 20.0,
                               //fontStyle: FontStyle.italic,

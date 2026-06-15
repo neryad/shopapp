@@ -180,27 +180,29 @@ Debería usar import absoluto: `import 'package:pocketlist/main.dart';`
 
 ## 🔧 Problemas de Calidad de Código
 
-### 21. Typos en nombres
-| Archivo | Nombre actual | Nombre correcto |
-|---------|--------------|-----------------|
-| `lib/src/Shared_Prefs/Prefrecias_user.dart` | `Prefrecias` → `Preferencias` |
-| `lib/src/utils/ThemeManager .dart` | Espacio antes de `.dart` |
-| `lib/src/models/List_model.dart` | `superMaret` | `superMarket` |
-| `lib/src/models/List_model.dart` | `buget` | `budget` |
-| `lib/src/models/List_model.dart` | `diference` | `difference` |
-| `lib/src/localization/localization_constant.dart` | `getTranlated` | `getTranslated` |
-| `lib/src/providers/db_provider.dart` | `getToadasLista` | `getTodasLista` |
-| `lib/src/pages/New-List/newList.dart` | `_subimt` | `_submit` |
-| `lib/src/pages/New-List/newList.dart` | `_editDubimt` | `_editSubmit` |
-| `lib/src/pages/New-List/newList.dart` | `suge` (import) | `sugerencia` |
-| `pubspec.yaml:13` | `hhttps://` | `https://` |
+### 21. ~~Typos en nombres~~ ✅ FIXED (parcial)
+| Archivo | Nombre actual | Nombre correcto | Estado |
+|---------|--------------|-----------------|--------|
+| `lib/src/Shared_Prefs/Prefrecias_user.dart` | `Prefrecias` → `Preferencias` | Pendiente (requiere rename de archivo) |
+| ~~`lib/src/utils/ThemeManager .dart`~~ | ~~Espacio antes de `.dart`~~ | ✅ Eliminado |
+| `lib/src/models/List_model.dart` | `superMaret` | `superMarket` | Pendiente (requiere migración DB) |
+| `lib/src/models/List_model.dart` | `buget` | `budget` | Pendiente (requiere migración DB) |
+| `lib/src/models/List_model.dart` | `diference` | `difference` | Pendiente (requiere migración DB) |
+| `lib/src/localization/localization_constant.dart` | `getTranlated` | `getTranslated` | ✅ |
+| `lib/src/providers/db_provider.dart` | `getToadasLista` | `getTodasLista` | ✅ |
+| `lib/src/pages/New-List/newList.dart` | `_subimt` | `_submit` | ✅ |
+| `lib/src/pages/New-List/newList.dart` | `_editDubimt` | `_editSubmit` | ✅ |
+| ~~`lib/src/pages/New-List/newList.dart`~~ | ~~`suge` (import)~~ | ✅ Eliminado |
+| `pubspec.yaml:13` | `hhttps://` | `https://` | ✅ |
 
-### 22. Modelo `Segurencia` (suge.dart) no usado
+### 22. ~~Modelo `Segurencia` (suge.dart) no usado~~ ✅ FIXED
 **Problema:** Se importa en `newList.dart` pero nunca se usa para funcionalidad real.
+**Fix:** Se eliminó `suge.dart`, el import y la variable `sugeModel`.
 
-### 23. Preferencia `colorSecundario` no usada
+### 23. ~~Preferencia `colorSecundario` no usada~~ ✅ FIXED
 **Archivo:** `lib/src/Shared_Prefs/Prefrecias_user.dart:29-35`
 **Problema:** Getter y setter existen pero nunca se usan en la app.
+**Fix:** Se eliminó el getter y setter.
 
 ### 24. Métodos duplicados en DBProvider
 | Método 1 | Método 2 | Diferencia |
@@ -210,10 +212,11 @@ Debería usar import absoluto: `import 'package:pocketlist/main.dart';`
 | `newProd()` | `tmpProd()` | Idénticos |
 | `getArticlesTmp(id)` | `getProdId(id)` | Misma query |
 
-### 25. `_initPackageInfo` repetido en 3 widgets
+### 25. ~~`_initPackageInfo` repetido en 3 widgets~~ ✅ FIXED
 `MenuWidget`, `SettingPage` y `AboutPage` repiten el mismo código para obtener información del paquete. Debería compartirse.
+**Fix:** Se creó mixin `PackageInfoMixin` en `package_info_mixin.dart`. Los 3 widgets ahora usan el mixin.
 
-### 26. Flujo `_submít` con DB read innecesario
+### 26. ~~Flujo `_submit` con DB read innecesario~~ ✅ FIXED
 **Archivo:** `lib/src/pages/New-List/newList.dart:570-578`
 ```dart
 // Optimistic update
@@ -223,6 +226,7 @@ setState(() {
 await DBProvider.db.newProd(prod);
 _loadItems(); // 🔴 DB read innecesario tras insert optimista
 ```
+**Fix:** Se eliminó `_loadItems()` ya que el item se agregó optimísticamente.
 
 ---
 

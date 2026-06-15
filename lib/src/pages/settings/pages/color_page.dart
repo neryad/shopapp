@@ -61,7 +61,7 @@ class _ColorPageState extends State<ColorPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(getTranlated(context, 'themTitle')),
+        title: Text(getTranslated(context, 'themTitle')),
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
       ),
@@ -103,7 +103,7 @@ class _ColorPageState extends State<ColorPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            getTranlated(context, 'colorPersonalization'),
+                            getTranslated(context, 'colorPersonalization'),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 24,
@@ -111,7 +111,7 @@ class _ColorPageState extends State<ColorPage> {
                             ),
                           ),
                           Text(
-                            getTranlated(context, 'colorChooseFavorite'),
+                            getTranslated(context, 'colorChooseFavorite'),
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.9),
                               fontSize: 14,
@@ -134,7 +134,7 @@ class _ColorPageState extends State<ColorPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    getTranlated(context, 'colorCurrent'),
+                    getTranslated(context, 'colorCurrent'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -196,7 +196,7 @@ class _ColorPageState extends State<ColorPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    getTranlated(context, 'colorPredefined'),
+                    getTranslated(context, 'colorPredefined'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -255,7 +255,7 @@ class _ColorPageState extends State<ColorPage> {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              getTranlated(context, colorOption.name),
+                              getTranslated(context, colorOption.name),
                               style: TextStyle(
                                 fontSize: 10,
                                 color: Colors.grey[600],
@@ -282,7 +282,7 @@ class _ColorPageState extends State<ColorPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    getTranlated(context, 'colorCustom'),
+                    getTranslated(context, 'colorCustom'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -310,7 +310,7 @@ class _ColorPageState extends State<ColorPage> {
                           ),
                         ),
                       ),
-                      title: Text(getTranlated(context, 'colorSelect')),
+                      title: Text(getTranslated(context, 'colorSelect')),
                       subtitle: Text(
                         '#${currentColor.value.toRadixString(16).substring(2).toUpperCase()}',
                         style: const TextStyle(
@@ -350,7 +350,7 @@ class _ColorPageState extends State<ColorPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            getTranlated(context, 'colorAuto'),
+                            getTranslated(context, 'colorAuto'),
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -359,7 +359,7 @@ class _ColorPageState extends State<ColorPage> {
                           ),
                           SizedBox(height: 4),
                           Text(
-                            getTranlated(context, 'colorAutoDesc'),
+                            getTranslated(context, 'colorAutoDesc'),
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey[700],
@@ -386,7 +386,7 @@ class _ColorPageState extends State<ColorPage> {
       (c) => c.color.value == color.value,
       orElse: () => ColorOption(color: color, name: 'colorCustomFallback'),
     );
-    return getTranlated(context, match.name);
+    return getTranslated(context, match.name);
   }
 
   void _showColorPicker(BuildContext context) {
@@ -410,7 +410,7 @@ class _ColorPageState extends State<ColorPage> {
                 children: [
                   Icon(Icons.colorize, color: selectedColor),
                   SizedBox(width: 12),
-                  Text(getTranlated(context, 'colorDialogTitle')),
+                  Text(getTranslated(context, 'colorDialogTitle')),
                 ],
               ),
               content: SingleChildScrollView(
@@ -450,13 +450,13 @@ class _ColorPageState extends State<ColorPage> {
                       controller: hexController,
                       maxLength: 6,
                       decoration: InputDecoration(
-                        labelText: getTranlated(context, 'colorHexCode'),
+                        labelText: getTranslated(context, 'colorHexCode'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                         prefixText: '#',
                         counterText: '',
-                        helperText: getTranlated(context, 'colorHexExample'),
+                        helperText: getTranslated(context, 'colorHexExample'),
                       ),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
@@ -480,7 +480,7 @@ class _ColorPageState extends State<ColorPage> {
                     SizedBox(height: 16),
                     // Colores rápidos
                     Text(
-                      getTranlated(context, 'colorQuickColors'),
+                      getTranslated(context, 'colorQuickColors'),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -541,7 +541,7 @@ class _ColorPageState extends State<ColorPage> {
                     hexController.dispose();
                     Navigator.pop(context);
                   },
-                  child: Text(getTranlated(context, 'cancel')),
+                  child: Text(getTranslated(context, 'cancel')),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -557,7 +557,7 @@ class _ColorPageState extends State<ColorPage> {
                     ),
                   ),
                   child: Text(
-                    getTranlated(context, 'colorApply'),
+                    getTranslated(context, 'colorApply'),
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

@@ -33,7 +33,7 @@ class _ListPageState extends State<ListPage> {
   }
 
   Future<void> _loadLists() async {
-    final data = await DBProvider.db.getToadasLista();
+    final data = await DBProvider.db.getTodasLista();
     if (mounted) {
       setState(() {
         _lists = data;
@@ -64,7 +64,7 @@ class _ListPageState extends State<ListPage> {
               ),
               const SizedBox(height: 16),
               Text(
-                getTranlated(context, 'noList'),
+                getTranslated(context, 'noList'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
@@ -72,7 +72,7 @@ class _ListPageState extends State<ListPage> {
               ),
               const SizedBox(height: 12),
               Text(
-                getTranlated(context, 'noList2'),
+                getTranslated(context, 'noList2'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: Theme.of(context)
@@ -115,16 +115,16 @@ class _ListPageState extends State<ListPage> {
                 context: context,
                 barrierDismissible: false,
                 builder: (ctx) => AlertDialog(
-                  title: Text(getTranlated(context, 'delete')),
-                  content: Text(getTranlated(context, 'deleteListDia')),
+                  title: Text(getTranslated(context, 'delete')),
+                  content: Text(getTranslated(context, 'deleteListDia')),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(false),
-                      child: Text(getTranlated(context, 'leave')),
+                      child: Text(getTranslated(context, 'leave')),
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(true),
-                      child: Text(getTranlated(context, 'accept')),
+                      child: Text(getTranslated(context, 'accept')),
                     ),
                   ],
                 ),
@@ -145,7 +145,7 @@ class _ListPageState extends State<ListPage> {
                 return 0;
               });
               utils.showSnack(
-                  context, getTranlated(context, 'deletedList'));
+                  context, getTranslated(context, 'deletedList'));
             },
             child: card(_lists[i]),
           );
@@ -290,13 +290,13 @@ class _ListPageState extends State<ListPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'delete')),
-            content: new Text(getTranlated(context, 'deleteListDia')),
+            title: Text(getTranslated(context, 'delete')),
+            content: new Text(getTranslated(context, 'deleteListDia')),
             actions: <Widget>[
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranslated(context, 'leave'),
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
@@ -306,10 +306,10 @@ class _ListPageState extends State<ListPage> {
                     Navigator.of(context).pop();
                     await _loadLists();
                     utils.showSnack(
-                        context, getTranlated(context, 'deletedList'));
+                        context, getTranslated(context, 'deletedList'));
                   },
                   child: Text(
-                    getTranlated(context, 'accept'),
+                    getTranslated(context, 'accept'),
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
@@ -327,7 +327,7 @@ class _ListPageState extends State<ListPage> {
       textAlign: TextAlign.center,
       onSaved: (value) => listaModel.title = value ?? '',
       decoration: InputDecoration(
-        labelText: getTranlated(context, 'listName'),
+        labelText: getTranslated(context, 'listName'),
         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
@@ -344,7 +344,7 @@ class _ListPageState extends State<ListPage> {
       textAlign: TextAlign.center,
       onSaved: (value) => listaModel.superMaret = value ?? '',
       decoration: InputDecoration(
-        labelText: getTranlated(context, 'shopName'),
+        labelText: getTranslated(context, 'shopName'),
         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
@@ -361,7 +361,7 @@ class _ListPageState extends State<ListPage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text(getTranlated(context, 'saveList')),
+            title: Text(getTranslated(context, 'saveList')),
             content: Form(
               key: lisForm,
               child: Column(
@@ -373,7 +373,7 @@ class _ListPageState extends State<ListPage> {
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranslated(context, 'leave'),
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
@@ -385,7 +385,7 @@ class _ListPageState extends State<ListPage> {
                         context, 'home'); // si navegas a home igual se refresca
                   },
                   child: Text(
-                    getTranlated(context, 'save'),
+                    getTranslated(context, 'save'),
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
@@ -412,8 +412,8 @@ class _ListPageState extends State<ListPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(getTranlated(context, 'exportOptions')),
-          content: Text(getTranlated(context, 'chooseExportFormat')),
+          title: Text(getTranslated(context, 'exportOptions')),
+          content: Text(getTranslated(context, 'chooseExportFormat')),
           actions: <Widget>[
             TextButton(
               child: Text("PDF"),
@@ -433,7 +433,7 @@ class _ListPageState extends State<ListPage> {
               },
             ),
             TextButton(
-              child: Text(getTranlated(context, 'cancel')),
+              child: Text(getTranslated(context, 'cancel')),
               onPressed: () {
                 Navigator.of(context).pop();
               },

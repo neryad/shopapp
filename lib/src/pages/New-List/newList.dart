@@ -5,7 +5,6 @@ import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/models/List_model.dart';
 import 'package:pocketlist/src/models/category_model.dart';
 import 'package:pocketlist/src/models/product_model.dart';
-import 'package:pocketlist/src/models/suge.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:uuid/uuid.dart';
@@ -96,7 +95,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   List<ProductModel> items = [];
   ProductModel productModel = ProductModel();
-  Segurencia sugeModel = Segurencia();
   late Lista listaModel = Lista();
 
   // Getters para items completados y pendientes
@@ -109,7 +107,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: isNewList
-            ? Text(getTranlated(context, 'mMyLisTitle'))
+            ? Text(getTranslated(context, 'mMyLisTitle'))
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -150,7 +148,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 if (itemsCompletados > 0)
                   IconButton(
                     icon: Icon(Icons.refresh),
-                    tooltip: getTranlated(context, 'resetList'),
+                    tooltip: getTranslated(context, 'resetList'),
                     onPressed: _confirmResetCompleted,
                   ),
 
@@ -266,7 +264,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     ),
                     SizedBox(width: 12),
                     Text(
-                      getTranlated(context, 'buget'),
+                      getTranslated(context, 'buget'),
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -282,7 +280,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   autofocus: true,
                   decoration: InputDecoration(
                     counterText: '',
-                    labelText: getTranlated(context, 'newBuget'),
+                    labelText: getTranslated(context, 'newBuget'),
                     prefixIcon: Icon(Icons.attach_money),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -302,7 +300,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text(getTranlated(context, 'baclTolist')),
+                      child: Text(getTranslated(context, 'baclTolist')),
                     ),
                     SizedBox(width: 8),
                     ElevatedButton(
@@ -321,7 +319,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         ),
                       ),
                       child: Text(
-                        getTranlated(context, 'save'),
+                        getTranslated(context, 'save'),
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -363,7 +361,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             size: 28),
                         SizedBox(width: 12),
                         Text(
-                          getTranlated(context, 'newArt'),
+                          getTranslated(context, 'newArt'),
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -386,7 +384,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       DropdownButtonFormField<int?>(
                         initialValue: _newItemCategoryId,
                         decoration: InputDecoration(
-                          labelText: getTranlated(context, 'categories'),
+                          labelText: getTranslated(context, 'categories'),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -402,7 +400,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         items: [
                           DropdownMenuItem<int?>(
                             value: null,
-                            child: Text(getTranlated(context, 'noCategory'),
+                            child: Text(getTranslated(context, 'noCategory'),
                                 style: TextStyle(color: Colors.grey[600])),
                           ),
                           ..._categories.map((cat) => DropdownMenuItem<int?>(
@@ -430,12 +428,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             productModel = ProductModel();
                             Navigator.of(context).pop();
                           },
-                          child: Text(getTranlated(context, 'baclTolist')),
+                          child: Text(getTranslated(context, 'baclTolist')),
                         ),
                         SizedBox(width: 8),
                         ElevatedButton(
                           onPressed: () {
-                            _subimt();
+                            _submit();
                             getTotal();
                           },
                           style: ElevatedButton.styleFrom(
@@ -448,7 +446,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             ),
                           ),
                           child: Text(
-                            getTranlated(context, 'add'),
+                            getTranslated(context, 'add'),
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -476,11 +474,11 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         if (utils.isEmpty(value!)) {
           return null;
         } else {
-          return getTranlated(context, 'noEmpty');
+          return getTranslated(context, 'noEmpty');
         }
       },
       decoration: InputDecoration(
-        labelText: getTranlated(context, 'nameArt'),
+        labelText: getTranslated(context, 'nameArt'),
         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
@@ -496,7 +494,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       maxLength: 6,
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        labelText: getTranlated(context, 'price'),
+        labelText: getTranslated(context, 'price'),
         counterText: '',
         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
@@ -515,7 +513,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         if (utils.isNumeric(checkValue)) {
           return null;
         } else {
-          return getTranlated(context, 'onlyNumbers');
+          return getTranslated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -529,7 +527,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       maxLength: 6,
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        labelText: getTranlated(context, 'quantity'),
+        labelText: getTranslated(context, 'quantity'),
         counterText: '',
         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
@@ -548,14 +546,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         if (utils.isNumeric(checkValue)) {
           return null;
         } else {
-          return getTranlated(context, 'onlyNumbers');
+          return getTranslated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
     );
   }
 
-  void _subimt() async {
+  void _submit() async {
     var it = items.length;
     if (!formKey.currentState!.validate()) return;
 
@@ -575,7 +573,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
     try {
       await DBProvider.db.newProd(prod);
-      _loadItems();
     } catch (e) {
       setState(() {
         items.removeWhere((item) => item.name == prod.name && item.listId == prod.listId);
@@ -605,7 +602,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             return AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
-              title: Text(getTranlated(context, 'EupdArt')),
+              title: Text(getTranslated(context, 'EupdArt')),
               content: Form(
                 key: editFormKey,
                 child: Column(
@@ -619,7 +616,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       DropdownButtonFormField<int?>(
                         initialValue: _editItemCategoryId,
                         decoration: InputDecoration(
-                          labelText: getTranlated(context, 'categories'),
+                          labelText: getTranslated(context, 'categories'),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -629,7 +626,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         items: [
                           DropdownMenuItem<int?>(
                             value: null,
-                            child: Text(getTranlated(context, 'noCategory'),
+                            child: Text(getTranslated(context, 'noCategory'),
                                 style: TextStyle(color: Colors.grey[600])),
                           ),
                           ..._categories.map((cat) => DropdownMenuItem<int?>(
@@ -655,7 +652,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 TextButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(
-                      getTranlated(context, 'leave'),
+                      getTranslated(context, 'leave'),
                       style: TextStyle(
                           color: (prefs.color == kColorGray)
                               ? Colors.white
@@ -663,12 +660,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     )),
                 TextButton(
                     onPressed: () {
-                      _editDubimt(index);
+                      _editSubmit(index);
                       getTotal();
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      getTranlated(context, 'save'),
+                      getTranslated(context, 'save'),
                       style: TextStyle(
                           color: (prefs.color == kColorGray)
                               ? Colors.white
@@ -680,7 +677,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         });
   }
 
-  void _editDubimt(int index) async {
+  void _editSubmit(int index) async {
     editFormKey.currentState!.save();
     items[index].categoryId = _editItemCategoryId;
     await DBProvider.db.updateProd(items[index]);
@@ -699,7 +696,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       textAlign: TextAlign.center,
       onSaved: (value) => items[index].name = value ?? '',
       decoration: InputDecoration(
-        labelText: getTranlated(context, 'nameArt'),
+        labelText: getTranslated(context, 'nameArt'),
         counterText: '',
         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
@@ -716,7 +713,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       maxLength: 6,
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        labelText: getTranlated(context, 'price'),
+        labelText: getTranslated(context, 'price'),
         counterText: '',
         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
@@ -731,7 +728,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         if (utils.isNumeric(value ?? "0")) {
           return null;
         } else {
-          return getTranlated(context, 'onlyNumbers');
+          return getTranslated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -745,7 +742,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       maxLength: 6,
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-        labelText: getTranlated(context, 'quantity'),
+        labelText: getTranslated(context, 'quantity'),
         counterText: '',
         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
@@ -760,7 +757,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         if (utils.isNumeric(value ?? "0")) {
           return null;
         } else {
-          return getTranlated(context, 'onlyNumbers');
+          return getTranslated(context, 'onlyNumbers');
         }
       },
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -774,7 +771,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       textAlign: TextAlign.center,
       onSaved: (value) => listaModel.title = value ?? '',
       decoration: InputDecoration(
-        labelText: getTranlated(context, 'listName'),
+        labelText: getTranslated(context, 'listName'),
         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
@@ -790,7 +787,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       textAlign: TextAlign.center,
       onSaved: (value) => listaModel.superMaret = value ?? '',
       decoration: InputDecoration(
-        labelText: getTranlated(context, 'shopName'),
+        labelText: getTranslated(context, 'shopName'),
         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
@@ -818,7 +815,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         children: [
           _buildStatRow(
             icon: Icons.account_balance_wallet,
-            label: getTranlated(context, 'buget'),
+            label: getTranslated(context, 'buget'),
             value: utils.numberFormat(buget),
             color: bugetColor,
             onTap: () => _mostrarAlertaBuget(context),
@@ -826,14 +823,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           Divider(height: 16, thickness: 1),
           _buildStatRow(
             icon: Icons.shopping_cart,
-            label: getTranlated(context, 'total'),
+            label: getTranslated(context, 'total'),
             value: utils.numberFormat(total),
             color: Theme.of(context).colorScheme.primary,
           ),
           Divider(height: 16, thickness: 1),
           _buildStatRow(
             icon: Icons.shuffle,
-            label: getTranlated(context, 'difference'),
+            label: getTranslated(context, 'difference'),
             value: utils.numberFormat(diference),
             color: colorBuget,
           ),
@@ -898,7 +895,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               ),
               SizedBox(height: 24),
               Text(
-                getTranlated(context, 'noItems'),
+                getTranslated(context, 'noItems'),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -912,7 +909,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               ),
               SizedBox(height: 12),
               Text(
-                getTranlated(context, 'noItems2'),
+                getTranslated(context, 'noItems2'),
                 style: TextStyle(
                   fontSize: 16,
                   color: Theme.of(context)
@@ -928,7 +925,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 onPressed: () => _mostrarAlertaProducto(context),
                 icon: Icon(Icons.add, color: Colors.white),
                 label: Text(
-                  getTranlated(context, 'addFirstItem'),
+                  getTranslated(context, 'addFirstItem'),
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -998,7 +995,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             padding: const EdgeInsets.only(right: 6),
                             child: FilterChip(
                               label: Text(
-                                  getTranlated(context, 'filterByCategory')),
+                                  getTranslated(context, 'filterByCategory')),
                               selected: _filterCategoryId == null,
                               onSelected: (_) =>
                                   setState(() => _filterCategoryId = null),
@@ -1038,7 +1035,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                               padding: const EdgeInsets.only(right: 6),
                               child: FilterChip(
                                 label:
-                                    Text(getTranlated(context, 'noCategory')),
+                                    Text(getTranslated(context, 'noCategory')),
                                 selected: _filterCategoryId == -1,
                                 onSelected: (_) => setState(() =>
                                     _filterCategoryId =
@@ -1065,7 +1062,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         GestureDetector(
                           onTap: () => setState(() => _sortByCategory = false),
                           child: Text(
-                            getTranlated(context, 'sortAlpha'),
+                            getTranslated(context, 'sortAlpha'),
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: !_sortByCategory
@@ -1083,7 +1080,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         GestureDetector(
                           onTap: () => setState(() => _sortByCategory = true),
                           child: Text(
-                            getTranlated(context, 'sortByCategory'),
+                            getTranslated(context, 'sortByCategory'),
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: _sortByCategory
@@ -1146,7 +1143,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                   ),
                                   SizedBox(width: 6),
                                   Text(
-                                    getTranlated(context, 'completed'),
+                                    getTranslated(context, 'completed'),
                                     style: TextStyle(
                                       color: Theme.of(context).disabledColor,
                                       fontSize: 12,
@@ -1180,7 +1177,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                               children: <Widget>[
                                 Icon(Icons.delete, color: Colors.white),
                                 Text(
-                                  getTranlated(context, 'delete'),
+                                  getTranslated(context, 'delete'),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w700,
@@ -1198,7 +1195,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       onDismissed: (direction) {
                         showDeleteSnack(
                             context,
-                            getTranlated(context, 'offLis'),
+                            getTranslated(context, 'offLis'),
                             itemIndex,
                             item,
                             items);
@@ -1326,7 +1323,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                     children: [
                                       _buildItemDetail(
                                         icon: Icons.attach_money,
-                                        label: getTranlated(context, 'price'),
+                                        label: getTranslated(context, 'price'),
                                         value: utils.numberFormat(item.price),
                                       ),
                                       Container(
@@ -1338,7 +1335,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                       _buildItemDetail(
                                         icon: Icons.shopping_basket,
                                         label:
-                                            getTranlated(context, 'quantity'),
+                                            getTranslated(context, 'quantity'),
                                         value: item.quantity.toString(),
                                       ),
                                       Container(
@@ -1349,7 +1346,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                               .withOpacity(0.2)),
                                       _buildItemDetail(
                                         icon: Icons.calculate,
-                                        label: getTranlated(context, 'total'),
+                                        label: getTranslated(context, 'total'),
                                         value: utils.numberFormat(
                                             item.quantity * item.price),
                                         highlight: true,
@@ -1418,7 +1415,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
     utils.showSnack(
       context,
-      valor ? getTranlated(context, 'onCart') : getTranlated(context, 'ofCart'),
+      valor ? getTranslated(context, 'onCart') : getTranslated(context, 'ofCart'),
     );
   }
 
@@ -1434,13 +1431,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             if (isNewList) ...[
               _buildNavButton(
                 icon: Icons.save_outlined,
-                label: getTranlated(context, 'saveList'),
+                label: getTranslated(context, 'saveList'),
                 onPressed: items.isEmpty ? null : () => _guardarLista(context),
                 color: Colors.green,
               ),
               _buildNavButton(
                 icon: Icons.delete_outline,
-                label: getTranlated(context, 'clearList'),
+                label: getTranslated(context, 'clearList'),
                 onPressed:
                     items.isEmpty ? null : () => _validateEliminarList(context),
                 color: Colors.red,
@@ -1489,19 +1486,19 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text(getTranlated(context, 'deleteCont')),
+            title: Text(getTranslated(context, 'deleteCont')),
             actions: <Widget>[
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranslated(context, 'leave'),
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
               TextButton(
                   onPressed: () => limpiarTodo(),
                   child: Text(
-                    getTranlated(context, 'accept'),
+                    getTranslated(context, 'accept'),
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
@@ -1519,16 +1516,16 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             borderRadius: BorderRadius.circular(15),
           ),
           title: Text(
-            getTranlated(context, 'resetList') ?? 'Reiniciar lista',
+            getTranslated(context, 'resetList') ?? 'Reiniciar lista',
           ),
           content: Text(
-            getTranlated(context, 'resetListConfirm') ??
+            getTranslated(context, 'resetListConfirm') ??
                 '¿Deseas desmarcar todos los artículos completados?',
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(getTranlated(context, 'leave')),
+              child: Text(getTranslated(context, 'leave')),
             ),
             ElevatedButton(
               onPressed: () {
@@ -1539,7 +1536,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 backgroundColor: Theme.of(context).colorScheme.primary,
               ),
               child: Text(
-                getTranlated(context, 'accept'),
+                getTranslated(context, 'accept'),
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -1566,7 +1563,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 ),
                 SizedBox(height: 12),
                 Text(
-                  getTranlated(context, 'listComplete'),
+                  getTranslated(context, 'listComplete'),
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20),
                 ),
@@ -1583,7 +1580,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                           {Navigator.of(context).pop(), _guardarLista(context)},
                       icon: Icon(Icons.save, color: Colors.white),
                       label: Text(
-                        getTranlated(context, 'save'),
+                        getTranslated(context, 'save'),
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -1601,7 +1598,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     },
                     icon: Icon(Icons.delete_outline, color: Colors.red),
                     label: Text(
-                      getTranlated(context, 'clearList'),
+                      getTranslated(context, 'clearList'),
                       style: TextStyle(color: Colors.red, fontSize: 16),
                     ),
                     style: OutlinedButton.styleFrom(
@@ -1613,7 +1610,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   TextButton.icon(
                     icon: const Icon(Icons.refresh),
                     label: Text(
-                      getTranlated(context, 'resetList') ?? 'Reiniciar lista',
+                      getTranslated(context, 'resetList') ?? 'Reiniciar lista',
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -1624,7 +1621,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(
-                      getTranlated(context, 'leave'),
+                      getTranslated(context, 'leave'),
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 14,
@@ -1657,7 +1654,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
     utils.showSnack(
       context,
-      getTranlated(context, 'itemsReset') ?? 'Lista reiniciada',
+      getTranslated(context, 'itemsReset') ?? 'Lista reiniciada',
     );
   }
 
@@ -1763,7 +1760,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text(getTranlated(context, 'saveList')),
+            title: Text(getTranslated(context, 'saveList')),
             content: Form(
               key: lisForm,
               child: Column(
@@ -1775,7 +1772,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    getTranlated(context, 'leave'),
+                    getTranslated(context, 'leave'),
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
@@ -1787,7 +1784,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     prefs.tempBuget = '0.00';
                   },
                   child: Text(
-                    getTranlated(context, 'save'),
+                    getTranslated(context, 'save'),
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
@@ -1808,7 +1805,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         if (mounted) {
           showcompletedSnack(
               context,
-              getTranlated(context, 'listComplete') ??
+              getTranslated(context, 'listComplete') ??
                   'Lista de compra completa');
           _validateGuardaroEliminarList(context);
         }
@@ -1840,7 +1837,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           setState(() {});
         },
         child: Text(
-          getTranlated(context, 'undo'),
+          getTranslated(context, 'undo'),
           style: TextStyle(
               color: (prefs.color == kColorGray) ? Colors.white : Colors.amber),
         ),

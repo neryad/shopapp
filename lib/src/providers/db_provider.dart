@@ -133,7 +133,7 @@ class DBProvider {
   }
 
   ///GET ALL LIST
-  Future<List<Lista>> getToadasLista() async {
+  Future<List<Lista>> getTodasLista() async {
     final db = await database;
     final res = await db!.query('Lista');
 
