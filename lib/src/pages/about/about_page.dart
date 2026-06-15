@@ -2,7 +2,7 @@ import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:pocketlist/src/localization/localization_constant.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pocketlist/src/utils/package_info_mixin.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart';
 
@@ -13,29 +13,13 @@ class AboutPage extends StatefulWidget {
   _AboutPageState createState() => _AboutPageState();
 }
 
-class _AboutPageState extends State<AboutPage> {
+class _AboutPageState extends State<AboutPage> with PackageInfoMixin {
   final prefs = PreferenciasUsuario();
-
-  PackageInfo _packageInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
-  );
 
   @override
   void initState() {
     super.initState();
-    _initPackageInfo();
-  }
-
-  Future<void> _initPackageInfo() async {
-    final PackageInfo info = await PackageInfo.fromPlatform();
-    if (mounted) {
-      setState(() {
-        _packageInfo = info;
-      });
-    }
+    initPackageInfo();
   }
 
   @override
@@ -44,7 +28,7 @@ class _AboutPageState extends State<AboutPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(getTranlated(context, 'aboutTitle')),
+        title: Text(getTranslated(context, 'aboutTitle')),
         elevation: 0,
       ),
       body: Column(
@@ -100,7 +84,7 @@ class _AboutPageState extends State<AboutPage> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    'v${_packageInfo.version}',
+                    'v${packageInfo.version}',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white,
@@ -123,15 +107,15 @@ class _AboutPageState extends State<AboutPage> {
                   SizedBox(height: 8),
 
                   // Sección: Información de la App
-                  _buildSectionHeader(getTranlated(context, 'aboutAppInfo')),
+                  _buildSectionHeader(getTranslated(context, 'aboutAppInfo')),
                   SizedBox(height: 12),
 
                   _buildInfoCard(
                     icon: Icons.info_outline,
                     iconColor: Colors.blue,
-                    title: getTranlated(context, 'versionTitle'),
+                    title: getTranslated(context, 'versionTitle'),
                     subtitle:
-                        'v${_packageInfo.version} (${_packageInfo.buildNumber})',
+                        'v${packageInfo.version} (${packageInfo.buildNumber})',
                   ),
 
                   SizedBox(height: 24),
@@ -144,7 +128,7 @@ class _AboutPageState extends State<AboutPage> {
                     icon: Icons.person_outline,
                     iconColor: Colors.purple,
                     title:
-                        getTranlated(context, 'authorTitle'),
+                        getTranslated(context, 'authorTitle'),
                     subtitle: 'Neryad',
                     onTap: () => Navigator.pushNamed(context, 'authorPage'),
                     showArrow: true,
@@ -155,8 +139,8 @@ class _AboutPageState extends State<AboutPage> {
                   // _buildInfoCard(
                   //   icon: Icons.palette_outlined,
                   //   iconColor: Colors.orange,
-                  //   title: getTranlated(context, 'aImgs') ?? 'Ilustraciones',
-                  //   subtitle: getTranlated(context, 'aImgs2') ?? 'unDraw',
+                  //   title: getTranslated(context, 'aImgs') ?? 'Ilustraciones',
+                  //   subtitle: getTranslated(context, 'aImgs2') ?? 'unDraw',
                   //   onTap: () => _launchUrl('https://undraw.co/illustrations'),
                   //   showArrow: true,
                   // ),
@@ -166,9 +150,9 @@ class _AboutPageState extends State<AboutPage> {
                   _buildInfoCard(
                     icon: Icons.brush_outlined,
                     iconColor: Colors.pink,
-                    title: getTranlated(context, 'lDesign'),
+                    title: getTranslated(context, 'lDesign'),
                     subtitle:
-                        getTranlated(context, 'studio') ?? 'Plus Logo Design',
+                        getTranslated(context, 'studio') ?? 'Plus Logo Design',
                     onTap: () => _launchUrl(
                         'https://www.instagram.com/plus.logodesign/'),
                     showArrow: true,
@@ -177,13 +161,13 @@ class _AboutPageState extends State<AboutPage> {
                   // Donaciones (solo en móvil)
                   if (!kIsWeb) ...[
                     SizedBox(height: 24),
-                    _buildSectionHeader(getTranlated(context, 'aboutSupport')),
+                    _buildSectionHeader(getTranslated(context, 'aboutSupport')),
                     SizedBox(height: 12),
                     _buildInfoCard(
                       icon: Icons.favorite_outline,
                       iconColor: Colors.red,
-                      title: getTranlated(context, 'dantions'),
-                      subtitle: getTranlated(context, 'aboutDonation'),
+                      title: getTranslated(context, 'dantions'),
+                      subtitle: getTranslated(context, 'aboutDonation'),
                       onTap: () => _launchUrl('https://www.paypal.me/neryad'),
                       showArrow: true,
                     ),
@@ -192,13 +176,13 @@ class _AboutPageState extends State<AboutPage> {
                   SizedBox(height: 24),
 
                   // Links importantes
-                  _buildSectionHeader(getTranlated(context, 'aboutLinks')),
+                  _buildSectionHeader(getTranslated(context, 'aboutLinks')),
                   SizedBox(height: 12),
 
                   _buildInfoCard(
                     icon: Icons.code_outlined,
                     iconColor: Colors.teal,
-                    title: getTranlated(context, 'aboutSourceCode'),
+                    title: getTranslated(context, 'aboutSourceCode'),
                     subtitle: 'GitHub',
                     onTap: () => _launchUrl('https://github.com/neryad'),
                     showArrow: true,
@@ -209,8 +193,8 @@ class _AboutPageState extends State<AboutPage> {
                   _buildInfoCard(
                     icon: Icons.privacy_tip_outlined,
                     iconColor: Colors.indigo,
-                    title: getTranlated(context, 'privacyPol'),
-                    subtitle: getTranlated(context, 'aboutViewDoc'),
+                    title: getTranslated(context, 'privacyPol'),
+                    subtitle: getTranslated(context, 'aboutViewDoc'),
                     onTap: () => _launchUrl(
                         'https://neryad.github.io/pocketPage/docs/PrivacyPolicy.pdf'),
                     showArrow: true,
@@ -223,7 +207,7 @@ class _AboutPageState extends State<AboutPage> {
                     child: Column(
                       children: [
                         Text(
-                          getTranlated(context, 'aboutMadeWith'),
+                          getTranslated(context, 'aboutMadeWith'),
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
@@ -231,7 +215,7 @@ class _AboutPageState extends State<AboutPage> {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          getTranlated(context, 'aboutCopyright'),
+                          getTranslated(context, 'aboutCopyright'),
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[500],
@@ -387,13 +371,13 @@ class _AboutPageState extends State<AboutPage> {
           mode: LaunchMode.externalApplication,
         );
       } else {
-        throw getTranlated(context, 'aboutOpenLinkError') + ' $urlString';
+        throw getTranslated(context, 'aboutOpenLinkError') + ' $urlString';
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(getTranlated(context, 'aboutOpenLinkError')),
+            content: Text(getTranslated(context, 'aboutOpenLinkError')),
             backgroundColor: Colors.red,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(

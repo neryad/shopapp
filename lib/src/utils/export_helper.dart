@@ -14,21 +14,21 @@ import 'package:pocketlist/src/utils/file_save_helper.dart';
 
 class ExportHelper {
   static Future<void> generateCsv(BuildContext context, String listId) async {
-    final filePlaceHolder = getTranlated(context, 'csvFilePlaceholder');
-    final dateCsv = getTranlated(context, 'csvDate');
-    final bugetCsv = getTranlated(context, 'csvBudget');
-    final bought = getTranlated(context, 'csvBought');
-    final notBought = getTranlated(context, 'csvNotBought');
-    final storeCsv = getTranlated(context, 'csvStore');
-    final titleCsv = getTranlated(context, 'csvListName');
-    final difrenceCsv = getTranlated(context, 'csvDifference');
-    final totalCsv = getTranlated(context, 'csvTotal');
-    final nameProdCsv = getTranlated(context, 'csvName');
-    final priceProdCsv = getTranlated(context, 'csvPrice');
-    final quantityProdCsv = getTranlated(context, 'csvQuantity');
-    final statusProdCsv = getTranlated(context, 'csvStatus');
-    final successMsgExport = getTranlated(context, 'csvExportSuccess');
-    final errorMsgExport = getTranlated(context, 'csvExportError');
+    final filePlaceHolder = getTranslated(context, 'csvFilePlaceholder');
+    final dateCsv = getTranslated(context, 'csvDate');
+    final bugetCsv = getTranslated(context, 'csvBudget');
+    final bought = getTranslated(context, 'csvBought');
+    final notBought = getTranslated(context, 'csvNotBought');
+    final storeCsv = getTranslated(context, 'csvStore');
+    final titleCsv = getTranslated(context, 'csvListName');
+    final difrenceCsv = getTranslated(context, 'csvDifference');
+    final totalCsv = getTranslated(context, 'csvTotal');
+    final nameProdCsv = getTranslated(context, 'csvName');
+    final priceProdCsv = getTranslated(context, 'csvPrice');
+    final quantityProdCsv = getTranslated(context, 'csvQuantity');
+    final statusProdCsv = getTranslated(context, 'csvStatus');
+    final successMsgExport = getTranslated(context, 'csvExportSuccess');
+    final errorMsgExport = getTranslated(context, 'csvExportError');
 
     try {
       List<Lista> lista = await DBProvider.db.getListIds(listId);

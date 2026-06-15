@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
         },
         icon: Icon(Icons.add, color: Colors.white),
         label: Text(
-          getTranlated(context, 'fabNewList'),
+          getTranslated(context, 'fabNewList'),
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,

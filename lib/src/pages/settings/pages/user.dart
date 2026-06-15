@@ -58,7 +58,7 @@ class _UserPageState extends State<UserPage> {
       MyApp.stateSet(context);
 
       _showSuccessSnack(
-        getTranlated(context, 'userChangesSaved'),
+        getTranslated(context, 'userChangesSaved'),
       );
     }
   }
@@ -72,16 +72,16 @@ class _UserPageState extends State<UserPage> {
           children: [
             Icon(Icons.warning_amber_rounded, color: Colors.orange),
             SizedBox(width: 12),
-            Text(getTranlated(context, 'userDeleteConfirmTitle')),
+            Text(getTranslated(context, 'userDeleteConfirmTitle')),
           ],
         ),
         content: Text(
-          getTranlated(context, 'userDeleteConfirmMsg'),
+          getTranslated(context, 'userDeleteConfirmMsg'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(getTranlated(context, 'cancel')),
+            child: Text(getTranslated(context, 'cancel')),
           ),
           ElevatedButton(
             onPressed: () {
@@ -95,12 +95,12 @@ class _UserPageState extends State<UserPage> {
               Navigator.pop(context);
               MyApp.stateSet(context);
 
-              _showInfoSnack(getTranlated(context, 'userProfileDeleted'));
+              _showInfoSnack(getTranslated(context, 'userProfileDeleted'));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
             ),
-            child: Text(getTranlated(context, 'userDeleteBtn'), style: TextStyle(color: Colors.white)),
+            child: Text(getTranslated(context, 'userDeleteBtn'), style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -112,14 +112,14 @@ class _UserPageState extends State<UserPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(getTranlated(context, 'userTitle')),
+        title: Text(getTranslated(context, 'userTitle')),
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         actions: [
           if (_hasChanges)
             IconButton(
               icon: Icon(Icons.check),
-              tooltip: getTranlated(context, 'userSaveChanges'),
+              tooltip: getTranslated(context, 'userSaveChanges'),
               onPressed: _saveChanges,
             ),
         ],
@@ -172,7 +172,7 @@ class _UserPageState extends State<UserPage> {
                     SizedBox(height: 16),
                     Text(
                       _nameController.text.isEmpty
-                          ? getTranlated(context, 'userGuest')
+                          ? getTranslated(context, 'userGuest')
                           : _nameController.text,
                       style: TextStyle(
                         color: Colors.white,
@@ -194,7 +194,7 @@ class _UserPageState extends State<UserPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      getTranlated(context, 'userProfileInfo'),
+                      getTranslated(context, 'userProfileInfo'),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -219,7 +219,7 @@ class _UserPageState extends State<UserPage> {
                         controller: _nameController,
                         textCapitalization: TextCapitalization.words,
                         decoration: InputDecoration(
-                          labelText: getTranlated(context, 'userFullName'),
+                          labelText: getTranslated(context, 'userFullName'),
                           labelStyle: TextStyle(
                               color: Theme.of(context).colorScheme.primary),
                           prefixIcon: Icon(
@@ -236,14 +236,14 @@ class _UserPageState extends State<UserPage> {
                             horizontal: 16,
                             vertical: 16,
                           ),
-                          helperText: getTranlated(context, 'userNameHelper'),
+                          helperText: getTranslated(context, 'userNameHelper'),
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return getTranlated(context, 'userNameRequired');
+                            return getTranslated(context, 'userNameRequired');
                           }
                           if (value.trim().length < 2) {
-                            return getTranlated(context, 'userNameMinLength');
+                            return getTranslated(context, 'userNameMinLength');
                           }
                           return null;
                         },
@@ -261,7 +261,7 @@ class _UserPageState extends State<UserPage> {
                           onPressed: _saveChanges,
                           icon: Icon(Icons.save, color: Colors.white),
                           label: Text(
-                            getTranlated(context, 'userSaveBtn'),
+                            getTranslated(context, 'userSaveBtn'),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -283,7 +283,7 @@ class _UserPageState extends State<UserPage> {
 
                     // Sección de acciones
                     Text(
-                      getTranlated(context, 'userActions'),
+                      getTranslated(context, 'userActions'),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -317,13 +317,13 @@ class _UserPageState extends State<UserPage> {
                           ),
                         ),
                         title: Text(
-                          getTranlated(context, 'userDeleteProfile'),
+                          getTranslated(context, 'userDeleteProfile'),
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         subtitle: Text(
-                          getTranlated(context, 'userDeleteProfileDesc'),
+                          getTranslated(context, 'userDeleteProfileDesc'),
                           style: TextStyle(fontSize: 12),
                         ),
                         trailing: Icon(
@@ -360,7 +360,7 @@ class _UserPageState extends State<UserPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  getTranlated(context, 'userInfoSafe'),
+                                  getTranslated(context, 'userInfoSafe'),
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -370,7 +370,7 @@ class _UserPageState extends State<UserPage> {
                                 ),
                                 SizedBox(height: 4),
                                 Text(
-                                  getTranlated(context, 'userInfoSafeDesc'),
+                                  getTranslated(context, 'userInfoSafeDesc'),
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey[700],

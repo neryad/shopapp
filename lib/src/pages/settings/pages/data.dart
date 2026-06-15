@@ -24,7 +24,7 @@ class _DataPageState extends State<DataPage> {
   }
 
   Future<void> _loadStatistics() async {
-    final lists = await DBProvider.db.getToadasLista();
+    final lists = await DBProvider.db.getTodasLista();
     final products = await DBProvider.db.getAllProducts();
 
     setState(() {
@@ -38,7 +38,7 @@ class _DataPageState extends State<DataPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(getTranlated(context, 'dataTitle')),
+        title: Text(getTranslated(context, 'dataTitle')),
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
       ),
@@ -80,7 +80,7 @@ class _DataPageState extends State<DataPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            getTranlated(context, 'dataTitle'),
+                            getTranslated(context, 'dataTitle'),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 24,
@@ -111,7 +111,7 @@ class _DataPageState extends State<DataPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    getTranlated(context, 'dataSummary'),
+                    getTranslated(context, 'dataSummary'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class _DataPageState extends State<DataPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    getTranlated(context, 'actions'),
+                    getTranslated(context, 'actions'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -186,8 +186,8 @@ class _DataPageState extends State<DataPage> {
                   _buildActionCard(
                     icon: Icons.delete_forever,
                     iconColor: Colors.red,
-                    title: getTranlated(context, 'deleteAllList'),
-                    subtitle: getTranlated(context, 'deletePar'),
+                    title: getTranslated(context, 'deleteAllList'),
+                    subtitle: getTranslated(context, 'deletePar'),
                     onTap: () => _validateEliminar(context),
                     isDanger: true,
                   ),
@@ -204,7 +204,7 @@ class _DataPageState extends State<DataPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    getTranlated(context, 'info'),
+                    getTranslated(context, 'info'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -398,7 +398,7 @@ class _DataPageState extends State<DataPage> {
   }
 
   Future<void> _deleteCompletedLists() async {
-    final lists = await DBProvider.db.getToadasLista();
+    final lists = await DBProvider.db.getTodasLista();
     final completedLists = <Lista>[];
     for (final list in lists) {
       final products = await DBProvider.db.getProdId(list.id);
@@ -500,7 +500,7 @@ class _DataPageState extends State<DataPage> {
       setState(() => _isLoading = false);
       Navigator.of(context).pop();
 
-      _showSuccessSnack(getTranlated(context, 'dataDelete'));
+      _showSuccessSnack(getTranslated(context, 'dataDelete'));
     } catch (e) {
       setState(() => _isLoading = false);
       _showErrorSnack('Error al eliminar los datos');
@@ -521,7 +521,7 @@ class _DataPageState extends State<DataPage> {
               SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  getTranlated(context, 'deleteAllList'),
+                  getTranslated(context, 'deleteAllList'),
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -531,7 +531,7 @@ class _DataPageState extends State<DataPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(getTranlated(context, 'deleteDialo')),
+              Text(getTranslated(context, 'deleteDialo')),
               SizedBox(height: 16),
               Container(
                 padding: EdgeInsets.all(12),
@@ -563,7 +563,7 @@ class _DataPageState extends State<DataPage> {
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
-                getTranlated(context, 'leave'),
+                getTranslated(context, 'leave'),
                 style: TextStyle(color: Colors.grey[600]),
               ),
             ),
@@ -574,7 +574,7 @@ class _DataPageState extends State<DataPage> {
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
               child: Text(
-                getTranlated(context, 'accept'),
+                getTranslated(context, 'accept'),
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

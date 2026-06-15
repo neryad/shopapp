@@ -38,13 +38,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(getTranlated(context, 'importExportTitle')),
+        title: Text(getTranslated(context, 'importExportTitle')),
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         actions: [
           // Botón de importar con tooltip
           Tooltip(
-            message: getTranlated(context, 'importTooltip'),
+            message: getTranslated(context, 'importTooltip'),
             child: IconButton(
               onPressed: _isLoading ? null : pickFile,
               icon: Icon(Icons.file_download),
@@ -52,7 +52,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           ),
           // Botón de ayuda
           Tooltip(
-            message: getTranlated(context, 'helpTooltip'),
+            message: getTranslated(context, 'helpTooltip'),
             child: IconButton(
               onPressed: _showHelpDialog,
               icon: Icon(Icons.help_outline),
@@ -75,7 +75,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       children: [
                         CircularProgressIndicator(),
                         SizedBox(height: 16),
-                        Text(getTranlated(context, 'processing')),
+                        Text(getTranslated(context, 'processing')),
                       ],
                     ),
                   ),
@@ -92,7 +92,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       children: [
         // Header con información
         FutureBuilder<List<Lista>>(
-          future: DBProvider.db.getToadasLista(),
+          future: DBProvider.db.getTodasLista(),
           builder: (context, snapshot) {
             final hasLists = snapshot.hasData && snapshot.data!.isNotEmpty;
 
@@ -142,7 +142,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
   Widget _buildListView() {
     return FutureBuilder<List<Lista>>(
-      future: DBProvider.db.getToadasLista(),
+      future: DBProvider.db.getTodasLista(),
       builder: (context, AsyncSnapshot<List<Lista>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -390,12 +390,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
       List<List<String>> csvData = [
         <String>[
-          getTranlated(context, 'csvListName'),
-          getTranlated(context, 'csvDate'),
-          getTranlated(context, 'csvStore'),
-          getTranlated(context, 'csvBudget'),
-          getTranlated(context, 'csvTotal'),
-          getTranlated(context, 'csvDifference')
+          getTranslated(context, 'csvListName'),
+          getTranslated(context, 'csvDate'),
+          getTranslated(context, 'csvStore'),
+          getTranslated(context, 'csvBudget'),
+          getTranslated(context, 'csvTotal'),
+          getTranslated(context, 'csvDifference')
         ],
         ...lista.map((e) => [
               e.title,
@@ -406,18 +406,18 @@ class _ImportExportPageState extends State<ImportExportPage> {
               e.diference.toString()
             ]),
         <String>[
-          getTranlated(context, 'csvName'),
-          getTranlated(context, 'csvPrice'),
-          getTranlated(context, 'csvQuantity'),
-          getTranlated(context, 'csvStatus')
+          getTranslated(context, 'csvName'),
+          getTranslated(context, 'csvPrice'),
+          getTranslated(context, 'csvQuantity'),
+          getTranslated(context, 'csvStatus')
         ],
         ...productModel.map((item) => [
               item.name,
               item.price.toString(),
               item.quantity.toString(),
               item.complete == 1
-                  ? getTranlated(context, 'csvBought')
-                  : getTranlated(context, 'csvNotBought')
+                  ? getTranslated(context, 'csvBought')
+                  : getTranslated(context, 'csvNotBought')
             ]),
       ];
 
@@ -438,18 +438,18 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
         await file.writeAsString(csvString);
         await Share.shareXFiles([XFile(file.path)],
-            text: getTranlated(context, 'csvFilePlaceholder'));
+            text: getTranslated(context, 'csvFilePlaceholder'));
       }
 
       setState(() => _isLoading = false);
       _showSuccessSnack(
-          getTranlated(context, 'csvExportSuccess'),
-          getTranlated(context, 'strExport'));
+          getTranslated(context, 'csvExportSuccess'),
+          getTranslated(context, 'strExport'));
     } catch (e) {
       setState(() => _isLoading = false);
       _showErrorSnack(
-          '${getTranlated(context, 'csvExportError')}: ${e.toString()}',
-          getTranlated(context, 'strExport'));
+          '${getTranslated(context, 'csvExportError')}: ${e.toString()}',
+          getTranslated(context, 'strExport'));
     }
   }
 
@@ -481,8 +481,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
       }
     } catch (e) {
       _showErrorSnack(
-          '${getTranlated(context, 'csvImportError')}: ${e.toString()}',
-          getTranlated(context, 'strImport'));
+          '${getTranslated(context, 'csvImportError')}: ${e.toString()}',
+          getTranslated(context, 'strImport'));
     } finally {
       setState(() => _isLoading = false);
     }
@@ -493,12 +493,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
     try {
       if (importedList.length < 3) {
         _showErrorSnack('CSV inválido: muy pocas filas',
-            getTranlated(context, 'strImport'));
+            getTranslated(context, 'strImport'));
         return;
       }
       if (importedList[1] is! List || (importedList[1] as List).length < 6) {
         _showErrorSnack('CSV inválido: datos de lista incompletos',
-            getTranlated(context, 'strImport'));
+            getTranslated(context, 'strImport'));
         return;
       }
 
@@ -524,7 +524,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           price: double.tryParse(row[1].toString()) ?? 0.0,
           quantity: int.tryParse(row[2].toString()) ?? 1,
           complete:
-              (row[3]?.toString() == getTranlated(context, 'csvBought'))
+              (row[3]?.toString() == getTranslated(context, 'csvBought'))
                   ? 1
                   : 0,
           listId: listaImportada.id,
@@ -534,12 +534,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
         }
       }
 
-      _showSuccessSnack(getTranlated(context, 'csvImportSuccess'),
-          getTranlated(context, 'strImport'));
+      _showSuccessSnack(getTranslated(context, 'csvImportSuccess'),
+          getTranslated(context, 'strImport'));
     } catch (e) {
       _showErrorSnack(
-          '${getTranlated(context, 'csvImportError')}: ${e.toString()}',
-          getTranlated(context, 'strImport'));
+          '${getTranslated(context, 'csvImportError')}: ${e.toString()}',
+          getTranslated(context, 'strImport'));
     }
   }
 

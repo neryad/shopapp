@@ -1,6 +1,6 @@
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/pages/New-List/newList.dart';
+import 'package:pocketlist/src/utils/package_info_mixin.dart';
 
 import 'package:flutter/material.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
@@ -10,29 +10,13 @@ class MenuWidget extends StatefulWidget {
   State<MenuWidget> createState() => _MenuWidgetState();
 }
 
-class _MenuWidgetState extends State<MenuWidget> {
+class _MenuWidgetState extends State<MenuWidget> with PackageInfoMixin {
   final prefs = PreferenciasUsuario();
   @override
   void initState() {
     super.initState();
-    _initPackageInfo();
+    initPackageInfo();
   }
-
-  Future<void> _initPackageInfo() async {
-    final PackageInfo info = await PackageInfo.fromPlatform();
-    if (mounted) {
-      setState(() {
-        _packageInfo = info;
-      });
-    }
-  }
-
-  PackageInfo _packageInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +74,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                   const SizedBox(height: 16),
                   Text(
                     hasName
-                        ? getTranlated(context, 'greattin1')
-                        : getTranlated(context, 'setProfile'),
+                        ? getTranslated(context, 'greattin1')
+                        : getTranslated(context, 'setProfile'),
                     style: textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onPrimaryContainer.withOpacity(0.8),
                     ),
@@ -100,7 +84,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                   Text(
                     hasName
                         ? prefs.nombreUsuario
-                        : getTranlated(context, 'guestUser'),
+                        : getTranslated(context, 'guestUser'),
                     style: textTheme.titleLarge?.copyWith(
                       color: colorScheme.onPrimaryContainer,
                       fontWeight: FontWeight.bold,
@@ -131,7 +115,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            getTranlated(context, 'mCompleteProfile'),
+                            getTranslated(context, 'mCompleteProfile'),
                             style: textTheme.labelSmall?.copyWith(
                               color: colorScheme.primary,
                               fontWeight: FontWeight.w600,
@@ -151,19 +135,19 @@ class _MenuWidgetState extends State<MenuWidget> {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               children: <Widget>[
                 // Sección Principal
-                _createSectionHeader(context, getTranlated(context, 'mMain')),
+                _createSectionHeader(context, getTranslated(context, 'mMain')),
                 _createMenuItem(
                   context,
                   icon: Icons.home_outlined,
                   activeIcon: Icons.home,
-                  title: getTranlated(context, 'mHomeTitle'),
+                  title: getTranslated(context, 'mHomeTitle'),
                   routeName: 'home',
                 ),
                 _createMenuItem(
                   context,
                   icon: Icons.add_circle_outline,
                   activeIcon: Icons.add_circle,
-                  title: getTranlated(context, 'mMyLisTitle'),
+                  title: getTranslated(context, 'mMyLisTitle'),
                   onTap: () {
                     Navigator.pop(context); // Cerrar drawer
                     Navigator.push(
@@ -180,12 +164,12 @@ class _MenuWidgetState extends State<MenuWidget> {
                 const SizedBox(height: 8),
 
                 // Sección Datos
-                _createSectionHeader(context, getTranlated(context, 'mData')),
+                _createSectionHeader(context, getTranslated(context, 'mData')),
                 _createMenuItem(
                   context,
                   icon: Icons.sync_alt,
                   activeIcon: Icons.sync,
-                  title: getTranlated(context, 'importExportTitle'),
+                  title: getTranslated(context, 'importExportTitle'),
                   routeName: 'exportImport',
                 ),
 
@@ -194,19 +178,19 @@ class _MenuWidgetState extends State<MenuWidget> {
                 const SizedBox(height: 8),
 
                 // Sección Configuración
-                _createSectionHeader(context, getTranlated(context, 'mSettings')),
+                _createSectionHeader(context, getTranslated(context, 'mSettings')),
                 _createMenuItem(
                   context,
                   icon: Icons.settings_outlined,
                   activeIcon: Icons.settings,
-                  title: getTranlated(context, 'mSettingTitle'),
+                  title: getTranslated(context, 'mSettingTitle'),
                   routeName: 'settings',
                 ),
                 _createMenuItem(
                   context,
                   icon: Icons.info_outline,
                   activeIcon: Icons.info,
-                  title: getTranlated(context, 'mAboutTitle'),
+                  title: getTranslated(context, 'mAboutTitle'),
                   routeName: 'about',
                 ),
               ],
@@ -234,7 +218,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'PocketList v${_packageInfo.version} (${_packageInfo.buildNumber})',
+                  'PocketList v${packageInfo.version} (${packageInfo.buildNumber})',
                   style: textTheme.labelSmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.w500,

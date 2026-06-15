@@ -4,8 +4,8 @@ import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/data/class/language.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/pages/settings/category_management_page.dart';
+import 'package:pocketlist/src/utils/package_info_mixin.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -14,29 +14,13 @@ class SettingPage extends StatefulWidget {
   _SettingPageState createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingPageState extends State<SettingPage> with PackageInfoMixin {
   final prefs = PreferenciasUsuario();
-
-  PackageInfo _packageInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
-  );
 
   @override
   void initState() {
     super.initState();
-    _initPackageInfo();
-  }
-
-  Future<void> _initPackageInfo() async {
-    final PackageInfo info = await PackageInfo.fromPlatform();
-    if (mounted) {
-      setState(() {
-        _packageInfo = info;
-      });
-    }
+    initPackageInfo();
   }
 
   void _changeLanguage(Language language) async {
@@ -50,7 +34,7 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(getTranlated(context, 'settTitle')),
+        title: Text(getTranslated(context, 'settTitle')),
         elevation: 0,
       ),
       body: ListView(
@@ -89,7 +73,7 @@ class _SettingPageState extends State<SettingPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          getTranlated(context, 'settTitle'),
+                          getTranslated(context, 'settTitle'),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 24,
@@ -97,7 +81,7 @@ class _SettingPageState extends State<SettingPage> {
                           ),
                         ),
                         Text(
-                          getTranlated(context, 'settSubtitle'),
+                          getTranslated(context, 'settSubtitle'),
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.9),
                             fontSize: 14,
@@ -114,21 +98,21 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Apariencia
-          _buildSectionHeader(getTranlated(context, 'settAppearance')),
+          _buildSectionHeader(getTranslated(context, 'settAppearance')),
           _buildSettingCard(
             icon: Icons.color_lens_rounded,
-            title: getTranlated(context, 'themTitle'),
-            subtitle: getTranlated(context, 'settCustomColors'),
+            title: getTranslated(context, 'themTitle'),
+            subtitle: getTranslated(context, 'settCustomColors'),
             onTap: () => Navigator.pushNamed(context, 'colorPage'),
             trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
           ),
 
           _buildSettingCard(
             icon: Icons.dark_mode_rounded,
-            title: getTranlated(context, 'darkMode'),
+            title: getTranslated(context, 'darkMode'),
             subtitle: prefs.darkLightTheme
-                ? getTranlated(context, 'settDarkOn')
-                : getTranlated(context, 'settLightOn'),
+                ? getTranslated(context, 'settDarkOn')
+                : getTranslated(context, 'settLightOn'),
             trailing: Transform.scale(
               scale: 0.8,
               child: Switch(
@@ -146,12 +130,12 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Cuenta
-          _buildSectionHeader(getTranlated(context, 'settAccount')),
+          _buildSectionHeader(getTranslated(context, 'settAccount')),
           _buildSettingCard(
             icon: Icons.person_rounded,
-            title: getTranlated(context, 'userTitle'),
+            title: getTranslated(context, 'userTitle'),
             subtitle: prefs.nombreUsuario.isEmpty
-                ? getTranlated(context, 'settConfigProfile')
+                ? getTranslated(context, 'settConfigProfile')
                 : prefs.nombreUsuario,
             onTap: () => Navigator.pushNamed(context, 'userPage'),
             trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
@@ -160,11 +144,11 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Categorías
-          _buildSectionHeader(getTranlated(context, 'categories')),
+          _buildSectionHeader(getTranslated(context, 'categories')),
           _buildSettingCard(
             icon: Icons.label_outline,
-            title: getTranlated(context, 'categoryManagement'),
-            subtitle: getTranlated(context, 'filterByCategory'),
+            title: getTranslated(context, 'categoryManagement'),
+            subtitle: getTranslated(context, 'filterByCategory'),
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -177,11 +161,11 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Datos
-          _buildSectionHeader(getTranlated(context, 'settDataSection')),
+          _buildSectionHeader(getTranslated(context, 'settDataSection')),
           _buildSettingCard(
             icon: Icons.storage_rounded,
-            title: getTranlated(context, 'dataTitle'),
-            subtitle: getTranlated(context, 'settManageData'),
+            title: getTranslated(context, 'dataTitle'),
+            subtitle: getTranslated(context, 'settManageData'),
             onTap: () => Navigator.pushNamed(context, 'dataPage'),
             trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
           ),
@@ -189,10 +173,10 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Idioma
-          _buildSectionHeader(getTranlated(context, 'settLangRegion')),
+          _buildSectionHeader(getTranslated(context, 'settLangRegion')),
           _buildSettingCard(
             icon: Icons.language_rounded,
-            title: getTranlated(context, 'lngTitle'),
+            title: getTranslated(context, 'lngTitle'),
             subtitle: _getCurrentLanguageName(),
             trailing: _buildLanguageSelector(),
           ),
@@ -200,11 +184,11 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Legal
-          _buildSectionHeader(getTranlated(context, 'settLegal')),
+          _buildSectionHeader(getTranslated(context, 'settLegal')),
           _buildSettingCard(
             icon: Icons.description_rounded,
-            title: getTranlated(context, 'Terms'),
-            subtitle: getTranlated(context, 'settTermsConditions'),
+            title: getTranslated(context, 'Terms'),
+            subtitle: getTranslated(context, 'settTermsConditions'),
             onTap: () => _launchURL(
                 'https://neryad.github.io/pocketPage/docs/Terms.pdf'),
             trailing: Icon(Icons.open_in_new, size: 16),
@@ -212,8 +196,8 @@ class _SettingPageState extends State<SettingPage> {
 
           _buildSettingCard(
             icon: Icons.privacy_tip_rounded,
-            title: getTranlated(context, 'privacyPol'),
-            subtitle: getTranlated(context, 'privacyPol'),
+            title: getTranslated(context, 'privacyPol'),
+            subtitle: getTranslated(context, 'privacyPol'),
             onTap: () => _launchURL(
                 'https://neryad.github.io/pocketPage/docs/PrivacyPolicy.pdf'),
             trailing: Icon(Icons.open_in_new, size: 16),
@@ -235,7 +219,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 SizedBox(height: 4),
                 Text(
-                  '${getTranlated(context, 'settVersion')} ${_packageInfo.version}',
+                  '${getTranslated(context, 'settVersion')} ${packageInfo.version}',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[500],
@@ -474,7 +458,7 @@ class _SettingPageState extends State<SettingPage> {
       return '${currentLang.flag} ${currentLang.name}';
     } catch (e) {
       // Si no encuentra el idioma, devolver un valor por defecto
-      return getTranlated(context, 'lngTitle');
+      return getTranslated(context, 'lngTitle');
     }
   }
 
@@ -490,7 +474,7 @@ class _SettingPageState extends State<SettingPage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(getTranlated(context, 'settOpenLinkError')),
+          content: Text(getTranslated(context, 'settOpenLinkError')),
           backgroundColor: Colors.red,
         ),
       );

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pocketlist/src/localization/localization.dart';
 
-String getTranlated(BuildContext context, String key) {
+String getTranslated(BuildContext context, String key) {
   return Localization.of(context).getTranslatedValue(key);
 }
 

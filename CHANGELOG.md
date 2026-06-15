@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.3.0] - 2026-06-14
+
+### Changed
+- **Typo fix:** Renamed `getTranlated` → `getTranslated` across 15 files (~265 call sites)
+- **Typo fix:** Renamed `getToadasLista` → `getTodasLista` in db_provider and 3 callers
+- **Typo fix:** Renamed `_subimt` → `_submit` in newList.dart
+- **Typo fix:** Renamed `_editDubimt` → `_editSubmit` in newList.dart
+- **Typo fix:** Fixed `hhttps://` → `https://` in pubspec.yaml comment
+
+### Removed
+- Deleted unused `suge.dart` model and `sugeModel` variable from newList.dart
+- Deleted unused `colorSecundario` getter/setter from Prefrecias_user.dart
+- Removed redundant `_loadItems()` call after optimistic insert in `_submit`
+
+### Added
+- Created `PackageInfoMixin` to centralize `_initPackageInfo` (was duplicated in 3 widgets)
+- `Menu_widget.dart`, `about_page.dart`, `setting_page.dart` now use the shared mixin
+
 ## [3.2.0] - 2026-06-14
 
 ### Fixed

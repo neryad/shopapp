@@ -60,8 +60,8 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                       const SizedBox(width: 12),
                       Text(
                         existing == null
-                            ? getTranlated(context, 'addCategory')
-                            : getTranlated(context, 'editCategory'),
+                            ? getTranslated(context, 'addCategory')
+                            : getTranslated(context, 'editCategory'),
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -120,7 +120,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                     maxLength: 30,
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
-                      labelText: getTranlated(context, 'editCategory'),
+                      labelText: getTranslated(context, 'editCategory'),
                       counterText: '',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12)),
@@ -139,7 +139,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                     children: [
                       TextButton(
                         onPressed: () => Navigator.of(ctx).pop(),
-                        child: Text(getTranlated(context, 'cancel')),
+                        child: Text(getTranslated(context, 'cancel')),
                       ),
                       const SizedBox(width: 8),
                       ElevatedButton(
@@ -167,7 +167,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                           _refresh();
                         },
                         child: Text(
-                          getTranlated(context, 'save'),
+                          getTranslated(context, 'save'),
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
@@ -188,7 +188,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(getTranlated(context, 'deleteCategory')),
+        title: Text(getTranslated(context, 'deleteCategory')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,7 +197,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                 style: const TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             Text(
-              getTranlated(context, 'deleteCategoryWarn'),
+              getTranslated(context, 'deleteCategoryWarn'),
               style: TextStyle(
                   color: Theme.of(context).disabledColor, fontSize: 13),
             ),
@@ -206,7 +206,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: Text(getTranlated(context, 'cancel')),
+            child: Text(getTranslated(context, 'cancel')),
           ),
           TextButton(
             onPressed: () async {
@@ -215,7 +215,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
               _refresh();
             },
             child: Text(
-              getTranlated(context, 'delete'),
+              getTranslated(context, 'delete'),
               style: const TextStyle(color: Colors.red),
             ),
           ),
@@ -228,13 +228,13 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(getTranlated(context, 'categoryManagement')),
+        title: Text(getTranslated(context, 'categoryManagement')),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showCategoryDialog(),
         icon: const Icon(Icons.add, color: Colors.white),
         label: Text(
-          getTranlated(context, 'addCategory'),
+          getTranslated(context, 'addCategory'),
           style: const TextStyle(color: Colors.white),
         ),
       ),
@@ -260,13 +260,13 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                           .withOpacity(0.4)),
                   const SizedBox(height: 16),
                   Text(
-                    getTranlated(context, 'categories'),
+                    getTranslated(context, 'categories'),
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    getTranlated(context, 'addCategory'),
+                    getTranslated(context, 'addCategory'),
                     style: TextStyle(color: Theme.of(context).disabledColor),
                   ),
                 ],
@@ -321,13 +321,13 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                         icon: Icon(Icons.edit_outlined,
                             color: Theme.of(context).colorScheme.primary),
                         onPressed: () => _showCategoryDialog(existing: cat),
-                        tooltip: getTranlated(context, 'editCategory'),
+                        tooltip: getTranslated(context, 'editCategory'),
                       ),
                       IconButton(
                         icon: Icon(Icons.delete_outline,
                             color: Theme.of(context).colorScheme.error),
                         onPressed: () => _confirmDelete(cat),
-                        tooltip: getTranlated(context, 'deleteCategory'),
+                        tooltip: getTranslated(context, 'deleteCategory'),
                       ),
                     ],
                   ),

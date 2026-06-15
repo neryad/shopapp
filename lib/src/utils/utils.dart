@@ -31,9 +31,9 @@ Color cambiarColor() {
 
 saludos(BuildContext context) {
   var timeNow = int.parse(DateFormat('kk').format(DateTime.now()));
-  String greattin1 = getTranlated(context, 'greattin1');
-  String greattin2 = getTranlated(context, 'greattin2');
-  String greattin3 = getTranlated(context, 'greattin3');
+  String greattin1 = getTranslated(context, 'greattin1');
+  String greattin2 = getTranslated(context, 'greattin2');
+  String greattin3 = getTranslated(context, 'greattin3');
   var msg = '';
   if (timeNow <= 11) {
     msg = '$greattin1 ${prefs.nombreUsuario}';
