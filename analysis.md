@@ -192,45 +192,285 @@ _loadItems(); // 🔴 DB read innecesario tras insert optimista
 
 ---
 
-## 💡 Mejoras Sugeridas
+## 🔒 Seguridad
+
+### S-1: CSV import usa nombres de archivo sin sanitizar (Path Traversal)
+
+**Archivos:** `import_export_page.dart:504-511`, `export_helper.dart:98-105`
+
+```dart
+var fileName = csvData[1][0]; // título de lista controlado por usuario
+final File file = File(appDocPath + Platform.pathSeparator + fileName + '.csv');
+```
+
+**Riesgo:** BAJO-MEDIO. Un título malicioso como `../../evil` podría escribir fuera del directorio esperado.
+
+**Fix:** Sanitizar con `basename` de `package:path/path.dart`.
+
+### S-2: CSV import sin validación de tipos — crash en datos mal formados
+
+**Archivo:** `import_export_page.dart:558-595`
+
+```dart
+total: double.parse(importedList[1][4].toString()),  // crash si no es numérico
+price: double.parse(finalItems[index][1].toString()),
+quantity: int.parse(finalItems[index][2].toString()),
+```
+
+**Riesgo:** MEDIO. Un solo valor inválido crashea toda la importación.
+
+**Fix:** Usar `double.tryParse()` / `int.tryParse()` con defaults.
+
+### S-3: `saveBudget()` sin try-catch
+
+**Archivo:** `newList.dart:1685`
+
+```dart
+buget = double.parse(value); // crash si el valor no es numérico
+```
+
+**Riesgo:** BAJO (teclado numérico, pero no garantizado).
+
+**Fix:** Usar `double.tryParse()`.
+
+### S-4: Datos locales sin encriptación
+
+**Riesgo:** BAJO actualmente (sin passwords/tokens). Si en futuro se almacenan datos sensibles, usar `flutter_secure_storage`.
+
+### S-5: Consultas SQL parametrizadas ✅
+
+**Positivo:** Todas las CRUD usan `whereArgs` — sin riesgo de SQL injection.
+
+### S-6: Sin secrets/API keys hardcodeadas ✅
+
+**Positivo:** No hay claves, tokens, o contraseñas en el código. URLs usan HTTPS.
+
+---
+
+## ⚡ Rendimiento
+
+### R-1: `didChangeDependencies` → `getTotal()` → `setState` en bucle
+
+**Archivo:** `newList.dart:1631-1637` + `198-209`
+
+```dart
+void didChangeDependencies() {
+    getTotal(); // llama setState N veces
+}
+void getTotal() {
+    for (int i = 0; i < items.length; i++) {
+        setState(() { total += ... }); // N reconstrucciones
+    }
+}
+```
+
+**Impacto:** **ALTO**. Causa N reconstrucciones del widget tree por cada llamada. `didChangeDependencies` puede dispararse múltiples veces, creando loops infinitos.
+
+**Fix:** Calcular total fuera del `setState`, llamar `setState` una sola vez.
+
+### R-2: `TextEditingController` leak en `ListView.builder`
+
+**Archivo:** `newList.dart:95` y `1097`
+
+```dart
+List<TextEditingController> _controllers = []; // nunca se hace dispose
+// en itemBuilder:
+_controllers.add(TextEditingController()); // nuevo controller en cada rebuild
+```
+
+**Impacto:** **ALTO**. Con 50 items y 10 rebuilds = 500 controllers huérfanos.
+
+**Fix:** Eliminar `_controllers` si no se usa, o Map con lifecycle.
+
+### R-3: `FocusNode` sin dispose
+
+**Archivo:** `newList.dart:33`
+
+```dart
+FocusNode myFocusNode = FocusNode(); // nunca se hace dispose
+```
+
+**Fix:** Agregar `myFocusNode.dispose()` en `dispose()`.
+
+### R-4: Full list reload tras cada inserción
+
+**Archivo:** `newList.dart:557-583`
+
+```dart
+await DBProvider.db.newProd(prod);
+_loadItems(); // recarga TODOS los items de BD tras insert optimista
+```
+
+**Fix:** Remover `_loadItems()` ya que el item se agregó optimísticamente.
+
+### R-5: N+1 updates al guardar lista nueva
+
+**Archivo:** `newList.dart:1714-1717`
+
+```dart
+for (var i = 0; i < items.length; i++) {
+    await DBProvider.db.updateProd(items[i]); // 1 transacción por item
+}
+```
+
+**Fix:** Usar `db.batch()` para una sola transacción.
+
+### R-6: Filtrado/sorteo en cada build
+
+**Archivo:** `newList.dart:940-964`
+
+```dart
+final displayItems = items.where((item) { ... }).toList(); // cada build
+displayItems.sort((a, b) { ... }); // cada build
+```
+
+Además `itemsCompletados` y `itemsPendientes` (líneas 101-102) filtran la lista cada vez que se acceden.
+
+**Fix:** Cachear valores computados, ordenar solo cuando cambien los items.
+
+### R-7: `setState(() {});` sin cambios reales
+
+**Archivos:** `list_page.dart:135,111,265`, `newList.dart:1199,1695`
+
+Disparan rebuilds completos del widget tree cuando solo una pequeña parte cambió.
+
+**Fix:** State management más granular.
+
+### R-8: Operaciones pesadas en isolate principal
+
+PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy grandes (>1000 items) podría causar jank.
+
+**Fix:** Usar `compute()` para exportación PDF/CSV con datos grandes.
+
+---
+
+## 🎨 Mejoras UI/UX
 
 ### Prioridad Alta
 
-1. **⬆️ Migrar a state management (Provider/Riverpod)**
-   - `setState()` directo no escala
-   - Facilita testing y mantenimiento
+1. **⬆️ Hardcoded strings sin traducir en 7 páginas**
+   - `setting_page.dart`, `color_page.dart`, `user.dart`, `data.dart`, `import_export_page.dart`, `about_page.dart`, `Menu_widget.dart`
+   - Migrar todo a `getTranlated()` + archivos i18n
 
-2. **⬆️ Agregar tests**
-   - `flutter_test` está en dependencias pero no hay tests
-   - Tests para DBProvider, modelos, CSV import/export
+2. **⬆️ `resizeToAvoidBottomInset: false` oculta campos tras teclado**
+   - `home_page.dart:79` y `newList.dart:107`
+   - Quitar la propiedad para que el scaffold maneje el inset correctamente
 
-3. **⬆️ Refactorizar i18n CSV/PDF**
-   - Unificar toda la traducción en el sistema `getTranlated`
-   - Eliminar traducciones manuales duplicadas
-
-4. **⬆️ Centralizar obtención de PackageInfo**
-   - Singleton o provider para evitar repetir el código en 3 widgets
+3. **⬆️ Validación de formulario invertida — permite guardar artículos vacíos**
+   - `newList.dart:474-480` — `isEmpty` retorna `true` para `""`, el validator nunca rechaza
+   - `utils.dart:23-25` — la lógica está al revés
 
 ### Prioridad Media
 
-5. **⬆️ Agregar seed de categorías por defecto en inicialización**
-   - `seedDefaultCategories()` existe pero nunca se llama
+4. **⬆️ Sin layout adaptativo — no funciona bien en tablets/landscape**
+   - Usar `LayoutBuilder` o `MediaQuery` para grids responsive
+   - `color_page.dart` y `authorPage.dart` con `crossAxisCount` fijo
+   - Sin soporte de `NavigationRail` en pantallas anchas
 
-6. **⬆️ Reemplazar números mágicos con constantes**
-   - `colorIndex` y `prefs.color == 5` deben ser constantes con nombre
+5. **⬆️ `setState` dentro de bucle en newList (líneas 198-209)**
+   - Causa N reconstrucciones por cada interacción con >20 items
+   - Mover `setState` fuera del bucle
 
-7. **⬆️ Reemplazar rutas named por patrón consistente**
-   - Mezcla de `Navigator.pushNamed` y `Navigator.push` con `MaterialPageRoute`
+6. **⬆️ Sin pull-to-refresh en listas**
+   - Ni `list_page.dart` ni `newList.dart` tienen `RefreshIndicator`
+   - Usuario debe navegar y volver para ver datos actualizados
+
+7. **⬆️ `TextEditingController` leak en `ListView.builder`**
+   - `newList.dart:1097` — se crean controllers nuevos en cada rebuild sin dispose
+
+8. **⬆️ Dark mode rebuild completo sin animación**
+   - `setting_page.dart:482-483` — usa `MyApp.stateSet()` en vez de `AnimatedTheme`
+   - Migrar a `MaterialApp.themeMode` para transición suave
+
+9. **⬆️ Inconsistencia en feedback visual (SnackBar vs Flushbar)**
+   - Mezcla de 3 patrones: `Flushbar`, `another_flushbar`, `ScaffoldMessenger.showSnackBar`
+   - Crear utilidad unificada: `showSuccess()`, `showError()`, `showInfo()`
 
 ### Prioridad Baja
 
-8. **⬆️ Limpiar código comentado**
-   - Mucho código legacy comentado en `utils.dart`, `data.dart`, `setting_page.dart`
+10. **⬆️ Navegación sin límite de profundidad**
+    - Push tras push sin `pop` ni `pushReplacement`
+    - Considerar `go_router` para nested navigation
 
-9. **⬆️ Agregar Semantics/Accesibilidad**
-   - Iconos sin `SemanticsLabel`, falta de `MergeSemantics`
+11. **⬆️ Signo de dólar `\$` hardcodeado en UI**
+    - `list_page.dart:190`, `newList.dart` — usar `NumberFormat.currency()` con locale
 
-10. **⬆️ Agregar analítica básica**
+12. **⬆️ Sin feedback visual en CRUD de categorías**
+    - `category_management_page.dart` — agregar flushbar después de cada operación
+
+13. **⬆️ `_deleteCompletedLists` siempre retorna `false`**
+    - `data.dart:399-405` — lógica no implementada, nunca limpia nada
+
+14. **⬆️ `ThemeManager` y `SummaryHeader` no usados**
+    - Eliminar código muerto o integrarlo
+
+15. **⬆️ Saludo en app bar pegado al nombre + gaps en horario**
+    - `utils.dart:118-138` — sin espacio entre saludo y nombre
+    - Revisar rangos horarios para evening
+
+---
+
+## 💡 Mejoras Sugeridas
+
+### Prioridad Alta — Nuevas Features
+
+1. **⬆️ Onboarding (4 pantallas)**
+   - Tutorial al primer inicio: Crear lista → Agregar artículos → Categorías → Completar/Exportar
+   - Skip button + indicador de progreso
+
+2. **⬆️ Widget homescreen (tamaño mediano)**
+   - Lista activa con checkboxes, barra de progreso, presupuesto
+   - Botón de acceso directo a la app
+   - Soporte Android/iOS (`flutter_home_widgets` o nativo)
+
+3. **⬆️ 4 nuevos idiomas: Francés, Portugués, Italiano, Alemán**
+   - Refactorizar i18n manual de CSV/PDF al sistema centralizado primero
+   - Archivos JSON de traducción
+
+4. **⬆️ Compartir app (QR + Share sheet)**
+   - Botón en navegación principal
+   - Diálogo con QR code + share nativo
+
+5. **⬆️ Verificador de actualizaciones**
+   - Archivo JSON remoto con versión + changelog
+   - Diálogo "Nueva versión disponible"
+
+6. **⬆️ In-App Review / Feedback**
+   - Pedir calificación tras acciones clave (lista completada, exportaciones)
+   - Enlace directo a tienda + opción de feedback por email
+
+7. **⬆️ Formato de archivo propio `.pocketlist`**
+   - JSON con datos enriquecidos (categorías, colores, presupuesto)
+   - Registrar extensión en Android/iOS para abrir desde el explorador
+   - Mantener CSV para compatibilidad
+
+### Prioridad Media — Calidad
+
+8. **⬆️ Migrar a state management (Provider/Riverpod)**
+   - `setState()` directo no escala
+   - Facilita testing y mantenimiento
+
+9. **⬆️ Agregar tests**
+   - `flutter_test` está en dependencias pero no hay tests
+   - Tests para DBProvider, modelos, CSV import/export
+
+10. **⬆️ Centralizar obtención de PackageInfo**
+    - Singleton o provider para evitar repetir el código en 3 widgets
+
+11. **⬆️ Agregar seed de categorías por defecto en inicialización**
+    - `seedDefaultCategories()` existe pero nunca se llama
+
+12. **⬆️ Reemplazar números mágicos con constantes**
+    - `colorIndex` y `prefs.color == 5` deben ser constantes con nombre
+
+13. **⬆️ Reemplazar rutas named por patrón consistente**
+    - Mezcla de `Navigator.pushNamed` y `Navigator.push` con `MaterialPageRoute`
+
+### Prioridad Baja
+
+14. **⬆️ Limpiar código comentado**
+15. **⬆️ Agregar Semantics/Accesibilidad**
+16. **⬆️ Agregar analítica básica**
     - No hay seguimiento de eventos para entender uso de la app
 
 ---
@@ -257,8 +497,45 @@ _loadItems(); // 🔴 DB read innecesario tras insert optimista
 13. Agregar tests unitarios y de widget
 14. Refactorizar state management
 
-### Fase 4: Mejoras (largo plazo)
-15. Agregar seed de categorías
-16. Mejorar accesibilidad
-17. Limpiar código comentado
-18. Agregar analítica
+### Fase 4: Nuevas Features (mediano/largo plazo)
+15. **Onboarding (4 pantallas)**
+    - Crear lista → Agregar artículos → Categorías → Completar/Exportar
+    - Mostrar al abrir la app por primera vez
+    - Skip button + indicador de progreso
+16. **Widget para homescreen (tamaño mediano)**
+    - Muestra lista activa con artículos, checkboxes, barra de progreso y presupuesto
+    - Botón "➕ Rápido" + botón "Abrir app"
+    - Usar `flutter_home_widgets` o nativo Android/iOS
+17. **4 nuevos idiomas: Francés, Portugués, Italiano, Alemán**
+    - Archivos `i18n/fr.json`, `i18n/pt.json`, `i18n/it.json`, `i18n/de.json`
+    - Registrar en `supportedLocales` y `_LocalizationDelegate`
+    - Refactorizar traducciones manuales en CSV/PDF al sistema centralizado primero
+18. **Compartir app (QR + Share sheet)**
+    - Botón "Compartir" en navegación principal (no solo en AuthorPage)
+    - Diálogo con QR code + botón de share nativo
+    - QR apunta a Play Store / App Store / web
+19. **Verificador de actualizaciones**
+    - Consultar archivo JSON remoto con última versión + changelog
+    - Comparar con versión local (`package_info_plus`)
+    - Mostrar diálogo "Nueva versión disponible" si hay actualización
+20. **In-App Review / Feedback**
+    - Pedir calificación en Play Store / App Store después de ciertas acciones (ej: lista completada, 3 exportaciones)
+    - Usar `in_app_review` package o `url_launcher` a la tienda directamente
+    - Opción de feedback por email si no quieren calificar
+21. **Formato de archivo propio `.pocketlist`**
+    - Formato basado en JSON con datos enriquecidos (categorías, colores, presupuesto, metadatos)
+    - Registrar extensión en Android (Intent Filter) e iOS (Document Types)
+    - FilePicker filtrado por `.pocketlist`
+    - Mantener compatibilidad CSV para importar desde otras apps
+
+### Fase 5: Calidad de Código (mediano plazo)
+22. Eliminar métodos duplicados en DBProvider
+23. Centralizar `_initPackageInfo`
+24. Agregar tests unitarios y de widget
+25. Refactorizar state management
+
+### Fase 6: Mejoras continuas (largo plazo)
+26. Agregar seed de categorías por defecto
+27. Mejorar accesibilidad (Semantics)
+28. Limpiar código comentado
+29. Agregar analítica básica
