@@ -507,7 +507,8 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 
 ### Prioridad Baja
 
-14. **⬆️ Limpiar código comentado**
+14. **~~⬆️ Limpiar código comentado~~** ✅ FIXED
+    - Eliminado código muerto de 11 archivos: `home_page.dart`, `data.dart`, `setting_page.dart`, `utils.dart`, `list_page.dart`, `localization_constant.dart`, `tmp.dart`, `about_page.dart`, `pdf.dart`, `export_helper.dart`, `product_model.dart`
 15. **⬆️ Agregar Semantics/Accesibilidad**
 16. **⬆️ Agregar analítica básica**
     - No hay seguimiento de eventos para entender uso de la app

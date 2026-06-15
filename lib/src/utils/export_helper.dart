@@ -84,7 +84,6 @@ class ExportHelper {
       await file.writeAsString(csvString);
 
       await Share.shareXFiles([XFile(file.path)], text: filePlaceHolder);
-      // utils.showSnack(context, successMsgExport);
     } catch (e) {
       utils.showSnack(context, '$errorMsgExport');
     }

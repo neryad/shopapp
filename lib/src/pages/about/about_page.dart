@@ -134,17 +134,6 @@ class _AboutPageState extends State<AboutPage> with PackageInfoMixin {
                     showArrow: true,
                   ),
 
-                  // SizedBox(height: 12),
-
-                  // _buildInfoCard(
-                  //   icon: Icons.palette_outlined,
-                  //   iconColor: Colors.orange,
-                  //   title: getTranslated(context, 'aImgs') ?? 'Ilustraciones',
-                  //   subtitle: getTranslated(context, 'aImgs2') ?? 'unDraw',
-                  //   onTap: () => _launchUrl('https://undraw.co/illustrations'),
-                  //   showArrow: true,
-                  // ),
-
                   SizedBox(height: 12),
 
                   _buildInfoCard(

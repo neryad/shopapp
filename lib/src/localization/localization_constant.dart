@@ -27,11 +27,6 @@ Future<Locale> setLocal(String languageCode) async {
 
 Locale _locale(String languageCode) {
   Locale _temp;
-  // if (languageCode == 'en') {
-  //   _temp = Locale(languageCode, 'US');
-  // } else {
-  //   _temp = Locale(languageCode, 'US');
-  // }
 
   switch (languageCode) {
     case ENGLISH:

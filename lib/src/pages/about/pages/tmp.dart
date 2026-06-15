@@ -21,8 +21,6 @@ class _AboutPageState extends State<AboutPage> {
   @override
   void initState() {
     super.initState();
-    //getBuildAndVersion();
-    //prefs.ultimaPagina = 'about';
   }
 
   @override
@@ -33,10 +31,8 @@ class _AboutPageState extends State<AboutPage> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Text(getTranslated(context, 'aboutTitle')),
-          //title: Text(getTranslated(context, 'aboutTitle')),
           elevation: 0.0,
         ),
-        // drawer: MenuWidget(),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[

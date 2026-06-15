@@ -2,7 +2,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketlist/src/theme/app_theme.dart';
 import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
-//import 'package:flushbar/flushbar.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:another_flushbar/flushbar.dart';
 
@@ -100,26 +99,3 @@ void showInfoSnack(BuildContext context, String msg) {
     margin: EdgeInsets.all(8),
   )..show(context);
 }
-
-// Future<String> get _localPath async {
-//   final directory = await getApplicationDocumentsDirectory();
-
-//   return directory.path;
-// }
-
-// Future<File> get _localFile async {
-//   final path = await _localPath;
-//   print('path ${path}');
-//   return File('$path/lista.pdf');
-// }
-
-// Future<int> deleteFile(String name) async {
-//   final dir = await getApplicationDocumentsDirectory();
-//   final file = File('${dir.path}/$name.pdf');
-//   try {
-//     await file.delete();
-//     return 1;
-//   } catch (e) {
-//     return 0;
-//   }
-// }
