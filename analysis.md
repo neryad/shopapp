@@ -166,6 +166,16 @@ import '../../../../main.dart';
 Debería usar import absoluto: `import 'package:pocketlist/main.dart';`
 **Fix:** Se reemplazó con import absoluto.
 
+### 21. ~~Overflow en cards de pantalla física~~ ✅ FIXED
+**Archivos:** `import_export_page.dart`, `list_page.dart`
+**Problema:** En dispositivos físicos con pantalla pequeña, las cards tenían overflow de 62px (export) y 28px (list page) por exceso de padding y elementos horizontales sin wrap.
+**Fix:** Se redujo padding, se cambió `Row` de chips por `Wrap`, se compactaron `IconButton` con `constraints: BoxConstraints()`.
+
+### 22. ~~Build Android falla por keystore path de Windows~~ ✅ FIXED
+**Archivo:** `android/app/build.gradle`
+**Problema:** `key.properties` contiene `storeFile=D:/keys/Android/key.jks` (ruta Windows). El `signingConfigs` intentaba resolver `file()` aunque la ruta no existiera en macOS.
+**Fix:** Se agregó validación `!sf.contains(':')` y `file(sf).exists()` antes de intentar usar el keystore.
+
 ---
 
 ## 🔧 Problemas de Calidad de Código
