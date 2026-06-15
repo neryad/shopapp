@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/models/List_model.dart';
 import 'package:pocketlist/src/models/category_model.dart';
@@ -470,11 +470,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       textAlign: TextAlign.center,
       onSaved: (value) => productModel.name = value ?? '',
       validator: (value) {
-        if (utils.isEmpty(value!)) {
-          return null;
-        } else {
+        if (value == null || value.trim().isEmpty) {
           return getTranslated(context, 'noEmpty');
         }
+        return null;
       },
       decoration: InputDecoration(
         labelText: getTranslated(context, 'nameArt'),

@@ -1,4 +1,4 @@
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:pocketlist/src/localization/localization_constant.dart';

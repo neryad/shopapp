@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketlist/src/theme/app_theme.dart';
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 //import 'package:flushbar/flushbar.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -16,7 +16,7 @@ bool isNumeric(String s) {
 }
 
 bool isEmpty(String s) {
-  return (s == " ") ? false : true;
+  return s.trim().isEmpty;
 }
 
 String numberFormat(double t) {

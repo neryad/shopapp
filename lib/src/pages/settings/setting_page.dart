@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pocketlist/main.dart';
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 import 'package:pocketlist/src/data/class/language.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/pages/settings/category_management_page.dart';

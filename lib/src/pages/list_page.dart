@@ -1,4 +1,4 @@
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 import 'package:pocketlist/src/pages/New-List/newList.dart';
 import 'package:pocketlist/src/utils/pdf.dart';
 import 'package:flutter/material.dart';

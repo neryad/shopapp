@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:pocketlist/src/utils/file_save_helper.dart';
 
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 // import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/models/List_model.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';

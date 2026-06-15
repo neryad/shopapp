@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:pocketlist/src/localization/localization.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 
 import 'package:pocketlist/src/pages/home_page.dart';
 import 'package:pocketlist/src/pages/New-List/newList.dart';
