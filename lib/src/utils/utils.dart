@@ -54,7 +54,6 @@ saludos(BuildContext context) {
 
 void showSnack(BuildContext context, String msg) {
   Flushbar(
-    //title: 'This action is prohibited',
     message: msg,
     icon: Icon(
       Icons.info_outline,
@@ -63,6 +62,42 @@ void showSnack(BuildContext context, String msg) {
     ),
     leftBarIndicatorColor: (prefs.color == 5) ? Colors.white : cambiarColor(),
     duration: Duration(seconds: 2),
+  )..show(context);
+}
+
+void showSuccessSnack(BuildContext context, String msg) {
+  Flushbar(
+    message: msg,
+    icon: Icon(Icons.check_circle, size: 28, color: Colors.white),
+    leftBarIndicatorColor: Colors.green,
+    backgroundColor: Colors.green[700]!,
+    duration: Duration(seconds: 2),
+    borderRadius: BorderRadius.circular(8),
+    margin: EdgeInsets.all(8),
+  )..show(context);
+}
+
+void showErrorSnack(BuildContext context, String msg) {
+  Flushbar(
+    message: msg,
+    icon: Icon(Icons.error, size: 28, color: Colors.white),
+    leftBarIndicatorColor: Colors.red,
+    backgroundColor: Colors.red[700]!,
+    duration: Duration(seconds: 3),
+    borderRadius: BorderRadius.circular(8),
+    margin: EdgeInsets.all(8),
+  )..show(context);
+}
+
+void showInfoSnack(BuildContext context, String msg) {
+  Flushbar(
+    message: msg,
+    icon: Icon(Icons.info_outline,
+        size: 28, color: Theme.of(context).colorScheme.primary),
+    leftBarIndicatorColor: Theme.of(context).colorScheme.primary,
+    duration: Duration(seconds: 2),
+    borderRadius: BorderRadius.circular(8),
+    margin: EdgeInsets.all(8),
   )..show(context);
 }
 

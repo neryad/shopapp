@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.4.0] - 2026-06-15
+
+### Security
+- **Path traversal:** Added `_sanitizeFilename()` to prevent malicious CSV filenames
+- **Input validation:** `saveBudget()` now uses `double.tryParse` instead of `double.parse`
+
+### Performance
+- **Batch update:** `_saveLista` now uses `updateProdsBatch()` instead of N+1 individual updates
+
+### UX
+- **Pull-to-refresh:** Added `RefreshIndicator` to list_page for pull-to-refresh
+- **Unified notifications:** Centralized `showSnack`, `showSuccessSnack`, `showErrorSnack`, `showInfoSnack` in `utils.dart`
+- **Category CRUD feedback:** Added success/info snackbars after create, update, and delete operations
+- **Flushbar cleanup:** Removed duplicated Flushbar methods from `data.dart`, `user.dart`, `import_export_page.dart`
+- **Native SnackBar:** Migrated `newList.dart` undo/completed snackbars from Flushbar to `ScaffoldMessenger`
+
 ## [3.3.0] - 2026-06-14
 
 ### Changed
@@ -17,6 +33,7 @@
 ### Added
 - Created `PackageInfoMixin` to centralize `_initPackageInfo` (was duplicated in 3 widgets)
 - `Menu_widget.dart`, `about_page.dart`, `setting_page.dart` now use the shared mixin
+- 3 new i18n keys: `categoryCreated`, `categoryUpdated`, `categoryDeleted`
 
 ## [3.2.0] - 2026-06-14
 

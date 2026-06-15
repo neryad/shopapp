@@ -3,7 +3,6 @@ import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
-import 'package:another_flushbar/flushbar.dart';
 
 class DataPage extends StatefulWidget {
   DataPage({Key? key}) : super(key: key);
@@ -408,7 +407,7 @@ class _DataPageState extends State<DataPage> {
     }
 
     if (completedLists.isEmpty) {
-      _showInfoSnack('No hay listas completadas para eliminar');
+      utils.showInfoSnack(context, 'No hay listas completadas para eliminar');
       return;
     }
 
@@ -439,7 +438,7 @@ class _DataPageState extends State<DataPage> {
               }
               await _loadStatistics();
               Navigator.pop(context);
-              _showSuccessSnack(
+              utils.showSuccessSnack(context,
                   '${completedLists.length} lista(s) eliminada(s)');
             },
             style: ElevatedButton.styleFrom(
@@ -477,7 +476,7 @@ class _DataPageState extends State<DataPage> {
               await DBProvider.db.deleteAllTempProd('tmp');
               await _loadStatistics();
               Navigator.pop(context);
-              _showSuccessSnack('Productos temporales eliminados');
+              utils.showSuccessSnack(context, 'Productos temporales eliminados');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.purple,
@@ -500,10 +499,10 @@ class _DataPageState extends State<DataPage> {
       setState(() => _isLoading = false);
       Navigator.of(context).pop();
 
-      _showSuccessSnack(getTranslated(context, 'dataDelete'));
+      utils.showSuccessSnack(context, getTranslated(context, 'dataDelete'));
     } catch (e) {
       setState(() => _isLoading = false);
-      _showErrorSnack('Error al eliminar los datos');
+      utils.showErrorSnack(context, 'Error al eliminar los datos');
     }
   }
 
@@ -585,41 +584,5 @@ class _DataPageState extends State<DataPage> {
         );
       },
     );
-  }
-
-  void _showSuccessSnack(String msg) {
-    Flushbar(
-      message: msg,
-      icon: Icon(Icons.check_circle, size: 28, color: Colors.white),
-      leftBarIndicatorColor: Colors.green,
-      backgroundColor: Colors.green[700]!,
-      duration: Duration(seconds: 2),
-      borderRadius: BorderRadius.circular(8),
-      margin: EdgeInsets.all(8),
-    ).show(context);
-  }
-
-  void _showErrorSnack(String msg) {
-    Flushbar(
-      message: msg,
-      icon: Icon(Icons.error, size: 28, color: Colors.white),
-      leftBarIndicatorColor: Colors.red,
-      backgroundColor: Colors.red[700]!,
-      duration: Duration(seconds: 3),
-      borderRadius: BorderRadius.circular(8),
-      margin: EdgeInsets.all(8),
-    ).show(context);
-  }
-
-  void _showInfoSnack(String msg) {
-    Flushbar(
-      message: msg,
-      icon: Icon(Icons.info_outline,
-          size: 28, color: Theme.of(context).colorScheme.primary),
-      leftBarIndicatorColor: Theme.of(context).colorScheme.primary,
-      duration: Duration(seconds: 2),
-      borderRadius: BorderRadius.circular(8),
-      margin: EdgeInsets.all(8),
-    ).show(context);
   }
 }

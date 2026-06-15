@@ -8,7 +8,6 @@ import 'package:pocketlist/src/models/product_model.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:uuid/uuid.dart';
-import 'package:another_flushbar/flushbar.dart';
 
 const int kColorGray = 5;
 
@@ -1686,7 +1685,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       return;
     }
 
-    buget = double.parse(value);
+    final parsed = double.tryParse(value);
+    if (parsed == null) return;
+
+    buget = parsed;
 
     if (isNewList) {
       prefs.tempBuget = buget.toString();
@@ -1718,8 +1720,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
       for (var i = 0; i < items.length; i++) {
         items[i].listId = nuevaLista.id;
-        await DBProvider.db.updateProd(items[i]);
       }
+      await DBProvider.db.updateProdsBatch(items);
 
       items = [];
       lisForm.currentState!.reset();
@@ -1817,48 +1819,43 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   void showDeleteSnack(BuildContext context, String msg, int index,
       ProductModel item, List<ProductModel> items) {
-    Flushbar(
-      message: msg,
-      icon: Icon(
-        Icons.info_outline,
-        size: 28,
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      mainButton: TextButton(
-        onPressed: () {
-          if (isNewList) {
-            DBProvider.db.tmpProd(item);
-            DBProvider.db.getArticlesTmp('tmp');
-          } else {
-            DBProvider.db.newProd(item);
-          }
-          var it = items.length;
-          items.insert(it, item);
-          setState(() {});
-        },
-        child: Text(
-          getTranslated(context, 'undo'),
-          style: TextStyle(
-              color: (prefs.color == kColorGray) ? Colors.white : Colors.amber),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        action: SnackBarAction(
+          label: getTranslated(context, 'undo'),
+          textColor: (prefs.color == kColorGray)
+              ? Colors.white
+              : Colors.amber,
+          onPressed: () {
+            if (isNewList) {
+              DBProvider.db.tmpProd(item);
+              DBProvider.db.getArticlesTmp('tmp');
+            } else {
+              DBProvider.db.newProd(item);
+            }
+            var it = items.length;
+            items.insert(it, item);
+            setState(() {});
+          },
         ),
+        duration: Duration(seconds: 3),
       ),
-      leftBarIndicatorColor: (prefs.color == kColorGray)
-          ? Colors.white
-          : Theme.of(context).colorScheme.primary,
-      duration: Duration(seconds: 3),
-    )..show(context);
+    );
   }
 
   void showcompletedSnack(BuildContext context, String msg) {
-    Flushbar(
-      message: msg,
-      icon: Icon(
-        Icons.check_circle,
-        size: 28,
-        color: Colors.green,
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.check_circle, size: 20, color: Colors.green),
+            SizedBox(width: 8),
+            Text(msg),
+          ],
+        ),
+        duration: Duration(seconds: 2),
       ),
-      leftBarIndicatorColor: Colors.green,
-      duration: Duration(seconds: 2),
-    )..show(context);
+    );
   }
 }

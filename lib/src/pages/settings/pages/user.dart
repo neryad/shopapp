@@ -1,8 +1,8 @@
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketlist/main.dart';
+import 'package:pocketlist/src/utils/utils.dart' as utils;
 
 class UserPage extends StatefulWidget {
   UserPage({Key? key}) : super(key: key);
@@ -57,7 +57,8 @@ class _UserPageState extends State<UserPage> {
 
       MyApp.stateSet(context);
 
-      _showSuccessSnack(
+      utils.showSuccessSnack(
+        context,
         getTranslated(context, 'userChangesSaved'),
       );
     }
@@ -95,7 +96,7 @@ class _UserPageState extends State<UserPage> {
               Navigator.pop(context);
               MyApp.stateSet(context);
 
-              _showInfoSnack(getTranslated(context, 'userProfileDeleted'));
+              utils.showInfoSnack(context, getTranslated(context, 'userProfileDeleted'));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
@@ -393,36 +394,5 @@ class _UserPageState extends State<UserPage> {
         ),
       ),
     );
-  }
-
-  void _showSuccessSnack(String msg) {
-    Flushbar(
-      message: msg,
-      icon: Icon(
-        Icons.check_circle,
-        size: 28,
-        color: Colors.white,
-      ),
-      leftBarIndicatorColor: Colors.green,
-      backgroundColor: Colors.green[700]!,
-      duration: Duration(seconds: 2),
-      borderRadius: BorderRadius.circular(8),
-      margin: EdgeInsets.all(8),
-    ).show(context);
-  }
-
-  void _showInfoSnack(String msg) {
-    Flushbar(
-      message: msg,
-      icon: Icon(
-        Icons.info_outline,
-        size: 28,
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      leftBarIndicatorColor: Theme.of(context).colorScheme.primary,
-      duration: Duration(seconds: 2),
-      borderRadius: BorderRadius.circular(8),
-      margin: EdgeInsets.all(8),
-    ).show(context);
   }
 }

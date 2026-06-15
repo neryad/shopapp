@@ -88,10 +88,12 @@ class _ListPageState extends State<ListPage> {
       );
     }
 
-    return ListView.builder(
-        key: ValueKey(_lists.map((l) => l.id).toList()),
-        padding: const EdgeInsets.only(top: 8, bottom: 84),
-        itemCount: _lists.length,
+    return RefreshIndicator(
+      onRefresh: _loadLists,
+      child: ListView.builder(
+          key: ValueKey(_lists.map((l) => l.id).toList()),
+          padding: const EdgeInsets.only(top: 8, bottom: 84),
+          itemCount: _lists.length,
         itemBuilder: (context, i) {
           return Dismissible(
             direction: DismissDirection.endToStart,
@@ -149,7 +151,8 @@ class _ListPageState extends State<ListPage> {
             },
             child: card(_lists[i]),
           );
-        });
+        }),
+    );
   }
 
   Widget card(Lista lista) {

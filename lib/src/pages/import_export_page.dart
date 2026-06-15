@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:pocketlist/src/models/List_model.dart';
 import 'package:pocketlist/src/models/product_model.dart';
-import 'package:another_flushbar/flushbar.dart';
 import 'package:pocketlist/src/pages/New-List/newList.dart';
 
 import 'package:share_plus/share_plus.dart';
@@ -384,6 +383,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
   Future<void> _generateCsv(BuildContext context, String id) async {
     setState(() => _isLoading = true);
 
+    String sanitizeFilename(String name) {
+      return name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_').trim();
+    }
+
     try {
       List<Lista> lista = await DBProvider.db.getListIds(id);
       List<ProductModel> productModel = await DBProvider.db.getProdId(id);
@@ -425,9 +428,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
       if (kIsWeb) {
         final bytes = utf8.encode(csvString);
-        await saveFile('${csvData[1][0]}.csv', Uint8List.fromList(bytes));
+        await saveFile('${sanitizeFilename(csvData[1][0])}.csv', Uint8List.fromList(bytes));
       } else {
-        var fileName = csvData[1][0];
+        var fileName = sanitizeFilename(csvData[1][0]);
         Directory? dir = Platform.isAndroid
             ? await getExternalStorageDirectory()
             : await getApplicationSupportDirectory();
@@ -442,14 +445,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
       }
 
       setState(() => _isLoading = false);
-      _showSuccessSnack(
-          getTranslated(context, 'csvExportSuccess'),
-          getTranslated(context, 'strExport'));
+      utils.showSuccessSnack(context,
+          getTranslated(context, 'csvExportSuccess'));
     } catch (e) {
       setState(() => _isLoading = false);
-      _showErrorSnack(
-          '${getTranslated(context, 'csvExportError')}: ${e.toString()}',
-          getTranslated(context, 'strExport'));
+      utils.showErrorSnack(context,
+          '${getTranslated(context, 'csvExportError')}: ${e.toString()}');
     }
   }
 
@@ -480,9 +481,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
         setState(() {});
       }
     } catch (e) {
-      _showErrorSnack(
-          '${getTranslated(context, 'csvImportError')}: ${e.toString()}',
-          getTranslated(context, 'strImport'));
+      utils.showErrorSnack(context,
+          '${getTranslated(context, 'csvImportError')}: ${e.toString()}');
     } finally {
       setState(() => _isLoading = false);
     }
@@ -492,13 +492,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
       BuildContext context, List<dynamic> importedList) async {
     try {
       if (importedList.length < 3) {
-        _showErrorSnack('CSV inválido: muy pocas filas',
-            getTranslated(context, 'strImport'));
+        utils.showErrorSnack(context, 'CSV inválido: muy pocas filas');
         return;
       }
       if (importedList[1] is! List || (importedList[1] as List).length < 6) {
-        _showErrorSnack('CSV inválido: datos de lista incompletos',
-            getTranslated(context, 'strImport'));
+        utils.showErrorSnack(context, 'CSV inválido: datos de lista incompletos');
         return;
       }
 
@@ -534,35 +532,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
         }
       }
 
-      _showSuccessSnack(getTranslated(context, 'csvImportSuccess'),
-          getTranslated(context, 'strImport'));
+      utils.showSuccessSnack(context, getTranslated(context, 'csvImportSuccess'));
     } catch (e) {
-      _showErrorSnack(
-          '${getTranslated(context, 'csvImportError')}: ${e.toString()}',
-          getTranslated(context, 'strImport'));
+      utils.showErrorSnack(context,
+          '${getTranslated(context, 'csvImportError')}: ${e.toString()}');
     }
-  }
-
-  void _showSuccessSnack(String msg, String title) {
-    Flushbar(
-      title: title,
-      message: msg,
-      icon: Icon(Icons.check_circle, size: 28, color: Colors.white),
-      leftBarIndicatorColor: Colors.green,
-      backgroundColor: Colors.green[700]!,
-      duration: Duration(seconds: 3),
-    ).show(context);
-  }
-
-  void _showErrorSnack(String msg, String title) {
-    Flushbar(
-      title: title,
-      message: msg,
-      icon: Icon(Icons.error, size: 28, color: Colors.white),
-      leftBarIndicatorColor: Colors.red,
-      backgroundColor: Colors.red[700]!,
-      duration: Duration(seconds: 4),
-    ).show(context);
   }
 
   void _showHelpDialog() {

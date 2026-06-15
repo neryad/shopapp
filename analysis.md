@@ -420,9 +420,10 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
    - `setting_page.dart:482-483` — usa `MyApp.stateSet()` en vez de `AnimatedTheme`
    - Migrar a `MaterialApp.themeMode` para transición suave
 
-9. **⬆️ Inconsistencia en feedback visual (SnackBar vs Flushbar)**
-   - Mezcla de 3 patrones: `Flushbar`, `another_flushbar`, `ScaffoldMessenger.showSnackBar`
-   - Crear utilidad unificada: `showSuccess()`, `showError()`, `showInfo()`
+9. **~~⬆️ Inconsistencia en feedback visual (SnackBar vs Flushbar)~~** ✅ FIXED
+   - Centralizado en `utils.dart`: `showSnack()`, `showSuccessSnack()`, `showErrorSnack()`, `showInfoSnack()`
+   - Eliminados métodos duplicados en `data.dart`, `user.dart`, `import_export_page.dart`
+   - `newList.dart` migrado a `ScaffoldMessenger` nativo
 
 ### Prioridad Baja
 
@@ -433,8 +434,8 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 11. **⬆️ Signo de dólar `\$` hardcodeado en UI**
     - `list_page.dart:190`, `newList.dart` — usar `NumberFormat.currency()` con locale
 
-12. **⬆️ Sin feedback visual en CRUD de categorías**
-    - `category_management_page.dart` — agregar flushbar después de cada operación
+12. **~~⬆️ Sin feedback visual en CRUD de categorías~~** ✅ FIXED
+    - `category_management_page.dart` — agregar `showSuccessSnack`/`showSnack` después de crear/editar/eliminar
 
 13. **~~⬆️ `_deleteCompletedLists` siempre retorna `false`~~** ✅ FIXED
     - `data.dart:399-405` — lógica no implementada, nunca limpia nada
