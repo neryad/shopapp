@@ -508,11 +508,11 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 4. ~~Eliminar `TextEditingController` leak o refactorizar~~ ✅
 5. ~~Hardcodear textos faltantes en i18n o agregar keys~~ ✅
 
-### Fase 2: Bugs Moderados (corto plazo) — pendiente
-6. Agregar manejo de errores en operaciones DB
-7. Eliminar `resizeToAvoidBottomInset: false` en páginas con forms
-8. Eliminar `ThemeManager .dart` no usado o integrarlo
-9. Arreglar typos en nombres de archivos y clases
+### Fase 2: Bugs Moderados (corto plazo) ✅ COMPLETADA
+6. ~~Agregar manejo de errores en operaciones DB~~ ✅
+7. ~~Eliminar `resizeToAvoidBottomInset: false` en páginas con forms~~ ✅ (home_page eliminado, newList se mantuvo por scroll propio)
+8. ~~Eliminar `ThemeManager .dart` no usado o integrarlo~~ ✅ (eliminado)
+9. Arreglar typos en nombres de archivos y clases — pendiente
 10. ~~Unificar sistema de traducción~~ ✅
 
 ### Fase 3: Calidad de Código (mediano plazo)
