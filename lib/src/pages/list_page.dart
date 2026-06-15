@@ -141,7 +141,7 @@ class _ListPageState extends State<ListPage> {
               DBProvider.db.deleteLista(deletedId).catchError((e) {
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error al eliminar la lista')),
+                    SnackBar(content: Text(getTranslated(context, 'errorDeleteList'))),
                   );
                 }
                 return 0;
@@ -253,7 +253,7 @@ class _ListPageState extends State<ListPage> {
                         icon: Icon(Icons.share_outlined, size: 20,
                             color: colorScheme.primary),
                         onPressed: () => _showExportOptions(context, lista),
-                        tooltip: 'Share',
+                        tooltip: getTranslated(context, 'share'),
                         padding: EdgeInsets.all(8),
                         constraints: BoxConstraints(),
                       ),
@@ -264,7 +264,7 @@ class _ListPageState extends State<ListPage> {
                           listaModel = lista;
                           _editarLista(context, lista);
                         },
-                        tooltip: 'Edit',
+                        tooltip: getTranslated(context, 'edit'),
                         padding: EdgeInsets.all(8),
                         constraints: BoxConstraints(),
                       ),
@@ -272,7 +272,7 @@ class _ListPageState extends State<ListPage> {
                         icon: Icon(Icons.delete_outline, size: 20,
                             color: colorScheme.error),
                         onPressed: () => _validateEliminar(context, lista.id),
-                        tooltip: 'Delete',
+                        tooltip: getTranslated(context, 'tooltipDelete'),
                         padding: EdgeInsets.all(8),
                         constraints: BoxConstraints(),
                       ),
@@ -404,7 +404,7 @@ class _ListPageState extends State<ListPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al guardar la lista')),
+          SnackBar(content: Text(getTranslated(context, 'errorSaveList'))),
         );
       }
     }

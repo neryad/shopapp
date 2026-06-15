@@ -87,7 +87,7 @@ class _DataPageState extends State<DataPage> {
                             ),
                           ),
                           Text(
-                            'Administra tu información',
+                            getTranslated(context, 'dataManageInfo'),
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.9),
                               fontSize: 14,
@@ -122,7 +122,7 @@ class _DataPageState extends State<DataPage> {
                       Expanded(
                         child: _buildStatCard(
                           icon: Icons.list_alt,
-                          title: 'Listas',
+                          title: getTranslated(context, 'dataLists'),
                           value: _totalLists.toString(),
                           color: Colors.blue,
                         ),
@@ -131,7 +131,7 @@ class _DataPageState extends State<DataPage> {
                       Expanded(
                         child: _buildStatCard(
                           icon: Icons.shopping_cart,
-                          title: 'Productos',
+                          title: getTranslated(context, 'dataProducts'),
                           value: _totalProducts.toString(),
                           color: Colors.green,
                         ),
@@ -163,8 +163,8 @@ class _DataPageState extends State<DataPage> {
                   _buildActionCard(
                     icon: Icons.check_circle_outline,
                     iconColor: Colors.orange,
-                    title: 'Limpiar listas completadas',
-                    subtitle: 'Elimina solo las listas que ya completaste',
+                    title: getTranslated(context, 'dataCleanCompleted'),
+                    subtitle: getTranslated(context, 'dataCleanCompletedSub'),
                     onTap: _deleteCompletedLists,
                   ),
 
@@ -174,8 +174,8 @@ class _DataPageState extends State<DataPage> {
                   _buildActionCard(
                     icon: Icons.delete_sweep,
                     iconColor: Colors.purple,
-                    title: 'Limpiar productos temporales',
-                    subtitle: 'Elimina artículos de lista en progreso',
+                    title: getTranslated(context, 'dataCleanTemp'),
+                    subtitle: getTranslated(context, 'dataCleanTempSub'),
                     onTap: _deleteTempProducts,
                   ),
 
@@ -232,7 +232,7 @@ class _DataPageState extends State<DataPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Datos Locales',
+                                getTranslated(context, 'dataLocalData'),
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -241,7 +241,7 @@ class _DataPageState extends State<DataPage> {
                               ),
                               SizedBox(height: 4),
                               Text(
-                                'Todos tus datos se almacenan localmente en tu dispositivo. Eliminar datos no se puede deshacer.',
+                                getTranslated(context, 'dataLocalDataDesc'),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey[700],
@@ -407,7 +407,7 @@ class _DataPageState extends State<DataPage> {
     }
 
     if (completedLists.isEmpty) {
-      utils.showInfoSnack(context, 'No hay listas completadas para eliminar');
+      utils.showInfoSnack(context, getTranslated(context, 'dataNoCompleted'));
       return;
     }
 
@@ -419,16 +419,16 @@ class _DataPageState extends State<DataPage> {
           children: [
             Icon(Icons.warning_amber_rounded, color: Colors.orange),
             SizedBox(width: 12),
-            Text('Confirmar'),
+            Text(getTranslated(context, 'confirm')),
           ],
         ),
         content: Text(
-          '¿Deseas eliminar ${completedLists.length} lista(s) completada(s)?',
+          getTranslated(context, 'dataDeleteCompletedConfirm'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancelar'),
+            child: Text(getTranslated(context, 'cancel')),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -439,12 +439,12 @@ class _DataPageState extends State<DataPage> {
               await _loadStatistics();
               Navigator.pop(context);
               utils.showSuccessSnack(context,
-                  '${completedLists.length} lista(s) eliminada(s)');
+                  '${completedLists.length} ${getTranslated(context, 'dataListsDeleted')}');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
             ),
-            child: Text('Eliminar', style: TextStyle(color: Colors.white)),
+            child: Text(getTranslated(context, 'delete'), style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -460,28 +460,28 @@ class _DataPageState extends State<DataPage> {
           children: [
             Icon(Icons.warning_amber_rounded, color: Colors.purple),
             SizedBox(width: 12),
-            Text('Confirmar'),
+            Text(getTranslated(context, 'confirm')),
           ],
         ),
         content: Text(
-          '¿Deseas eliminar todos los productos temporales?',
+          getTranslated(context, 'dataDeleteTempConfirm'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancelar'),
+            child: Text(getTranslated(context, 'cancel')),
           ),
           ElevatedButton(
             onPressed: () async {
               await DBProvider.db.deleteAllTempProd('tmp');
               await _loadStatistics();
               Navigator.pop(context);
-              utils.showSuccessSnack(context, 'Productos temporales eliminados');
+              utils.showSuccessSnack(context, getTranslated(context, 'dataTempDeleted'));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.purple,
             ),
-            child: Text('Eliminar', style: TextStyle(color: Colors.white)),
+            child: Text(getTranslated(context, 'delete'), style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -502,7 +502,7 @@ class _DataPageState extends State<DataPage> {
       utils.showSuccessSnack(context, getTranslated(context, 'dataDelete'));
     } catch (e) {
       setState(() => _isLoading = false);
-      utils.showErrorSnack(context, 'Error al eliminar los datos');
+      utils.showErrorSnack(context, getTranslated(context, 'dataDeleteError'));
     }
   }
 
@@ -545,7 +545,7 @@ class _DataPageState extends State<DataPage> {
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Esta acción no se puede deshacer',
+                        getTranslated(context, 'dataCantUndo'),
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.red[900],

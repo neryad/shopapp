@@ -71,7 +71,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
 
                   // Icon picker
                   Text(
-                    'Icono',
+                    getTranslated(context, 'icon'),
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Theme.of(context).hintColor),

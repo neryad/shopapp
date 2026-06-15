@@ -25,7 +25,7 @@ class _AuthorPageState extends State<AuthorPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
-          'Desarrollador',
+          getTranslated(context, 'developer'),
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 22,
@@ -79,7 +79,7 @@ class _AuthorPageState extends State<AuthorPage> {
             SizedBox(height: 8),
 
             Text(
-              'FullStack Developer',
+              getTranslated(context, 'fullstackDev'),
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey[600],
@@ -90,7 +90,7 @@ class _AuthorPageState extends State<AuthorPage> {
             SizedBox(height: 4),
 
             Text(
-              '☕ Coffee, Code 💻 & Repeat',
+              '☕ ${getTranslated(context, 'coffeeCodeRepeat')}',
               style: TextStyle(
                 fontSize: 14,
                 color: Theme.of(context).colorScheme.primary,
@@ -107,7 +107,7 @@ class _AuthorPageState extends State<AuthorPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Conecta Conmigo',
+                    getTranslated(context, 'connectWithMe'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -124,37 +124,37 @@ class _AuthorPageState extends State<AuthorPage> {
                       _socialButton(
                         context,
                         icon: Icons.close_rounded,
-                        label: 'Twitter',
+                        label: getTranslated(context, 'twitter'),
                         url: 'https://twitter.com/NeryadG',
                       ),
                       _socialButton(
                         context,
                         icon: Icons.camera_alt_outlined,
-                        label: 'Instagram',
+                        label: getTranslated(context, 'instagram'),
                         url: 'https://www.instagram.com/neryad_dev/',
                       ),
                       _socialButton(
                         context,
                         icon: Icons.language_rounded,
-                        label: 'Website',
+                        label: getTranslated(context, 'website'),
                         url: 'https://neryad.dev/',
                       ),
                       _socialButton(
                         context,
                         icon: Icons.code_rounded,
-                        label: 'GitHub',
+                        label: getTranslated(context, 'github'),
                         url: 'https://github.com/neryad',
                       ),
                       _socialButton(
                         context,
                         icon: Icons.business_rounded,
-                        label: 'LinkedIn',
+                        label: getTranslated(context, 'linkedin'),
                         url: 'https://www.linkedin.com/in/dayern-gomez/',
                       ),
                       _socialButton(
                         context,
                         icon: Icons.mail_outline_rounded,
-                        label: 'Email',
+                        label: getTranslated(context, 'email'),
                         url: 'mailto:contact@neryad.dev',
                       ),
                     ],
@@ -172,7 +172,7 @@ class _AuthorPageState extends State<AuthorPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Acciones',
+                    getTranslated(context, 'actions'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -183,24 +183,24 @@ class _AuthorPageState extends State<AuthorPage> {
                     _actionButton(
                       context,
                       icon: Icons.favorite_outline,
-                      label: 'Apoya el proyecto',
-                      subtitle: 'Donar en PayPal',
+                      label: getTranslated(context, 'supportProject'),
+                      subtitle: getTranslated(context, 'donatePaypal'),
                       onTap: () => _launchUrl('https://www.paypal.me/neryad'),
                     ),
                   if (!kIsWeb) SizedBox(height: 12),
                   _actionButton(
                     context,
                     icon: Icons.share_outlined,
-                    label: 'Compartir App',
-                    subtitle: 'Recomienda PocketList',
+                    label: getTranslated(context, 'shareApp'),
+                    subtitle: getTranslated(context, 'recommendApp'),
                     onTap: () => _shareApp(context),
                   ),
                   SizedBox(height: 12),
                   _actionButton(
                     context,
                     icon: Icons.bug_report_outlined,
-                    label: 'Reportar Bug',
-                    subtitle: 'Enviar email',
+                    label: getTranslated(context, 'reportBug'),
+                    subtitle: getTranslated(context, 'sendEmail'),
                     onTap: () => _launchUrl(
                         'mailto:contact@neryad.dev?subject=Bug%20Report%20-%20PocketList'),
                   ),
@@ -208,8 +208,8 @@ class _AuthorPageState extends State<AuthorPage> {
                   _actionButton(
                     context,
                     icon: Icons.star_outline_rounded,
-                    label: 'Calificar App',
-                    subtitle: 'En la tienda',
+                    label: getTranslated(context, 'rateApp'),
+                    subtitle: getTranslated(context, 'inStore'),
                     onTap: () => _rateApp(),
                   ),
                 ],
@@ -242,7 +242,7 @@ class _AuthorPageState extends State<AuthorPage> {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        'Sobre el Desarrollador',
+                        getTranslated(context, 'aboutDeveloper'),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -253,7 +253,7 @@ class _AuthorPageState extends State<AuthorPage> {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    'Desarrollador apasionado por crear aplicaciones útiles y fáciles de usar. Especializado en Flutter y desarrollo multiplataforma.',
+                    getTranslated(context, 'developerBio'),
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.grey[700],
@@ -261,11 +261,11 @@ class _AuthorPageState extends State<AuthorPage> {
                     ),
                   ),
                   SizedBox(height: 16),
-                  _infoRow('Stack', 'Flutter • Dart • Firebase'),
+                  _infoRow(getTranslated(context, 'stack'), 'Flutter • Dart • Firebase'),
                   SizedBox(height: 8),
-                  _infoRow('Experiencia', 'Full Stack Developer'),
+                  _infoRow(getTranslated(context, 'experience'), 'Full Stack Developer'),
                   SizedBox(height: 8),
-                  _infoRow('Ubicación', 'República Dominicana 🇩🇴'),
+                  _infoRow(getTranslated(context, 'location'), 'República Dominicana 🇩🇴'),
                 ],
               ),
             ),
@@ -288,7 +288,7 @@ class _AuthorPageState extends State<AuthorPage> {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'Hecho con ❤️ y Flutter',
+                    getTranslated(context, 'madeWith'),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 11,
@@ -452,7 +452,7 @@ class _AuthorPageState extends State<AuthorPage> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('No se pudo abrir el enlace'),
+              content: Text(getTranslated(context, 'linkOpenError')),
               backgroundColor: Colors.red,
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
@@ -466,7 +466,7 @@ class _AuthorPageState extends State<AuthorPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error al abrir el enlace: $e'),
+            content: Text('${getTranslated(context, 'linkOpenErrorMsg')} $e'),
             backgroundColor: Colors.red,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
@@ -480,8 +480,8 @@ class _AuthorPageState extends State<AuthorPage> {
 
   void _shareApp(BuildContext context) {
     Share.share(
-      '¡Descarga PocketList! 🛒\n\nLa mejor app para gestionar tus listas de compras de forma fácil y rápida.\n\n🌐 Visita:\nhttps://pockelist-web.neryad.dev/\n\n📱 ¡Pruébala ahora!',
-      subject: 'Descarga PocketList',
+      getTranslated(context, 'shareMsg'),
+      subject: getTranslated(context, 'shareSubject'),
     );
   }
 

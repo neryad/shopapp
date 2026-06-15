@@ -578,7 +578,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al guardar artículo')),
+          SnackBar(content: Text(getTranslated(context, 'errorSaveProduct'))),
         );
       }
     }
@@ -1729,7 +1729,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al guardar la lista')),
+          SnackBar(content: Text(getTranslated(context, 'errorSaveList'))),
         );
       }
     }
