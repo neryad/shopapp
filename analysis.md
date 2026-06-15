@@ -416,9 +416,8 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 7. **⬆️ `TextEditingController` leak en `ListView.builder`**
    - `newList.dart:1097` — se crean controllers nuevos en cada rebuild sin dispose
 
-8. **⬆️ Dark mode rebuild completo sin animación**
-   - `setting_page.dart:482-483` — usa `MyApp.stateSet()` en vez de `AnimatedTheme`
-   - Migrar a `MaterialApp.themeMode` para transición suave
+8. **~~⬆️ Dark mode rebuild completo sin animación~~** ✅ FIXED
+   - `main.dart` — Ahora usa `themeMode` con `darkTheme` separado para transiciones suaves
 
 9. **~~⬆️ Inconsistencia en feedback visual (SnackBar vs Flushbar)~~** ✅ FIXED
    - Centralizado en `utils.dart`: `showSnack()`, `showSuccessSnack()`, `showErrorSnack()`, `showInfoSnack()`

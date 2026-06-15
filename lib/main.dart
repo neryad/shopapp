@@ -108,9 +108,15 @@ class DarkLightTheme extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.getTheme(
         prefs.color,
-        prefs.darkLightTheme,
+        false,
         customColor: prefs.customColorValue,
       ),
+      darkTheme: AppTheme.getTheme(
+        prefs.color,
+        true,
+        customColor: prefs.customColorValue,
+      ),
+      themeMode: prefs.darkLightTheme ? ThemeMode.dark : ThemeMode.light,
       locale: locale,
       supportedLocales: const [
         Locale('en'),
