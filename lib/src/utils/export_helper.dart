@@ -13,6 +13,10 @@ import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:pocketlist/src/utils/file_save_helper.dart';
 
 class ExportHelper {
+  static String _sanitizeFilename(String name) {
+    return name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_').trim();
+  }
+
   static Future<void> generateCsv(BuildContext context, String listId) async {
     final filePlaceHolder = getTranslated(context, 'csvFilePlaceholder');
     final dateCsv = getTranslated(context, 'csvDate');
@@ -62,13 +66,13 @@ class ExportHelper {
       if (kIsWeb) {
         // Web: Download CSV
         final bytes = utf8.encode(csvString);
-        await saveFile('${csvData[1][0]}.csv', Uint8List.fromList(bytes));
+        await saveFile('${_sanitizeFilename(csvData[1][0])}.csv', Uint8List.fromList(bytes));
         if (successMsgExport.isNotEmpty)
           utils.showSnack(context, successMsgExport);
         return;
       }
 
-      var fileName = csvData[1][0];
+      var fileName = _sanitizeFilename(csvData[1][0]);
       Directory? dir = Platform.isAndroid
           ? await getExternalStorageDirectory()
           : await getApplicationSupportDirectory();

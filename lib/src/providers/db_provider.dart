@@ -275,6 +275,16 @@ class DBProvider {
     return res;
   }
 
+  Future<void> updateProdsBatch(List<ProductModel> products) async {
+    final db = await database;
+    final batch = db!.batch();
+    for (final prod in products) {
+      batch.update('product', prod.toJson(),
+          where: 'id = ?', whereArgs: [prod.id]);
+    }
+    await batch.commit(noResult: true);
+  }
+
   // ─────────────────────────────────────────────
   // CATEGORY CRUD
   // ─────────────────────────────────────────────

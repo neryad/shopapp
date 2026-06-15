@@ -121,7 +121,7 @@ class _AboutPageState extends State<AboutPage> with PackageInfoMixin {
                   SizedBox(height: 24),
 
                   // Sección: Créditos
-                  _buildSectionHeader('Créditos'),
+                  _buildSectionHeader(getTranslated(context, 'credits')),
                   SizedBox(height: 12),
 
                   _buildInfoCard(
@@ -183,7 +183,7 @@ class _AboutPageState extends State<AboutPage> with PackageInfoMixin {
                     icon: Icons.code_outlined,
                     iconColor: Colors.teal,
                     title: getTranslated(context, 'aboutSourceCode'),
-                    subtitle: 'GitHub',
+                    subtitle: getTranslated(context, 'github'),
                     onTap: () => _launchUrl('https://github.com/neryad'),
                     showArrow: true,
                   ),

@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:pocketlist/src/models/List_model.dart';
 import 'package:pocketlist/src/models/product_model.dart';
-import 'package:another_flushbar/flushbar.dart';
 import 'package:pocketlist/src/pages/New-List/newList.dart';
 
 import 'package:share_plus/share_plus.dart';
@@ -121,7 +120,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'Toca una lista para editarla o toca ↑ para exportarla',
+                      getTranslated(context, 'csvTapToEdit'),
                       style: TextStyle(
                         fontSize: 13,
                         color: Colors.grey[700],
@@ -156,13 +155,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 Icon(Icons.error_outline, size: 64, color: Colors.red),
                 SizedBox(height: 16),
                 Text(
-                  'Error al cargar las listas',
+                  getTranslated(context, 'csvLoadError'),
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 8),
                 TextButton(
                   onPressed: () => setState(() {}),
-                  child: Text('Reintentar'),
+                  child: Text(getTranslated(context, 'retry')),
                 ),
               ],
             ),
@@ -208,7 +207,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           ),
           SizedBox(height: 24),
           Text(
-            'No hay listas guardadas',
+            getTranslated(context, 'csvNoLists'),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -217,7 +216,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           ),
           SizedBox(height: 8),
           Text(
-            'Crea una lista para poder exportarla',
+            getTranslated(context, 'csvCreateFirst'),
             style: TextStyle(
               fontSize: 14,
               color: Colors.grey[500],
@@ -231,7 +230,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 onPressed: () => Navigator.pushNamed(context, 'home'),
                 icon: Icon(Icons.add, color: Colors.white),
                 label: Text(
-                  'Crear lista',
+                  getTranslated(context, 'csvCreateList'),
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -248,7 +247,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               OutlinedButton.icon(
                 onPressed: pickFile,
                 icon: Icon(Icons.file_download),
-                label: Text('Importar lista'),
+                label: Text(getTranslated(context, 'csvImportList')),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Theme.of(context).colorScheme.primary,
                   side:
@@ -335,11 +334,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       runSpacing: 4,
                       children: [
                         _buildInfoChip(
-                          'Total: ${utils.numberFormat(list.total)}',
+                          '${getTranslated(context, 'csvTotal')} ${utils.numberFormat(list.total)}',
                           Colors.blue,
                         ),
                         _buildInfoChip(
-                          'Presupuesto: ${utils.numberFormat(list.buget)}',
+                          '${getTranslated(context, 'csvBudget')} ${utils.numberFormat(list.buget)}',
                           Colors.green,
                         ),
                       ],
@@ -351,7 +350,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               // Botón de exportar
               IconButton(
                 icon: Icon(Icons.file_upload, size: 22, color: Colors.cyan[700]),
-                tooltip: 'Exportar lista',
+                tooltip: getTranslated(context, 'csvExportList'),
                 onPressed: () => _generateCsv(context, list.id),
                 padding: EdgeInsets.all(8),
                 constraints: BoxConstraints(),
@@ -383,6 +382,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
   Future<void> _generateCsv(BuildContext context, String id) async {
     setState(() => _isLoading = true);
+
+    String sanitizeFilename(String name) {
+      return name.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_').trim();
+    }
 
     try {
       List<Lista> lista = await DBProvider.db.getListIds(id);
@@ -425,9 +428,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
       if (kIsWeb) {
         final bytes = utf8.encode(csvString);
-        await saveFile('${csvData[1][0]}.csv', Uint8List.fromList(bytes));
+        await saveFile('${sanitizeFilename(csvData[1][0])}.csv', Uint8List.fromList(bytes));
       } else {
-        var fileName = csvData[1][0];
+        var fileName = sanitizeFilename(csvData[1][0]);
         Directory? dir = Platform.isAndroid
             ? await getExternalStorageDirectory()
             : await getApplicationSupportDirectory();
@@ -442,14 +445,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
       }
 
       setState(() => _isLoading = false);
-      _showSuccessSnack(
-          getTranslated(context, 'csvExportSuccess'),
-          getTranslated(context, 'strExport'));
+      utils.showSuccessSnack(context,
+          getTranslated(context, 'csvExportSuccess'));
     } catch (e) {
       setState(() => _isLoading = false);
-      _showErrorSnack(
-          '${getTranslated(context, 'csvExportError')}: ${e.toString()}',
-          getTranslated(context, 'strExport'));
+      utils.showErrorSnack(context,
+          '${getTranslated(context, 'csvExportError')}: ${e.toString()}');
     }
   }
 
@@ -480,9 +481,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
         setState(() {});
       }
     } catch (e) {
-      _showErrorSnack(
-          '${getTranslated(context, 'csvImportError')}: ${e.toString()}',
-          getTranslated(context, 'strImport'));
+      utils.showErrorSnack(context,
+          '${getTranslated(context, 'csvImportError')}: ${e.toString()}');
     } finally {
       setState(() => _isLoading = false);
     }
@@ -492,13 +492,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
       BuildContext context, List<dynamic> importedList) async {
     try {
       if (importedList.length < 3) {
-        _showErrorSnack('CSV inválido: muy pocas filas',
-            getTranslated(context, 'strImport'));
+        utils.showErrorSnack(context, getTranslated(context, 'csvInvalidRows'));
         return;
       }
       if (importedList[1] is! List || (importedList[1] as List).length < 6) {
-        _showErrorSnack('CSV inválido: datos de lista incompletos',
-            getTranslated(context, 'strImport'));
+        utils.showErrorSnack(context, getTranslated(context, 'csvInvalidData'));
         return;
       }
 
@@ -534,35 +532,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
         }
       }
 
-      _showSuccessSnack(getTranslated(context, 'csvImportSuccess'),
-          getTranslated(context, 'strImport'));
+      utils.showSuccessSnack(context, getTranslated(context, 'csvImportSuccess'));
     } catch (e) {
-      _showErrorSnack(
-          '${getTranslated(context, 'csvImportError')}: ${e.toString()}',
-          getTranslated(context, 'strImport'));
+      utils.showErrorSnack(context,
+          '${getTranslated(context, 'csvImportError')}: ${e.toString()}');
     }
-  }
-
-  void _showSuccessSnack(String msg, String title) {
-    Flushbar(
-      title: title,
-      message: msg,
-      icon: Icon(Icons.check_circle, size: 28, color: Colors.white),
-      leftBarIndicatorColor: Colors.green,
-      backgroundColor: Colors.green[700]!,
-      duration: Duration(seconds: 3),
-    ).show(context);
-  }
-
-  void _showErrorSnack(String msg, String title) {
-    Flushbar(
-      title: title,
-      message: msg,
-      icon: Icon(Icons.error, size: 28, color: Colors.white),
-      leftBarIndicatorColor: Colors.red,
-      backgroundColor: Colors.red[700]!,
-      duration: Duration(seconds: 4),
-    ).show(context);
   }
 
   void _showHelpDialog() {
@@ -575,7 +549,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
             Icon(Icons.help_outline,
                 color: Theme.of(context).colorScheme.primary),
             SizedBox(width: 12),
-            Text('Cómo usar  ?'),
+            Text(getTranslated(context, 'csvHowTo')),
           ],
         ),
         content: Column(
@@ -584,14 +558,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
           children: [
             _buildHelpItem(
               Icons.file_upload,
-              'Exportar',
-              'Toca el ícono de descarga en cada lista para exportarla como archivo CSV.',
+              getTranslated(context, 'csvHowExport'),
+              getTranslated(context, 'csvHowExportDesc'),
             ),
             SizedBox(height: 16),
             _buildHelpItem(
               Icons.file_download,
-              'Importar',
-              'Toca el ícono de subir en la parte superior para importar un archivo CSV.',
+              getTranslated(context, 'csvHowImport'),
+              getTranslated(context, 'csvHowImportDesc'),
             ),
             SizedBox(height: 16),
             Container(
@@ -607,7 +581,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Solo se pueden importar archivos CSV exportados desde PocketList',
+                      getTranslated(context, 'csvOnlyPocketList'),
                       style: TextStyle(fontSize: 12, color: Colors.amber[900]),
                     ),
                   ),
@@ -619,7 +593,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Entendido'),
+            child: Text(getTranslated(context, 'understood')),
           ),
         ],
       ),

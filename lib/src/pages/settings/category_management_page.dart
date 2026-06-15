@@ -71,7 +71,7 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
 
                   // Icon picker
                   Text(
-                    'Icono',
+                    getTranslated(context, 'icon'),
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Theme.of(context).hintColor),
@@ -157,10 +157,14 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
                             await DBProvider.db.insertCategory(
                               CategoryModel(name: name, icon: selectedIcon),
                             );
+                            utils.showSuccessSnack(context,
+                                getTranslated(context, 'categoryCreated'));
                           } else {
                             existing.name = name;
                             existing.icon = selectedIcon;
                             await DBProvider.db.updateCategory(existing);
+                            utils.showSuccessSnack(context,
+                                getTranslated(context, 'categoryUpdated'));
                           }
 
                           Navigator.of(ctx).pop();
@@ -213,6 +217,8 @@ class _CategoryManagementPageState extends State<CategoryManagementPage> {
               await DBProvider.db.deleteCategory(category.id!);
               Navigator.of(ctx).pop();
               _refresh();
+              utils.showSnack(context,
+                  getTranslated(context, 'categoryDeleted'));
             },
             child: Text(
               getTranslated(context, 'delete'),

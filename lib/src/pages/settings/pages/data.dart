@@ -3,7 +3,6 @@ import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
-import 'package:another_flushbar/flushbar.dart';
 
 class DataPage extends StatefulWidget {
   DataPage({Key? key}) : super(key: key);
@@ -88,7 +87,7 @@ class _DataPageState extends State<DataPage> {
                             ),
                           ),
                           Text(
-                            'Administra tu información',
+                            getTranslated(context, 'dataManageInfo'),
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.9),
                               fontSize: 14,
@@ -123,7 +122,7 @@ class _DataPageState extends State<DataPage> {
                       Expanded(
                         child: _buildStatCard(
                           icon: Icons.list_alt,
-                          title: 'Listas',
+                          title: getTranslated(context, 'dataLists'),
                           value: _totalLists.toString(),
                           color: Colors.blue,
                         ),
@@ -132,7 +131,7 @@ class _DataPageState extends State<DataPage> {
                       Expanded(
                         child: _buildStatCard(
                           icon: Icons.shopping_cart,
-                          title: 'Productos',
+                          title: getTranslated(context, 'dataProducts'),
                           value: _totalProducts.toString(),
                           color: Colors.green,
                         ),
@@ -164,8 +163,8 @@ class _DataPageState extends State<DataPage> {
                   _buildActionCard(
                     icon: Icons.check_circle_outline,
                     iconColor: Colors.orange,
-                    title: 'Limpiar listas completadas',
-                    subtitle: 'Elimina solo las listas que ya completaste',
+                    title: getTranslated(context, 'dataCleanCompleted'),
+                    subtitle: getTranslated(context, 'dataCleanCompletedSub'),
                     onTap: _deleteCompletedLists,
                   ),
 
@@ -175,8 +174,8 @@ class _DataPageState extends State<DataPage> {
                   _buildActionCard(
                     icon: Icons.delete_sweep,
                     iconColor: Colors.purple,
-                    title: 'Limpiar productos temporales',
-                    subtitle: 'Elimina artículos de lista en progreso',
+                    title: getTranslated(context, 'dataCleanTemp'),
+                    subtitle: getTranslated(context, 'dataCleanTempSub'),
                     onTap: _deleteTempProducts,
                   ),
 
@@ -233,7 +232,7 @@ class _DataPageState extends State<DataPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Datos Locales',
+                                getTranslated(context, 'dataLocalData'),
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -242,7 +241,7 @@ class _DataPageState extends State<DataPage> {
                               ),
                               SizedBox(height: 4),
                               Text(
-                                'Todos tus datos se almacenan localmente en tu dispositivo. Eliminar datos no se puede deshacer.',
+                                getTranslated(context, 'dataLocalDataDesc'),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey[700],
@@ -408,7 +407,7 @@ class _DataPageState extends State<DataPage> {
     }
 
     if (completedLists.isEmpty) {
-      _showInfoSnack('No hay listas completadas para eliminar');
+      utils.showInfoSnack(context, getTranslated(context, 'dataNoCompleted'));
       return;
     }
 
@@ -420,16 +419,16 @@ class _DataPageState extends State<DataPage> {
           children: [
             Icon(Icons.warning_amber_rounded, color: Colors.orange),
             SizedBox(width: 12),
-            Text('Confirmar'),
+            Text(getTranslated(context, 'confirm')),
           ],
         ),
         content: Text(
-          '¿Deseas eliminar ${completedLists.length} lista(s) completada(s)?',
+          getTranslated(context, 'dataDeleteCompletedConfirm'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancelar'),
+            child: Text(getTranslated(context, 'cancel')),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -439,13 +438,13 @@ class _DataPageState extends State<DataPage> {
               }
               await _loadStatistics();
               Navigator.pop(context);
-              _showSuccessSnack(
-                  '${completedLists.length} lista(s) eliminada(s)');
+              utils.showSuccessSnack(context,
+                  '${completedLists.length} ${getTranslated(context, 'dataListsDeleted')}');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
             ),
-            child: Text('Eliminar', style: TextStyle(color: Colors.white)),
+            child: Text(getTranslated(context, 'delete'), style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -461,28 +460,28 @@ class _DataPageState extends State<DataPage> {
           children: [
             Icon(Icons.warning_amber_rounded, color: Colors.purple),
             SizedBox(width: 12),
-            Text('Confirmar'),
+            Text(getTranslated(context, 'confirm')),
           ],
         ),
         content: Text(
-          '¿Deseas eliminar todos los productos temporales?',
+          getTranslated(context, 'dataDeleteTempConfirm'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancelar'),
+            child: Text(getTranslated(context, 'cancel')),
           ),
           ElevatedButton(
             onPressed: () async {
               await DBProvider.db.deleteAllTempProd('tmp');
               await _loadStatistics();
               Navigator.pop(context);
-              _showSuccessSnack('Productos temporales eliminados');
+              utils.showSuccessSnack(context, getTranslated(context, 'dataTempDeleted'));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.purple,
             ),
-            child: Text('Eliminar', style: TextStyle(color: Colors.white)),
+            child: Text(getTranslated(context, 'delete'), style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -500,10 +499,10 @@ class _DataPageState extends State<DataPage> {
       setState(() => _isLoading = false);
       Navigator.of(context).pop();
 
-      _showSuccessSnack(getTranslated(context, 'dataDelete'));
+      utils.showSuccessSnack(context, getTranslated(context, 'dataDelete'));
     } catch (e) {
       setState(() => _isLoading = false);
-      _showErrorSnack('Error al eliminar los datos');
+      utils.showErrorSnack(context, getTranslated(context, 'dataDeleteError'));
     }
   }
 
@@ -546,7 +545,7 @@ class _DataPageState extends State<DataPage> {
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Esta acción no se puede deshacer',
+                        getTranslated(context, 'dataCantUndo'),
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.red[900],
@@ -585,41 +584,5 @@ class _DataPageState extends State<DataPage> {
         );
       },
     );
-  }
-
-  void _showSuccessSnack(String msg) {
-    Flushbar(
-      message: msg,
-      icon: Icon(Icons.check_circle, size: 28, color: Colors.white),
-      leftBarIndicatorColor: Colors.green,
-      backgroundColor: Colors.green[700]!,
-      duration: Duration(seconds: 2),
-      borderRadius: BorderRadius.circular(8),
-      margin: EdgeInsets.all(8),
-    ).show(context);
-  }
-
-  void _showErrorSnack(String msg) {
-    Flushbar(
-      message: msg,
-      icon: Icon(Icons.error, size: 28, color: Colors.white),
-      leftBarIndicatorColor: Colors.red,
-      backgroundColor: Colors.red[700]!,
-      duration: Duration(seconds: 3),
-      borderRadius: BorderRadius.circular(8),
-      margin: EdgeInsets.all(8),
-    ).show(context);
-  }
-
-  void _showInfoSnack(String msg) {
-    Flushbar(
-      message: msg,
-      icon: Icon(Icons.info_outline,
-          size: 28, color: Theme.of(context).colorScheme.primary),
-      leftBarIndicatorColor: Theme.of(context).colorScheme.primary,
-      duration: Duration(seconds: 2),
-      borderRadius: BorderRadius.circular(8),
-      margin: EdgeInsets.all(8),
-    ).show(context);
   }
 }
