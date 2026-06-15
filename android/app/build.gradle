@@ -54,10 +54,11 @@ android {
     // Configuración para firmar tus builds de release.
     signingConfigs {
         release {
-            if (keystoreProperties['storeFile'] && keystoreProperties['storePassword'] && keystoreProperties['keyAlias'] && keystoreProperties['keyPassword']) {
+            def sf = keystoreProperties['storeFile']
+            if (sf && !sf.contains(':') && keystoreProperties['storePassword'] && keystoreProperties['keyAlias'] && keystoreProperties['keyPassword'] && file(sf).exists()) {
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
-                storeFile file(keystoreProperties['storeFile'])
+                storeFile file(sf)
                 storePassword keystoreProperties['storePassword']
             }
         }
@@ -66,7 +67,8 @@ android {
     // Define qué configuración de firma usar para cada tipo de build.
     buildTypes {
         release {
-            if (keystoreProperties['storeFile'] && keystoreProperties['storePassword'] && keystoreProperties['keyAlias'] && keystoreProperties['keyPassword']) {
+            def sf = keystoreProperties['storeFile']
+            if (sf && !sf.contains(':') && keystoreProperties['storePassword'] && keystoreProperties['keyAlias'] && keystoreProperties['keyPassword'] && file(sf).exists()) {
                 signingConfig signingConfigs.release
             }
         }

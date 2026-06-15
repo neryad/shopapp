@@ -176,9 +176,10 @@ class _ListPageState extends State<ListPage> {
         //   Navigator.of(context).push(route);
         // },
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -189,6 +190,8 @@ class _ListPageState extends State<ListPage> {
                       children: [
                         Text(
                           lista.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: colorScheme.onSurface,
@@ -231,7 +234,7 @@ class _ListPageState extends State<ListPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -244,25 +247,31 @@ class _ListPageState extends State<ListPage> {
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.share_outlined,
+                        icon: Icon(Icons.share_outlined, size: 20,
                             color: colorScheme.primary),
                         onPressed: () => _showExportOptions(context, lista),
                         tooltip: 'Share',
+                        padding: EdgeInsets.all(8),
+                        constraints: BoxConstraints(),
                       ),
                       IconButton(
-                        icon: Icon(Icons.edit_outlined,
+                        icon: Icon(Icons.edit_outlined, size: 20,
                             color: colorScheme.secondary),
                         onPressed: () {
                           listaModel = lista;
                           _editarLista(context, lista);
                         },
                         tooltip: 'Edit',
+                        padding: EdgeInsets.all(8),
+                        constraints: BoxConstraints(),
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete_outline,
+                        icon: Icon(Icons.delete_outline, size: 20,
                             color: colorScheme.error),
                         onPressed: () => _validateEliminar(context, lista.id),
                         tooltip: 'Delete',
+                        padding: EdgeInsets.all(8),
+                        constraints: BoxConstraints(),
                       ),
                     ],
                   ),

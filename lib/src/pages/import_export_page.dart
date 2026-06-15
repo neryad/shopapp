@@ -283,13 +283,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
         },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(12),
           child: Row(
             children: [
               // Icono de lista
               Container(
-                width: 48,
-                height: 48,
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
@@ -297,60 +297,47 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 child: Icon(
                   Icons.shopping_cart,
                   color: Theme.of(context).colorScheme.primary,
-                  size: 24,
+                  size: 22,
                 ),
               ),
-              SizedBox(width: 16),
+              SizedBox(width: 12),
 
               // Información de la lista
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       list.title,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Icon(Icons.store, size: 14, color: Colors.grey[600]),
-                        SizedBox(width: 4),
-                        Text(
-                          list.superMaret.isEmpty
-                              ? 'Sin tienda'
-                              : list.superMaret,
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        SizedBox(width: 12),
-                        Icon(Icons.calendar_today,
-                            size: 14, color: Colors.grey[600]),
-                        SizedBox(width: 4),
-                        Text(
-                          list.fecha,
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: 2),
+                    Text(
+                      list.superMaret.isEmpty
+                          ? list.fecha
+                          : '${list.superMaret} · ${list.fecha}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 4),
-                    Row(
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 4,
                       children: [
                         _buildInfoChip(
                           'Total: ${utils.numberFormat(list.total)}',
                           Colors.blue,
                         ),
-                        SizedBox(width: 8),
                         _buildInfoChip(
                           'Presupuesto: ${utils.numberFormat(list.buget)}',
                           Colors.green,
@@ -362,16 +349,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
               ),
 
               // Botón de exportar
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.cyan[50],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.file_upload, color: Colors.cyan[700]),
-                  tooltip: 'Exportar lista',
-                  onPressed: () => _generateCsv(context, list.id),
-                ),
+              IconButton(
+                icon: Icon(Icons.file_upload, size: 22, color: Colors.cyan[700]),
+                tooltip: 'Exportar lista',
+                onPressed: () => _generateCsv(context, list.id),
+                padding: EdgeInsets.all(8),
+                constraints: BoxConstraints(),
               ),
             ],
           ),

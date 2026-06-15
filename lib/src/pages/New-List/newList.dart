@@ -106,6 +106,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: isNewList
             ? Text(getTranlated(context, 'mMyLisTitle'))
