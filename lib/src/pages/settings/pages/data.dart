@@ -1,3 +1,4 @@
+import 'package:pocketlist/src/models/List_model.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,7 @@ class _DataPageState extends State<DataPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Gestión de Datos',
+                            getTranlated(context, 'dataTitle'),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 24,
@@ -110,7 +111,7 @@ class _DataPageState extends State<DataPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Resumen de Datos',
+                    getTranlated(context, 'dataSummary'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -151,7 +152,7 @@ class _DataPageState extends State<DataPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Acciones',
+                    getTranlated(context, 'actions'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -203,7 +204,7 @@ class _DataPageState extends State<DataPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Información',
+                    getTranlated(context, 'info'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -398,11 +399,13 @@ class _DataPageState extends State<DataPage> {
 
   Future<void> _deleteCompletedLists() async {
     final lists = await DBProvider.db.getToadasLista();
-    final completedLists = lists.where((list) {
-      // Aquí puedes agregar lógica para determinar si una lista está completa
-      // Por ahora, considera que una lista está completa si tiene todos sus productos marcados
-      return false; // Implementar lógica según tu modelo
-    }).toList();
+    final completedLists = <Lista>[];
+    for (final list in lists) {
+      final products = await DBProvider.db.getProdId(list.id);
+      if (products.isNotEmpty && products.every((p) => p.complete == 1)) {
+        completedLists.add(list);
+      }
+    }
 
     if (completedLists.isEmpty) {
       _showInfoSnack('No hay listas completadas para eliminar');

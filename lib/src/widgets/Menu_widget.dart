@@ -131,7 +131,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            'Completar perfil',
+                            getTranlated(context, 'mCompleteProfile'),
                             style: textTheme.labelSmall?.copyWith(
                               color: colorScheme.primary,
                               fontWeight: FontWeight.w600,
@@ -151,7 +151,7 @@ class _MenuWidgetState extends State<MenuWidget> {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               children: <Widget>[
                 // Sección Principal
-                _createSectionHeader(context, 'Principal'),
+                _createSectionHeader(context, getTranlated(context, 'mMain')),
                 _createMenuItem(
                   context,
                   icon: Icons.home_outlined,
@@ -180,12 +180,12 @@ class _MenuWidgetState extends State<MenuWidget> {
                 const SizedBox(height: 8),
 
                 // Sección Datos
-                _createSectionHeader(context, 'Datos'),
+                _createSectionHeader(context, getTranlated(context, 'mData')),
                 _createMenuItem(
                   context,
                   icon: Icons.sync_alt,
                   activeIcon: Icons.sync,
-                  title: 'Import / Export',
+                  title: getTranlated(context, 'importExportTitle'),
                   routeName: 'exportImport',
                 ),
 
@@ -194,7 +194,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                 const SizedBox(height: 8),
 
                 // Sección Configuración
-                _createSectionHeader(context, 'Configuración'),
+                _createSectionHeader(context, getTranlated(context, 'mSettings')),
                 _createMenuItem(
                   context,
                   icon: Icons.settings_outlined,

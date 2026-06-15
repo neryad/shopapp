@@ -19,102 +19,137 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  final prefs = new PreferenciasUsuario();
+  final prefs = PreferenciasUsuario();
   final lisForm = GlobalKey<FormState>();
-  Lista listaModel = new Lista();
+  Lista listaModel = Lista();
+  List<Lista> _lists = [];
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
     prefs.ultimaPagina = 'home';
+    _loadLists();
+  }
+
+  Future<void> _loadLists() async {
+    final data = await DBProvider.db.getToadasLista();
+    if (mounted) {
+      setState(() {
+        _lists = data;
+        _lists.sort((a, b) => b.fecha.compareTo(a.fecha));
+        _isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return _listContainer(context);
-  }
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
-  Widget _listContainer(BuildContext context) {
-    return FutureBuilder<List<Lista>>(
-      future: DBProvider.db.getToadasLista(),
-      builder: (context, AsyncSnapshot<List<Lista>> snapshot) {
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        }
+    if (_lists.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.shopping_cart_outlined,
+                size: 64,
+                color:
+                    Theme.of(context).colorScheme.primary.withOpacity(0.5),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                getTranlated(context, 'noList'),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                getTranlated(context, 'noList2'),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.color
+                          ?.withOpacity(0.6),
+                    ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
 
-        final lista = snapshot.data;
-
-        if (lista == null || lista.isEmpty) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.shopping_cart_outlined,
-                    size: 64,
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.5),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    getTranlated(context, 'noList'),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    getTranlated(context, 'noList2'),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.color
-                              ?.withOpacity(0.6),
-                        ),
-                  ),
-                ],
+    return ListView.builder(
+        key: ValueKey(_lists.map((l) => l.id).toList()),
+        padding: const EdgeInsets.only(top: 8, bottom: 84),
+        itemCount: _lists.length,
+        itemBuilder: (context, i) {
+          return Dismissible(
+            direction: DismissDirection.endToStart,
+            background: Container(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.errorContainer,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: 20),
+              child: Icon(
+                Icons.delete_outline,
+                color: Theme.of(context).colorScheme.onErrorContainer,
               ),
             ),
-          );
-        }
-        lista.sort((a, b) => b.fecha.compareTo(a.fecha));
-        return ListView.builder(
-            padding: const EdgeInsets.only(top: 8, bottom: 84),
-            itemCount: lista.length,
-            itemBuilder: (context, i) {
-              return Dismissible(
-                direction: DismissDirection.endToStart,
-                background: Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.errorContainer,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(right: 20),
-                  child: Icon(
-                    Icons.delete_outline,
-                    color: Theme.of(context).colorScheme.onErrorContainer,
-                  ),
+            key: ValueKey(_lists[i].id),
+            confirmDismiss: (direction) async {
+              final confirmed = await showDialog<bool>(
+                context: context,
+                barrierDismissible: false,
+                builder: (ctx) => AlertDialog(
+                  title: Text(getTranlated(context, 'delete')),
+                  content: Text(getTranlated(context, 'deleteListDia')),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(false),
+                      child: Text(getTranlated(context, 'leave')),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(true),
+                      child: Text(getTranlated(context, 'accept')),
+                    ),
+                  ],
                 ),
-                key: Key(lista[i].id),
-                onDismissed: (direction) {
-                  utils.showSnack(
-                      context, getTranlated(context, 'deletedList'));
-                  DBProvider.db.deleteLista(lista[i].id);
-                  lista.removeAt(i);
-                  setState(() {});
-                },
-                child: card(lista[i]),
               );
-            });
-      },
-    );
+              return confirmed ?? false;
+            },
+            onDismissed: (direction) {
+              final deletedId = _lists[i].id;
+              setState(() {
+                _lists.removeAt(i);
+              });
+              DBProvider.db.deleteLista(deletedId).catchError((e) {
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error al eliminar la lista')),
+                  );
+                }
+                return 0;
+              });
+              utils.showSnack(
+                  context, getTranlated(context, 'deletedList'));
+            },
+            child: card(_lists[i]),
+          );
+        });
   }
 
   Widget card(Lista lista) {
@@ -141,9 +176,10 @@ class _ListPageState extends State<ListPage> {
         //   Navigator.of(context).push(route);
         // },
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,6 +190,8 @@ class _ListPageState extends State<ListPage> {
                       children: [
                         Text(
                           lista.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: colorScheme.onSurface,
@@ -196,7 +234,7 @@ class _ListPageState extends State<ListPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -209,25 +247,31 @@ class _ListPageState extends State<ListPage> {
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.share_outlined,
+                        icon: Icon(Icons.share_outlined, size: 20,
                             color: colorScheme.primary),
                         onPressed: () => _showExportOptions(context, lista),
                         tooltip: 'Share',
+                        padding: EdgeInsets.all(8),
+                        constraints: BoxConstraints(),
                       ),
                       IconButton(
-                        icon: Icon(Icons.edit_outlined,
+                        icon: Icon(Icons.edit_outlined, size: 20,
                             color: colorScheme.secondary),
                         onPressed: () {
                           listaModel = lista;
                           _editarLista(context, lista);
                         },
                         tooltip: 'Edit',
+                        padding: EdgeInsets.all(8),
+                        constraints: BoxConstraints(),
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete_outline,
+                        icon: Icon(Icons.delete_outline, size: 20,
                             color: colorScheme.error),
                         onPressed: () => _validateEliminar(context, lista.id),
                         tooltip: 'Delete',
+                        padding: EdgeInsets.all(8),
+                        constraints: BoxConstraints(),
                       ),
                     ],
                   ),
@@ -257,12 +301,12 @@ class _ListPageState extends State<ListPage> {
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
               TextButton(
-                  onPressed: () {
-                    DBProvider.db.deleteLista(id);
+                  onPressed: () async {
+                    await DBProvider.db.deleteLista(id);
                     Navigator.of(context).pop();
+                    await _loadLists();
                     utils.showSnack(
                         context, getTranlated(context, 'deletedList'));
-                    setState(() {});
                   },
                   child: Text(
                     getTranlated(context, 'accept'),
@@ -355,7 +399,11 @@ class _ListPageState extends State<ListPage> {
     try {
       await DBProvider.db.updateList(lista);
     } catch (e) {
-      print(e);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al guardar la lista')),
+        );
+      }
     }
   }
 

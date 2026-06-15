@@ -54,6 +54,7 @@ import 'package:flutter/material.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/pages/New-List/newList.dart';
 import 'package:pocketlist/src/pages/list_page.dart';
+import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:pocketlist/src/widgets/Menu_widget.dart';
 
@@ -76,7 +77,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: utils.saludos(context),
         elevation: 0,
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
         },
         icon: Icon(Icons.add, color: Colors.white),
         label: Text(
-          'Nueva Lista',
+          getTranlated(context, 'fabNewList'),
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,

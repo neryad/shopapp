@@ -8,54 +8,27 @@ import 'package:share_plus/share_plus.dart';
 import 'package:pocketlist/src/models/List_model.dart';
 import 'package:pocketlist/src/models/product_model.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:pocketlist/src/utils/file_save_helper.dart';
 
 class ExportHelper {
-  static final prefs = PreferenciasUsuario();
-
   static Future<void> generateCsv(BuildContext context, String listId) async {
-    String titleCsv, dateCsv, storeCsv, bugetCsv, totalCsv, difrenceCsv;
-    String nameProdCsv, priceProdCsv, quantityProdCsv, statusProdCsv;
-    String bought, notBought;
-    String filePlaceHolder = '';
-    String successMsgExport = '';
-    String errorMsgExport = '';
-
-    if (prefs.lnge == 'en') {
-      filePlaceHolder = 'List imported from PocketList';
-      dateCsv = 'Date';
-      bugetCsv = 'Budget';
-      bought = 'Bought';
-      notBought = 'Not bought';
-      storeCsv = 'Store';
-      titleCsv = 'List name';
-      difrenceCsv = 'Diference';
-      totalCsv = 'Total';
-      nameProdCsv = 'Name';
-      priceProdCsv = 'Price';
-      quantityProdCsv = 'Quantity';
-      statusProdCsv = 'Status';
-      successMsgExport = 'List exported successfully';
-      errorMsgExport = 'An error occurred while trying to export the list';
-    } else {
-      filePlaceHolder = 'Lista importada desde PocketList';
-      dateCsv = 'Fecha';
-      titleCsv = 'Nombre lista';
-      bugetCsv = 'Presupuesto';
-      difrenceCsv = 'Diferencia';
-      totalCsv = 'Total';
-      bought = 'Comprado';
-      notBought = 'No comprado';
-      storeCsv = 'Tienda';
-      nameProdCsv = 'Nombre';
-      priceProdCsv = 'Precio';
-      quantityProdCsv = 'Cantidad';
-      statusProdCsv = 'Estatus';
-      successMsgExport = 'Lista exportada correctamente';
-      errorMsgExport = 'Sucedió un error al intentar exportar la lista';
-    }
+    final filePlaceHolder = getTranlated(context, 'csvFilePlaceholder');
+    final dateCsv = getTranlated(context, 'csvDate');
+    final bugetCsv = getTranlated(context, 'csvBudget');
+    final bought = getTranlated(context, 'csvBought');
+    final notBought = getTranlated(context, 'csvNotBought');
+    final storeCsv = getTranlated(context, 'csvStore');
+    final titleCsv = getTranlated(context, 'csvListName');
+    final difrenceCsv = getTranlated(context, 'csvDifference');
+    final totalCsv = getTranlated(context, 'csvTotal');
+    final nameProdCsv = getTranlated(context, 'csvName');
+    final priceProdCsv = getTranlated(context, 'csvPrice');
+    final quantityProdCsv = getTranlated(context, 'csvQuantity');
+    final statusProdCsv = getTranlated(context, 'csvStatus');
+    final successMsgExport = getTranlated(context, 'csvExportSuccess');
+    final errorMsgExport = getTranlated(context, 'csvExportError');
 
     try {
       List<Lista> lista = await DBProvider.db.getListIds(listId);
