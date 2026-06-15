@@ -1,4 +1,4 @@
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 import 'package:pocketlist/src/pages/New-List/newList.dart';
 import 'package:pocketlist/src/utils/pdf.dart';
 import 'package:flutter/material.dart';
@@ -172,12 +172,6 @@ class _ListPageState extends State<ListPage> {
           );
           setState(() {}); // ← Fuerza reconstruir el FutureBuilder al volver
         },
-        // onTap: () {
-        //   var route = MaterialPageRoute(
-        //       builder: (BuildContext context) =>
-        //           ShoppingListPage(existingList: lista));
-        //   Navigator.of(context).push(route);
-        // },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           child: Column(

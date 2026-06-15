@@ -183,7 +183,7 @@ Debería usar import absoluto: `import 'package:pocketlist/main.dart';`
 ### 21. ~~Typos en nombres~~ ✅ FIXED (parcial)
 | Archivo | Nombre actual | Nombre correcto | Estado |
 |---------|--------------|-----------------|--------|
-| `lib/src/Shared_Prefs/Prefrecias_user.dart` | `Prefrecias` → `Preferencias` | Pendiente (requiere rename de archivo) |
+| `lib/src/Shared_Prefs/Prefrecias_user.dart` | `Prefrecias` → `Preferencias` | ✅ FIXED (renamed + 15 imports updated) |
 | ~~`lib/src/utils/ThemeManager .dart`~~ | ~~Espacio antes de `.dart`~~ | ✅ Eliminado |
 | `lib/src/models/List_model.dart` | `superMaret` | `superMarket` | Pendiente (requiere migración DB) |
 | `lib/src/models/List_model.dart` | `buget` | `budget` | Pendiente (requiere migración DB) |
@@ -394,9 +394,9 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
    - `home_page.dart:79` y `newList.dart:107`
    - Quitar la propiedad para que el scaffold maneje el inset correctamente
 
-3. **⬆️ Validación de formulario invertida — permite guardar artículos vacíos**
-   - `newList.dart:474-480` — `isEmpty` retorna `true` para `""`, el validator nunca rechaza
-   - `utils.dart:23-25` — la lógica está al revés
+3. **~~⬆️ Validación de formulario invertida — permite guardar artículos vacíos~~** ✅ FIXED
+   - `utils.dart:18-20` — `isEmpty` tenía lógica invertida
+   - `newList.dart:472-478` — validator corregido
 
 ### Prioridad Media
 
@@ -416,9 +416,8 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 7. **⬆️ `TextEditingController` leak en `ListView.builder`**
    - `newList.dart:1097` — se crean controllers nuevos en cada rebuild sin dispose
 
-8. **⬆️ Dark mode rebuild completo sin animación**
-   - `setting_page.dart:482-483` — usa `MyApp.stateSet()` en vez de `AnimatedTheme`
-   - Migrar a `MaterialApp.themeMode` para transición suave
+8. **~~⬆️ Dark mode rebuild completo sin animación~~** ✅ FIXED
+   - `main.dart` — Ahora usa `themeMode` con `darkTheme` separado para transiciones suaves
 
 9. **~~⬆️ Inconsistencia en feedback visual (SnackBar vs Flushbar)~~** ✅ FIXED
    - Centralizado en `utils.dart`: `showSnack()`, `showSuccessSnack()`, `showErrorSnack()`, `showInfoSnack()`
@@ -507,7 +506,8 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 
 ### Prioridad Baja
 
-14. **⬆️ Limpiar código comentado**
+14. **~~⬆️ Limpiar código comentado~~** ✅ FIXED
+    - Eliminado código muerto de 11 archivos: `home_page.dart`, `data.dart`, `setting_page.dart`, `utils.dart`, `list_page.dart`, `localization_constant.dart`, `tmp.dart`, `about_page.dart`, `pdf.dart`, `export_helper.dart`, `product_model.dart`
 15. **⬆️ Agregar Semantics/Accesibilidad**
 16. **⬆️ Agregar analítica básica**
     - No hay seguimiento de eventos para entender uso de la app

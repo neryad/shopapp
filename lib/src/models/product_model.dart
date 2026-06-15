@@ -14,7 +14,6 @@ class ProductModel {
     this.listId = '',
     this.complete = 0,
     this.categoryId,
-    // this.autocompleteterm,
   });
 
   int id;
@@ -24,7 +23,6 @@ class ProductModel {
   String listId;
   int complete;
   int? categoryId;
-  // String autocompleteterm;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pocketlist/main.dart';
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 import 'package:pocketlist/src/data/class/language.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/pages/settings/category_management_page.dart';
@@ -386,69 +386,6 @@ class _SettingPageState extends State<SettingPage> with PackageInfoMixin {
       ),
     );
   }
-
-  // Widget _buildLanguageSelector() {
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-  //     decoration: BoxDecoration(
-  //       color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-  //       borderRadius: BorderRadius.circular(8),
-  //     ),
-  //     child: DropdownButton<Language>(
-  //       value: Language.languageList().firstWhere(
-  //         (lang) => lang.languageCode == prefs.lnge,
-  //         orElse: () => Language.languageList().first,
-  //       ),
-  //       underline: SizedBox(),
-  //       icon: Icon(
-  //         Icons.keyboard_arrow_down_rounded,
-  //         color: Theme.of(context).colorScheme.primary,
-  //         size: 20,
-  //       ),
-  //       isDense: true,
-  //       items: Language.languageList()
-  //           .map<DropdownMenuItem<Language>>(
-  //             (lang) => DropdownMenuItem(
-  //               value: lang,
-  //               child: Row(
-  //                 mainAxisSize: MainAxisSize.min,
-  //                 children: [
-  //                   Text(
-  //                     lang.flag,
-  //                     style: TextStyle(fontSize: 18),
-  //                   ),
-  //                   SizedBox(width: 8),
-  //                   Text(
-  //                     lang.languageCode.toUpperCase(),
-  //                     style: TextStyle(
-  //                       fontSize: 13,
-  //                       fontWeight: FontWeight.w600,
-  //                       color: Theme.of(context).colorScheme.primary,
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           )
-  //           .toList(),
-  //       onChanged: (Language? language) {
-  //         if (language != null) {
-  //           setState(() {
-  //             _changeLanguage(language);
-  //           });
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
-
-  // String _getCurrentLanguageName() {
-  //   final currentLang = Language.languageList().firstWhere(
-  //     (lang) => lang.languageCode == prefs.lnge,
-  //     orElse: () => Language.languageList().first,
-  //   );
-  //   return '${currentLang.flag} ${currentLang.name}';
-  // }
 
   String _getCurrentLanguageName() {
     try {

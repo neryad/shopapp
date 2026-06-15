@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pocketlist/src/localization/localization.dart';
@@ -27,11 +27,6 @@ Future<Locale> setLocal(String languageCode) async {
 
 Locale _locale(String languageCode) {
   Locale _temp;
-  // if (languageCode == 'en') {
-  //   _temp = Locale(languageCode, 'US');
-  // } else {
-  //   _temp = Locale(languageCode, 'US');
-  // }
 
   switch (languageCode) {
     case ENGLISH:

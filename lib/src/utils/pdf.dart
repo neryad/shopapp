@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:pocketlist/src/utils/file_save_helper.dart';
 
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
+import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 // import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/models/List_model.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
@@ -75,17 +75,13 @@ class ApiPdf {
     if (kIsWeb) return; // Browser handles download/open
     final url = file.path;
 
-    // await OpenFile.open(url);
     await OpenFilex.open(url);
   }
 
   static Widget buildTitle(Lista list) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
       Text(list.title, style: TextStyle(fontSize: 24)),
-      //Divider(),
-      //SizedBox(height: 0.8 * PdfPageFormat.cm),
       Text(list.superMaret),
-      //SizedBox(height: 0.8 * PdfPageFormat.cm),
     ]);
   }
 
