@@ -11,11 +11,12 @@
 
 ## 🐛 Bugs Críticos
 
-### 1. Assets inexistentes referenciados en `utils.dart`
+### 1. ~~Assets inexistentes referenciados en `utils.dart`~~ ✅ FIXED
 **Archivo:** `lib/src/utils/utils.dart` (líneas 39, 64, 92)
 **Problema:** Las funciones `cambiarHeaderImage()`, `cambiarHomeImage()` y `cambiarNewImage()` construyen rutas tipo `assets/shopping_app_${prefs.color}.png`, `assets/empty_cart_${prefs.color}.png`, `assets/add_to_cart_${prefs.color}.png`. Estos assets **no existen** en el directorio `assets/`. Esto causa errores en tiempo de ejecución (`AssertionError` o imagen rota).
+**Fix:** Se eliminaron las 3 funciones y 2 variables globales muertas que las referenciaban.
 
-### 2. Función `_deleteCompletedLists` no funcional (DataPage)
+### 2. ~~Función `_deleteCompletedLists` no funcional (DataPage)~~ ✅ FIXED
 **Archivo:** `lib/src/pages/settings/pages/data.dart` (líneas 399-405)
 **Problema:** El filtro en `_deleteCompletedLists` siempre retorna `false`:
 ```dart
@@ -24,8 +25,9 @@ final completedLists = lists.where((list) {
 }).toList();
 ```
 El botón "Limpiar listas completadas" siempre muestra "No hay listas completadas para eliminar", incluso cuando todas las listas están completadas.
+**Fix:** Se implementó lógica real usando `getProdId()` + `every(p.complete == 1)` para detectar listas completadas.
 
-### 3. `setState()` dentro de un bucle en `getTotal()`
+### 3. ~~`setState()` dentro de un bucle en `getTotal()`~~ ✅ FIXED
 **Archivo:** `lib/src/pages/New-List/newList.dart` (líneas 195-218)
 **Problema:** `setState()` se llama dentro de un `for` loop, causando N reconstrucciones del widget por cada artículo:
 ```dart
@@ -36,8 +38,9 @@ for (int i = 0; i < items.length; i++) {
   });
 }
 ```
+**Fix:** Se movió `setState` fuera del bucle, calculando el total primero y llamando `setState` una sola vez.
 
-### 4. Fuga de memoria: `TextEditingController` sin dispose
+### 4. ~~Fuga de memoria: `TextEditingController` sin dispose~~ ✅ FIXED
 **Archivo:** `lib/src/pages/New-List/newList.dart` (línea 1097)
 **Problema:** Se crean `TextEditingController` dentro del `itemBuilder` de un `ListView.builder`, y **nunca se hacen dispose**. Cada reconstrucción del `ListView` agrega nuevos controladores sin eliminar los anteriores:
 ```dart
@@ -46,8 +49,9 @@ itemBuilder: (BuildContext context, int index) {
   ...
 }
 ```
+**Fix:** Se eliminó la lista `_controllers` (código 100% muerto que solo causaba leak).
 
-### 5. CSV Import: parsing frágil por índices
+### 5. ~~CSV Import: parsing frágil por índices~~ ✅ FIXED
 **Archivo:** `lib/src/pages/import_export_page.dart` (líneas 574-576)
 **Problema:** El import CSV asume posiciones de array sin validación:
 ```dart
@@ -55,34 +59,45 @@ var importedItems = importedList.getRange(2, importedList.length).toList();
 var finalItems = importedItems.getRange(1, importedItems.length).toList();
 ```
 Si la estructura del CSV cambia, el parseo falla silenciosamente o con excepción.
+**Fix:** Se agregó validación de estructura (mínimo de filas y columnas) y se reemplazó `double.parse` / `int.parse` por `tryParse` con valores por defecto.
 
-### 6. Textos hardcodeados sin traducción
+### 6. ~~Textos hardcodeados sin traducción~~ ✅ FIXED
 **Archivos múltiples:**
 - `lib/src/pages/home_page.dart:98` — "Nueva Lista"
 - `lib/src/pages/New-List/newList.dart:921` — "Agregar primer artículo"
 - `lib/src/pages/New-List/newList.dart:819` — "Total" (hardcodeado, no usa `getTranlated`)
 - `lib/src/pages/import_export_page.dart:112,195,282-292,306,322` — múltiples textos en español hardcodeados
 - `lib/src/pages/settings/pages/data.dart:125,126,153,163,167,176,205` — textos hardcodeados
+- `lib/src/pages/settings/setting_page.dart` — 15 strings
+- `lib/src/pages/settings/pages/color_page.dart` — 18 strings
+- `lib/src/pages/settings/pages/user.dart` — 19 strings
+- `lib/src/pages/about/about_page.dart` — 14 strings
+- `lib/src/widgets/Menu_widget.dart` — 5 strings
+**Fix:** Se agregaron ~50 keys i18n en `en.json` y `es.json`. Se reemplazaron todos los strings hardcodeados con `getTranlated(context, key)`.
 
-### 7. i18n manual duplicado para export/import/PDF
+### 7. ~~i18n manual duplicado para export/import/PDF~~ ✅ FIXED
 **Archivos:**
 - `lib/src/pages/import_export_page.dart:64-106`
 - `lib/src/utils/export_helper.dart:26-58`
 - `lib/src/utils/pdf.dart:29-49`
 
 **Problema:** Los textos para CSV y PDF se traducen manualmente con `if (prefs.lnge == 'en')` en lugar de usar el sistema de traducción (`getTranlated`). Esto es inconsistente, propenso a errores, y duplica lógica.
+**Fix:** Se eliminaron todos los `if (prefs.lnge == 'en')`. Se agregaron keys CSV (`csvDate`, `csvBudget`, etc.) a i18n. `export_helper.dart` e `import_export_page.dart` ahora usan `getTranlated(context, key)` directamente.
 
-### 8. `didChangeDependencies` llama a `getTotal()` durante build
+### 8. ~~`didChangeDependencies` llama a `getTotal()` durante build~~ ✅ FIXED
 **Archivo:** `lib/src/pages/New-List/newList.dart` (líneas 1632-1637)
 **Problema:** `didChangeDependencies` se llama durante el ciclo de build y `getTotal()` modifica estado, causando warnings de Flutter y potenciales bugs de reconstrucción infinita.
+**Fix:** Se removió `getTotal()` de `didChangeDependencies`, se llama en `_loadItems()` en su lugar.
 
-### 9. `prefs.color == 5` usado como flag mágico
+### 9. ~~`prefs.color == 5` usado como flag mágico~~ ✅ FIXED
 **Archivo:** `lib/src/pages/New-List/newList.dart` (líneas 649-651, 1580-1581, 1833-1834)
 **Problema:** El valor `5` (Gris oscuro) se usa como condición para cambiar colores de texto, pero es un número mágico que no es mantenible. Si se reordenan los colores, esto se rompe.
+**Fix:** Se reemplazó con constante con nombre `kColorGray`.
 
-### 10. `deleteLista` retorna String pero debería retornar int
+### 10. ~~`deleteLista` retorna String pero debería retornar int~~ ✅ FIXED
 **Archivo:** `lib/src/providers/db_provider.dart:173-176`
 **Problema:** `deleteLista` envuelve el resultado de `deleteList` (que retorna `int`) en `toString()`. No hay un beneficio real y se pierde el tipado correcto.
+**Fix:** Se cambió el tipo de retorno de `Future<String>` a `Future<int>`.
 
 ---
 
@@ -348,7 +363,7 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 
 ### Prioridad Alta
 
-1. **⬆️ Hardcoded strings sin traducir en 7 páginas**
+1. **~~⬆️ Hardcoded strings sin traducir en 7 páginas~~** ✅ FIXED
    - `setting_page.dart`, `color_page.dart`, `user.dart`, `data.dart`, `import_export_page.dart`, `about_page.dart`, `Menu_widget.dart`
    - Migrar todo a `getTranlated()` + archivos i18n
 
@@ -367,7 +382,7 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
    - `color_page.dart` y `authorPage.dart` con `crossAxisCount` fijo
    - Sin soporte de `NavigationRail` en pantallas anchas
 
-5. **⬆️ `setState` dentro de bucle en newList (líneas 198-209)**
+5. **~~⬆️ `setState` dentro de bucle en newList (líneas 198-209)~~** ✅ FIXED
    - Causa N reconstrucciones por cada interacción con >20 items
    - Mover `setState` fuera del bucle
 
@@ -398,7 +413,7 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 12. **⬆️ Sin feedback visual en CRUD de categorías**
     - `category_management_page.dart` — agregar flushbar después de cada operación
 
-13. **⬆️ `_deleteCompletedLists` siempre retorna `false`**
+13. **~~⬆️ `_deleteCompletedLists` siempre retorna `false`~~** ✅ FIXED
     - `data.dart:399-405` — lógica no implementada, nunca limpia nada
 
 14. **⬆️ `ThemeManager` y `SummaryHeader` no usados**
@@ -477,19 +492,19 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 
 ## 📝 Plan de Acción Sugerido
 
-### Fase 1: Bugs Críticos (inmediato)
-1. Eliminar referencias a assets inexistentes o agregar los archivos PNG
-2. Implementar `_deleteCompletedLists` correctamente
-3. Mover `setState()` fuera del bucle en `getTotal()`
-4. Eliminar `TextEditingController` leak o refactorizar
-5. Hardcodear textos faltantes en i18n o agregar keys
+### Fase 1: Bugs Críticos (inmediato) ✅ COMPLETADA
+1. ~~Eliminar referencias a assets inexistentes o agregar los archivos PNG~~ ✅
+2. ~~Implementar `_deleteCompletedLists` correctamente~~ ✅
+3. ~~Mover `setState()` fuera del bucle en `getTotal()`~~ ✅
+4. ~~Eliminar `TextEditingController` leak o refactorizar~~ ✅
+5. ~~Hardcodear textos faltantes en i18n o agregar keys~~ ✅
 
-### Fase 2: Bugs Moderados (corto plazo)
+### Fase 2: Bugs Moderados (corto plazo) — pendiente
 6. Agregar manejo de errores en operaciones DB
 7. Eliminar `resizeToAvoidBottomInset: false` en páginas con forms
 8. Eliminar `ThemeManager .dart` no usado o integrarlo
 9. Arreglar typos en nombres de archivos y clases
-10. Unificar sistema de traducción
+10. ~~Unificar sistema de traducción~~ ✅
 
 ### Fase 3: Calidad de Código (mediano plazo)
 11. Eliminar métodos duplicados en DBProvider
