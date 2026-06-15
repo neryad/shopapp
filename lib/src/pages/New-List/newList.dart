@@ -11,6 +11,8 @@ import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:uuid/uuid.dart';
 import 'package:another_flushbar/flushbar.dart';
 
+const int kColorGray = 5;
+
 class ShoppingListPage extends StatefulWidget {
   final Lista? existingList; // null = nueva lista, no-null = editar lista
 
@@ -78,6 +80,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       setState(() {
         items = data;
       });
+      getTotal();
     }
   }
 
@@ -85,14 +88,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   final editFormKey = GlobalKey<FormState>();
   final lisForm = GlobalKey<FormState>();
 
-  late Color colorBuget;
-  late Color bugetColor;
+  Color colorBuget = Colors.blue;
+  Color bugetColor = Colors.blue;
   final bugetController = TextEditingController();
 
   var uuid = Uuid();
 
   List<ProductModel> items = [];
-  List<TextEditingController> _controllers = [];
   ProductModel productModel = ProductModel();
   Segurencia sugeModel = Segurencia();
   late Lista listaModel = Lista();
@@ -196,17 +198,16 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     if (items.isNotEmpty) {
       total = 0;
       for (int i = 0; i < items.length; i++) {
-        setState(() {
-          total += (items[i].price * items[i].quantity);
-
-          getDiference();
-          if (total > buget) {
-            bugetColor = Colors.red[900]!;
-          } else {
-            bugetColor = Theme.of(context).colorScheme.primary;
-          }
-        });
+        total += (items[i].price * items[i].quantity);
       }
+      getDiference();
+      if (total > buget && buget > 0) {
+        bugetColor = Colors.red[900]!;
+      } else {
+        bugetColor = Theme.of(context).colorScheme.primary;
+      }
+
+      setState(() {});
 
       if (isNewList) {
         prefs.tempTotal = total.toString();
@@ -646,7 +647,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     child: Text(
                       getTranlated(context, 'leave'),
                       style: TextStyle(
-                          color: (prefs.color == 5)
+                          color: (prefs.color == kColorGray)
                               ? Colors.white
                               : Theme.of(context).colorScheme.primary),
                     )),
@@ -659,7 +660,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     child: Text(
                       getTranlated(context, 'save'),
                       style: TextStyle(
-                          color: (prefs.color == 5)
+                          color: (prefs.color == kColorGray)
                               ? Colors.white
                               : Theme.of(context).colorScheme.primary),
                     )),
@@ -815,7 +816,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           Divider(height: 16, thickness: 1),
           _buildStatRow(
             icon: Icons.shopping_cart,
-            label: 'Total',
+            label: getTranlated(context, 'total'),
             value: utils.numberFormat(total),
             color: Theme.of(context).colorScheme.primary,
           ),
@@ -917,7 +918,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 onPressed: () => _mostrarAlertaProducto(context),
                 icon: Icon(Icons.add, color: Colors.white),
                 label: Text(
-                  'Agregar primer artículo',
+                  getTranlated(context, 'addFirstItem'),
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -1094,7 +1095,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             child: ListView.builder(
               itemCount: displayItems.length,
               itemBuilder: (BuildContext context, int index) {
-                _controllers.add(TextEditingController());
                 // Map displayItems index back to items index
                 final itemIndex = items.indexOf(displayItems[index]);
                 final item = displayItems[index];
@@ -1339,7 +1339,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                               .withOpacity(0.2)),
                                       _buildItemDetail(
                                         icon: Icons.calculate,
-                                        label: 'Total',
+                                        label: getTranlated(context, 'total'),
                                         value: utils.numberFormat(
                                             item.quantity * item.price),
                                         highlight: true,
@@ -1577,7 +1577,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: (prefs.color == 5)
+                        backgroundColor: (prefs.color == kColorGray)
                             ? Colors.white.withOpacity(0.9)
                             : Theme.of(context).colorScheme.primary,
                         padding: EdgeInsets.symmetric(vertical: 12),
@@ -1631,9 +1631,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    colorBuget = Theme.of(context).colorScheme.primary;
-    bugetColor = Theme.of(context).colorScheme.primary;
-    getTotal();
   }
 
   void _resetCompletedItems() async {
@@ -1827,10 +1824,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         child: Text(
           getTranlated(context, 'undo'),
           style: TextStyle(
-              color: (prefs.color == 5) ? Colors.white : Colors.amber),
+              color: (prefs.color == kColorGray) ? Colors.white : Colors.amber),
         ),
       ),
-      leftBarIndicatorColor: (prefs.color == 5)
+      leftBarIndicatorColor: (prefs.color == kColorGray)
           ? Colors.white
           : Theme.of(context).colorScheme.primary,
       duration: Duration(seconds: 3),

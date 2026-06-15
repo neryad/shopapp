@@ -123,7 +123,7 @@ class _AboutPageState extends State<AboutPage> {
                   SizedBox(height: 8),
 
                   // Sección: Información de la App
-                  _buildSectionHeader('Información de la App'),
+                  _buildSectionHeader(getTranlated(context, 'aboutAppInfo')),
                   SizedBox(height: 12),
 
                   _buildInfoCard(
@@ -144,7 +144,7 @@ class _AboutPageState extends State<AboutPage> {
                     icon: Icons.person_outline,
                     iconColor: Colors.purple,
                     title:
-                        getTranlated(context, 'authorTitle') ?? 'Desarrollador',
+                        getTranlated(context, 'authorTitle'),
                     subtitle: 'Neryad',
                     onTap: () => Navigator.pushNamed(context, 'authorPage'),
                     showArrow: true,
@@ -166,7 +166,7 @@ class _AboutPageState extends State<AboutPage> {
                   _buildInfoCard(
                     icon: Icons.brush_outlined,
                     iconColor: Colors.pink,
-                    title: getTranlated(context, 'lDesign') ?? 'Diseño de Logo',
+                    title: getTranlated(context, 'lDesign'),
                     subtitle:
                         getTranlated(context, 'studio') ?? 'Plus Logo Design',
                     onTap: () => _launchUrl(
@@ -177,14 +177,13 @@ class _AboutPageState extends State<AboutPage> {
                   // Donaciones (solo en móvil)
                   if (!kIsWeb) ...[
                     SizedBox(height: 24),
-                    _buildSectionHeader('Soporte'),
+                    _buildSectionHeader(getTranlated(context, 'aboutSupport')),
                     SizedBox(height: 12),
                     _buildInfoCard(
                       icon: Icons.favorite_outline,
                       iconColor: Colors.red,
-                      title: getTranlated(context, 'dantions') ?? 'Donaciones',
-                      subtitle: getTranlated(context, 'aboutDonation') ??
-                          'Apoya el desarrollo de la app',
+                      title: getTranlated(context, 'dantions'),
+                      subtitle: getTranlated(context, 'aboutDonation'),
                       onTap: () => _launchUrl('https://www.paypal.me/neryad'),
                       showArrow: true,
                     ),
@@ -193,13 +192,13 @@ class _AboutPageState extends State<AboutPage> {
                   SizedBox(height: 24),
 
                   // Links importantes
-                  _buildSectionHeader('Enlaces'),
+                  _buildSectionHeader(getTranlated(context, 'aboutLinks')),
                   SizedBox(height: 12),
 
                   _buildInfoCard(
                     icon: Icons.code_outlined,
                     iconColor: Colors.teal,
-                    title: 'Código Fuente',
+                    title: getTranlated(context, 'aboutSourceCode'),
                     subtitle: 'GitHub',
                     onTap: () => _launchUrl('https://github.com/neryad'),
                     showArrow: true,
@@ -210,8 +209,8 @@ class _AboutPageState extends State<AboutPage> {
                   _buildInfoCard(
                     icon: Icons.privacy_tip_outlined,
                     iconColor: Colors.indigo,
-                    title: 'Política de Privacidad',
-                    subtitle: 'Ver documento',
+                    title: getTranlated(context, 'privacyPol'),
+                    subtitle: getTranlated(context, 'aboutViewDoc'),
                     onTap: () => _launchUrl(
                         'https://neryad.github.io/pocketPage/docs/PrivacyPolicy.pdf'),
                     showArrow: true,
@@ -224,7 +223,7 @@ class _AboutPageState extends State<AboutPage> {
                     child: Column(
                       children: [
                         Text(
-                          'Hecho con ❤️ por Neryad',
+                          getTranlated(context, 'aboutMadeWith'),
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
@@ -232,7 +231,7 @@ class _AboutPageState extends State<AboutPage> {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          '© 2024 PocketList',
+                          getTranlated(context, 'aboutCopyright'),
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[500],
@@ -388,13 +387,13 @@ class _AboutPageState extends State<AboutPage> {
           mode: LaunchMode.externalApplication,
         );
       } else {
-        throw 'No se pudo abrir $urlString';
+        throw getTranlated(context, 'aboutOpenLinkError') + ' $urlString';
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('No se pudo abrir el enlace'),
+            content: Text(getTranlated(context, 'aboutOpenLinkError')),
             backgroundColor: Colors.red,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(

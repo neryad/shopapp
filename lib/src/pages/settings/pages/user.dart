@@ -58,7 +58,7 @@ class _UserPageState extends State<UserPage> {
       MyApp.stateSet(context);
 
       _showSuccessSnack(
-        getTranlated(context, 'changeComplete') ?? 'Cambios guardados',
+        getTranlated(context, 'userChangesSaved'),
       );
     }
   }
@@ -72,16 +72,16 @@ class _UserPageState extends State<UserPage> {
           children: [
             Icon(Icons.warning_amber_rounded, color: Colors.orange),
             SizedBox(width: 12),
-            Text('Confirmar'),
+            Text(getTranlated(context, 'userDeleteConfirmTitle')),
           ],
         ),
         content: Text(
-          '¿Estás seguro de que deseas borrar tu información de perfil?',
+          getTranlated(context, 'userDeleteConfirmMsg'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancelar'),
+            child: Text(getTranlated(context, 'cancel')),
           ),
           ElevatedButton(
             onPressed: () {
@@ -95,12 +95,12 @@ class _UserPageState extends State<UserPage> {
               Navigator.pop(context);
               MyApp.stateSet(context);
 
-              _showInfoSnack('Perfil borrado correctamente');
+              _showInfoSnack(getTranlated(context, 'userProfileDeleted'));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
             ),
-            child: Text('Borrar', style: TextStyle(color: Colors.white)),
+            child: Text(getTranlated(context, 'userDeleteBtn'), style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -119,7 +119,7 @@ class _UserPageState extends State<UserPage> {
           if (_hasChanges)
             IconButton(
               icon: Icon(Icons.check),
-              tooltip: 'Guardar cambios',
+              tooltip: getTranlated(context, 'userSaveChanges'),
               onPressed: _saveChanges,
             ),
         ],
@@ -172,7 +172,7 @@ class _UserPageState extends State<UserPage> {
                     SizedBox(height: 16),
                     Text(
                       _nameController.text.isEmpty
-                          ? getTranlated(context, 'guestUser') ?? 'Usuario'
+                          ? getTranlated(context, 'userGuest')
                           : _nameController.text,
                       style: TextStyle(
                         color: Colors.white,
@@ -194,8 +194,7 @@ class _UserPageState extends State<UserPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      getTranlated(context, 'userNameConf') ??
-                          'Información del Perfil',
+                      getTranlated(context, 'userProfileInfo'),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -220,8 +219,7 @@ class _UserPageState extends State<UserPage> {
                         controller: _nameController,
                         textCapitalization: TextCapitalization.words,
                         decoration: InputDecoration(
-                          labelText: getTranlated(context, 'userInpText') ??
-                              'Nombre completo',
+                          labelText: getTranlated(context, 'userFullName'),
                           labelStyle: TextStyle(
                               color: Theme.of(context).colorScheme.primary),
                           prefixIcon: Icon(
@@ -238,15 +236,14 @@ class _UserPageState extends State<UserPage> {
                             horizontal: 16,
                             vertical: 16,
                           ),
-                          helperText:
-                              'Ingresa tu nombre para personalizar la app',
+                          helperText: getTranlated(context, 'userNameHelper'),
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return 'Por favor ingresa tu nombre';
+                            return getTranlated(context, 'userNameRequired');
                           }
                           if (value.trim().length < 2) {
-                            return 'El nombre debe tener al menos 2 caracteres';
+                            return getTranlated(context, 'userNameMinLength');
                           }
                           return null;
                         },
@@ -264,7 +261,7 @@ class _UserPageState extends State<UserPage> {
                           onPressed: _saveChanges,
                           icon: Icon(Icons.save, color: Colors.white),
                           label: Text(
-                            'Guardar Cambios',
+                            getTranlated(context, 'userSaveBtn'),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -286,7 +283,7 @@ class _UserPageState extends State<UserPage> {
 
                     // Sección de acciones
                     Text(
-                      'Acciones',
+                      getTranlated(context, 'userActions'),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -320,13 +317,13 @@ class _UserPageState extends State<UserPage> {
                           ),
                         ),
                         title: Text(
-                          'Borrar información del perfil',
+                          getTranlated(context, 'userDeleteProfile'),
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         subtitle: Text(
-                          'Elimina tu nombre del perfil',
+                          getTranlated(context, 'userDeleteProfileDesc'),
                           style: TextStyle(fontSize: 12),
                         ),
                         trailing: Icon(
@@ -363,7 +360,7 @@ class _UserPageState extends State<UserPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Tu información está segura',
+                                  getTranlated(context, 'userInfoSafe'),
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -373,7 +370,7 @@ class _UserPageState extends State<UserPage> {
                                 ),
                                 SizedBox(height: 4),
                                 Text(
-                                  'Tu información se guarda localmente en tu dispositivo y no se comparte con terceros.',
+                                  getTranlated(context, 'userInfoSafeDesc'),
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey[700],

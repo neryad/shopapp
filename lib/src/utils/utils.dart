@@ -4,14 +4,9 @@ import 'package:pocketlist/src/theme/app_theme.dart';
 import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 //import 'package:flushbar/flushbar.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
-import 'package:pocketlist/src/models/product_model.dart';
 import 'package:another_flushbar/flushbar.dart';
 
 final prefs = new PreferenciasUsuario();
-DateTime now = DateTime.now();
-List<ProductModel> deleteItems = [];
-var timeNow = int.parse(DateFormat('kk').format(now));
-
 bool isNumeric(String s) {
   if (s.isEmpty) return false;
 
@@ -34,88 +29,8 @@ Color cambiarColor() {
       customColor: prefs.customColorValue);
 }
 
-BoxDecoration cambiarHeaderImage() {
-  var img = '';
-  img = 'assets/shopping_app_${prefs.color}.png';
-  // if (prefs.color == 1) {
-  //   img = 'assets/undraw_shopping_app_flsj.png';
-  // } else if (prefs.color == 2) {
-  //   img = 'assets/undraw_shopping_app_flsj_A.png';
-  // } else if (prefs.color == 3) {
-  //   img = 'assets/undraw_shopping_app_flsj_G.png';
-  // } else if (prefs.color == 4) {
-  //   img = 'assets/undraw_shopping_app_flsj_R.png';
-  // } else if (prefs.color == 5) {
-  //   img = 'assets/undraw_shopping_app_flsj_GR.png';
-  // } else if (prefs.color == 6) {
-  //   img = 'assets/undraw_shopping_app_flsj-dp.png';
-  // } else if (prefs.color == 7) {
-  //   img = 'assets/undraw_shopping_app_flsj-Red.png';
-  // } else {
-  //   img = 'assets/undraw_shopping_app_flsj.png';
-  // }
-
-  return BoxDecoration(
-      image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover));
-}
-
-Image cambiarHomeImage() {
-  var img;
-  img = 'assets/empty_cart_${prefs.color}.png';
-  // if (prefs.color == 1) {
-  //   img = 'assets/undraw_empty_cart_co35.png';
-  // } else if (prefs.color == 2) {
-  //   img = 'assets/undraw_empty_cart_co35_A.png';
-  // } else if (prefs.color == 3) {
-  //   img = 'assets/undraw_empty_cart_co35_G.png';
-  // } else if (prefs.color == 4) {
-  //   img = 'assets/undraw_empty_cart_co35_R.png';
-  // } else if (prefs.color == 5) {
-  //   img = 'assets/undraw_empty_cart_co35_GR.png';
-  // } else if (prefs.color == 6) {
-  //   img = 'assets/undraw_empty_cart_co35-dp.png';
-  // } else if (prefs.color == 7) {
-  //   img = 'assets/undraw_empty_cart_co35-Red.png';
-  // } else {
-  //   img = 'assets/undraw_empty_cart_co35.png';
-  // }
-
-  return Image(
-    image: AssetImage(img),
-    height: 150.00,
-    fit: BoxFit.fitWidth,
-  );
-}
-
-Image cambiarNewImage() {
-  var img;
-  img = 'assets/add_to_cart_${prefs.color}.png';
-  // if (prefs.color == 1) {
-  //   img = 'assets/add_to_cart.png';
-  // } else if (prefs.color == 2) {
-  //   img = 'assets/add_to_cart_A.png';
-  // } else if (prefs.color == 3) {
-  //   img = 'assets/add_to_cart_G.png';
-  // } else if (prefs.color == 4) {
-  //   img = 'assets/add_to_cart_R.png';
-  // } else if (prefs.color == 5) {
-  //   img = 'assets/add_to_cart_GR.png';
-  // } else if (prefs.color == 6) {
-  //   img = 'assets/undraw_add_to_cart_vkjp-dp.png';
-  // } else if (prefs.color == 7) {
-  //   img = 'assets/undraw_add_to_cart_vkjp-Red.png';
-  // } else {
-  //   img = 'assets/add_to_cart.png';
-  // }
-
-  return Image(
-    image: AssetImage(img),
-    height: 200.00,
-    fit: BoxFit.cover,
-  );
-}
-
 saludos(BuildContext context) {
+  var timeNow = int.parse(DateFormat('kk').format(DateTime.now()));
   String greattin1 = getTranlated(context, 'greattin1');
   String greattin2 = getTranlated(context, 'greattin2');
   String greattin3 = getTranlated(context, 'greattin3');

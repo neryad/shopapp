@@ -97,7 +97,7 @@ class _SettingPageState extends State<SettingPage> {
                           ),
                         ),
                         Text(
-                          'Personaliza tu experiencia',
+                          getTranlated(context, 'settSubtitle'),
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.9),
                             fontSize: 14,
@@ -114,11 +114,11 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Apariencia
-          _buildSectionHeader('Apariencia'),
+          _buildSectionHeader(getTranlated(context, 'settAppearance')),
           _buildSettingCard(
             icon: Icons.color_lens_rounded,
             title: getTranlated(context, 'themTitle'),
-            subtitle: 'Personaliza los colores',
+            subtitle: getTranlated(context, 'settCustomColors'),
             onTap: () => Navigator.pushNamed(context, 'colorPage'),
             trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
           ),
@@ -127,8 +127,8 @@ class _SettingPageState extends State<SettingPage> {
             icon: Icons.dark_mode_rounded,
             title: getTranlated(context, 'darkMode'),
             subtitle: prefs.darkLightTheme
-                ? 'Modo oscuro activado'
-                : 'Modo claro activado',
+                ? getTranlated(context, 'settDarkOn')
+                : getTranlated(context, 'settLightOn'),
             trailing: Transform.scale(
               scale: 0.8,
               child: Switch(
@@ -146,12 +146,12 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Cuenta
-          _buildSectionHeader('Cuenta y Perfil'),
+          _buildSectionHeader(getTranlated(context, 'settAccount')),
           _buildSettingCard(
             icon: Icons.person_rounded,
             title: getTranlated(context, 'userTitle'),
             subtitle: prefs.nombreUsuario.isEmpty
-                ? 'Configura tu perfil'
+                ? getTranlated(context, 'settConfigProfile')
                 : prefs.nombreUsuario,
             onTap: () => Navigator.pushNamed(context, 'userPage'),
             trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
@@ -177,11 +177,11 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Datos
-          _buildSectionHeader('Datos'),
+          _buildSectionHeader(getTranlated(context, 'settDataSection')),
           _buildSettingCard(
             icon: Icons.storage_rounded,
             title: getTranlated(context, 'dataTitle'),
-            subtitle: 'Gestiona tus datos',
+            subtitle: getTranlated(context, 'settManageData'),
             onTap: () => Navigator.pushNamed(context, 'dataPage'),
             trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
           ),
@@ -189,7 +189,7 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Idioma
-          _buildSectionHeader('Idioma y Región'),
+          _buildSectionHeader(getTranlated(context, 'settLangRegion')),
           _buildSettingCard(
             icon: Icons.language_rounded,
             title: getTranlated(context, 'lngTitle'),
@@ -200,11 +200,11 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(height: 16),
 
           // Sección: Legal
-          _buildSectionHeader('Legal'),
+          _buildSectionHeader(getTranlated(context, 'settLegal')),
           _buildSettingCard(
             icon: Icons.description_rounded,
             title: getTranlated(context, 'Terms'),
-            subtitle: 'Términos y condiciones',
+            subtitle: getTranlated(context, 'settTermsConditions'),
             onTap: () => _launchURL(
                 'https://neryad.github.io/pocketPage/docs/Terms.pdf'),
             trailing: Icon(Icons.open_in_new, size: 16),
@@ -213,7 +213,7 @@ class _SettingPageState extends State<SettingPage> {
           _buildSettingCard(
             icon: Icons.privacy_tip_rounded,
             title: getTranlated(context, 'privacyPol'),
-            subtitle: 'Política de privacidad',
+            subtitle: getTranlated(context, 'privacyPol'),
             onTap: () => _launchURL(
                 'https://neryad.github.io/pocketPage/docs/PrivacyPolicy.pdf'),
             trailing: Icon(Icons.open_in_new, size: 16),
@@ -235,7 +235,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 SizedBox(height: 4),
                 Text(
-                  'Versión ${_packageInfo.version}',
+                  '${getTranlated(context, 'settVersion')} ${_packageInfo.version}',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[500],
@@ -474,7 +474,7 @@ class _SettingPageState extends State<SettingPage> {
       return '${currentLang.flag} ${currentLang.name}';
     } catch (e) {
       // Si no encuentra el idioma, devolver un valor por defecto
-      return '🌐 Idioma';
+      return getTranlated(context, 'lngTitle');
     }
   }
 
@@ -490,7 +490,7 @@ class _SettingPageState extends State<SettingPage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('No se pudo abrir el enlace'),
+          content: Text(getTranlated(context, 'settOpenLinkError')),
           backgroundColor: Colors.red,
         ),
       );

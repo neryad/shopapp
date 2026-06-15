@@ -169,10 +169,9 @@ class DBProvider {
     return res;
   }
 
-  ///DELETE LIST BY ID - ALIAS para compatibilidad
-  Future<String> deleteLista(String id) async {
-    final res = await deleteList(id);
-    return res.toString();
+  ///DELETE LIST BY ID
+  Future<int> deleteLista(String id) async {
+    return await deleteList(id);
   }
 
   ///DELETE ALL LISTS

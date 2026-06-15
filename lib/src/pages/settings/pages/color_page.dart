@@ -16,18 +16,18 @@ class _ColorPageState extends State<ColorPage> {
 
   // Colores predefinidos
   static const List<ColorOption> predefinedColors = [
-    ColorOption(color: Color(0xFFFF6F5E), name: 'Coral'),
-    ColorOption(color: Color(0xFF0E5C68), name: 'Azul Océano'),
-    ColorOption(color: Color(0xFF2B7600), name: 'Verde Bosque'),
-    ColorOption(color: Color(0xFFFF1493), name: 'Rosa Fucsia'),
-    ColorOption(color: Color(0xFF424242), name: 'Gris Oscuro'),
-    ColorOption(color: Color(0xFF7E57C2), name: 'Morado'),
-    ColorOption(color: Color(0xFFE53935), name: 'Rojo Intenso'),
-    ColorOption(color: Color(0xFF00897B), name: 'Verde Agua'),
-    ColorOption(color: Color(0xFFFF6F00), name: 'Naranja'),
-    ColorOption(color: Color(0xFF5E35B1), name: 'Índigo'),
-    ColorOption(color: Color(0xFFC62828), name: 'Rojo Vino'),
-    ColorOption(color: Color(0xFF00695C), name: 'Teal'),
+    ColorOption(color: Color(0xFFFF6F5E), name: 'colorCoral'),
+    ColorOption(color: Color(0xFF0E5C68), name: 'colorOceanBlue'),
+    ColorOption(color: Color(0xFF2B7600), name: 'colorForestGreen'),
+    ColorOption(color: Color(0xFFFF1493), name: 'colorFuchsiaPink'),
+    ColorOption(color: Color(0xFF424242), name: 'colorDarkGray'),
+    ColorOption(color: Color(0xFF7E57C2), name: 'colorPurple'),
+    ColorOption(color: Color(0xFFE53935), name: 'colorIntenseRed'),
+    ColorOption(color: Color(0xFF00897B), name: 'colorTealGreen'),
+    ColorOption(color: Color(0xFFFF6F00), name: 'colorOrange'),
+    ColorOption(color: Color(0xFF5E35B1), name: 'colorIndigo'),
+    ColorOption(color: Color(0xFFC62828), name: 'colorWineRed'),
+    ColorOption(color: Color(0xFF00695C), name: 'colorTeal'),
   ];
 
   Color get currentColor {
@@ -103,7 +103,7 @@ class _ColorPageState extends State<ColorPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Personalización',
+                            getTranlated(context, 'colorPersonalization'),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 24,
@@ -111,7 +111,7 @@ class _ColorPageState extends State<ColorPage> {
                             ),
                           ),
                           Text(
-                            'Elige tu color favorito',
+                            getTranlated(context, 'colorChooseFavorite'),
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.9),
                               fontSize: 14,
@@ -134,7 +134,7 @@ class _ColorPageState extends State<ColorPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Color Actual',
+                    getTranlated(context, 'colorCurrent'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -164,7 +164,7 @@ class _ColorPageState extends State<ColorPage> {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          _getColorName(currentColor),
+                          _getColorName(context, currentColor),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -196,7 +196,7 @@ class _ColorPageState extends State<ColorPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Colores Predefinidos',
+                    getTranlated(context, 'colorPredefined'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -255,7 +255,7 @@ class _ColorPageState extends State<ColorPage> {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              colorOption.name,
+                              getTranlated(context, colorOption.name),
                               style: TextStyle(
                                 fontSize: 10,
                                 color: Colors.grey[600],
@@ -282,7 +282,7 @@ class _ColorPageState extends State<ColorPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Color Personalizado',
+                    getTranlated(context, 'colorCustom'),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -310,7 +310,7 @@ class _ColorPageState extends State<ColorPage> {
                           ),
                         ),
                       ),
-                      title: const Text('Selecciona un color'),
+                      title: Text(getTranlated(context, 'colorSelect')),
                       subtitle: Text(
                         '#${currentColor.value.toRadixString(16).substring(2).toUpperCase()}',
                         style: const TextStyle(
@@ -350,7 +350,7 @@ class _ColorPageState extends State<ColorPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Personalización Automática',
+                            getTranlated(context, 'colorAuto'),
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -359,7 +359,7 @@ class _ColorPageState extends State<ColorPage> {
                           ),
                           SizedBox(height: 4),
                           Text(
-                            'El color seleccionado se aplicará en toda la aplicación automáticamente.',
+                            getTranlated(context, 'colorAutoDesc'),
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey[700],
@@ -381,12 +381,12 @@ class _ColorPageState extends State<ColorPage> {
     );
   }
 
-  String _getColorName(Color color) {
+  String _getColorName(BuildContext context, Color color) {
     final match = predefinedColors.firstWhere(
       (c) => c.color.value == color.value,
-      orElse: () => ColorOption(color: color, name: 'Personalizado'),
+      orElse: () => ColorOption(color: color, name: 'colorCustomFallback'),
     );
-    return match.name;
+    return getTranlated(context, match.name);
   }
 
   void _showColorPicker(BuildContext context) {
@@ -410,7 +410,7 @@ class _ColorPageState extends State<ColorPage> {
                 children: [
                   Icon(Icons.colorize, color: selectedColor),
                   SizedBox(width: 12),
-                  Text('Selecciona un Color'),
+                  Text(getTranlated(context, 'colorDialogTitle')),
                 ],
               ),
               content: SingleChildScrollView(
@@ -450,13 +450,13 @@ class _ColorPageState extends State<ColorPage> {
                       controller: hexController,
                       maxLength: 6,
                       decoration: InputDecoration(
-                        labelText: 'Código HEX',
+                        labelText: getTranlated(context, 'colorHexCode'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                         prefixText: '#',
                         counterText: '',
-                        helperText: 'Ejemplo: FF6F5E',
+                        helperText: getTranlated(context, 'colorHexExample'),
                       ),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
@@ -480,7 +480,7 @@ class _ColorPageState extends State<ColorPage> {
                     SizedBox(height: 16),
                     // Colores rápidos
                     Text(
-                      'Colores Rápidos',
+                      getTranlated(context, 'colorQuickColors'),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -541,7 +541,7 @@ class _ColorPageState extends State<ColorPage> {
                     hexController.dispose();
                     Navigator.pop(context);
                   },
-                  child: Text('Cancelar'),
+                  child: Text(getTranlated(context, 'cancel')),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -557,7 +557,7 @@ class _ColorPageState extends State<ColorPage> {
                     ),
                   ),
                   child: Text(
-                    'Aplicar',
+                    getTranlated(context, 'colorApply'),
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

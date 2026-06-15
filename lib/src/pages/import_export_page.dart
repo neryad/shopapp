@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:io';
 
-import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/models/List_model.dart';
 import 'package:pocketlist/src/models/product_model.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -28,94 +27,24 @@ class ImportExportPage extends StatefulWidget {
 }
 
 class _ImportExportPageState extends State<ImportExportPage> {
-  final prefs = PreferenciasUsuario();
   final uuid = Uuid();
 
   bool _isLoading = false;
   String? _errorMessage;
 
-  // Strings de traducción
-  late String filePlaceHolder,
-      titleCsv,
-      dateCsv,
-      storeCsv,
-      bugetCsv,
-      totalCsv,
-      difrenceCsv,
-      bought,
-      nameProdCsv,
-      priceProdCsv,
-      quantityProdCsv,
-      statusProdCsv,
-      notBought,
-      errorMsgImport,
-      successMsgImport,
-      errorMsgExport,
-      successMsgExport,
-      strExport,
-      strImported;
 
-  @override
-  void initState() {
-    super.initState();
-    _initializeStrings();
-  }
-
-  void _initializeStrings() {
-    if (prefs.lnge == 'en') {
-      filePlaceHolder = 'List imported from PocketList';
-      dateCsv = 'Date';
-      bugetCsv = 'Budget';
-      bought = 'Bought';
-      notBought = 'Not bought';
-      storeCsv = 'Store';
-      titleCsv = 'List name';
-      difrenceCsv = 'Difference';
-      totalCsv = 'Total';
-      nameProdCsv = 'Name';
-      priceProdCsv = 'Price';
-      quantityProdCsv = 'Quantity';
-      statusProdCsv = 'Status';
-      errorMsgImport = 'An error occurred while trying to import the list';
-      successMsgImport = 'List imported successfully';
-      errorMsgExport = 'An error occurred while trying to export the list';
-      successMsgExport = 'List exported successfully';
-      strExport = 'Export';
-      strImported = 'Import';
-    } else {
-      filePlaceHolder = 'Lista importada desde PocketList';
-      dateCsv = 'Fecha';
-      titleCsv = 'Nombre lista';
-      bugetCsv = 'Presupuesto';
-      difrenceCsv = 'Diferencia';
-      totalCsv = 'Total';
-      bought = 'Comprado';
-      notBought = 'No comprado';
-      storeCsv = 'Tienda';
-      nameProdCsv = 'Nombre';
-      priceProdCsv = 'Precio';
-      quantityProdCsv = 'Cantidad';
-      statusProdCsv = 'Estatus';
-      errorMsgImport = 'Sucedió un error al intentar importar la lista';
-      successMsgImport = 'Lista importada correctamente';
-      errorMsgExport = 'Sucedió un error al intentar exportar la lista';
-      successMsgExport = 'Lista exportada correctamente';
-      strExport = 'Exportar';
-      strImported = 'Importar';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Import / Export'),
+        title: Text(getTranlated(context, 'importExportTitle')),
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         actions: [
           // Botón de importar con tooltip
           Tooltip(
-            message: 'Importar lista desde CSV',
+            message: getTranlated(context, 'importTooltip'),
             child: IconButton(
               onPressed: _isLoading ? null : pickFile,
               icon: Icon(Icons.file_download),
@@ -123,7 +52,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           ),
           // Botón de ayuda
           Tooltip(
-            message: 'Ayuda',
+            message: getTranlated(context, 'helpTooltip'),
             child: IconButton(
               onPressed: _showHelpDialog,
               icon: Icon(Icons.help_outline),
@@ -146,7 +75,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       children: [
                         CircularProgressIndicator(),
                         SizedBox(height: 16),
-                        Text('Procesando...'),
+                        Text(getTranlated(context, 'processing')),
                       ],
                     ),
                   ),
@@ -477,7 +406,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
       List<ProductModel> productModel = await DBProvider.db.getProdId(id);
 
       List<List<String>> csvData = [
-        <String>[titleCsv, dateCsv, storeCsv, bugetCsv, totalCsv, difrenceCsv],
+        <String>[
+          getTranlated(context, 'csvListName'),
+          getTranlated(context, 'csvDate'),
+          getTranlated(context, 'csvStore'),
+          getTranlated(context, 'csvBudget'),
+          getTranlated(context, 'csvTotal'),
+          getTranlated(context, 'csvDifference')
+        ],
         ...lista.map((e) => [
               e.title,
               e.fecha,
@@ -486,12 +422,19 @@ class _ImportExportPageState extends State<ImportExportPage> {
               e.total.toString(),
               e.diference.toString()
             ]),
-        <String>[nameProdCsv, priceProdCsv, quantityProdCsv, statusProdCsv],
+        <String>[
+          getTranlated(context, 'csvName'),
+          getTranlated(context, 'csvPrice'),
+          getTranlated(context, 'csvQuantity'),
+          getTranlated(context, 'csvStatus')
+        ],
         ...productModel.map((item) => [
               item.name,
               item.price.toString(),
               item.quantity.toString(),
-              item.complete == 1 ? bought : notBought
+              item.complete == 1
+                  ? getTranlated(context, 'csvBought')
+                  : getTranlated(context, 'csvNotBought')
             ]),
       ];
 
@@ -511,14 +454,19 @@ class _ImportExportPageState extends State<ImportExportPage> {
             File(appDocPath + Platform.pathSeparator + fileName + '.csv');
 
         await file.writeAsString(csvString);
-        await Share.shareXFiles([XFile(file.path)], text: filePlaceHolder);
+        await Share.shareXFiles([XFile(file.path)],
+            text: getTranlated(context, 'csvFilePlaceholder'));
       }
 
       setState(() => _isLoading = false);
-      _showSuccessSnack(successMsgExport, strExport);
+      _showSuccessSnack(
+          getTranlated(context, 'csvExportSuccess'),
+          getTranlated(context, 'strExport'));
     } catch (e) {
       setState(() => _isLoading = false);
-      _showErrorSnack('$errorMsgExport: ${e.toString()}', strExport);
+      _showErrorSnack(
+          '${getTranlated(context, 'csvExportError')}: ${e.toString()}',
+          getTranlated(context, 'strExport'));
     }
   }
 
@@ -549,7 +497,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
         setState(() {});
       }
     } catch (e) {
-      _showErrorSnack('$errorMsgImport: ${e.toString()}', strImported);
+      _showErrorSnack(
+          '${getTranlated(context, 'csvImportError')}: ${e.toString()}',
+          getTranlated(context, 'strImport'));
     } finally {
       setState(() => _isLoading = false);
     }
@@ -558,39 +508,55 @@ class _ImportExportPageState extends State<ImportExportPage> {
   Future<void> saveList(
       BuildContext context, List<dynamic> importedList) async {
     try {
+      if (importedList.length < 3) {
+        _showErrorSnack('CSV inválido: muy pocas filas',
+            getTranlated(context, 'strImport'));
+        return;
+      }
+      if (importedList[1] is! List || (importedList[1] as List).length < 6) {
+        _showErrorSnack('CSV inválido: datos de lista incompletos',
+            getTranlated(context, 'strImport'));
+        return;
+      }
+
       String lisId = uuid.v4();
       final listaImportada = Lista(
         id: lisId,
-        title: importedList[1][0],
-        superMaret: importedList[1][2],
-        fecha: importedList[1][1],
-        total: double.parse(importedList[1][4].toString()),
-        diference: double.parse(importedList[1][5].toString()),
-        buget: double.parse(importedList[1][3].toString()),
+        title: importedList[1][0]?.toString() ?? '',
+        superMaret: importedList[1][2]?.toString() ?? '',
+        fecha: importedList[1][1]?.toString() ?? '',
+        total: double.tryParse(importedList[1][4].toString()) ?? 0.0,
+        diference: double.tryParse(importedList[1][5].toString()) ?? 0.0,
+        buget: double.tryParse(importedList[1][3].toString()) ?? 0.0,
       );
 
       await DBProvider.db.nuevoLista(listaImportada);
 
-      var importedItems =
-          importedList.getRange(2, importedList.length).toList();
-      var finalItems = importedItems.getRange(1, importedItems.length).toList();
+      for (var i = 2; i < importedList.length; i++) {
+        final row = importedList[i];
+        if (row is! List || row.length < 4) continue;
 
-      for (var item in finalItems) {
-        var index = finalItems.indexOf(item);
-
-        var product = ProductModel(
-          name: finalItems[index][0],
-          price: double.parse(finalItems[index][1].toString()),
-          quantity: int.parse(finalItems[index][2].toString()),
-          complete: (finalItems[index][3] == bought) ? 1 : 0,
+        final product = ProductModel(
+          name: row[0]?.toString() ?? '',
+          price: double.tryParse(row[1].toString()) ?? 0.0,
+          quantity: int.tryParse(row[2].toString()) ?? 1,
+          complete:
+              (row[3]?.toString() == getTranlated(context, 'csvBought'))
+                  ? 1
+                  : 0,
           listId: listaImportada.id,
         );
-        await DBProvider.db.newProd(product);
+        if (product.name.isNotEmpty) {
+          await DBProvider.db.newProd(product);
+        }
       }
 
-      _showSuccessSnack(successMsgImport, strImported);
+      _showSuccessSnack(getTranlated(context, 'csvImportSuccess'),
+          getTranlated(context, 'strImport'));
     } catch (e) {
-      _showErrorSnack('$errorMsgImport: ${e.toString()}', strImported);
+      _showErrorSnack(
+          '${getTranlated(context, 'csvImportError')}: ${e.toString()}',
+          getTranlated(context, 'strImport'));
     }
   }
 
