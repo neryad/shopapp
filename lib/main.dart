@@ -16,6 +16,8 @@ import 'package:pocketlist/src/pages/about/about_page.dart';
 import 'package:pocketlist/src/pages/about/pages/authorPage.dart';
 import 'package:pocketlist/src/pages/import_export_page.dart';
 
+import 'package:upgrader/upgrader.dart';
+
 import 'package:pocketlist/src/theme/app_theme.dart';
 
 final PreferenciasUsuario prefs = PreferenciasUsuario();
@@ -103,51 +105,53 @@ class DarkLightTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PocketList',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.getTheme(
-        prefs.color,
-        false,
-        customColor: prefs.customColorValue,
-      ),
-      darkTheme: AppTheme.getTheme(
-        prefs.color,
-        true,
-        customColor: prefs.customColorValue,
-      ),
-      themeMode: prefs.darkLightTheme ? ThemeMode.dark : ThemeMode.light,
-      locale: locale,
-      supportedLocales: const [
-        Locale('en'),
-        Locale('es'),
-      ],
-      localizationsDelegates: const [
-        Localization.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      localeResolutionCallback: (deviceLocale, supportedLocales) {
-        for (final supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == deviceLocale?.languageCode) {
-            return supportedLocale;
+    return UpgradeAlert(
+      child: MaterialApp(
+        title: 'PocketList',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.getTheme(
+          prefs.color,
+          false,
+          customColor: prefs.customColorValue,
+        ),
+        darkTheme: AppTheme.getTheme(
+          prefs.color,
+          true,
+          customColor: prefs.customColorValue,
+        ),
+        themeMode: prefs.darkLightTheme ? ThemeMode.dark : ThemeMode.light,
+        locale: locale,
+        supportedLocales: const [
+          Locale('en'),
+          Locale('es'),
+        ],
+        localizationsDelegates: const [
+          Localization.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        localeResolutionCallback: (deviceLocale, supportedLocales) {
+          for (final supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == deviceLocale?.languageCode) {
+              return supportedLocale;
+            }
           }
-        }
-        return supportedLocales.first;
-      },
-      initialRoute: 'home',
-      routes: {
-        'home': (_) => const HomePage(),
-        'newList': (_) => ShoppingListPage(),
-        'settings': (_) => const SettingPage(),
-        'colorPage': (_) => ColorPage(),
-        'about': (_) => const AboutPage(),
-        'exportImport': (_) => ImportExportPage(),
-        'userPage': (_) => UserPage(),
-        'dataPage': (_) => DataPage(),
-        'authorPage': (_) => const AuthorPage(),
-      },
+          return supportedLocales.first;
+        },
+        initialRoute: 'home',
+        routes: {
+          'home': (_) => const HomePage(),
+          'newList': (_) => ShoppingListPage(),
+          'settings': (_) => const SettingPage(),
+          'colorPage': (_) => ColorPage(),
+          'about': (_) => const AboutPage(),
+          'exportImport': (_) => ImportExportPage(),
+          'userPage': (_) => UserPage(),
+          'dataPage': (_) => DataPage(),
+          'authorPage': (_) => const AuthorPage(),
+        },
+      ),
     );
   }
 }
