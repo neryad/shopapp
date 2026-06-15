@@ -90,4 +90,12 @@ class PreferenciasUsuario {
   set lastReviewRequestTimestamp(int value) {
     _prefs.setInt('lastReviewRequestTimestamp', value);
   }
+
+  int get completedListCount {
+    return _prefs.getInt('completedListCount') ?? 0;
+  }
+
+  set completedListCount(int value) {
+    _prefs.setInt('completedListCount', value);
+  }
 }
