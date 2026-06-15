@@ -578,3 +578,21 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 27. Mejorar accesibilidad (Semantics)
 28. Limpiar código comentado
 29. Agregar analítica básica
+
+---
+
+## Feature: In-App Review + Update Checker
+
+### In-App Review
+- **File:** `lib/src/utils/review_helper.dart`
+- **Logic:** Requests review after 3+ completed lists, 90-day cooldown
+- **Trigger:** Called in `saveList()` after successful list save
+
+### Update Checker
+- **File:** `lib/main.dart`
+- **Logic:** `UpgradeAlert` widget checks Play Store/App Store for updates
+- **Behavior:** Shows dialog when update available
+
+### Preferences
+- **File:** `lib/src/Shared_Prefs/Preferencias_user.dart`
+- **Added:** `lastReviewRequestTimestamp` (int), `completedListCount` (int)

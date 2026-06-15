@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.5.0] - Unreleased
+
+### Added
+- **In-App Review:** App store review prompt after completing 3+ lists (90-day cooldown)
+- **Update Checker:** `upgrader` package shows update dialog when new version available on Play Store/App Store
+
+### Dependencies
+- Added `upgrader: ^13.5.0`
+- Added `in_app_review: ^2.0.9`
+
 ## [3.4.0] - 2026-06-15
 
 ### Security
