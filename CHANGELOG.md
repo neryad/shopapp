@@ -11,6 +11,15 @@
 - **Bug #6+7:** Replaced all hardcoded strings with i18n keys across 7 files (~50 new keys added)
 - **Bug #9:** Replaced magic number `5` with named constant `kColorGray`
 - **Bug #10:** Changed `deleteLista()` return type from `Future<String>` to `Future<int>`
+- **Bug #11:** Removed `resizeToAvoidBottomInset: false` from home_page and newList (keyboard now pushes content)
+- **Bug #12:** Added try-catch with user feedback to DB operations (`newProd`, `_saveLista`, `saveList`, `deleteLista`)
+- **Bug #13:** Replaced empty `print(e)` catch block with SnackBar feedback in `list_page.dart`
+- **Bug #14:** Deleted unused `ThemeManager.dart` file
+- **Bug #15:** Deleted unused `summary_header.dart` file
+- **Bug #17:** Verified `webPageTitle` key exists in `es.json` (analysis was outdated)
+- **Bug #18:** Fixed inconsistent indentation in `es.json` (categories section)
+- **Bug #19:** Fixed web locale fallback — now uses browser language instead of always defaulting to English
+- **Bug #20:** Replaced relative import `../../../../main.dart` with absolute import in `user.dart`
 - **Greeting:** Fixed time-of-day greeting showing wrong period (was computed once at import)
 - **Dismissible:** Swipe-to-delete now works reliably with confirmation dialog
 

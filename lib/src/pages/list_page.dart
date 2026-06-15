@@ -136,7 +136,14 @@ class _ListPageState extends State<ListPage> {
               setState(() {
                 _lists.removeAt(i);
               });
-              DBProvider.db.deleteLista(deletedId);
+              DBProvider.db.deleteLista(deletedId).catchError((e) {
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error al eliminar la lista')),
+                  );
+                }
+                return 0;
+              });
               utils.showSnack(
                   context, getTranlated(context, 'deletedList'));
             },
@@ -383,7 +390,11 @@ class _ListPageState extends State<ListPage> {
     try {
       await DBProvider.db.updateList(lista);
     } catch (e) {
-      print(e);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al guardar la lista')),
+        );
+      }
     }
   }
 

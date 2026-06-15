@@ -103,59 +103,68 @@ Si la estructura del CSV cambia, el parseo falla silenciosamente o con excepció
 
 ## ⚠️ Bugs Moderados
 
-### 11. `resizeToAvoidBottomInset: false` en pages con forms
+### 11. ~~`resizeToAvoidBottomInset: false` en pages con forms~~ ✅ FIXED
 **Archivos:** `lib/src/pages/home_page.dart:79`, `lib/src/pages/New-List/newList.dart:107`
 **Problema:** Esto evita que el teclado empuje el contenido hacia arriba, lo que puede ocultar campos de texto.
+**Fix:** Se eliminó `resizeToAvoidBottomInset: false` de ambos archivos.
 
-### 12. Sin manejo de errores en operaciones DB
+### 12. ~~Sin manejo de errores en operaciones DB~~ ✅ FIXED
 **Archivos múltiples:**
 - `list_page.dart:109` — `DBProvider.db.deleteLista()` sin try-catch
 - `newList.dart:575` — `DBProvider.db.newProd()` sin try-catch
 - `newList.dart:1712-1717` — operaciones secuenciales sin manejo de errores
 
 **Problema:** Fallos en BD silenciosos o crashes inesperados.
+**Fix:** Se agregó try-catch con SnackBar de feedback en `newProd`, `_saveLista`, `saveList` y `deleteLista`.
 
-### 13. Catch block vacío en `list_page.dart`
+### 13. ~~Catch block vacío en `list_page.dart`~~ ✅ FIXED
 **Archivo:** `lib/src/pages/list_page.dart:357-359`
 ```dart
 catch (e) {
   print(e); // 🔴 Solo imprime en consola, el usuario no recibe feedback
 }
 ```
+**Fix:** Se reemplazó `print(e)` con SnackBar de feedback al usuario.
 
-### 14. `ThemeManager` no integrado
+### 14. ~~`ThemeManager` no integrado~~ ✅ FIXED (eliminado)
 **Archivo:** `lib/src/utils/ThemeManager .dart`
 **Problema:** La clase `ThemeManager` (ChangeNotifier) está creada pero **nunca se usa**. El app usa directamente `PreferenciasUsuario` y `AppTheme.getTheme()`.
+**Fix:** Se eliminó el archivo.
 
-### 15. `summary_header.dart` no usado
+### 15. ~~`summary_header.dart` no usado~~ ✅ FIXED (eliminado)
 **Archivo:** `lib/src/widgets/summary_header.dart`
 **Problema:** El widget `SummaryHeader` está creado pero **nunca se importa ni usa** en ninguna página.
+**Fix:** Se eliminó el archivo.
 
 ### 16. Variables globales mutables en PDF
 **Archivo:** `lib/src/utils/pdf.dart` (líneas 15-24)
 **Problema:** `datePdf`, `bugetPdf`, `quatiyPdf`, etc. son variables globales mutables. Esto no es thread-safe y puede causar bugs si se generan múltiples PDFs concurrentemente.
 
-### 17. i18n: Key faltante en es.json
+### 17. ~~i18n: Key faltante en es.json~~ ✅ FIXED
 **Problema:** `webPageTitle` existe en `en.json` pero no en `es.json`.
+**Fix:** La key ya existía en es.json (línea 98). Análisis obsoleto.
 
-### 18. Indentación inconsistente en es.json
+### 18. ~~Indentación inconsistente en es.json~~ ✅ FIXED
 **Archivo:** `i18n/es.json` (líneas 109-110):
 ```json
 "resetListConfirm": "¿Deseas desmarcar todos los artículos completados?",
 "itemsReset": "Lista reiniciada correctamente",
 ```
 Falta la indentación de 2 espacios que tiene el resto del archivo.
+**Fix:** Se corrigió la indentación de las keys de categorías (líneas 111-125).
 
-### 19. Español como fallback en web
+### 19. ~~Español como fallback en web~~ ✅ FIXED
 **Archivo:** `lib/src/localization/localization_constant.dart:20`
 **Problema:** En web, el locale por defecto siempre es 'en', ignorando el locale del navegador.
+**Fix:** Se eliminó el check `kIsWeb` y se usa `Platform.localeName.substring(0, 2)` directamente (funciona en web y nativo).
 
-### 20. Import relativo no convencional
+### 20. ~~Import relativo no convencional~~ ✅ FIXED
 **Archivo:** `lib/src/pages/settings/pages/user.dart:5`
 ```dart
 import '../../../../main.dart';
 ```
 Debería usar import absoluto: `import 'package:pocketlist/main.dart';`
+**Fix:** Se reemplazó con import absoluto.
 
 ---
 

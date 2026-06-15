@@ -106,7 +106,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: isNewList
             ? Text(getTranlated(context, 'mMyLisTitle'))
@@ -573,9 +572,19 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       items.insert(it, prod);
     });
 
-    await DBProvider.db.newProd(prod);
-    // Reload to get the real ID from DB if needed
-    _loadItems();
+    try {
+      await DBProvider.db.newProd(prod);
+      _loadItems();
+    } catch (e) {
+      setState(() {
+        items.removeWhere((item) => item.name == prod.name && item.listId == prod.listId);
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al guardar artículo')),
+        );
+      }
+    }
 
     productModel = ProductModel();
     _newItemCategoryId = null;
@@ -1706,16 +1715,24 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         diference: diference,
         buget: buget);
 
-    await DBProvider.db.nuevoLista(nuevaLista);
+    try {
+      await DBProvider.db.nuevoLista(nuevaLista);
 
-    for (var i = 0; i < items.length; i++) {
-      items[i].listId = nuevaLista.id;
-      await DBProvider.db.updateProd(items[i]);
+      for (var i = 0; i < items.length; i++) {
+        items[i].listId = nuevaLista.id;
+        await DBProvider.db.updateProd(items[i]);
+      }
+
+      items = [];
+      lisForm.currentState!.reset();
+      _dialogoCompletadoMostrado = false;
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al guardar la lista')),
+        );
+      }
     }
-
-    items = [];
-    lisForm.currentState!.reset();
-    _dialogoCompletadoMostrado = false;
   }
 
   void _updateLista() {

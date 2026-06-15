@@ -2,7 +2,7 @@ import 'package:pocketlist/src/Shared_Prefs/Prefrecias_user.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import '../../../../main.dart';
+import 'package:pocketlist/main.dart';
 
 class UserPage extends StatefulWidget {
   UserPage({Key? key}) : super(key: key);
