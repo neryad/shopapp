@@ -82,4 +82,12 @@ class PreferenciasUsuario {
   set tempBuget(String value) {
     _prefs.setString('tempBuget', value);
   }
+
+  int get lastReviewRequestTimestamp {
+    return _prefs.getInt('lastReviewRequestTimestamp') ?? 0;
+  }
+
+  set lastReviewRequestTimestamp(int value) {
+    _prefs.setInt('lastReviewRequestTimestamp', value);
+  }
 }
