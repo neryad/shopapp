@@ -20,6 +20,40 @@ import 'package:upgrader/upgrader.dart';
 
 import 'package:pocketlist/src/theme/app_theme.dart';
 
+class CustomUpgraderMessages extends UpgraderMessages {
+  CustomUpgraderMessages({super.code});
+
+  @override
+  String get title {
+    return 'New Update Available';
+  }
+
+  @override
+  String get body {
+    return 'We have a new version of {{appName}} ready for you!\n\nCurrent version: {{currentInstalledVersion}}\nNew version: {{currentAppStoreVersion}}';
+  }
+
+  @override
+  String get prompt {
+    return 'Update now to enjoy the latest features and improvements.';
+  }
+
+  @override
+  String get buttonTitleUpdate {
+    return 'Update Now';
+  }
+
+  @override
+  String get buttonTitleLater {
+    return 'Maybe Later';
+  }
+
+  @override
+  String get buttonTitleIgnore {
+    return 'Skip This Version';
+  }
+}
+
 final PreferenciasUsuario prefs = PreferenciasUsuario();
 
 Future<void> main() async {
@@ -105,52 +139,66 @@ class DarkLightTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UpgradeAlert(
-      child: MaterialApp(
-        title: 'PocketList',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.getTheme(
-          prefs.color,
-          false,
-          customColor: prefs.customColorValue,
-        ),
-        darkTheme: AppTheme.getTheme(
-          prefs.color,
-          true,
-          customColor: prefs.customColorValue,
-        ),
-        themeMode: prefs.darkLightTheme ? ThemeMode.dark : ThemeMode.light,
-        locale: locale,
-        supportedLocales: const [
-          Locale('en'),
-          Locale('es'),
-        ],
-        localizationsDelegates: const [
-          Localization.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        localeResolutionCallback: (deviceLocale, supportedLocales) {
-          for (final supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == deviceLocale?.languageCode) {
-              return supportedLocale;
-            }
+    final upgrader = Upgrader(
+      debugDisplayAlways: true,
+      debugLogging: true,
+      messages: CustomUpgraderMessages(),
+    );
+    final navigatorKey = GlobalKey<NavigatorState>();
+
+    return MaterialApp(
+      navigatorKey: navigatorKey,
+      title: 'PocketList',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.getTheme(
+        prefs.color,
+        false,
+        customColor: prefs.customColorValue,
+      ),
+      darkTheme: AppTheme.getTheme(
+        prefs.color,
+        true,
+        customColor: prefs.customColorValue,
+      ),
+      themeMode: prefs.darkLightTheme ? ThemeMode.dark : ThemeMode.light,
+      locale: locale,
+      supportedLocales: const [
+        Locale('en'),
+        Locale('es'),
+      ],
+      localizationsDelegates: const [
+        Localization.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      localeResolutionCallback: (deviceLocale, supportedLocales) {
+        for (final supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == deviceLocale?.languageCode) {
+            return supportedLocale;
           }
-          return supportedLocales.first;
-        },
-        initialRoute: 'home',
-        routes: {
-          'home': (_) => const HomePage(),
-          'newList': (_) => ShoppingListPage(),
-          'settings': (_) => const SettingPage(),
-          'colorPage': (_) => ColorPage(),
-          'about': (_) => const AboutPage(),
-          'exportImport': (_) => ImportExportPage(),
-          'userPage': (_) => UserPage(),
-          'dataPage': (_) => DataPage(),
-          'authorPage': (_) => const AuthorPage(),
-        },
+        }
+        return supportedLocales.first;
+      },
+      initialRoute: 'home',
+      routes: {
+        'home': (_) => const HomePage(),
+        'newList': (_) => ShoppingListPage(),
+        'settings': (_) => const SettingPage(),
+        'colorPage': (_) => ColorPage(),
+        'about': (_) => const AboutPage(),
+        'exportImport': (_) => ImportExportPage(),
+        'userPage': (_) => UserPage(),
+        'dataPage': (_) => DataPage(),
+        'authorPage': (_) => const AuthorPage(),
+      },
+      builder: (context, child) => UpgradeAlert(
+        upgrader: upgrader,
+        navigatorKey: navigatorKey,
+        showIgnore: false,
+        showLater: true,
+        showReleaseNotes: true,
+        child: child!,
       ),
     );
   }

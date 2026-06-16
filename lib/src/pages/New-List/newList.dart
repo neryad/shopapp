@@ -7,7 +7,6 @@ import 'package:pocketlist/src/models/category_model.dart';
 import 'package:pocketlist/src/models/product_model.dart';
 import 'package:pocketlist/src/providers/db_provider.dart';
 import 'package:pocketlist/src/utils/utils.dart' as utils;
-import 'package:pocketlist/src/utils/review_helper.dart';
 import 'package:uuid/uuid.dart';
 
 const int kColorGray = 5;
@@ -1722,8 +1721,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         items[i].listId = nuevaLista.id;
       }
       await DBProvider.db.updateProdsBatch(items);
-
-      ReviewHelper.maybeRequestReview();
 
       items = [];
       lisForm.currentState!.reset();
