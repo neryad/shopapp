@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.5.0] - 2026-06-15
+
+### Added
+- **Update Checker:** `upgrader` package shows update dialog when new version available on Play Store/App Store
+- **Localized update dialog:** Update messages translated to English and Spanish
+
+### Dependencies
+- Added `upgrader: ^13.5.0`
+- Removed `in_app_review: ^2.0.9`
+
 ## [3.4.0] - 2026-06-15
 
 ### Security

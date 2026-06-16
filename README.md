@@ -10,6 +10,7 @@ PocketList es una aplicación móvil sencilla y eficiente diseñada para ayudart
 - **Importación/Exportación de Datos:** Comparte tus listas con otros usuarios de la app o realiza copias de seguridad de tu información.
 - **Personalización:** Soporte para temas (colores), modo oscuro y multi-idioma (Español e Inglés).
 - **Interfaz Moderna:** Diseño limpio basado en Material Design para una experiencia de usuario fluida.
+- **Actualizaciones:** Notificación automática cuando haya una nueva versión disponible en la tienda.
 
 ## 🚀 Tecnologías Utilizadas
 
@@ -18,6 +19,7 @@ PocketList es una aplicación móvil sencilla y eficiente diseñada para ayudart
 - **Sqflite:** Base de datos local para almacenamiento persistente.
 - **Shared Preferences:** Almacenamiento de configuraciones del usuario.
 - **i18n:** Sistema de localización para soporte multi-idioma.
+- **Upgrader:** Detección automática de actualizaciones en tienda.
 
 ## 🛠️ Instalación y Configuración
 

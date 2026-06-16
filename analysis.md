@@ -578,3 +578,14 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 27. Mejorar accesibilidad (Semantics)
 28. Limpiar código comentado
 29. Agregar analítica básica
+
+---
+
+## Feature: Update Checker
+
+### Update Checker
+- **File:** `lib/main.dart`
+- **Logic:** `UpgradeAlert` widget checks Play Store/App Store for updates
+- **Behavior:** Shows localized dialog when update available
+- **Messages:** Custom `CustomUpgraderMessages` class loads translations from i18n JSON files
+- **Dependencies:** `upgrader: ^13.5.0`
