@@ -1,14 +1,14 @@
 # Changelog
 
-## [3.5.0] - Unreleased
+## [3.5.0] - 2026-06-15
 
 ### Added
-- **In-App Review:** App store review prompt after completing 3+ lists (90-day cooldown)
 - **Update Checker:** `upgrader` package shows update dialog when new version available on Play Store/App Store
+- **Localized update dialog:** Update messages translated to English and Spanish
 
 ### Dependencies
 - Added `upgrader: ^13.5.0`
-- Added `in_app_review: ^2.0.9`
+- Removed `in_app_review: ^2.0.9`
 
 ## [3.4.0] - 2026-06-15
 

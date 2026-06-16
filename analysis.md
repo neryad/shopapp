@@ -581,18 +581,11 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 
 ---
 
-## Feature: In-App Review + Update Checker
-
-### In-App Review
-- **File:** `lib/src/utils/review_helper.dart`
-- **Logic:** Requests review after 3+ completed lists, 90-day cooldown
-- **Trigger:** Called in `saveList()` after successful list save
+## Feature: Update Checker
 
 ### Update Checker
 - **File:** `lib/main.dart`
 - **Logic:** `UpgradeAlert` widget checks Play Store/App Store for updates
-- **Behavior:** Shows dialog when update available
-
-### Preferences
-- **File:** `lib/src/Shared_Prefs/Preferencias_user.dart`
-- **Added:** `lastReviewRequestTimestamp` (int), `completedListCount` (int)
+- **Behavior:** Shows localized dialog when update available
+- **Messages:** Custom `CustomUpgraderMessages` class loads translations from i18n JSON files
+- **Dependencies:** `upgrader: ^13.5.0`
