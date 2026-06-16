@@ -6,6 +6,10 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Se requiere acceso a la galería para seleccionar archivos y adjuntarlos a tus listas.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>PocketList necesita acceso a la cámara para escanear códigos QR y compartir la app.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>PocketList necesita tu ubicación para mostrarte tiendas cercanas.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
