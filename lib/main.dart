@@ -20,38 +20,236 @@ import 'package:upgrader/upgrader.dart';
 
 import 'package:pocketlist/src/theme/app_theme.dart';
 
-class CustomUpgraderMessages extends UpgraderMessages {
-  CustomUpgraderMessages({super.code});
+void showUpdateDialog(BuildContext context, String appVersion, String storeVersion) {
+  final theme = Theme.of(context);
+  final primaryColor = theme.colorScheme.primary;
+  final isDark = theme.brightness == Brightness.dark;
 
-  @override
-  String get title {
-    return 'New Update Available';
-  }
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierColor: Colors.black54,
+    builder: (context) => Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      backgroundColor: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      elevation: 8,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.85,
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
+                    primaryColor,
+                    primaryColor.withValues(alpha: 0.7),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: primaryColor.withValues(alpha: 0.3),
+                    blurRadius: 16,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.rocket_launch_rounded,
+                size: 40,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Update Available',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : const Color(0xFF1A1A2E),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'A new version of PocketList is ready to install.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                color: isDark ? Colors.grey[400] : Colors.grey[600],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: primaryColor.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        'Current',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: isDark ? Colors.grey[500] : Colors.grey[500],
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        appVersion,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: isDark ? Colors.grey[300] : Colors.grey[700],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Icon(
+                      Icons.arrow_forward_rounded,
+                      color: primaryColor,
+                      size: 20,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'New',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: isDark ? Colors.grey[500] : Colors.grey[500],
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        storeVersion,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: isDark ? Colors.grey[850] : const Color(0xFFF8F9FA),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: isDark ? Colors.grey[800]! : Colors.grey[200]!,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "What's New",
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? Colors.grey[300] : Colors.grey[700],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  _buildChangelogItem('✨', 'Shared Lists', isDark),
+                  const SizedBox(height: 8),
+                  _buildChangelogItem('🐛', 'Bug fixes and stability', isDark),
+                  const SizedBox(height: 8),
+                  _buildChangelogItem('⚡', 'Faster performance', isDark),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      'Later',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: isDark ? Colors.grey[400] : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  flex: 2,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      // TODO: Launch store URL
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      elevation: 2,
+                      shadowColor: primaryColor.withValues(alpha: 0.4),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text(
+                      'Update Now',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
 
-  @override
-  String get body {
-    return 'We have a new version of {{appName}} ready for you!\n\nCurrent version: {{currentInstalledVersion}}\nNew version: {{currentAppStoreVersion}}';
-  }
-
-  @override
-  String get prompt {
-    return 'Update now to enjoy the latest features and improvements.';
-  }
-
-  @override
-  String get buttonTitleUpdate {
-    return 'Update Now';
-  }
-
-  @override
-  String get buttonTitleLater {
-    return 'Maybe Later';
-  }
-
-  @override
-  String get buttonTitleIgnore {
-    return 'Skip This Version';
-  }
+Widget _buildChangelogItem(String emoji, String text, bool isDark) {
+  return Row(
+    children: [
+      Text(emoji, style: const TextStyle(fontSize: 14)),
+      const SizedBox(width: 10),
+      Expanded(
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 13,
+            color: isDark ? Colors.grey[300] : Colors.grey[700],
+          ),
+        ),
+      ),
+    ],
+  );
 }
 
 final PreferenciasUsuario prefs = PreferenciasUsuario();
@@ -139,10 +337,25 @@ class DarkLightTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? storedAppVersion;
+    String? storedStoreVersion;
+
     final upgrader = Upgrader(
       debugDisplayAlways: true,
       debugLogging: true,
-      messages: CustomUpgraderMessages(),
+      willDisplayUpgrade: ({required bool display, String? installedVersion, UpgraderVersionInfo? versionInfo, String? minAppVersion}) {
+        storedAppVersion = installedVersion;
+        storedStoreVersion = versionInfo?.appStoreVersion?.toString();
+        if (display) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            showUpdateDialog(
+              context,
+              storedAppVersion ?? '0.0.0',
+              storedStoreVersion ?? '0.0.0',
+            );
+          });
+        }
+      },
     );
     final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -196,8 +409,9 @@ class DarkLightTheme extends StatelessWidget {
         upgrader: upgrader,
         navigatorKey: navigatorKey,
         showIgnore: false,
-        showLater: true,
-        showReleaseNotes: true,
+        showLater: false,
+        showReleaseNotes: false,
+        showPrompt: false,
         child: child!,
       ),
     );
