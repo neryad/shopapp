@@ -33,10 +33,12 @@ class CustomUpgraderMessages extends UpgraderMessages {
   String get title => _translations['updateTitle'] ?? 'Update Available';
 
   @override
-  String get body => _translations['updateBody'] ?? 'A new version is available.';
+  String get body =>
+      _translations['updateBody'] ?? 'A new version is available.';
 
   @override
-  String get buttonTitleUpdate => _translations['updateButtonUpdate'] ?? 'Update';
+  String get buttonTitleUpdate =>
+      _translations['updateButtonUpdate'] ?? 'Update';
 
   @override
   String get buttonTitleLater => _translations['updateButtonLater'] ?? 'Later';
@@ -45,9 +47,11 @@ class CustomUpgraderMessages extends UpgraderMessages {
 
   Future<void> load() async {
     try {
-      final jsonString = await rootBundle.loadString('i18n/$_languageCode.json');
+      final jsonString =
+          await rootBundle.loadString('i18n/$_languageCode.json');
       final Map<String, dynamic> jsonMap = json.decode(jsonString);
-      _translations = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+      _translations =
+          jsonMap.map((key, value) => MapEntry(key, value.toString()));
     } catch (_) {
       _translations = {};
     }
@@ -144,8 +148,8 @@ class DarkLightTheme extends StatelessWidget {
     );
 
     final upgrader = Upgrader(
-      debugDisplayAlways: true,
-      debugLogging: true,
+      debugDisplayAlways: false,
+      debugLogging: false,
       messages: messages,
     );
     final navigatorKey = GlobalKey<NavigatorState>();
