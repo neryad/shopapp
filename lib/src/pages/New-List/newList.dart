@@ -570,7 +570,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     });
 
     try {
-      await DBProvider.db.newProd(prod);
+      final insertedId = await DBProvider.db.newProd(prod);
+      prod.id = insertedId;
     } catch (e) {
       setState(() {
         items.removeWhere((item) => item.name == prod.name && item.listId == prod.listId);
@@ -1778,8 +1779,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   )),
               TextButton(
-                  onPressed: () {
-                    saveList();
+                  onPressed: () async {
+                    await saveList();
                     Navigator.pushNamed(context, 'home');
                     prefs.tempTotal = '0.00';
                     prefs.tempBuget = '0.00';
