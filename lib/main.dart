@@ -16,24 +16,42 @@ import 'package:pocketlist/src/pages/about/about_page.dart';
 import 'package:pocketlist/src/pages/about/pages/authorPage.dart';
 import 'package:pocketlist/src/pages/import_export_page.dart';
 
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:pocketlist/src/theme/app_theme.dart';
 
 class CustomUpgraderMessages extends UpgraderMessages {
-  CustomUpgraderMessages({super.code});
+  final String _languageCode;
+
+  CustomUpgraderMessages({String? languageCode})
+      : _languageCode = languageCode ?? 'en',
+        super(code: languageCode);
 
   @override
-  String get title => 'Update Available';
+  String get title => _translations['updateTitle'] ?? 'Update Available';
 
   @override
-  String get body => 'A new version of {{appName}} is ready.\n\nCurrent: {{currentInstalledVersion}}\nNew: {{currentAppStoreVersion}}';
+  String get body => _translations['updateBody'] ?? 'A new version is available.';
 
   @override
-  String get buttonTitleUpdate => 'Update';
+  String get buttonTitleUpdate => _translations['updateButtonUpdate'] ?? 'Update';
 
   @override
-  String get buttonTitleLater => 'Later';
+  String get buttonTitleLater => _translations['updateButtonLater'] ?? 'Later';
+
+  Map<String, String> _translations = {};
+
+  Future<void> load() async {
+    try {
+      final jsonString = await rootBundle.loadString('i18n/$_languageCode.json');
+      final Map<String, dynamic> jsonMap = json.decode(jsonString);
+      _translations = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+    } catch (_) {
+      _translations = {};
+    }
+  }
 }
 
 final PreferenciasUsuario prefs = PreferenciasUsuario();
@@ -121,12 +139,18 @@ class DarkLightTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final messages = CustomUpgraderMessages(
+      languageCode: prefs.lnge,
+    );
+
     final upgrader = Upgrader(
       debugDisplayAlways: true,
       debugLogging: true,
-      messages: CustomUpgraderMessages(),
+      messages: messages,
     );
     final navigatorKey = GlobalKey<NavigatorState>();
+
+    messages.load();
 
     return MaterialApp(
       navigatorKey: navigatorKey,

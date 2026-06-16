@@ -312,5 +312,9 @@
   "edit": "Editar",
   "tooltipDelete": "Eliminar",
   "actions": "Acciones",
-  "copyright": "© {year} Neryad"
+  "copyright": "© {year} Neryad",
+  "updateTitle": "Actualización Disponible",
+  "updateBody": "Una nueva versión de {{appName}} está lista.\n\nActual: {{currentInstalledVersion}}\nNueva: {{currentAppStoreVersion}}",
+  "updateButtonUpdate": "Actualizar",
+  "updateButtonLater": "Después"
 }
