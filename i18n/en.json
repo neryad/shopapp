@@ -316,5 +316,9 @@
   "updateTitle": "Update Available",
   "updateBody": "A new version of {{appName}} is ready.\n\nCurrent: {{currentInstalledVersion}}\nNew: {{currentAppStoreVersion}}",
   "updateButtonUpdate": "Update",
-  "updateButtonLater": "Later"
+  "updateButtonLater": "Later",
+  "shareDialogTitle": "Share PocketList",
+  "scanToDownload": "Scan the QR code to download the app",
+  "copyLink": "Copy link",
+  "linkCopied": "Link copied to clipboard"
 }

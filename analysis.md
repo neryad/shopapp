@@ -465,9 +465,12 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
    - Refactorizar i18n manual de CSV/PDF al sistema centralizado primero
    - Archivos JSON de traducción
 
-4. **⬆️ Compartir app (QR + Share sheet)**
-   - Botón en navegación principal
-   - Diálogo con QR code + share nativo
+4. **~~⬆️ Compartir app (QR + Share sheet)~~** ✅ IMPLEMENTED
+   - ~~Botón en navegación principal~~ → Added to drawer menu (`Menu_widget.dart`)
+   - ~~Diálogo con QR code + share nativo~~ → `ShareAppDialog` widget with QR code + native share
+   - QR apunta a `https://pockelist-web.neryad.dev/`
+   - Botones: "Copiar enlace" (clipboard + snackbar) y "Compartir" (share nativo)
+   - i18n keys: `shareDialogTitle`, `scanToDownload`, `copyLink`, `linkCopied`
 
 5. **⬆️ Verificador de actualizaciones**
    - Archivo JSON remoto con versión + changelog
@@ -549,10 +552,10 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
     - Archivos `i18n/fr.json`, `i18n/pt.json`, `i18n/it.json`, `i18n/de.json`
     - Registrar en `supportedLocales` y `_LocalizationDelegate`
     - Refactorizar traducciones manuales en CSV/PDF al sistema centralizado primero
-18. **Compartir app (QR + Share sheet)**
-    - Botón "Compartir" en navegación principal (no solo en AuthorPage)
-    - Diálogo con QR code + botón de share nativo
-    - QR apunta a Play Store / App Store / web
+18. **~~Compartir app (QR + Share sheet)~~** ✅ IMPLEMENTED
+    - ~~Botón "Compartir" en navegación principal (no solo en AuthorPage)~~ → Added to drawer
+    - ~~Diálogo con QR code + botón de share nativo~~ → `ShareAppDialog` widget
+    - ~~QR apunta a Play Store / App Store / web~~ → Points to web URL
 19. **Verificador de actualizaciones**
     - Consultar archivo JSON remoto con última versión + changelog
     - Comparar con versión local (`package_info_plus`)
@@ -589,3 +592,14 @@ PDF, CSV, y procesamiento de datos corren en el main isolate. Para listas muy gr
 - **Behavior:** Shows localized dialog when update available
 - **Messages:** Custom `CustomUpgraderMessages` class loads translations from i18n JSON files
 - **Dependencies:** `upgrader: ^13.5.0`
+
+## Feature: Share App
+
+### Share App (QR + Share Sheet)
+- **File:** `lib/src/widgets/share_app_dialog.dart`
+- **Trigger:** Drawer menu item in `lib/src/widgets/Menu_widget.dart`
+- **QR Code:** Points to `https://pockelist-web.neryad.dev/` (web URL, works cross-platform)
+- **Copy Link:** Copies URL to clipboard with SnackBar feedback
+- **Share:** Native share sheet with localized message (`shareMsg` / `shareSubject` i18n keys)
+- **i18n keys added:** `shareDialogTitle`, `scanToDownload`, `copyLink`, `linkCopied`
+- **Dependencies:** `qr_flutter: ^4.1.0`, `share_plus: ^12.0.1` (existing)

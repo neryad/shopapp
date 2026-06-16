@@ -316,5 +316,9 @@
   "updateTitle": "Actualización Disponible",
   "updateBody": "Una nueva versión de {{appName}} está lista.\n\nActual: {{currentInstalledVersion}}\nNueva: {{currentAppStoreVersion}}",
   "updateButtonUpdate": "Actualizar",
-  "updateButtonLater": "Después"
+  "updateButtonLater": "Después",
+  "shareDialogTitle": "Compartir PocketList",
+  "scanToDownload": "Escanea el código QR para descargar la app",
+  "copyLink": "Copiar enlace",
+  "linkCopied": "Enlace copiado al portapapeles"
 }

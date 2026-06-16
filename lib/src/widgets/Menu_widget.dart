@@ -4,6 +4,7 @@ import 'package:pocketlist/src/utils/package_info_mixin.dart';
 
 import 'package:flutter/material.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
+import 'package:pocketlist/src/widgets/share_app_dialog.dart';
 
 class MenuWidget extends StatefulWidget {
   @override
@@ -171,6 +172,16 @@ class _MenuWidgetState extends State<MenuWidget> with PackageInfoMixin {
                   activeIcon: Icons.sync,
                   title: getTranslated(context, 'importExportTitle'),
                   routeName: 'exportImport',
+                ),
+                _createMenuItem(
+                  context,
+                  icon: Icons.share_outlined,
+                  activeIcon: Icons.share,
+                  title: getTranslated(context, 'shareApp'),
+                  onTap: () {
+                    Navigator.pop(context); // Cerrar drawer
+                    ShareAppDialog.show(context);
+                  },
                 ),
 
                 const SizedBox(height: 8),

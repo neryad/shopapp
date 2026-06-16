@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.6.0] - 2026-06-16
+
+### Added
+- **Share App:** New "Share App" button in navigation drawer with QR code dialog and native share sheet
+  - QR code points to app web URL (`https://pockelist-web.neryad.dev/`)
+  - "Copy link" button copies URL to clipboard with SnackBar feedback
+  - "Share" button opens native share sheet with localized message
+  - Fully internationalized (English/Spanish)
+
+### Dependencies
+- Added `qr_flutter: ^4.1.0`
+
 ## [3.5.0] - 2026-06-15
 
 ### Added
