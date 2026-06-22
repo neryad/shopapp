@@ -126,7 +126,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   // Next or Start button
                   _currentPage == _pages.length - 1
                       ? SizedBox(
-                          width: 160,
+                          width: double.infinity,
                           child: ElevatedButton(
                             onPressed: _onComplete,
                             style: ElevatedButton.styleFrom(
