@@ -15,6 +15,7 @@ import 'package:pocketlist/src/pages/settings/pages/user.dart';
 import 'package:pocketlist/src/pages/about/about_page.dart';
 import 'package:pocketlist/src/pages/about/pages/authorPage.dart';
 import 'package:pocketlist/src/pages/import_export_page.dart';
+import 'package:pocketlist/src/pages/onboarding/onboarding_page.dart';
 
 import 'dart:convert';
 import 'package:upgrader/upgrader.dart';
@@ -189,9 +190,10 @@ class DarkLightTheme extends StatelessWidget {
         }
         return supportedLocales.first;
       },
-      initialRoute: 'home',
+      initialRoute: prefs.onboardingSeen ? 'home' : 'onboarding',
       routes: {
         'home': (_) => const HomePage(),
+        'onboarding': (_) => const OnboardingPage(),
         'newList': (_) => ShoppingListPage(),
         'settings': (_) => const SettingPage(),
         'colorPage': (_) => ColorPage(),
