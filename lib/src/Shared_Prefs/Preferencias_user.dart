@@ -67,6 +67,14 @@ class PreferenciasUsuario {
     _prefs.setString('ultimaPagina', value);
   }
 
+  bool get onboardingSeen {
+    return _prefs.getBool('onboardingSeen') ?? false;
+  }
+
+  set onboardingSeen(bool value) {
+    _prefs.setBool('onboardingSeen', value);
+  }
+
   String get tempTotal {
     return _prefs.getString('tempTotal') ?? '0.00';
   }
