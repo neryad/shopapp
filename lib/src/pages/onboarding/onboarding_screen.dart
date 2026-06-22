@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  final int screenIndex;
   final IconData icon;
   final String titleKey;
   final String descriptionKey;
 
   const OnboardingScreen({
     Key? key,
-    required this.screenIndex,
     required this.icon,
     required this.titleKey,
     required this.descriptionKey,
