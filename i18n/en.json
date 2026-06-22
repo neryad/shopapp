@@ -320,5 +320,16 @@
   "shareDialogTitle": "Share PocketList",
   "scanToDownload": "Scan the QR code to download the app",
   "copyLink": "Copy link",
-  "linkCopied": "Link copied to clipboard"
+  "linkCopied": "Link copied to clipboard",
+  "onboardingTitle1": "Welcome to PocketList!",
+  "onboardingDesc1": "Organize your shopping lists easily and quickly. Never forget anything.",
+  "onboardingTitle2": "Control your budget",
+  "onboardingDesc2": "Assign prices and budgets to your items to keep track of your spending.",
+  "onboardingTitle3": "Import and export",
+  "onboardingDesc3": "Share your lists with other users or generate professional PDFs of your purchases.",
+  "onboardingTitle4": "Customize your app",
+  "onboardingDesc4": "Choose from multiple themes, dark mode, and multi-language support.",
+  "onboardingSkip": "Skip",
+  "onboardingNext": "Next",
+  "onboardingStart": "Get Started"
 }

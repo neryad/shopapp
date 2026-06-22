@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.7.0] - 2026-06-22
+
+### Added
+- **Onboarding:** 4-screen onboarding flow shown automatically on first launch
+  - Screen 1: Welcome — introduces PocketList
+  - Screen 2: Budget — explains budget tracking
+  - Screen 3: Import/Export — highlights sharing and PDF export
+  - Screen 4: Customization — themes, dark mode, multi-language
+  - Skip button on all screens, "Get Started" button on last screen
+  - Persists completion state in SharedPreferences
+  - Fully internationalized (English/Spanish)
+
 ## [3.6.0] - 2026-06-16
 
 ### Added

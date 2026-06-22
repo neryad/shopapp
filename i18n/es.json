@@ -320,5 +320,16 @@
   "shareDialogTitle": "Compartir PocketList",
   "scanToDownload": "Escanea el código QR para descargar la app",
   "copyLink": "Copiar enlace",
-  "linkCopied": "Enlace copiado al portapapeles"
+  "linkCopied": "Enlace copiado al portapapeles",
+  "onboardingTitle1": "¡Bienvenido a PocketList!",
+  "onboardingDesc1": "Organiza tus listas de compras de forma fácil y rápida. Nunca olvides nada.",
+  "onboardingTitle2": "Controla tu presupuesto",
+  "onboardingDesc2": "Asigna precios y presupuestos a tus artículos para llevar el control de tus gastos.",
+  "onboardingTitle3": "Importa y exporta",
+  "onboardingDesc3": "Comparte tus listas con otros usuarios o genera PDFs profesionales de tus compras.",
+  "onboardingTitle4": "Personaliza tu app",
+  "onboardingDesc4": "Elige entre múltiples temas, modo oscuro y soporte multi-idioma.",
+  "onboardingSkip": "Omitir",
+  "onboardingNext": "Siguiente",
+  "onboardingStart": "Empezar"
 }
