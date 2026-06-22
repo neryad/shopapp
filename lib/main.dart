@@ -17,7 +17,6 @@ import 'package:pocketlist/src/pages/about/pages/authorPage.dart';
 import 'package:pocketlist/src/pages/import_export_page.dart';
 
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:pocketlist/src/theme/app_theme.dart';

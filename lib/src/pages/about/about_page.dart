@@ -1,6 +1,5 @@
 import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 import 'package:flutter/material.dart';
-import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/utils/package_info_mixin.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -52,7 +51,7 @@ class _AboutPageState extends State<AboutPage> with PackageInfoMixin {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
+                        color: Colors.black.withValues(alpha: 0.2),
                         blurRadius: 20,
                         offset: Offset(0, 10),
                       ),
@@ -80,7 +79,7 @@ class _AboutPageState extends State<AboutPage> with PackageInfoMixin {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
@@ -127,8 +126,7 @@ class _AboutPageState extends State<AboutPage> with PackageInfoMixin {
                   _buildInfoCard(
                     icon: Icons.person_outline,
                     iconColor: Colors.purple,
-                    title:
-                        getTranslated(context, 'authorTitle'),
+                    title: getTranslated(context, 'authorTitle'),
                     subtitle: 'Neryad',
                     onTap: () => Navigator.pushNamed(context, 'authorPage'),
                     showArrow: true,
@@ -140,8 +138,7 @@ class _AboutPageState extends State<AboutPage> with PackageInfoMixin {
                     icon: Icons.brush_outlined,
                     iconColor: Colors.pink,
                     title: getTranslated(context, 'lDesign'),
-                    subtitle:
-                        getTranslated(context, 'studio') ?? 'Plus Logo Design',
+                    subtitle: getTranslated(context, 'studio'),
                     onTap: () => _launchUrl(
                         'https://www.instagram.com/plus.logodesign/'),
                     showArrow: true,
@@ -254,7 +251,7 @@ class _AboutPageState extends State<AboutPage> with PackageInfoMixin {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: Offset(0, 2),
           ),
@@ -272,7 +269,7 @@ class _AboutPageState extends State<AboutPage> with PackageInfoMixin {
                 Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.1),
+                    color: iconColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(

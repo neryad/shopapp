@@ -1,6 +1,5 @@
 import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 import 'package:flutter/material.dart';
-import 'package:pocketlist/src/utils/utils.dart' as utils;
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
@@ -52,8 +51,10 @@ class _AuthorPageState extends State<AuthorPage> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.3),
                     blurRadius: 20,
                     offset: Offset(0, 8),
                   ),
@@ -224,9 +225,15 @@ class _AuthorPageState extends State<AuthorPage> {
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                color: Theme.of(context)
+                    .colorScheme
+                    .primary
+                    .withValues(alpha: 0.1),
                 border: Border.all(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: 0.2),
                   width: 1,
                 ),
               ),
@@ -261,11 +268,14 @@ class _AuthorPageState extends State<AuthorPage> {
                     ),
                   ),
                   SizedBox(height: 16),
-                  _infoRow(getTranslated(context, 'stack'), 'Flutter • Dart • Firebase'),
+                  _infoRow(getTranslated(context, 'stack'),
+                      'Flutter • Dart • Firebase'),
                   SizedBox(height: 8),
-                  _infoRow(getTranslated(context, 'experience'), 'Full Stack Developer'),
+                  _infoRow(getTranslated(context, 'experience'),
+                      'Full Stack Developer'),
                   SizedBox(height: 8),
-                  _infoRow(getTranslated(context, 'location'), 'República Dominicana 🇩🇴'),
+                  _infoRow(getTranslated(context, 'location'),
+                      'República Dominicana 🇩🇴'),
                 ],
               ),
             ),
@@ -321,7 +331,7 @@ class _AuthorPageState extends State<AuthorPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: Colors.grey.withOpacity(0.3),
+              color: Colors.grey.withValues(alpha: 0.3),
               width: 1,
             ),
           ),
@@ -366,7 +376,8 @@ class _AuthorPageState extends State<AuthorPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              color:
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
               width: 1.5,
             ),
           ),
