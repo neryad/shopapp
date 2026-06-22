@@ -106,55 +106,55 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Page indicators
-                  Row(
-                    children: List.generate(
-                      _pages.length,
-                      (index) => Container(
-                        margin: const EdgeInsets.only(right: 8),
-                        width: _currentPage == index ? 24 : 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: _currentPage == index
-                              ? Theme.of(context).colorScheme.primary
-                              : Colors.grey[300],
-                          borderRadius: BorderRadius.circular(4),
+                  if (_currentPage == _pages.length - 1) ...[
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: _onComplete,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          getTranslated(context, 'onboardingStart'),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  // Next or Start button
-                  _currentPage == _pages.length - 1
-                      ? SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: _onComplete,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.primary,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: Text(
-                              getTranslated(context, 'onboardingStart'),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        )
-                      : IconButton(
-                          onPressed: _nextPage,
-                          icon: Icon(
-                            Icons.arrow_forward,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 32,
+                  ] else ...[
+                    // Page indicators
+                    Row(
+                      children: List.generate(
+                        _pages.length,
+                        (index) => Container(
+                          margin: const EdgeInsets.only(right: 8),
+                          width: _currentPage == index ? 24 : 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: _currentPage == index
+                                ? Theme.of(context).colorScheme.primary
+                                : Colors.grey[300],
+                            borderRadius: BorderRadius.circular(4),
                           ),
                         ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: _nextPage,
+                      icon: Icon(
+                        Icons.arrow_forward,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 32,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
