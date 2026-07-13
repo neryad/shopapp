@@ -4,6 +4,12 @@
 <dict>
  	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to select files and images to attach to your shopping lists.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to scan QR codes for sharing and importing lists.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Used to show nearby stores when adding items to your lists.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
