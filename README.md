@@ -11,6 +11,8 @@ PocketList es una aplicación móvil sencilla y eficiente diseñada para ayudart
 - **Personalización:** Soporte para temas (colores), modo oscuro y multi-idioma (Español e Inglés).
 - **Interfaz Moderna:** Diseño limpio basado en Material Design para una experiencia de usuario fluida.
 - **Actualizaciones:** Notificación automática cuando haya una nueva versión disponible en la tienda.
+- **Privacidad Total:** Todos tus datos se almacenan localmente en tu dispositivo. Sin servidores, sin tracking, sin analytics.
+- **Documentos Legales Integrados:** Términos de Servicio y Política de Privacidad disponibles directamente en la app sin necesidad de conexión a internet.
 
 ## 🚀 Tecnologías Utilizadas
 
@@ -20,6 +22,7 @@ PocketList es una aplicación móvil sencilla y eficiente diseñada para ayudart
 - **Shared Preferences:** Almacenamiento de configuraciones del usuario.
 - **i18n:** Sistema de localización para soporte multi-idioma.
 - **Upgrader:** Detección automática de actualizaciones en tienda.
+- **flutter_markdown:** Renderizado local de documentos legales.
 
 ## 🛠️ Instalación y Configuración
 
@@ -29,7 +32,7 @@ PocketList es una aplicación móvil sencilla y eficiente diseñada para ayudart
 
 2. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/tu-usuario/pocketlist.git
+   git clone https://github.com/neryad/pocketlist.git
    cd pocketlist
    ```
 
