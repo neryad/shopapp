@@ -5,7 +5,6 @@ import 'package:pocketlist/src/data/class/language.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/pages/settings/category_management_page.dart';
 import 'package:pocketlist/src/utils/package_info_mixin.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -189,8 +188,7 @@ class _SettingPageState extends State<SettingPage> with PackageInfoMixin {
             icon: Icons.description_rounded,
             title: getTranslated(context, 'Terms'),
             subtitle: getTranslated(context, 'settTermsConditions'),
-            onTap: () => _launchURL(
-                'https://neryad.github.io/pocketPage/docs/Terms.pdf'),
+            onTap: () => Navigator.pushNamed(context, 'termsPage'),
             trailing: Icon(Icons.open_in_new, size: 16),
           ),
 
@@ -198,8 +196,7 @@ class _SettingPageState extends State<SettingPage> with PackageInfoMixin {
             icon: Icons.privacy_tip_rounded,
             title: getTranslated(context, 'privacyPol'),
             subtitle: getTranslated(context, 'privacyPol'),
-            onTap: () => _launchURL(
-                'https://neryad.github.io/pocketPage/docs/PrivacyPolicy.pdf'),
+            onTap: () => Navigator.pushNamed(context, 'privacyPage'),
             trailing: Icon(Icons.open_in_new, size: 16),
           ),
 
@@ -410,20 +407,6 @@ class _SettingPageState extends State<SettingPage> with PackageInfoMixin {
   void _selectedRadio(bool valor) {
     prefs.darkLightTheme = valor;
     MyApp.stateSet(context);
-  }
-
-  void _launchURL(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(getTranslated(context, 'settOpenLinkError')),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
   }
 
   void _showCCPAInfo(BuildContext context) {
