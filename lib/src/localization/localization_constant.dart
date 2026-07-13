@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:pocketlist/src/Shared_Prefs/Preferencias_user.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +10,17 @@ String getTranslated(BuildContext context, String key) {
 }
 
 final prefsU = new PreferenciasUsuario();
-// Langue code
 
 const String ENGLISH = 'en';
 
 const String SPANISH = 'es';
-final String defaultLocale = Platform.localeName.substring(0, 2);
+String get defaultLocale {
+  try {
+    return ui.PlatformDispatcher.instance.locale.languageCode;
+  } catch (_) {
+    return 'en';
+  }
+}
 
 const String LANGUAGE_CODE = 'languageCode';
 
