@@ -157,6 +157,9 @@
   "settLangRegion": "Idioma y Región",
   "settLegal": "Legal",
   "settTermsConditions": "Términos y condiciones",
+  "settCCPA": "CCPA / Derechos de Privacidad",
+  "settCCPADesc": "Tus derechos de privacidad en California",
+  "settCCPAInfo": "PocketList no vende ni comparte tu información personal. Todos tus datos se almacenan localmente en tu dispositivo y nunca se transmiten a terceros.",
   "settVersion": "Versión",
   "settOpenLinkError": "No se pudo abrir el enlace",
 

@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.8.0] - 2026-07-13
+
+### Added
+- **Legal safeguard audit:** Comprehensive legal review and implementation
+  - **Terms of Service:** Now rendered locally in-app via Markdown. Includes arbitration clause, class action waiver, DMCA takedown policy, and governing law (Dominican Republic)
+  - **Privacy Policy:** Rewritten to accurately reflect zero data collection. All data is stored locally on device, no servers, no third-party tracking
+  - **CCPA Notice:** New card in Settings → Legal with full California privacy rights disclosure
+  - **PrivacyInfo.xcprivacy:** Apple-required privacy manifest added for iOS compliance
+  - **iOS permissions cleanup:** Removed unused Camera, Location, and Photo Library permission declarations
+
+### Changed
+- Version bumped to 3.8.0+18
+
 ## [3.7.0] - 2026-06-22
 
 ### Added

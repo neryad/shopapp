@@ -16,6 +16,7 @@ import 'package:pocketlist/src/pages/about/about_page.dart';
 import 'package:pocketlist/src/pages/about/pages/authorPage.dart';
 import 'package:pocketlist/src/pages/import_export_page.dart';
 import 'package:pocketlist/src/pages/onboarding/onboarding_page.dart';
+import 'package:pocketlist/src/pages/legal_doc_page.dart';
 
 import 'dart:convert';
 import 'package:upgrader/upgrader.dart';
@@ -202,6 +203,14 @@ class DarkLightTheme extends StatelessWidget {
         'userPage': (_) => UserPage(),
         'dataPage': (_) => DataPage(),
         'authorPage': (_) => const AuthorPage(),
+        'termsPage': (_) => const LegalDocPage(
+              assetPath: 'assets/legal/terms.md',
+              titleKey: 'Terms',
+            ),
+        'privacyPage': (_) => const LegalDocPage(
+              assetPath: 'assets/legal/privacy.md',
+              titleKey: 'privacyPol',
+            ),
       },
       builder: (context, child) => UpgradeAlert(
         upgrader: upgrader,

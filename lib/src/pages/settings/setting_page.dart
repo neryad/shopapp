@@ -5,7 +5,6 @@ import 'package:pocketlist/src/data/class/language.dart';
 import 'package:pocketlist/src/localization/localization_constant.dart';
 import 'package:pocketlist/src/pages/settings/category_management_page.dart';
 import 'package:pocketlist/src/utils/package_info_mixin.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -189,8 +188,7 @@ class _SettingPageState extends State<SettingPage> with PackageInfoMixin {
             icon: Icons.description_rounded,
             title: getTranslated(context, 'Terms'),
             subtitle: getTranslated(context, 'settTermsConditions'),
-            onTap: () => _launchURL(
-                'https://neryad.github.io/pocketPage/docs/Terms.pdf'),
+            onTap: () => Navigator.pushNamed(context, 'termsPage'),
             trailing: Icon(Icons.open_in_new, size: 16),
           ),
 
@@ -198,9 +196,16 @@ class _SettingPageState extends State<SettingPage> with PackageInfoMixin {
             icon: Icons.privacy_tip_rounded,
             title: getTranslated(context, 'privacyPol'),
             subtitle: getTranslated(context, 'privacyPol'),
-            onTap: () => _launchURL(
-                'https://neryad.github.io/pocketPage/docs/PrivacyPolicy.pdf'),
+            onTap: () => Navigator.pushNamed(context, 'privacyPage'),
             trailing: Icon(Icons.open_in_new, size: 16),
+          ),
+
+          _buildSettingCard(
+            icon: Icons.shield_rounded,
+            title: getTranslated(context, 'settCCPA'),
+            subtitle: getTranslated(context, 'settCCPADesc'),
+            onTap: () => _showCCPAInfo(context),
+            trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16),
           ),
 
           SizedBox(height: 32),
@@ -404,17 +409,64 @@ class _SettingPageState extends State<SettingPage> with PackageInfoMixin {
     MyApp.stateSet(context);
   }
 
-  void _launchURL(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(getTranslated(context, 'settOpenLinkError')),
-          backgroundColor: Colors.red,
+  void _showCCPAInfo(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: [
+            Icon(Icons.shield_rounded, color: Theme.of(context).colorScheme.primary),
+            SizedBox(width: 12),
+            Text(getTranslated(context, 'settCCPA')),
+          ],
         ),
-      );
-    }
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(getTranslated(context, 'settCCPAInfo')),
+            SizedBox(height: 16),
+            Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'California Consumer Privacy Act (CCPA)',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'You have the right to:',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  SizedBox(height: 4),
+                  Text('• Know what personal information is collected', style: TextStyle(fontSize: 12)),
+                  Text('• Request deletion of your personal information', style: TextStyle(fontSize: 12)),
+                  Text('• Opt out of the sale or sharing of your data', style: TextStyle(fontSize: 12)),
+                  Text('• Non-discrimination for exercising your rights', style: TextStyle(fontSize: 12)),
+                  SizedBox(height: 8),
+                  Text(
+                    'To exercise your rights, contact us at neryadg@gmail.com',
+                    style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(getTranslated(context, 'accept')),
+          ),
+        ],
+      ),
+    );
   }
 }
