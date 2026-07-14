@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.8.1] - 2026-07-13
+
+### Changed
+- Version bumped to 3.8.1+19
+
 ## [3.8.0] - 2026-07-13
 
 ### Added
